@@ -7,6 +7,13 @@ categories: [documentation]
 
 # Known Issues {#wb-cont}
 
+## IE 9 Dataset Patch
+
+Internet Explorer 9, prior to the May 2014 security patch, would break on loading datasets with a large amount of numeric data.
+This would result in a script error and prevent the map from rendering correctly.  Any IE9 clients should be patched to ensure
+RAMP functions correctly.  See this <a href="http://stackoverflow.com/questions/11833319/ie-error-2147024882/11909547#11909547">
+bug report</a> for more details.
+
 ## IE Compatibility Mode
 
 RAMP will only render correctly if Internet Explorer is running in standards compliant mode.  The recommended way to enforce
