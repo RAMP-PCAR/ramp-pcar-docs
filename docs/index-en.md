@@ -23,3 +23,4 @@ published: true
 	* [External Library Implementations]({{site.production_url}}/docs/external-libraries-en.html)
     * [Build Tool]({{site.production_url}}/docs/build-tool-en.html)
 * [API Reference]({{site.production_url}}/api/yuidoc/index.html)
+* [Known Issues]({{site.production_url}}/docs/known-issues-en.html)
