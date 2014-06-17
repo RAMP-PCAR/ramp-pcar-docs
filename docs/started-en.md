@@ -20,3 +20,6 @@ categories: [documentation]
 1. [Create a GitHub account](https://help.github.com/articles/signing-up-for-a-new-github-account).
 2. Ask a question relating to the style guide by creating a new issue on GitHub.
 3. Report a bug, ask a question or request a feature relating to RAMP by filling out [a new issue](https://github.com/Environment-Canada/RAMP-AF/issues/new).
+
+## I want to setup a RAMP based web mapping application
+1. Follow [RAMP Quick Start Guide]({{ BASE_PATH }}/docs/quick-start-en.html) to setup your web mapping application.
