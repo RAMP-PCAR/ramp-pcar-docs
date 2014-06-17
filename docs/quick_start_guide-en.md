@@ -1,38 +1,41 @@
-﻿---
+---
 layout: index-en
-title: RAMP Getting Start Guide
+title: RAMP Quick Start Guide
 categories: [documentation]
 ---
-# RAMP Getting Start Guide #
+
+# RAMP Quick Start Guide
 
 
 Welcome to RAMP getting start guide. In this guide, we will be showing you how to setup your own web map using RAMP.
 
-## Requirements ##
+## Requirements
 
 This guide assumes you have downloaded the RAMP source from Github, and have run the Grunt build script. If not, please
 Please go through Getting Started Guide to get your environment setup. 
 
-### Map resources ###
+
+### Map resources
 
 We will be using the Natural Resources Canada’s basemap in our example. As for the map layers, we will be using a snapshot of the dataset from Science.gc.ca's Research Centres map layer.
 
 URL to Natural Resources Canada basemap
 
-http:\\geoappext.nrcan.gc.ca\arcgis\rest\services\BaseMaps\CBMT3978\MapServer
+http://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT3978/MapServer
 
 URL to sample research centre map layers
 
 Environment Canada Research Centres
-	\~/arcgis/rest/services/RAMP/RAMP_ResearchCentres/MapServer/0
+> ~/arcgis/rest/services/RAMP/RAMP_ResearchCentres/MapServer/0
+
 Agriculture and Agri-Food Canada Research Centres
 	\~/arcgis/rest/services/RAMP/RAMP_ResearchCentres/MapServer/1
 Fisheries and Oceans Canada Research Centres
 	\~/arcgis/rest/services/RAMP/RAMP_ResearchCentres/MapServer/2
 
-## Setting up your map layers ##
+## Setting up your map layers
 
-### Add a basemap layer ###
+### Add a basemap layer
 
 To configure a basemap for your RAMP based web mapping application, open the config.json file via a text editor (www.jsoneditoronline.org). Search for basemaps to locate
 the basemap configuration section. By default, RAMP has 5 basemaps layer configured. You can delete all and add your own, or use existing ones. For our example, we will keep
@@ -54,7 +57,7 @@ description: “NRCan CBMT3978“
 
 This will setup your RAMP basemap. When you start your web map application, the NRCan basemap will be displayed.
 
-### Add map layer ###
+### Add map layer
 
 In the Research Centre map layers, we have six layers available. We will be populating featureLayers section with those six layers. 
 With the config.json opened, Look for “featureLayers” section.  This section is where we will be adding Research Centre layers.  
@@ -83,7 +86,7 @@ nameField: \“Research_Centre_en\”
 
 ![Image of Data tab section of the web map application](../assets/images/qs_data_tab.png) 
 
-## Map Tip Configuration ##
+## Map Tip Configuration
 By default, hover map tip and anchor map tip use generic RAMP templates called “feature_hover_maptip_template.json” and “anchored_map_tip.json” template.
 These templates are located in \"src\\js\\RAMP\\Modules\\templates folder\.\"
 
@@ -97,7 +100,7 @@ feature, the hover map tip displays the name of the research centre.
  
 To customize the content of map tips, please refer to template guide on how to customize the template.
 
-## Setting up the Datagrid ##
+## Setting up the Datagrid
 
 In RAMP, datagrid comes in two states\: full datagrid and summary datagrid. By default, summary datagrid is displayed. 
 
@@ -109,14 +112,14 @@ When you click on the “Full data” link button, full datagrid is displayed.
 
 In this section, we will show you how to configure the full datagrid.
 
-### Summary Datagrid ###
+### Summary Datagrid
 
 Summary datagrid uses templates in datagrid_template.json file to generate the content. If you open the template file and associated helper function in tmplUtil.js, you will see the familiar fields being used to generate the individual rows: 
 displayName, imageUrl, and nameField.
 Therefore, by default, summary datagrid is configured if you have the above mentioned featureLayer configuration object setup.
 
 
-### Full Datagrid ###
+### Full Datagrid
 
 In RAMP, multiple layers can be configured to be displayed on the map; therefore, data available to each layer can be different from each other.
  A drop down is provided in the full datagrid to separate the data from the layer source. The configuration associated with each map layer is located 
@@ -137,7 +140,7 @@ width: column width (e.g. 50px)
 *title\: column heading
 *columnTemplate\: The template used to generate content for the given column.
 
-#### Column Template ####
+#### Column Template
 Column Template is used in RAMP to generate the content for each column. There are four default templates available with RAMP these are:
 
 *unformateed_grid_value\: generate content based on the column index and field name
@@ -146,4 +149,3 @@ Column Template is used in RAMP to generate the content for each column. There a
 *details_button\: generate a button with the feature id that opens detail panel when clicked.
 
 You can add and customize templates by adding or modifying the templates in this file. For more information on customizing template, please refer to the Template Guide
-
