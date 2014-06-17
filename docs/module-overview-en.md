@@ -28,6 +28,7 @@ $(document).ready(function() {
 Manages the widget that allows the user to change the basemap. Utilizes the [esri.dijit.Basemap](https://developers.arcgis.com/javascript/jsapi/basemap-amd.html) dijit.  Populates the widget with basemaps from the config.  All basemaps must be in the same projection.
 
 **Relevant Sequence Diagrams**
+
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/select_basemap.svg">
 		<img src="../assets/images/select_basemap.svg" style="max-width:80%" />
@@ -77,6 +78,7 @@ The grid contains buttons to obtain details and zoom to row items.  This is done
 
 **Relevant Sequence Diagrams**
 
+
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/filter_data_sequence.svg">
 		<img src="../assets/images/filter_data_sequence.svg" style="max-width:80%" />
@@ -103,6 +105,7 @@ The zoom function consists of the map zooming to the feature in question, where 
 The view detail function involves generating a custom detail report (from a template) and displaying it in a slide-out panel.  
 
 **Relevant Sequence Diagrams**
+
 
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/zoom_to_feature.svg">
@@ -146,6 +149,7 @@ This primarily consists of clicking a feature, and hovering over a feature.  For
 
 **Relevant Sequence Diagrams**
 
+
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/click_a_feature.svg">
 		<img src="../assets/images/click_a_feature.svg" style="max-width:80%" />
@@ -176,6 +180,7 @@ There are three types of highlighting: Click highlighting, Zoom highlighting, an
 The module also generates the graphic layers used to manage the highlight imagery
 
 **Relevant Sequence Diagrams**
+
 
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/click_a_feature.svg">
@@ -219,6 +224,7 @@ The following actions are performed by the module
 * Changing the draw order of layers on the map
 
 **Relevant Sequence Diagrams**
+
 
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/toggle_bounding_box.svg">
@@ -308,6 +314,7 @@ It also generates and hosts the scale bar.
 
 **Relevant Sequence Diagrams**
 
+
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/filter_data_sequence.svg">
 		<img src="../assets/images/filter_data_sequence.svg" alt="Filter Data Sequence" style="max-width:80%" />
@@ -330,6 +337,7 @@ The module handles maptip interaction (both hover and anchor). Includes position
 Fills the tips with contents from the template.
 
 **Relevant Sequence Diagrams**
+
 
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/close_anchor.svg">

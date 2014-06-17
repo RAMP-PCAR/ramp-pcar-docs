@@ -5,25 +5,24 @@ categories: [documentation]
 ---
 {% include JB/setup %}
 
+<script src="../scripts/toc.js"> </script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.toc').toc({
+		title: 'Table of Content',
+		listType: 'ul',
+		selector: 'h2, h3, h4, h5, h6, .include_toc'		
+	});
+});
+</script>
+
 <a name="top" />
 
 #Template Overview {#wb-cont}
 
 Below is all the modules that are customizable through templating. This summarizes all the information the developers need in order to customize each module through templating. For details on how templating works, refer to this [guide](template-guide-en.html). For an example of modifying a module through templating, refer to this [guide](template-example-en.html).
 
-##Table of Content
-
-* [Header Description](#header_description)
-* [Basemap Selector](#basemap_selector)
-* [Datagrid Summary Mode](#datagrid_summary_mode)
-* [Datagrid Expanded Mode](#datagrid_expanded_mode)
-* [Feature Hover Tip](#feature_hover_tip)
-* [Feature Details Panel](#feature_details_panel)
-* [Feature Anchor Tip](#feature_anchor_tip)
-* [Filter Global Row](#filter_global_row)
-* [Filter Row](#filter_row)
-
-
+<div class="toc"></div>
 
 
 ##Header Description {#header_description}
@@ -44,7 +43,7 @@ Data object
 
 Each row in the basemap selector dropdown.
 
-####Default Behaviour
+**Default Behaviour**
 
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/basemap_selector_default.png">
@@ -71,7 +70,7 @@ The default template uses the URL in [basemaps[].thumbnail](json-config-en.html#
 
 Each row in the datagrid when the datagrid is in the summary mode.
 
-####Default Behaviour
+**Default Behaviour**
 
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/datagrid_summary_default.png">
@@ -99,7 +98,7 @@ The image URL is retrieved using the [getGraphicIcon](http://ramp-racp.github.io
 
 Each row in the datagrid when the datagrid is the expanded mode
 
-####Default Behaviour
+**Default Behaviour**
 
 <section class="wb-lbx lbx-gal">
 <a href="../assets/images/extended_grid_screenshot.png">	
@@ -123,7 +122,7 @@ The default extended datagrid only allows the user to view one layer's dataset a
 
 The popup that appears when a feature on the map is clicked.
 
-####Default Behaviour
+**Default Behaviour**
 
 <section class="wb-lbx lbx-gal">
 <a href="../assets/images/feature_anchor_tip_screenshot.png">	
@@ -149,7 +148,7 @@ The anchor tip contains the icon representing the feature, the name of the featu
 
 The popup that appears when the mouse hovers over a feature on the map.
 
-####Default Behaviour
+**Default Behaviour**
 
 <section class="wb-lbx lbx-gal">
 <a href="../assets/images/feature_hover_tip_screenshot.png">	
@@ -175,7 +174,7 @@ The hover tip contains the icon representing the feature and the name of the fea
 
 The content of the detail panel that slides out whenever a user clicks on a feature on the map or selects a feature from the datagrid.
 
-####Default Behaviour
+**Default Behaviour**
 
 <section class="wb-lbx lbx-gal">	
 <a href="../assets/images/feature_detail_panel_screenshot.png">
@@ -202,7 +201,7 @@ The default detail panel contains each field of the feature on a separate row wi
 
 The top row that contain the global layer and bounding box toggles
 
-####Default Behaviour
+**Default Behaviour**
 
 <section class="wb-lbx lbx-gal">	
 <a href="../assets/images/filter_global_screenshot.png">
@@ -229,7 +228,7 @@ The default filter global row shows "All Data" and a global "eye" and "box" togg
 
 Each row in the filter manager
 
-####Default Behaviour
+**Default Behaviour**
 
 <section class="wb-lbx lbx-gal">
 <a href="../assets/images/filter_row_screenshot.png">	
