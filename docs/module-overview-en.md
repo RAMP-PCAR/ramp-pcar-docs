@@ -5,36 +5,29 @@ categories: [documentation]
 ---
 {% include JB/setup %}
 
+<script src="../scripts/toc.js"> </script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.toc').toc({
+		title: 'Table of Content',
+		listType: 'ul',
+		selector: 'h2, h3, h4, h5, h6, .include_toc'		
+	});
+});
+</script>
+
 <a name="top" />
 
 # RAMP Module Overview {#wb-cont}
 
-## Table of Content
-{: .span-4 module-table-contents}
-
-* [ramp/basemapSelector](#basemapselector)
-* [ramp/bookmarkLink](#bookmarklink)
-* [ramp/datagrid](#datagrid)
-* [ramp/datagridClickHandler](#datagridclickhandler)
-* [ramp/eventManager](#eventmanager)
-* [ramp/featureClickHandler](#featureclickhandler)
-* [ramp/featureHighlighter](#featurehighlighter)
-* [ramp/filterManager](#filtermanager)
-* [ramp/globalStorage](#globalstorage)
-* [ramp/graphicExtension](#graphicextension)
-* [ramp/gui](#gui)
-* [ramp/map](#map)
-* [ramp/maptips](#maptips)
-* [ramp/navigation](#navigationmodule)
-* [ramp/quickzoom](#quickzoom)
-* [ramp/ramp](#ramp)
+<div class="toc"></div>
 
 
 ## ramp/basemapSelector {#basemapselector}
 
 Manages the widget that allows the user to change the basemap. Utilizes the [esri.dijit.Basemap](https://developers.arcgis.com/javascript/jsapi/basemap-amd.html) dijit.  Populates the widget with basemaps from the config.  All basemaps must be in the same projection.
 
-##### Relevant Sequence Diagrams
+**Relevant Sequence Diagrams**
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/select_basemap.svg">
 		<img src="../assets/images/select_basemap.svg" style="max-width:80%" />
@@ -82,7 +75,7 @@ Finding a feature in the grid -- expand when Aly has enhanced it
 
 The grid contains buttons to obtain details and zoom to row items.  This is done via the dataGridClickHandler module (see below).  In future releases, we plan to have this extensible to allow easy overriding of the controls.
 
-##### Relevant Sequence Diagrams
+**Relevant Sequence Diagrams**
 
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/filter_data_sequence.svg">
@@ -109,7 +102,7 @@ The zoom function consists of the map zooming to the feature in question, where 
 
 The view detail function involves generating a custom detail report (from a template) and displaying it in a slide-out panel.  
 
-##### Relevant Sequence Diagrams
+**Relevant Sequence Diagrams**
 
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/zoom_to_feature.svg">
@@ -151,7 +144,7 @@ The module contains the handler functions that react to the mouse interacting wi
 
 This primarily consists of clicking a feature, and hovering over a feature.  For the most part, this class publishes appropriate events; the event listeners in other classes implement the reaction to the interactions.
 
-##### Relevant Sequence Diagrams
+**Relevant Sequence Diagrams**
 
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/click_a_feature.svg">
@@ -182,7 +175,7 @@ There are three types of highlighting: Click highlighting, Zoom highlighting, an
 
 The module also generates the graphic layers used to manage the highlight imagery
 
-##### Relevant Sequence Diagrams
+**Relevant Sequence Diagrams**
 
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/click_a_feature.svg">
@@ -225,7 +218,7 @@ The following actions are performed by the module
 * Handle the toggling of bounding boxes for layers
 * Changing the draw order of layers on the map
 
-##### Relevant Sequence Diagrams
+**Relevant Sequence Diagrams**
 
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/toggle_bounding_box.svg">
@@ -313,7 +306,7 @@ The map module generates the map control and adds layers to the map, as defined 
 
 It also generates and hosts the scale bar.
 
-##### Relevant Sequence Diagrams
+**Relevant Sequence Diagrams**
 
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/filter_data_sequence.svg">
@@ -336,7 +329,7 @@ The module handles maptip interaction (both hover and anchor). Includes position
 
 Fills the tips with contents from the template.
 
-##### Relevant Sequence Diagrams
+**Relevant Sequence Diagrams**
 
 <section class="wb-lbx lbx-gal">	
 	<a href="../assets/images/close_anchor.svg">
