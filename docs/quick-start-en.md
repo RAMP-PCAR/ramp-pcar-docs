@@ -7,12 +7,12 @@ categories: [documentation]
 # RAMP Quick Start Guide
 
 
-Welcome to RAMP getting start guide. In this guide, we will be showing you how to setup your own web map using RAMP.
+Welcome to RAMP Quick Start Guide. In this guide, we will be showing you how to setup your own web map using RAMP.
 
 ## Requirements
 
 This guide assumes you have downloaded the RAMP source from Github, and have run the Grunt build script. If not, please
-Please go through Getting Started Guide to get your environment setup. 
+Please go through Quick Start Guide to get your environment setup. 
 
 
 ### Map resources
@@ -87,7 +87,7 @@ symbology->icon->default->
 To display the individual feature data (in our case, the Research Centre name) in the Data tab; you will need to populate 
 the nameField with the field name you wish to display. In our case it will be the “Research_Centre_en” field that will contain the research centre name.
 
-nameField: \“Research_Centre_en\”
+nameField: "Research_Centre_en"
 
 ![Image of Data tab section of the web map application](../assets/images/qs_data_tab.png) 
 
@@ -113,7 +113,7 @@ In RAMP, datagrid comes in two states\: full datagrid and summary datagrid. By d
  
 When you click on the “Full data” link button, full datagrid is displayed.
 
-![Sample full datagrid view](../assets/images/qs_full_gridview.png)
+![Sample full datagrid view](../assets/images/qs_full_gridview.png =500x)
 
 In this section, we will show you how to configure the full datagrid.
 
@@ -145,7 +145,7 @@ The following attributes are available for each grid column:
 * title\: column heading
 * columnTemplate\: The template used to generate content for the given column.
 
-For detailed information on the column configuration, please refer to [DataTables](http://www.datatables.net/) site.
+For detailed information on the column configuration, please refer to [DataTables](http://www.datatables.net/) documentation.
 
 #### Column Template
 Column Template is used in RAMP to generate the content for each column. There are four default templates available with RAMP these are:
