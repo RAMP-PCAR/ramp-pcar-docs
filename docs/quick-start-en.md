@@ -26,12 +26,16 @@ http://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT3978/MapServer
 URL to sample research centre map layers
 
 Environment Canada Research Centres
-> ~/arcgis/rest/services/RAMP/RAMP_ResearchCentres/MapServer/0
+
+~/arcgis/rest/services/RAMP/RAMP_ResearchCentres/MapServer/0
 
 Agriculture and Agri-Food Canada Research Centres
-	\~/arcgis/rest/services/RAMP/RAMP_ResearchCentres/MapServer/1
+
+~/arcgis/rest/services/RAMP/RAMP_ResearchCentres/MapServer/1
+
 Fisheries and Oceans Canada Research Centres
-	\~/arcgis/rest/services/RAMP/RAMP_ResearchCentres/MapServer/2
+
+~/arcgis/rest/services/RAMP/RAMP_ResearchCentres/MapServer/2
 
 ## Setting up your map layers
 
@@ -44,15 +48,16 @@ basemap baseNrCan and delete the remaining.
 ![Partial configuration file](../assets/images/qs_basemap_config.png) 
 
 Basemap configuration
-id:
-url: http://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT3978/MapServer
-thumbnail
-showOnInit
-scaleCssClass ???
-type: “Topographic”
-name:”Canada Atlas”
-altText: “Topotraphic Map”
-description: “NRCan CBMT3978“
+
+* id:
+* url: http://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT3978/MapServer
+* thumbnail
+* showOnInit: true
+* scaleCssClass
+* type: “Topographic”
+* name: ”Canada Atlas”
+* altText: “Topotraphic Map”
+* description: “NRCan CBMT3978“
 
 
 This will setup your RAMP basemap. When you start your web map application, the NRCan basemap will be displayed.
@@ -64,17 +69,17 @@ With the config.json opened, Look for “featureLayers” section.  This section
 
 The main attributes to be modified will be the following:
 
-id: “layer_ec”
-displayName: “Environment Canada”
-url: http://jkfdslafjdskalfjsadl
-These attribute will be used in the filter manager \(Datasets Tab\) to display information for each layer.
+* id: “layer_ec”
+* displayName: “Environment Canada”
+* url: http://jkfdslafjdskalfjsadl
+* These attribute will be used in the filter manager \(Datasets Tab\) to display information for each layer.
 
 To display the legend image properly in the filter manager \(Datasets Tab\), you will need to provide the feature image url and 
 alt text for the image in the following fields.
 
 symbology->icon->default->
-	imageUrl:
-	legendText:
+	* imageUrl:
+	* legendText:
 
 ![Image of datasets section of the web map application](../assets/images/qs_filter.png)
 
@@ -131,21 +136,23 @@ You can display any number of columns in the full datagrid by adding grid column
 
 The following attributes are available for each grid column:
 
-*id\: unique id to identify the column
-*fieldName\: field name to access the data value. If using a default grid cell template, this field name will be used to supply data
-width: column width (e.g. 50px)
-*isSortable\: a flag to determine if the given column can be sortable
-*sortType\: type of sorting algorithm for the given column
-*alignment\: column alignment (e.g. 1)
-*title\: column heading
-*columnTemplate\: The template used to generate content for the given column.
+* id\: unique id to identify the column
+* fieldName\: field name to access the data value. If using a default grid cell template, this field name will be used to supply data
+* width: column width (e.g. 50px)
+* isSortable\: a flag to determine if the given column can be sortable
+* sortType\: type of sorting algorithm for the given column
+* alignment\: column alignment (e.g. 1)
+* title\: column heading
+* columnTemplate\: The template used to generate content for the given column.
+
+For detailed information on the column configuration, please refer to [DataTables](http://www.datatables.net/) site.
 
 #### Column Template
 Column Template is used in RAMP to generate the content for each column. There are four default templates available with RAMP these are:
 
-*unformateed_grid_value\: generate content based on the column index and field name
-*title_span\: tooltiped grid value
-*graphic_icon\: icon template that generate icon from current layer image
-*details_button\: generate a button with the feature id that opens detail panel when clicked.
+* unformateed_grid_value\: generate content based on the column index and field name
+* title_span\: tooltiped grid value
+* graphic_icon\: icon template that generate icon from current layer image
+* details_button\: generate a button with the feature id that opens detail panel when clicked.
 
 You can add and customize templates by adding or modifying the templates in this file. For more information on customizing template, please refer to the Template Guide
