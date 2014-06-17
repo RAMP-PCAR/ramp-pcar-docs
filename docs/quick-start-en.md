@@ -113,7 +113,7 @@ In RAMP, datagrid comes in two states\: full datagrid and summary datagrid. By d
  
 When you click on the “Full data” link button, full datagrid is displayed.
 
-![Sample full datagrid view](../assets/images/qs_full_gridview.png =500x)
+![Sample full datagrid view](../assets/images/qs_full_gridview.png =300x)
 
 In this section, we will show you how to configure the full datagrid.
 
