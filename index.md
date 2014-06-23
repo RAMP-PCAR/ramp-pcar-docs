@@ -5,7 +5,7 @@ tagline: Reusable Accessible Mapping Platform
 ---
 {% include JB/setup %}
 
-# Reusable, Accessible, Mapping Platform (RAMP) 
+# Reusable, Accessible, Mapping Platform (RAMP) {#wb-cont}
 
 ## What is the RAMP?
 
@@ -49,5 +49,3 @@ tagline: Reusable Accessible Mapping Platform
  * Report issues and suggestions
  * Documentation
  * Testing
-
-
