@@ -1,5 +1,5 @@
 ---
-layout: index-en
+layout: index-secmenu-en
 title: Initialization
 categories: [documentation]
 ---
@@ -36,7 +36,7 @@ The latter load ESRI and Dojo, the former is a [configuration file](http://dojot
 
 ## Dojo Config Parameters
 
-The dojoConfig object contains many different parameters, the ones relevant for RAMP are outlined below, a description of the rest can be found [here](http://dojotoolkit.org/reference-guide/1.9/dojo/_base/config.html). 
+The dojoConfig object contains many different parameters, the ones relevant for RAMP are outlined below, a description of the rest can be found [here](http://dojotoolkit.org/reference-guide/1.9/dojo/_base/config.html).
 
 _parseOnLoad_: if true, Dojo will parse your HTML page for any Dojo markups and replace them with widgets. If false, you must manually tell Dojo to parse the page at a later time (Recommended: false, since we’re not using any Dojo markups in RAMP, and parsing creates some overhead during loading).
 
@@ -44,13 +44,12 @@ _locale_: the current locale, since the dojoConfig object is built in javascript
 
 _async_: if true, Dojo will load all the modules asynchronously (Recommended: true)
 
-_packages_: an array of objects, each object contains a “name” and “location” field, which is used to give alias to module locations. The location should be relative to your HTML map page. In the above example, “ramp” is an alias for “javascript/src/RAMP/Modules/”, thus if there is a module located at: “javascript/src/RAMP/Modules/map.js”, then using the alias, the module can simply be referenced with “ramp/map”. 
+_packages_: an array of objects, each object contains a “name” and “location” field, which is used to give alias to module locations. The location should be relative to your HTML map page. In the above example, “ramp” is an alias for “javascript/src/RAMP/Modules/”, thus if there is a module located at: “javascript/src/RAMP/Modules/map.js”, then using the alias, the module can simply be referenced with “ramp/map”.
 
 ## Loading the bootstrapper
 
-The bootstrapper module is responsible for loading the JSON configuration file used by RAMP and for loading all the modules in the proper order. 
+The bootstrapper module is responsible for loading the JSON configuration file used by RAMP and for loading all the modules in the proper order.
 
 {% highlight html %}
 	<script type="text/javascript" src="./javascript/src/RAMP/bootstrapper.js"></script>
 {% endhighlight %}
-

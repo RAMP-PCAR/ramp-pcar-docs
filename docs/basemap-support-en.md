@@ -1,5 +1,5 @@
 ---
-layout: index-en
+layout: index-secmenu-en
 title: Basemap Support
 categories: [documentation]
 ---
@@ -24,5 +24,3 @@ ESRI Public Tiles
 
 Natural Resources Canada Public Tiles
 : NrCan provides [Canadian tile sets](http://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps) in both [Web Mercator Auxilliary Sphere](http://spatialreference.org/ref/sr-org/esri102100/) and [Canada Atlas Lambert](http://spatialreference.org/ref/sr-org/7254/) projections.  Tiles are provided in both English and French versions.  Sets include topographic, road network, text labels, water bodies, and provinces.
-
-

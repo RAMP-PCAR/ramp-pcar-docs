@@ -1,5 +1,5 @@
 ---
-layout: "index-en"
+layout: index-secmenu-en
 title: Build Tool
 categories:
   - documentation

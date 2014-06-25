@@ -1,5 +1,5 @@
 ---
-layout: index-en
+layout: index-secmenu-en
 title: Architecture Overview
 categories: [documentation]
 ---
@@ -19,16 +19,16 @@ The inner workings and usage of the ESRI Javascript API are not covered.  The [o
 
 A list of [extensions](external-libraries-en.html) is provided, but details of their inner workings and usage will be found on their homepages (links provided).
 
-Details on how to use [ArcGIS Server](http://www.esri.com/software/arcgis/arcgisserver) and publish spatial data as services is not covered.  
+Details on how to use [ArcGIS Server](http://www.esri.com/software/arcgis/arcgisserver) and publish spatial data as services is not covered.
 
-While RAMP meets [WCAG 2.0](http://www.w3.org/WAI/WCAG20/quickref/) AA compliance, we do not cover the details in meeting those requirements.  
+While RAMP meets [WCAG 2.0](http://www.w3.org/WAI/WCAG20/quickref/) AA compliance, we do not cover the details in meeting those requirements.
 
 ## Terminology
 
 AMD
 : [Asynchronous Module Definition](https://github.com/amdjs/amdjs-api/wiki/AMD).  The API DOJO implements to help achieve a more "object oriented" framework in javascript.  Detailed documentation with respect to DOJO's implementation can be found [here](http://dojotoolkit.org/reference-guide/1.9/loader/amd.html)
 
-Anchor Tip 
+Anchor Tip
 : A map tip that remains open until either manually closed by the user, or another anchor tip is opened.  This means you can change the map extent and hover over other features, and the anchor tip will stay active.
 
 Basemap
@@ -43,10 +43,10 @@ Extended Grid
 Highlight
 : Causes a feature on the map to stand out from other features and background imagery.  Typically accomplished by dulling out non-highlighted imagery.
 
-Hover Tip 
+Hover Tip
 : A map tip that is visible only when the mouse is hovering over a feature.
 
-RAMP 
+RAMP
 : Reusable Accessible Mapping Platform.  RAMP is a web application that allows for a webmap to be easily created in the WET Template.  The site will meet WCAG AA accessibility standards, and will have useful features available for use.
 
 Static Layer
@@ -58,15 +58,13 @@ Summary Grid
 Topic
 : A publication and subscription framework in [DOJO](http://dojotoolkit.org/reference-guide/1.9/dojo/topic.html).  This is used to pass events in the RAMP source.
 
-
 ## High Level Block Diagram
 
-<section class="wb-lbx lbx-gal">	
+<section class="wb-lbx lbx-gal">
 	<a href="../assets/images/block_diagram.png">
 		<img src="../assets/images/block_diagram.png" style="max-width:80%" />
 	</a>
 </section>
-
 
 ## Popup handling
 
@@ -84,19 +82,18 @@ In RAMP Arctic Fox we do not have any attribute based filtering.  Filtering is d
 * For each visible layer, perform a spatial query on the features using the map extent as the filter criteria.  Have the query output objectIds for features that satisfy the filter
 * Create a collection of objectId/layerId pairs, and have this be the source for the data grid
 
-<section class="wb-lbx lbx-gal">	
+<section class="wb-lbx lbx-gal">
 	<a href="../assets/images/filter_data_sequence.svg">
 		<img src="../assets/images/filter_data_sequence.svg" style="max-width:80%" />
 	</a>
 </section>
-
 
 ## Map layer management
 
 The layers exist in the following order on the map
 
 * Basemap Layer
-* Static Layers 
+* Static Layers
 * Bounding Box Layers
 * Feature Layers
 * Highlighting Layers
@@ -117,5 +114,3 @@ The data grid can exist in two different states.  This allows the map to be acce
 The default state is the _summary grid_.  This grid provides basic information about features on the map (name, icon, what layer it belongs to) and provides links to zoom to features and view details about them.  This grid works in concert with what is visible on the map; as the user navigates around the map, the grid will stay snynchronized with the view.
 
 The alternate state is the _extended grid_.  This grid provides a more traditional multi-column view of the data.  When open, the map is no longer visible, and the extent is fixed until the user reverts back to the summary grid.  The extended grid shows data from one feature set at a time (this is because different features can have different columns).  The active feature can be selected from the dropdown combo box above the grid.  It is possible to have the columns in the extended grid be sortable.
-
-

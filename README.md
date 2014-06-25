@@ -1,4 +1,4 @@
-# Jekyll-Bootstrap
+# Jekyll-Bootstrap {#wb-cont}
 
 The quickest way to start and publish your Jekyll powered blog. 100% compatible with GitHub pages
 
@@ -16,7 +16,6 @@ You might want to run 0.3.0 in a branch to make sure you are ok with the theme d
 
 ## Contributing
 
-
 To contribute to the framework please make sure to checkout your branch based on `jb-development`!!
 This is very important as it allows me to accept your pull request without having to publish a public version release.
 
@@ -33,7 +32,6 @@ Translation : it might take a bit longer so please be patient! (but sincerely th
 **Jekyll-Bootstrap Documentation Website.**
 
 The documentation website at <http://jekyllbootstrap.com> is maintained at https://github.com/plusjade/jekyllbootstrap.com
-
 
 ## License
 

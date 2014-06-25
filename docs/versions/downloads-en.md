@@ -4,7 +4,7 @@ title: Downloads
 ---
 {% include JB/setup %}
 
-# Downloads
+# Downloads {#wb-cont}
 
 ## Arctic Fox
 

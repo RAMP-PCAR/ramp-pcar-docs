@@ -1,5 +1,5 @@
 ---
-layout: index-en
+layout: index-secmenu-en
 title: Templating Guide
 categories: [documentation]
 ---
@@ -9,12 +9,11 @@ categories: [documentation]
 
 ## Libraries
 
-RAMP templating uses the [JavaScript Templates engine by BlueImp](https://github.com/blueimp/JavaScript-Templates).  
+RAMP templating uses the [JavaScript Templates engine by BlueImp](https://github.com/blueimp/JavaScript-Templates).
 
 The library resides in RAMP at /src/js/libs/tmplEx.2.4.1/tmplEx.js, and should be loaded in the main html page.
 
 The library has been modified from its original form.  It has been enhanced to allow the loading of JSON files that contain multiple template definitions.
-
 
 ## Template Structure
 
@@ -30,8 +29,6 @@ The basic structure of the template file is a key value dictionary, the keys bei
     "TemplateTwo": "A plain template"
 }
 {% endhighlight %}
-
-
 
 ### Comments
 
@@ -53,18 +50,15 @@ Comments can be added to the files to improve readability.  Both // and /* */ fo
 
 Be careful not to put comments inside the template strings, as they will be included in the template output and look funny.
 
-
 ### Simple Value Replacement
 
 The template references a data object called __o__.  The value of __o__ is the data object supplied to the template engine when it is called.  Using the embedded value tags {{ "{%= " }} %} we can reference the object and have the value appear in the template output.  E.g. this template will output a hyperlink based on the values in the data object.  The data object must have properties .url and .text to work.
 
 {% highlight js %}
 {% raw %}{
-    "UrlTemplate": "<a href='{%=o.url%}'>{%=o.text%}</a>"	
+    "UrlTemplate": "<a href='{%=o.url%}'>{%=o.text%}</a>"
 }{% endraw %}
 {% endhighlight %}
-
-
 
 ### Global Javascript Function Calls
 
@@ -78,17 +72,13 @@ function itIsFun(subject) {
 }
 {% endhighlight %}
 
-
-
 (template)
 
 {% highlight js %}
 {% raw %}{
-    "SubjectReview": "<div>{%=itIsFun(o.subjectName)%}</div>"	
+    "SubjectReview": "<div>{%=itIsFun(o.subjectName)%}</div>"
 }{% endraw %}
 {% endhighlight %}
-
-
 
 ### Linking Templates
 
@@ -106,20 +96,19 @@ Templates can embed other templates within them.  They do this by calling the __
 }{% endraw %}
 {% endhighlight %}
 
-
 ### Embedded Javascript
 The template can also include embedded javascript to help construct more complex templates.  Code is contained in {{ "{% " }} %} tags.  E.g. this template will loop through all the properties in the data object and generate list items for each property based on a second template.  Note how the __include__ call bundles up a custom data object to pass to the simpleListItem template.
 
 {% highlight js %}
 {% raw %}{
     //make a full list of properties
-    "PropertiesTemplate": 
+    "PropertiesTemplate":
         "<div>
             <ul>
-                {% for (var prop in o ) { 
-                    if (o.hasOwnProperty(prop)) { 
-                           include('simpleListItem', 
-                                   {key: prop, value: o[prop]}); 
+                {% for (var prop in o ) {
+                    if (o.hasOwnProperty(prop)) {
+                           include('simpleListItem',
+                                   {key: prop, value: o[prop]});
                     }
                 } %}
             </ul>
@@ -129,11 +118,9 @@ The template can also include embedded javascript to help construct more complex
     "simpleListItem": "<li>
                 <p>{%=o.key%}</p>
                 <p>{%=o.value%}</p>
-            </li>"    
+            </li>"
 }{% endraw %}
 {% endhighlight %}
-
-
 
 ## Template Usage
 
@@ -145,13 +132,11 @@ The parsed contents are then converted to a JSON object, and assigned to the cus
 tmpl.templates = JSON.parse(tmplHelper.stringifyTemplate(tmplFileContent));
 {% endhighlight %}
 
-
 Now the template object is ready to generate content using the templates provided.  To get the content, provide the template name (as defined in the template file) and a data JSON object (that has the appropriate properties required by the template).  E.g.
 
 {% highlight js %}
 result = tmpl("myTemplateName", oDataObject)
 {% endhighlight %}
-
 
 ## Full Example
 
@@ -160,13 +145,13 @@ result = tmpl("myTemplateName", oDataObject)
 {% highlight js %}
 {% raw %}{
     //make a full list of properties
-    "PropertiesTemplate": 
+    "PropertiesTemplate":
         "<div>
             <ul>
-                {% for (var prop in o ) { 
-                    if (o.hasOwnProperty(prop)) { 
-                           include('simpleListItem', 
-                                   {key: prop, value: o[prop]}); 
+                {% for (var prop in o ) {
+                    if (o.hasOwnProperty(prop)) {
+                           include('simpleListItem',
+                                   {key: prop, value: o[prop]});
                     }
                 } %}
             </ul>
@@ -176,11 +161,9 @@ result = tmpl("myTemplateName", oDataObject)
     "simpleListItem": "<li>
                             <p>{%=o.key%}</p>
                             <p>{%=o.value%}</p>
-                        </li>"    
+                        </li>"
 }{% endraw %}
 {% endhighlight %}
-
-
 
 ### Javascript
 
@@ -211,8 +194,6 @@ function (tmplHelper, sample_template) { return {
 });
 {% endhighlight %}
 
-
-
 ### Result
 
 {% highlight html %}
@@ -228,7 +209,6 @@ function (tmplHelper, sample_template) { return {
 </div>
 {% endhighlight %}
 
-
 ## Template Files
 
 Template files are currently stored in folder __/javascript/src/RAMP/Modules/templates__.  In the future we may have two folders, one for RAMP core templates, another for custom templates.
@@ -240,15 +220,13 @@ Developers are also free to implement alternative loading techniques to suit spe
 * Embedding a simple, pure-JSON template within the main config file
 * Loading a template file via [dojo/xhr](http://dojotoolkit.org/reference-guide/1.9/dojo/xhr.html).  Again, templates should be in proper JSON format (i.e. no comments)
 
-
 ## Template Data Object Standard Properties
 
-The template engine allows the caller to pass in any JSON object to supply values to the template.  In RAMP, we look to standardize this input object so that templates can access common data and javascript functions in a consistent and efficient manner.   
-
+The template engine allows the caller to pass in any JSON object to supply values to the template.  In RAMP, we look to standardize this input object so that templates can access common data and javascript functions in a consistent and efficient manner.
 
 ### Data Object Layout
 
-<a name="o_data"/>o.data
+<a name="o_data" />o.data
 : contains the primary data supplied by the caller.  For example, a hover-tip would likely supply the feature being hovered over here.  The caller can optionally supply a compound object consisting of many useful parameters.
 
 o.config
@@ -257,23 +235,20 @@ o.config
 o.str
 : points to the stringResources dictionary within the config object.  We provide this as a shortcut pointer to reduce template clutter.
 
-<a name="o_fn"/>o.fn
+<a name="o_fn" />o.fn
 : contains formatting functions that can be called within the template.  Currently this includes helper functions defined in tmplUtil module.  In the future we want to include user-defined custom functions as well.
 
-<a name="o_lyr"/>o.lyr
+<a name="o_lyr" />o.lyr
 : (optional) points to the layer object that is relevant for the current template.  Allows the template to avoid iterating through the layer collection in the global config object.
-
 
 ### Data Object Constructor
 
-The dojo module __utils/tmplHelper__ provides the function dataBuilder that generates and returns the data object using the above layout.  
+The dojo module __utils/tmplHelper__ provides the function dataBuilder that generates and returns the data object using the above layout.
 
 The function takes two parameters.  The first parameter determines the JSON object that is stored in o.data.  The second optional parameter is a url for a feature layer.  If provided, the data object will have its o.lyr property pointing to the appropriate layer config node.  If not provided, o.lyr will be undefined.  The other properties in the data object are automatically assigned by the function.
-
 
 ## Common Template Functions
 
 The module __utils/tmplUtil__ provides common functions that can be used inside the templates.  As an example, one function is __getGraphicIcon__, which will return the symbology image for a feature.
 
 Note that a scoping issue exists when calling functions from the template.  Any function called from within the template cannot call a second function, unless that function is defined within the scope of the first function.  __THIS ISSUE MAY NOT ACTUALLY EXIST.  MORE RESEARCH TO BE DONE!__
-

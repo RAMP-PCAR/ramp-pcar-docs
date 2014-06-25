@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ ASSET_PATH }}/css/wet-boew.min.css" />
     <!--<![endif]-->
     <link rel="stylesheet" href="{{ ASSET_PATH }}/css/theme.min.css" />
+    <link rel="stylesheet" href="{{ ASSET_PATH }}/css/extra.css" />
     <link rel="stylesheet" href="{{ ASSET_PATH }}/css/pygments.css" />
     <!--[if lt IE 9]><link href="./assets/favicon.ico" rel="shortcut icon" /> <link rel="stylesheet" href="./css/ie8-wet-boew.min.css" /> <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> <script src="./js/ie8-wet-boew.min.js"></script><![endif]-->
     <noscript>
@@ -101,15 +102,23 @@
             </div>
         </nav>
     </header>
-    <main role="main" property="mainContentOfPage" class="container">
-        {{ content }}
-        <dl id="wb-dtmd" property="dateModified">
-            <dt>Date modified:&#32;</dt>
-            <dd>
-                <time>{{ site.time | date: '%Y-%m-%d' }}</time>
-            </dd>
-        </dl>
-    </main>
+
+    <div class="container">
+        <div class="row">
+
+            <main role="main" property="mainContentOfPage" class="col-md-9 col-md-push-3">
+                {{ content }}
+                <dl id="wb-dtmd" property="dateModified">
+                    <dt>Date modified:&#32;</dt>
+                    <dd>
+                        <time>{{ site.time | date: '%Y-%m-%d' }}</time>
+                    </dd>
+                </dl>
+            </main>
+
+            {% include {{ include.param }} %}
+        </div>
+    </div>
 
     <footer role="contentinfo" id="wb-info" class="container visible-sm visible-md visible-lg wb-navcurr">
         <nav role="navigation" class="row">
@@ -144,7 +153,6 @@
                     </li>
                 </ul>
             </section>
-            </section>
         </nav>
     </footer>
     {% include JB/analytics %}
@@ -153,5 +161,7 @@
     <script src="{{ ASSET_PATH }}/js/wet-boew.min.js"></script>
     <!--<![endif]-->
     <!--[if lt IE 9]><script src="./js/ie8-wet-boew2.min.js"></script><![endif]-->
+
+    <script src="{{ ASSET_PATH }}/js/extra.js"></script>
 </body>
 </html>

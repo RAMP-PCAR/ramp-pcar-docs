@@ -1,5 +1,5 @@
 ---
-layout: index-en
+layout: index-secmenu-en
 title: Getting Started
 categories: [documentation]
 ---
@@ -11,7 +11,7 @@ categories: [documentation]
 1. [Setup Build Tool]({{ BASE_PATH }}/docs/build-tool-en.html) for your platform.
 2. [Create a GitHub account](https://help.github.com/articles/signing-up-for-a-new-github-account).
 3. Follow GitHub's guides on [setting up Git](https://help.github.com/articles/set-up-git).
-4. Fork the latest [RAMP repository](https://github.com/Environment-Canada/RAMP-AF) by following the GitHub forking guide. 
+4. Fork the latest [RAMP repository](https://github.com/Environment-Canada/RAMP-AF) by following the GitHub forking guide.
 6. Run grunt to build the project. You may run `grunt --help` to see the build target descriptions.
 7. The latest files will now be compiled
 8. To contribute back, follow the instructions on how to create a pull request.

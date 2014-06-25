@@ -1,5 +1,5 @@
 ---
-layout: index-en
+layout: index-secmenu-en
 title: Naming Conventions
 categories: [documentation]
 ---
@@ -7,15 +7,14 @@ categories: [documentation]
 
 # RAMP Naming Conventions {#wb-cont}
 
-Resource dictionary 
+Resource dictionary
 : a singleton object that only contain read-only fields (in C# or Java, these would be classes that cannot be instantiated and only contain public static fields)
 
-Utilities 
-: a singleton object that contain useful functions but does not contain any fields (in C# or Java, these would be classes that cannot be instantiated and only contain public static functions) 
+Utilities
+: a singleton object that contain useful functions but does not contain any fields (in C# or Java, these would be classes that cannot be instantiated and only contain public static functions)
 
-Singleton object 
+Singleton object
 : a singleton object that contains both fields and functions (in C# or Java, these would be classes that cannot be instantiated, have static fields, and static functions). These are the only objects can have states that change over time (e.g. Map can have different extents, Datagrid can have different points, whereas the Resource dictionary never changes, neither do the Utility classes).
-
 
 | Module Path | Return Type | Preferred Arg Alias |
 |:--------|:-------|:--------|
@@ -44,15 +43,13 @@ Singleton object
 | utils/url | class | UtilUrl |
 | utils/util | utilities | UtilMisc |
 
-
-
 ## Module Architecture
 Why everything is singleton in RAMP:
 
-* There is only one map, one navigation widget, one datagrid, etc. There is no point of having an option to create two datagrids or two maps. Even if the datagrid needs a tabbing option, there may be multiple “tab” objects, but there is still only one datagrid. 
-* Keeps code simpler. We no longer need to use “this.” everywhere. Using “this” caused a lot of problems with scope when we’re using anonymous functions (e.g. in publish/subscribe, arrayUtil.forEach, deferred.after). We need to “hitch” (using dojo/lang’s hitch function) the scope onto the function, and sometimes when there is an anonymous function nested in another anonymous function, the scoping gets tricky. Numerous times, a variable or function is unexpectedly undefined due to scoping issues. When everything is singleton, we no longer use “this”, instead we declare all the variables at the top of the file, and due to closure, the variables are always in scope. 
+* There is only one map, one navigation widget, one datagrid, etc. There is no point of having an option to create two datagrids or two maps. Even if the datagrid needs a tabbing option, there may be multiple “tab” objects, but there is still only one datagrid.
+* Keeps code simpler. We no longer need to use “this.” everywhere. Using “this” caused a lot of problems with scope when we’re using anonymous functions (e.g. in publish/subscribe, arrayUtil.forEach, deferred.after). We need to “hitch” (using dojo/lang’s hitch function) the scope onto the function, and sometimes when there is an anonymous function nested in another anonymous function, the scoping gets tricky. Numerous times, a variable or function is unexpectedly undefined due to scoping issues. When everything is singleton, we no longer use “this”, instead we declare all the variables at the top of the file, and due to closure, the variables are always in scope.
 * Each Utility class only needs one instance of itself, there’s no point of having two instance of the same Utility class.
-* Each Resource class only needs one instance of itself for the same reason. 
+* Each Resource class only needs one instance of itself for the same reason.
 
 ## Additional Coding Conventions
 
@@ -80,7 +77,7 @@ nonew: true
 plusplus: false
 quotmark: false
 undef: true
-unused: true 
+unused: true
 strict: true
 trailing: true
 
@@ -100,7 +97,7 @@ lastsemic: false
 laxbreak: false
 laxcomma: false
 loopfunc: false
-maxerr: 50 
+maxerr: 50
 moz: false
 multistr: false
 notypeof: false

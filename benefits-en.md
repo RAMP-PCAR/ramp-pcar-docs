@@ -5,7 +5,7 @@ tagline: Reusable Accessible Mapping Platform
 ---
 {% include JB/setup %}
 
-# Benefits
+# Benefits {#wb-cont}
 
 ## Accessibility, Usability, and Interoperability
 
@@ -34,4 +34,3 @@ tagline: Reusable Accessible Mapping Platform
  * Report issues and suggestions
  * Documentation
  * Testing
-
