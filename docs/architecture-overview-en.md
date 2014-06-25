@@ -49,6 +49,9 @@ Hover Tip
 RAMP 
 : Reusable Accessible Mapping Platform.  RAMP is a web application that allows for a webmap to be easily created in the WET Template.  The site will meet WCAG AA accessibility standards, and will have useful features available for use.
 
+Static Layer
+: A map layer that provides additional context, but is not interactive and is not a basemap.  As an example, a static layer with watershed names and boundaries can compliment an active layer showing water monitoring stations.
+
 Summary Grid
 : A grid that has minimal information in it, just enough to identify a point.   The summary grid has entries for all features visible, and combines features across different feature sets.
 
@@ -56,9 +59,14 @@ Topic
 : A publication and subscription framework in [DOJO](http://dojotoolkit.org/reference-guide/1.9/dojo/topic.html).  This is used to pass events in the RAMP source.
 
 
-## Block Diagram
+## High Level Block Diagram
 
-[High Level Block Diagram](../assets/images/block_diagram.png)
+<section class="wb-lbx lbx-gal">	
+	<a href="../assets/images/block_diagram.png">
+		<img src="../assets/images/block_diagram.png" style="max-width:80%" />
+	</a>
+</section>
+
 
 ## Popup handling
 
@@ -76,7 +84,12 @@ In RAMP Arctic Fox we do not have any attribute based filtering.  Filtering is d
 * For each visible layer, perform a spatial query on the features using the map extent as the filter criteria.  Have the query output objectIds for features that satisfy the filter
 * Create a collection of objectId/layerId pairs, and have this be the source for the data grid
 
-[Filter Data Sequence](../assets/images/filter_data_sequence.svg)
+<section class="wb-lbx lbx-gal">	
+	<a href="../assets/images/filter_data_sequence.svg">
+		<img src="../assets/images/filter_data_sequence.svg" style="max-width:80%" />
+	</a>
+</section>
+
 
 ## Map layer management
 
@@ -94,6 +107,8 @@ The layers exist in the following order on the map
 The Feature Layers can be re-ordered via the filter control, but always stay in the same range.
 
 Layers are arranged in this order as it makes sense from a drawing perspective.  Highlights have the most visual precedence, followed by the feature layers.  Basemaps are on the bottom as they are solid tile.  Static layers and bounding boxes have lower priority than the feature layers.
+
+The Zoomlight layer will highlight a feature that has been zoomed to from the datagrid.  The Hoverlight layer will highlight a feature that the mouse is hovering over.  The Highlight layer will highlight a feature that has been clicked on or has it's details opened.
 
 ## Datagrid Architecture
 
