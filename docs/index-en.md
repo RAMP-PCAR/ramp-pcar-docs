@@ -22,5 +22,6 @@ published: true
     * [Module Overview]({{site.production_url}}/docs/module-overview-en.html)
 	* [External Library Implementations]({{site.production_url}}/docs/external-libraries-en.html)
     * [Build Tool]({{site.production_url}}/docs/build-tool-en.html)
+	* [Basemap Support]({{site.production_url}}/docs/basemap-support-en.html)
 * [API Reference]({{site.production_url}}/api/yuidoc/index.html)
 * [Known Issues]({{site.production_url}}/docs/known-issues-en.html)
