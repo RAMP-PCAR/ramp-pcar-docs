@@ -4,7 +4,7 @@ title: RAMP Quick Start Guide
 categories: [documentation]
 ---
 
-# RAMP Quick Start Guide
+# RAMP Quick Start Guide {#wb-cont}
 
 Welcome to RAMP Quick Start Guide. In this guide, we will be showing you how to setup your own web map using RAMP.
 

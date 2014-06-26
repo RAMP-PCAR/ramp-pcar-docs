@@ -11,6 +11,7 @@ published: true
 ## Table of Contents
 
 * [Getting Started](/docs/started-en.html)
+    * [Quick Start Guide](/docs/quick-start-en.html)
 * [Customization Introduction](/docs/ramp-customization-intro-en.html)
     * [JSON Config Definition](/docs/json-config-en.html)
     * [Templating Guide](/docs/template-guide-en.html)
