@@ -11,6 +11,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Decorator",
         "Dictionary",
         "EventManager",
+        "FEGC-Theme",
         "FeatureClickHandler",
         "FeatureHighlighter",
         "FilterManager",
@@ -18,6 +19,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "GUI",
         "GlobalStorage",
         "GraphicExtension",
+        "Intranet-Theme",
         "Map",
         "Maptips",
         "Navigation",
@@ -33,19 +35,21 @@ YUI.add("yuidoc-meta", function(Y) {
         "SidePanel",
         "SubPanel",
         "SubPanelSettings",
+        "Theme",
+        "TmplHelper",
         "TmplUtil",
         "Url",
         "Util"
     ],
     "modules": [
         "BookmarkLink",
-        "Bootstrapper",
         "Datagrid",
         "FilterManager",
         "Map",
         "Navigation",
         "QuickZoom",
         "RAMP",
+        "Theme",
         "TmplUtil",
         "UI",
         "Utils"
@@ -55,11 +59,6 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "BookmarkLink",
             "name": "BookmarkLink",
             "description": "BookmarkLink submodule\n\nKeeps track of the current state of the map and updates the GetLinkPanel's textbook accordingly. On page load, if any\nparameters are detected in the URL, this module will attempt to recreate the map according to the parameters. Internally,\nthis module subscribes to all events that change the state of the map (e.g. extent-change, layers toggled on/off). It contains\na dictionary that map event names to an object that contains the minimum information needed to reconstruct the map for that particular\nevent. For example, if an extent change occurred, this module will add a key \"map/extent-change\" (or update if the entry already exists)\nand put an object that contains the minimum information needed to reconstruct the map to that extent (in this case it would be\nxmin, ymin, xmax, ymax. Spatial reference is not needed since the map always has the same spatial reference)."
-        },
-        {
-            "displayName": "Bootstrapper",
-            "name": "Bootstrapper",
-            "description": "Ramp module"
         },
         {
             "displayName": "Datagrid",
@@ -95,6 +94,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "RAMP",
             "name": "RAMP",
             "description": "Ramp module"
+        },
+        {
+            "displayName": "Theme",
+            "name": "Theme",
+            "description": "This submodule contains theme-specific classes with animation sequences such as Full Screen transition or tooltip setter helper method."
         },
         {
             "displayName": "TmplUtil",
