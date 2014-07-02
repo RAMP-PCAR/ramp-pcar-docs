@@ -8,5 +8,5 @@ title: Working Examples
 
 | Name | Link | Description
 |----+----|
-| NRSTC| [link](http://environment-canada.github.io/demos/NRSTC/map.html)| A Simple Implementation of the built-in RAMP templates
+| NRSTC| [link](http://ramp-racp.github.io/demos/NRSTC/ramp-gcwu-fegc-map.html)| A Simple Implementation of the built-in RAMP templates
 

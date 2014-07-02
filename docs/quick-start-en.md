@@ -3,16 +3,17 @@ layout: index-secmenu-en
 title: RAMP Quick Start Guide
 categories: [documentation]
 ---
+{% include JB/setup %}
 
 # RAMP Quick Start Guide {#wb-cont}
 
 Welcome to RAMP Quick Start Guide. In this guide, we will be showing you how to setup your own web map using RAMP.
 
-[View live sample](http://ramp-racp.github.io/demos/NRSTC/ramp-gcwu-fegc-map.html)
+[View live sample]({{ BASE_PATH }}/demos/NRSTC/ramp-gcwu-fegc-map.html)
 
 ## Requirements
 
-This guide assumes you have downloaded the RAMP source from Github, and have run the Grunt build script. If not, please visit the [Getting Started](started-en.html) page to get your environment setup.
+This guide assumes you have downloaded the RAMP source from Github, and have run the Grunt build script. If not, please visit the [Getting Started]({{ BASE_PATH }}/docs/started-en.html) page to get your environment setup.
 
 ### Map resources
 
@@ -55,10 +56,10 @@ Basemap configuration
 * thumbnail
 * showOnInit: true
 * scaleCssClass
-* type: “Topographic”
-* name: ”Canada Atlas”
-* altText: “Topotraphic Map”
-* description: “NRCan CBMT3978“
+* type: \"Topographic\"
+* name: \"Canada Atlas"
+* altText: \"Topotraphic Map\"
+* description: \"NRCan CBMT3978\"
 
 This will setup your RAMP basemap. When you start your web map application, the NRCan basemap will be displayed.
 
