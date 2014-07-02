@@ -3,13 +3,10 @@ layout: index-secmenu-en
 title: RAMP Quick Start Guide
 categories: [documentation]
 ---
-{% include JB/setup %}
 
 # RAMP Quick Start Guide {#wb-cont}
 
 Welcome to RAMP Quick Start Guide. In this guide, we will be showing you how to setup your own web map using RAMP.
-
-[View live sample]({{ BASE_PATH }}/demos/NRSTC/ramp-gcwu-fegc-map.html)
 
 ## Requirements
 
