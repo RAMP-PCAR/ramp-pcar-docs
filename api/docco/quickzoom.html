@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="RAMP-starter.html">
                 RAMP-starter.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
               </a>
             
               
@@ -206,7 +221,7 @@
 */</span>
 
 <span class="hljs-comment">/**
-* The QuickZoom class handles zooming in the map based on province, city, or postal code. 
+* The QuickZoom class handles zooming in the map based on province, city, or postal code.
 * These zoom in services rely on web services which return extent values based the user-entered province, city, or postal code
 *
 * @class QuickZoom
@@ -223,6 +238,7 @@
 * @uses esri/tasks/QueryTask
 * @uses esri/tasks/query
 * @uses GlobalStorage
+* @uses Map
 * @uses Util
 */</span>
 
@@ -244,14 +260,14 @@ define([
     <span class="hljs-comment">/* Ramp */</span>
     GlobalStorage, RampMap,
     <span class="hljs-comment">/* Util */</span>
-    utilMisc)</span> {</span><span class="hljs-pi">
+    UtilMisc)</span> {</span><span class="hljs-pi">
         "use strict"</span>;
         <span class="hljs-keyword">return</span> declare(<span class="hljs-literal">null</span>, {
             <span class="hljs-comment">/*
              * Defines the UI controls for the province, city, and postal code selections
              * @method constructor
              * @constructor
-             * 
+             *
              */</span>
             constructor: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                 <span class="hljs-keyword">this</span>.config = GlobalStorage.config;
@@ -264,36 +280,36 @@ define([
 
                 <span class="hljs-keyword">this</span>.provinceSelect = <span class="hljs-keyword">new</span> Select({
                     id: <span class="hljs-string">"quickZoomProvince"</span>,
-                    <span class="hljs-string">"class"</span>: className,
+                    <span class="hljs-keyword">class</span>: className,
                     options: []
                 });
 
                 <span class="hljs-keyword">this</span>.citySelect = <span class="hljs-keyword">new</span> Select({
                     id: <span class="hljs-string">"quickZoomCity"</span>,
-                    <span class="hljs-string">"class"</span>: className,
+                    <span class="hljs-keyword">class</span>: className,
                     options: []
                 });
 
                 <span class="hljs-keyword">this</span>.postalCodeTextbox = <span class="hljs-keyword">new</span> TextBox({
                     id: <span class="hljs-string">"quickZoomPostalCode"</span>,
-                    <span class="hljs-string">"class"</span>: className,
+                    <span class="hljs-keyword">class</span>: className,
                     style: <span class="hljs-string">"width : 30%"</span>
                 });
 
                 <span class="hljs-keyword">this</span>.button = <span class="hljs-keyword">new</span> Button({
                     label: <span class="hljs-string">"Find"</span>,
                     id: <span class="hljs-string">"quickZoomButton"</span>,
-                    <span class="hljs-string">"class"</span>: className
+                    <span class="hljs-keyword">class</span>: className
                 });
 
-                <span class="hljs-keyword">var</span> instance = <span class="hljs-keyword">this</span>; <span class="hljs-comment">// for local access to "this"</span>
+                <span class="hljs-keyword">var</span> that = <span class="hljs-keyword">this</span>; <span class="hljs-comment">// for local access to "this"</span>
                 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_addNode</span><span class="hljs-params">(domNode)</span> {</span>
-                    instance.form.domNode.appendChild(domNode);
+                    that.form.domNode.appendChild(domNode);
                 }
 
                 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_addLabel</span><span class="hljs-params">(text)</span> {</span>
                     <span class="hljs-keyword">var</span> node = domConstruct.create(<span class="hljs-string">"label"</span>, {
-                        <span class="hljs-string">"class"</span>: className,
+                        <span class="hljs-keyword">class</span>: className,
                         innerHTML: text
                     });
                     _addNode(node);
@@ -319,16 +335,16 @@ define([
             },
             <span class="hljs-comment">/*
              * This adds the search tools to the UI and populates the UI controls: Province dropdown, city drop down, postal code text box
+             *
              * @method init
              * @param {Object} where A DOM object where the dropdowns will be placed
              * @constructor
-             * 
              */</span>
             init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(where)</span> {</span>
                 <span class="hljs-keyword">var</span> provinceSelect = <span class="hljs-keyword">this</span>.provinceSelect,
                     citySelect = <span class="hljs-keyword">this</span>.citySelect,
                     config = <span class="hljs-keyword">this</span>.config,
-                    instance = <span class="hljs-keyword">this</span>; <span class="hljs-comment">// for local access to "this"</span>
+                    that = <span class="hljs-keyword">this</span>; <span class="hljs-comment">// for local access to "this"</span>
 
                 <span class="hljs-comment">/**
                 * Change the extent of the map based on the extent data
@@ -336,8 +352,8 @@ define([
                 *
                 * @method changeExtent
                 * @private
-                * @param url {String}
-                * @param query {Object}
+                * @param {String} url
+                * @param {Object} query
                 */</span>
                 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">changeExtent</span><span class="hljs-params">(url, query)</span> {</span>
                     query.returnGeometry = <span class="hljs-literal">true</span>;
@@ -346,15 +362,15 @@ define([
                     queryTask.execute(query,
                         <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(featureSet)</span> {</span>
                             <span class="hljs-keyword">if</span> (featureSet.features.isEmpty()) {
-                                instance._setError(<span class="hljs-string">"invalid query"</span>);
+                                that._setError(<span class="hljs-string">"invalid query"</span>);
                                 <span class="hljs-keyword">return</span>;
                             }
                             <span class="hljs-keyword">var</span> extent = featureSet.features[<span class="hljs-number">0</span>].geometry.getExtent();
                             <span class="hljs-keyword">if</span> (RampMap.getMaxExtent().contains(extent)) {
                                 RampMap.getMap().setExtent(extent);
-                                instance._setError(<span class="hljs-string">""</span>);
+                                that._setError(<span class="hljs-string">""</span>);
                             } <span class="hljs-keyword">else</span> {
-                                instance._setError(<span class="hljs-string">"beyond max extent"</span>);
+                                that._setError(<span class="hljs-string">"beyond max extent"</span>);
                             }
                         },
                         <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error)</span> {</span>
@@ -367,9 +383,9 @@ define([
                 * Populate the given dropdown with data from the given url.
                 *
                 * @method populateDropDown
-                * @param {String} url the url to the service containing the data to populate
-                *        the dropdown
+                * @param {String} url the url to the service containing the data to populate the dropdown
                 * @param {DObject} select the dojo Select object to populate
+                * @param {Object} query to execute
                 * @param {Function} mapFunc the function to convert each element in the retrieved data to a label that can be added to the dropdown menu
                 */</span>
                 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">populateDropDown</span><span class="hljs-params">(url, select, query, mapFunc)</span> {</span></pre></div></div>
@@ -430,8 +446,9 @@ from service</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>                provinceSelect.loadDropDown(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                    <span class="hljs-keyword">var</span> provinceConfig = config.quickzoom.province;
-                    <span class="hljs-keyword">var</span> query = <span class="hljs-keyword">new</span> Query();
+                    <span class="hljs-keyword">var</span> provinceConfig = config.quickzoom.province,
+                        query = <span class="hljs-keyword">new</span> Query();
+
                     query.where = <span class="hljs-string">"OBJECTID&gt;0"</span>;
                     query.outFields = [provinceConfig.shortName, provinceConfig.name];
 
@@ -452,12 +469,13 @@ from service</p>
                 *
                 * @method populateCityDropDown
                 * @private
-                * @param prov {String}
+                * @param {String} prov
                 */</span>
                 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">populateCityDropDown</span><span class="hljs-params">(prov)</span> {</span>
-                    <span class="hljs-keyword">var</span> cityConfig = config.quickzoom.city;
-                    <span class="hljs-keyword">var</span> query = <span class="hljs-keyword">new</span> Query();
-                    query.where = utilMisc.getWhereClause(cityConfig.province, prov);
+                    <span class="hljs-keyword">var</span> cityConfig = config.quickzoom.city,
+                        query = <span class="hljs-keyword">new</span> Query();
+
+                    query.where = UtilMisc.getWhereClause(cityConfig.province, prov);
                     query.outFields = [cityConfig.name, cityConfig.id];
                     populateDropDown(cityConfig.url, citySelect, query,
                     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(feature)</span> {</span>
@@ -505,7 +523,7 @@ from service</p>
             <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">var</span> provConfig = config.quickzoom.province,
                         prov = provinceSelect.get(<span class="hljs-string">"value"</span>),
                         query = <span class="hljs-keyword">new</span> Query();
-                    query.where = utilMisc.getWhereClause(provConfig.shortName, prov);
+                    query.where = UtilMisc.getWhereClause(provConfig.shortName, prov);
 
                     changeExtent(provConfig.url, query);
                     populateCityDropDown(prov);
@@ -515,7 +533,7 @@ from service</p>
                     <span class="hljs-keyword">var</span> cityConfig = config.quickzoom.city,
                         city = citySelect.get(<span class="hljs-string">"value"</span>),
                         query = <span class="hljs-keyword">new</span> Query();
-                    query.where = utilMisc.getWhereClause(cityConfig.id, city);
+                    query.where = UtilMisc.getWhereClause(cityConfig.id, city);
 
                     changeExtent(cityConfig.url, query);
                 });
@@ -525,7 +543,7 @@ from service</p>
                 *
                 * @method validatePostalCode
                 * @private
-                * @param fsa {String} fsa
+                * @param {String} fsa fsa
                 */</span>
                 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">validatePostalCode</span><span class="hljs-params">(fsa)</span> {</span></pre></div></div>
             
@@ -584,11 +602,11 @@ from service</p>
                     <span class="hljs-keyword">if</span> (validatePostalCode(postalCode)) {
                         <span class="hljs-keyword">var</span> postalConfig = config.quickzoom.postalCode,
                             query = <span class="hljs-keyword">new</span> Query();
-                        query.where = utilMisc.getWhereClause(postalConfig.id, postalCode);
+                        query.where = UtilMisc.getWhereClause(postalConfig.id, postalCode);
                         changeExtent(postalConfig.url, query);
                     } <span class="hljs-keyword">else</span> {
                         console.log(<span class="hljs-string">"invalid postal code!"</span>);
-                        instance._setError(<span class="hljs-string">"invalid postal code"</span>);
+                        that._setError(<span class="hljs-string">"invalid postal code"</span>);
                     }
                 }));
 

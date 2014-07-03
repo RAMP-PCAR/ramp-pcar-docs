@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="RAMP-starter.html">
                 RAMP-starter.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
               </a>
             
               
@@ -296,7 +311,7 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    utilArray, utilDict, utilMisc, tmplHelper,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    UtilArray, UtilDict, UtilMisc, TmplHelper,</pre></div></div>
             
         </li>
         
@@ -318,9 +333,9 @@ define([</pre></div></div>
             <span class="hljs-comment">/**
             * Given a graphic object, returns the config object associated with the graphic's layer.
             *
-            * @param graphic a graphic object or a feature object
-            * @return {esri/Graphic}
             * @method getLayerConfig
+            * @param {esri/Graphic} graphic a graphic object or a feature object
+            * @return {esri/Graphic}
             */</span>
             getLayerConfig: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic)</span> {</span>
                 <span class="hljs-keyword">return</span> Ramp.getLayerConfig(graphic.getLayer().url);
@@ -329,7 +344,7 @@ define([</pre></div></div>
             <span class="hljs-comment">/**
             * Returns the oid of the given graphic object
             *
-            * @param graphic
+            * @param {esri/Graphic} graphic
             * @method getOid
             */</span>
             getOid: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic)</span> {</span>
@@ -353,10 +368,10 @@ define([</pre></div></div>
                 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fillTemplate</span><span class="hljs-params">(graphic)</span> {</span>
                     tmpl.cache = {};
                     tmpl.templates = <span class="hljs-built_in">JSON</span>.parse(
-                        tmplHelper.stringifyTemplate(feature_details_template));
+                        TmplHelper.stringifyTemplate(feature_details_template));
 
-                    <span class="hljs-keyword">var</span> datawrapper = tmplHelper.dataBuilder(graphic, graphic.getLayer().url);
-                    <span class="hljs-keyword">var</span> result = tmpl(templateName, datawrapper);
+                    <span class="hljs-keyword">var</span> datawrapper = TmplHelper.dataBuilder(graphic, graphic.getLayer().url),
+                        result = tmpl(templateName, datawrapper);
 
                     <span class="hljs-keyword">return</span> result;
                 }</pre></div></div>
@@ -378,32 +393,15 @@ define([</pre></div></div>
             },
 
             <span class="hljs-comment">/**
+            * Returns the content of the name field of the provided graphic object
             *
-            *
-            * @param graphic a graphic object or a feature object
-            * @return {}
             * @method getGraphicTitle
+            * @param {esri/Graphic} graphic a graphic object or a feature object
+            * @return {}
             */</span>
             getGraphicTitle: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic)</span> {</span>
-                <span class="hljs-keyword">var</span> fieldnames = <span class="hljs-keyword">this</span>.getLayerConfig(graphic).mapTipSettings.hoverTipTemplateFields;
-
-                <span class="hljs-keyword">return</span> graphic.attributes[fieldnames[<span class="hljs-number">0</span>]];</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-10">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
-              </div>
-              <p>based on datagrid featureSources
-return graphic.attributes[this.getLayerConfig(graphic.getLayer().url).datagrid.featureSources[0]];</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            }
+                <span class="hljs-keyword">return</span> graphic.attributes[<span class="hljs-keyword">this</span>.getLayerConfig(graphic).nameField];
+            }
         };
     });</pre></div></div>
             

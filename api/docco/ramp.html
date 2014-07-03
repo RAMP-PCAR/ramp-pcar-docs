@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="RAMP-starter.html">
                 RAMP-starter.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
               </a>
             
               
@@ -307,7 +322,7 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    utilArray, utilDict, utilMisc, utilTmpl) {
+            <div class="content"><div class='highlight'><pre>    UtilArray, UtilDict, UtilMisc, UtilTmpl) {
         <span class="hljs-string">"use strict"</span>;
         <span class="hljs-keyword">return</span> {
             <span class="hljs-comment">/**
@@ -379,7 +394,7 @@ $(“#pageTitle”)[0].text(stringResources.txtPageTitle);</p>
             <span class="hljs-comment">/**
             * Returns the feature layer config for the given url
             *
-            * @param url {String}
+            * @param {String} url
             * @method getLayerConfig
             */</span>
             getLayerConfig: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url)</span> {</span>
@@ -388,7 +403,7 @@ $(“#pageTitle”)[0].text(stringResources.txtPageTitle);</p>
                 }
 
                 <span class="hljs-keyword">if</span> (GlobalStorage.urlCfg[url] === <span class="hljs-literal">undefined</span>) {
-                    <span class="hljs-keyword">var</span> res = utilArray.find(GlobalStorage.config.featureLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerConfig)</span> {</span>
+                    <span class="hljs-keyword">var</span> res = UtilArray.find(GlobalStorage.config.featureLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerConfig)</span> {</span>
                         <span class="hljs-keyword">return</span> layerConfig.url === url;
                     });
 
@@ -422,7 +437,7 @@ $(“#pageTitle”)[0].text(stringResources.txtPageTitle);</p>
             * attributes field) return the object containing the image URL and legend text for that
             * feature/graphic object.
             *
-            * @param feature {}
+            * @param {Object} feature
             * @return {icon} The default icon used to represent the feature layer
             * @method getSymbolForFeature
             */</span>
@@ -442,7 +457,7 @@ $(“#pageTitle”)[0].text(stringResources.txtPageTitle);</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">return</span> utilTmpl.getGraphicIcon(feature, layerConfig);
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">return</span> UtilTmpl.getGraphicIcon(feature, layerConfig);
             },
             <span class="hljs-comment">/*
              * This method builds a complete service URL callout for a map configuration. The URL is built using a base URL and map ID, and a language culture code.
@@ -450,7 +465,7 @@ $(“#pageTitle”)[0].text(stringResources.txtPageTitle);</p>
              * @param {String} rampService The base URL for a web service that provide's valid map JSON configuration data
              * @param {Number} mapID a unique identifier for a group of map configuration
              * @param {String} language culture code either 'en' or 'fr'
-             * 
+             *
              */</span>
             getServiceURL: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rampService, mapID, language)</span> {</span>
                 <span class="hljs-keyword">var</span> serviceURL = rampService + <span class="hljs-string">"configservice/map?mapid="</span> + mapID + <span class="hljs-string">"&amp;lang="</span> + language;

@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -104,6 +104,21 @@
               </a>
             
               
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
               </a>
@@ -181,7 +196,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>﻿<span class="hljs-comment">/*global window, location */</span>
+            <div class="content"><div class='highlight'><pre>﻿<span class="hljs-comment">/*global location */</span>
 
 <span class="hljs-comment">/**
 *
@@ -211,34 +226,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> sPath = window.location.href,
-    sPage = sPath.substring(sPath.lastIndexOf(<span class="hljs-string">'/'</span>) + <span class="hljs-number">1</span>).toLowerCase(),
-    jsFolderPath = <span class="hljs-string">"javascript/"</span>,
-    cssFolderPath = <span class="hljs-string">"css/"</span>,
-    state = <span class="hljs-string">"src/"</span>, <span class="hljs-comment">// replace with "build" upon release,</span>
-    pathname = location.pathname.replace(<span class="hljs-regexp">/\/[^/]+$/</span>, <span class="hljs-string">""</span>) + <span class="hljs-string">"/"</span>,
-    dojoConfig;
-
-dojoConfig = {
-	parseOnLoad: <span class="hljs-literal">false</span>,
-	locale: sPage.indexOf(<span class="hljs-string">'lang=fr'</span>) &gt; -<span class="hljs-number">1</span> ? <span class="hljs-string">"fr"</span> : <span class="hljs-string">"en"</span>,
-    async: <span class="hljs-literal">true</span>,
-    packages:[{
-            <span class="hljs-string">"name"</span> : <span class="hljs-string">"ramp"</span>,
-            <span class="hljs-string">"location"</span> : pathname + jsFolderPath + state + <span class="hljs-string">"RAMP/Modules"</span>
-        },
-        {
-            <span class="hljs-string">"name"</span> : <span class="hljs-string">"utils"</span>,
-            <span class="hljs-string">"location"</span> : pathname + jsFolderPath + state + <span class="hljs-string">"RAMP/Utils"</span>
-        }],
-    jsFolderPath: jsFolderPath,
-    cssFolderPath: cssFolderPath,
-    extensionPrefix: state === <span class="hljs-string">"build/"</span> ? <span class="hljs-string">".min"</span> : <span class="hljs-string">""</span>,
-    buildState: state
-};
-
-$(document).ready(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span><span class="hljs-pi">
-    "use strict"</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> <span class="hljs-comment">//sPath = window.location.href,</span></pre></div></div>
             
         </li>
         
@@ -248,6 +236,79 @@ $(document).ready(<span class="hljs-function"><span class="hljs-keyword">functio
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>sPage = sPath.substring(sPath.lastIndexOf(‘/‘) + 1).toLowerCase(),</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    jsFolderPath = <span class="hljs-string">"js/"</span>,
+    cssFolderPath = <span class="hljs-string">"css/"</span>,
+    state = <span class="hljs-string">"src/"</span>, <span class="hljs-comment">// replace with "build" upon release,</span>
+    pathname = location.pathname.replace(<span class="hljs-regexp">/\/[^/]+$/</span>, <span class="hljs-string">""</span>) + <span class="hljs-string">"/"</span>,
+    htmlNode = $(<span class="hljs-string">"html"</span>),
+    themeName = (htmlNode
+                    .attr(<span class="hljs-string">"class"</span>)
+                    .split(<span class="hljs-string">" "</span>)
+                    .filter(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(one)</span> {</span><span class="hljs-pi">
+                        "use strict"</span>;
+                        <span class="hljs-keyword">return</span> one.indexOf(<span class="hljs-string">"ramp-"</span>) === <span class="hljs-number">0</span>;
+                    }
+                    )[<span class="hljs-number">0</span>] || <span class="hljs-string">"ramp-base"</span>),
+    dojoConfig;
+
+dojoConfig = {
+    parseOnLoad: <span class="hljs-literal">false</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>locale: sPage.indexOf(‘lang=fr’) &gt; -1 ? “fr” : “en”,</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    locale: htmlNode.attr(<span class="hljs-string">"lang"</span>) === <span class="hljs-string">"fr"</span> ? <span class="hljs-string">"fr"</span> : <span class="hljs-string">"en"</span>,
+    async: <span class="hljs-literal">true</span>,
+    packages: [
+        {
+            name: <span class="hljs-string">"ramp"</span>,
+            location: pathname + jsFolderPath + <span class="hljs-string">"RAMP/Modules"</span>
+        },
+        {
+            name: <span class="hljs-string">"utils"</span>,
+            location: pathname + jsFolderPath + <span class="hljs-string">"RAMP/Utils"</span>
+        },
+        {
+            name: <span class="hljs-string">"defaultTheme"</span>,
+            location: pathname + jsFolderPath + <span class="hljs-string">"RAMP/Themes/ramp-base"</span>
+        },
+        {
+            name: <span class="hljs-string">"themes"</span>,
+            location: pathname + jsFolderPath + <span class="hljs-string">"RAMP/Themes/"</span> + themeName
+        }
+    ],
+    jsFolderPath: jsFolderPath,
+    cssFolderPath: cssFolderPath,
+    extensionPrefix: state === <span class="hljs-string">"build/"</span> ? <span class="hljs-string">".min"</span> : <span class="hljs-string">""</span>,
+    buildState: state
+};
+
+$(document).ready(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span><span class="hljs-pi">
+    "use strict"</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>when loadin js file that way, it will NOT show up in the debug panel in Firebug</p>
 
@@ -261,11 +322,11 @@ $(document).ready(<span class="hljs-function"><span class="hljs-keyword">functio
         </li>
         
         
-        <li id="section-4">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>when loadin js file that way, it will show up in the debug panel in Firebug</p>
 
@@ -274,7 +335,7 @@ $(document).ready(<span class="hljs-function"><span class="hljs-keyword">functio
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> head = document.getElementsByTagName(<span class="hljs-string">'head'</span>)[<span class="hljs-number">0</span>],
         script = document.createElement(<span class="hljs-string">'script'</span>);
     script.type = <span class="hljs-string">'text/javascript'</span>;
-    script.src = pathname + jsFolderPath + state + <span class="hljs-string">"RAMP/bootstrapper.js"</span>;
+    script.src = pathname + jsFolderPath + <span class="hljs-string">"RAMP/bootstrapper.js"</span>;
     head.appendChild(script);
 });
 

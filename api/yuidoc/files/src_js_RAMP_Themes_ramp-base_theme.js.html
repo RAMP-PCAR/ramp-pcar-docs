@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="..\..\..\src\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
+                <h1><img src="..\..\..\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.40-67</em>
+            <em>API Docs for: 1.0.42-5</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -298,12 +298,15 @@ define([&quot;utils/util&quot;],
              * Tooltip setter helper method.
              *
              * @method tooltipster
-             * @param  {Jquery} target A node to looked for tooltiped children on
-             * @param  {String} type   Type of the tooltips to set
-             * @return {Object}        This
+             * @param  {Jquery} target  A node to looked for tooltiped children on
+             * @param  {String} type    Type of the tooltips to set
+             * @param  {String} [action] Action name: &quot;update&quot; will update all the tooltips on target with their respective title attributes;
+             * null will create new tooltips
+             * @return {Object}         This
              * @chainable
              */
-            tooltipster: function (target, type) {
+            tooltipster: function (target, type, action) {
+                var attr;
                 target = target || $(&quot;body&quot;);
 
                 switch (type) {
@@ -311,10 +314,32 @@ define([&quot;utils/util&quot;],
                         break;
 
                     default:
-                        target.find(&#x27;.tooltip, ._tooltip&#x27;).tooltipster({
+                        attr = {
                             theme: &#x27;tooltipster-shadow&#x27;,
                             delay: 500
-                        });
+                        };
+                        break;
+                }
+
+                switch (action) {
+                    case &quot;update&quot;:
+
+                        target
+                            .find(&quot;.tooltipstered&quot;)
+                            .each(function (i, obj) {
+                                var node = $(obj);
+                                node
+                                    .tooltipster(&quot;content&quot;, node.attr(&quot;title&quot;))
+                                    .removeAttr(&quot;title&quot;);
+                            });
+                        break;
+
+                    default:
+                        target.find(&#x27;.tooltip, ._tooltip&#x27;)
+                            .tooltipster({
+                                theme: &#x27;tooltipster-shadow&#x27;,
+                                delay: 500
+                            });
                         break;
                 }
 

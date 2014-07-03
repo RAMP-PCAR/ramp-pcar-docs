@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="..\..\..\src\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
+                <h1><img src="..\..\..\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.40-67</em>
+            <em>API Docs for: 1.0.42-5</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -598,9 +598,10 @@ define([&quot;dojo/_base/array&quot;, &quot;dojo/_base/lang&quot;, &quot;dojo/to
             * @param {String} checkedClass Name of the CSS class to be used when checked
             * @param {String} focusedClass Name of the CSS class to be used when focused
             * @param {object} labels An object containing labels&#x27; text { checked: &quot;label when checked&quot;, unchecked: &quot;label when unchecked&quot; }
+            * @param {Function} [fnc] Function to run on the label node when it&#x27;s toggled
             * @return {CheckboxWrapper} A control objects allowing to toggle checkboxes supplying a state, and retrieve original checkbox nodes
             */
-            styleCheckboxes: function (nodes, checkedClass, focusedClass, labels) {
+            styleCheckboxes: function (nodes, checkedClass, focusedClass, labels, fnc) {
                 /**
                 * A wrapper class for styled checkboxes that allows to set their states individually and en masse.
                 *
@@ -678,6 +679,9 @@ define([&quot;dojo/_base/array&quot;, &quot;dojo/_base/lang&quot;, &quot;dojo/to
                                 .removeClass(checkedClass)
                                 .prop(&#x27;title&#x27;, newText)
                                 .find(&quot;&gt; span&quot;).text(newText);
+                        }
+                        if (fnc) {
+                            fnc.call(this, label.parent(), null, &quot;update&quot;);
                         }
                     });
                 }

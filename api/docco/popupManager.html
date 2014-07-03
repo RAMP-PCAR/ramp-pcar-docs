@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="RAMP-starter.html">
                 RAMP-starter.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
               </a>
             
               
@@ -200,8 +215,7 @@
 * @uses Util
 */</span>
 define([<span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-string">"dojo/_base/lang"</span>, <span class="hljs-string">"utils/util"</span>],
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(Deferred, lang,
-        utilMisc)</span> {</span><span class="hljs-pi">
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(Deferred, lang, UtilMisc)</span> {</span><span class="hljs-pi">
         "use strict"</span>;
 
         <span class="hljs-comment">/**
@@ -212,6 +226,16 @@ define([<span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-stri
         */</span>
         <span class="hljs-keyword">var</span> popupBaseAttrTemplate = {
             <span class="hljs-comment">/**
+             * The name of the event or events separated by a comma to trigger the closing of the popup.
+             *
+             * @property reverseEvent
+             * @type {String}
+             * @default null
+             * @for PopupBaseSettings
+             */</span>
+            reverseEvent: <span class="hljs-literal">null</span>,
+
+            <span class="hljs-comment">/**
             * The initially supplied handle to the PopupManager; a {{#crossLink "jQuery"}}{{/crossLink}} to listen to events on.
             *
             * @property handle
@@ -220,6 +244,7 @@ define([<span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-stri
             * @for PopupBaseSettings
             */</span>
             handle: <span class="hljs-literal">null</span>,
+
             <span class="hljs-comment">/**
             * The initially supplied handle selector to be used in conjunction with handle when listening to events. Useful if the real handle doesn't exist yet.
             *
@@ -237,6 +262,7 @@ define([<span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-stri
             * @default null
             */</span>
             target: <span class="hljs-literal">null</span>,
+
             <span class="hljs-comment">/**
             * The initially supplied target selector to be used in conjunction with target. Useful when the target of the popup doesn't exist yet.
             *
@@ -254,6 +280,7 @@ define([<span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-stri
             * @default null
             */</span>
             openHandler: <span class="hljs-literal">null</span>,
+
             <span class="hljs-comment">/**
             * The function to execute when the popup closes. If the function is not supplied, `openHandler` is used instead.
             *
@@ -277,9 +304,10 @@ define([<span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-stri
             *
             * @property activeClass
             * @type {String}
-            * @default null
+            * @default random guid
             */</span>
             activeClass: <span class="hljs-literal">null</span>,
+
             <span class="hljs-comment">/**
             * Indicates whether activeClass should be applied before openHandler function completes or after.
             *
@@ -288,6 +316,7 @@ define([<span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-stri
             * @default null
             */</span>
             setClassBefore: <span class="hljs-literal">false</span>,
+
             <span class="hljs-comment">/**
             * Indicates whether to apply aria-* attributes to DOM nodes.
             *
@@ -354,23 +383,39 @@ define([<span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-stri
 
                             <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._attr.target) {
                                 actualTarget = <span class="hljs-keyword">this</span>._attr.targetSelector ? <span class="hljs-keyword">this</span>._attr.target.find(<span class="hljs-keyword">this</span>._attr.targetSelector) : <span class="hljs-keyword">this</span>._attr.target;
-                            } <span class="hljs-keyword">else</span> {
-                                actualTarget = <span class="hljs-keyword">this</span>._attr.targetSelector ? ah.find(<span class="hljs-keyword">this</span>._attr.targetSelector) : ah;
+                            } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>if the target cannot be found, a handle its returned</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                                actualTarget = <span class="hljs-keyword">this</span>._attr.targetSelector ? ah.find(<span class="hljs-keyword">this</span>._attr.targetSelector) : ah;
                             }
 
-                            popups.push(
-                                lang.mixin(<span class="hljs-built_in">Object</span>.create(popupTempate), {
-                                    openHandler: <span class="hljs-keyword">this</span>._attr.openHandler,
-                                    closeHandler: <span class="hljs-keyword">this</span>._attr.closeHandler || <span class="hljs-keyword">this</span>._attr.openHandler,
+                            <span class="hljs-keyword">if</span> (actualTarget.length &gt; <span class="hljs-number">0</span>) {
+                                popups.push(
+                                    lang.mixin(<span class="hljs-built_in">Object</span>.create(popupTempate), {
+                                        openHandler: <span class="hljs-keyword">this</span>._attr.openHandler,
+                                        closeHandler: <span class="hljs-keyword">this</span>._attr.closeHandler || <span class="hljs-keyword">this</span>._attr.openHandler,
 
-                                    activeClass: <span class="hljs-keyword">this</span>._attr.activeClass,
-                                    setClassBefore: <span class="hljs-keyword">this</span>._attr.setClassBefore,
-                                    useAria: <span class="hljs-keyword">this</span>._attr.useAria,
+                                        activeClass: <span class="hljs-keyword">this</span>._attr.activeClass,
+                                        setClassBefore: <span class="hljs-keyword">this</span>._attr.setClassBefore,
+                                        useAria: <span class="hljs-keyword">this</span>._attr.useAria,
 
-                                    handle: actualHandle,
-                                    target: actualTarget
-                                })
-                            );
+                                        handle: actualHandle,
+                                        target: actualTarget
+                                    })
+                                );
+                            }
                         }));
 
                     <span class="hljs-keyword">return</span> popups;
@@ -381,7 +426,7 @@ define([<span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-stri
                 *
                 * @method isOpen
                 * @param {JQuery} [selector] A {{#crossLink "jQuery"}}{{/crossLink}} of the actual handle.
-                * @return result True if any of the descripte popups are open; false otherwise
+                * @return result True if any of the described popup are open; false otherwise
                 */</span>
                 isOpen: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(selector)</span> {</span>
                     <span class="hljs-keyword">var</span> result = <span class="hljs-literal">true</span>;
@@ -469,6 +514,7 @@ define([<span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-stri
                 * @default null
                 */</span>
                 openHandler: <span class="hljs-literal">null</span>,
+
                 <span class="hljs-comment">/**
                 * The function to execute when the popup closes.
                 *
@@ -479,13 +525,14 @@ define([<span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-stri
                 closeHandler: <span class="hljs-literal">null</span>,
 
                 <span class="hljs-comment">/**
-                * The CSS class to be applied to the hadnle of the popup when the popup opens.
+                * The CSS class to be applied to the handle of the popup when the popup opens.
                 *
                 * @property activeClass
                 * @type {String}
                 * @default null
                 */</span>
                 activeClass: <span class="hljs-literal">null</span>,
+
                 <span class="hljs-comment">/**
                 * Indicates whether activeClass should be applied before openHandler function completes or after.
                 *
@@ -494,6 +541,7 @@ define([<span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-stri
                 * @default null
                 */</span>
                 setClassBefore: <span class="hljs-literal">null</span>,
+
                 <span class="hljs-comment">/**
                 * Indicates whether to apply aria-* attributes to DOM nodes.
                 *
@@ -511,6 +559,7 @@ define([<span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-stri
                 * @default null
                 */</span>
                 handle: <span class="hljs-literal">null</span>,
+
                 <span class="hljs-comment">/**
                 * An actual {{#crossLink "jQuery"}}{{/crossLink}} of the targets's DOM node.
                 *
@@ -720,11 +769,11 @@ define([<span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-stri
         </li>
         
         
-        <li id="section-2">
+        <li id="section-3">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
+                <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
               <p>splitting event names</p>
 
@@ -737,31 +786,37 @@ define([<span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-stri
         </li>
         
         
-        <li id="section-3">
+        <li id="section-4">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>mixing default and user-provided settings</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                popupAttr = lang.mixin(<span class="hljs-built_in">Object</span>.create(popupBaseAttrTemplate), settings, {
-                    handle: handle,
-                    openHandler: openHandler
-                });
+            <div class="content"><div class='highlight'><pre>                popupAttr = lang.mixin(<span class="hljs-built_in">Object</span>.create(popupBaseAttrTemplate),
+                    {
+                        activeClass: UtilMisc.guid()
+                    },
+                    settings,
+                    {
+                        handle: handle,
+                        openHandler: openHandler
+                    }
+                );
 
                 popup = newPopup(popupAttr);</pre></div></div>
             
         </li>
         
         
-        <li id="section-4">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>iterating over event array</p>
 
@@ -773,11 +828,11 @@ define([<span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-stri
         </li>
         
         
-        <li id="section-5">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>hover intent uses a jQuery plugin: <a href="http://cherne.net/brian/resources/jquery.hoverIntent.html">http://cherne.net/brian/resources/jquery.hoverIntent.html</a>
 this plugin is loaded by WET, and sometimes it might not be loaded fast enough, so we use executeOnLoad to wait for the plugin to load</p>
@@ -795,7 +850,7 @@ this plugin is loaded by WET, and sometimes it might not be loaded fast enough, 
                                     popup.close(t);
                                 };
 
-                            utilMisc.executeOnLoad($(document), <span class="hljs-string">"hoverIntent"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                            UtilMisc.executeOnLoad($(document), <span class="hljs-string">"hoverIntent"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                                 popup._attr.handle
                                     .hoverIntent({
                                         over: open,
@@ -837,9 +892,19 @@ this plugin is loaded by WET, and sometimes it might not be loaded fast enough, 
                             <span class="hljs-keyword">break</span>;
 
                         <span class="hljs-keyword">default</span>:
-                            handle.on(e, popup._attr.handleSelector, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                                popup.toggle(event.currentTarget);
-                            });
+                            <span class="hljs-keyword">if</span> (popup._attr.reverseEvent) {
+                                handle
+                                    .on(e, popup._attr.handleSelector, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
+                                        popup.open(event.currentTarget);
+                                    })
+                                    .on(popup._attr.reverseEvent, popup._attr.handleSelector, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
+                                        popup.close(event.currentTarget);
+                                    });
+                            } <span class="hljs-keyword">else</span> {
+                                handle.on(e, popup._attr.handleSelector, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
+                                    popup.toggle(event.currentTarget);
+                                });
+                            }
 
                             <span class="hljs-keyword">break</span>;
                     }

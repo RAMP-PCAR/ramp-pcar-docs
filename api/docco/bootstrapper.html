@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="RAMP-starter.html">
                 RAMP-starter.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
               </a>
             
               
@@ -187,7 +202,6 @@
 * Ramp module
 *
 * @module RAMP
-* @submodule Bootstrapper
 * @main RAMP
 */</span>
 
@@ -201,6 +215,7 @@
 *
 * @uses dojo/parser
 * @uses dojo/on
+* @uses dojo/topic
 * @uses dojo/request/script
 * @uses dojo/request/xhr
 *
@@ -226,15 +241,16 @@
 
 <span class="hljs-built_in">require</span>([
 <span class="hljs-comment">/* Dojo */</span>
-    <span class="hljs-string">"dojo/parser"</span>, <span class="hljs-string">"dojo/on"</span>,
+    <span class="hljs-string">"dojo/parser"</span>, <span class="hljs-string">"dojo/on"</span>, <span class="hljs-string">"dojo/topic"</span>,
     <span class="hljs-string">"dojo/request/script"</span>,
     <span class="hljs-string">"dojo/request/xhr"</span>,
 
 <span class="hljs-comment">/* RAMP */</span>
-    <span class="hljs-string">"ramp/map"</span>, <span class="hljs-string">"ramp/basemapselector"</span>, <span class="hljs-string">"ramp/maptips"</span>, <span class="hljs-string">"ramp/datagrid"</span>,
+    <span class="hljs-string">"ramp/map"</span>, <span class="hljs-string">"ramp/basemapSelector"</span>, <span class="hljs-string">"ramp/maptips"</span>, <span class="hljs-string">"ramp/datagrid"</span>,
     <span class="hljs-string">"ramp/navigation"</span>, <span class="hljs-string">"ramp/filterManager"</span>, <span class="hljs-string">"ramp/bookmarkLink"</span>,
     <span class="hljs-string">"utils/url"</span>, <span class="hljs-string">"ramp/featureHighlighter"</span>,
     <span class="hljs-string">"ramp/ramp"</span>, <span class="hljs-string">"ramp/globalStorage"</span>, <span class="hljs-string">"ramp/gui"</span>, <span class="hljs-string">"ramp/eventManager"</span>,
+    <span class="hljs-string">"themes/theme"</span>,
 
 <span class="hljs-comment">/* Utils */</span>
     <span class="hljs-string">"utils/util"</span>,
@@ -244,23 +260,19 @@
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(
     <span class="hljs-comment">/* Dojo */</span>
-    parser, dojoOn, requestScript, xhr,
+    parser, dojoOn, topic, requestScript, xhr,
 
     <span class="hljs-comment">/* RAMP */</span>
     RampMap, BasemapSelector, Maptips, Datagrid, NavWidget, FilterManager,
     BookmarkLink, Url, FeatureHighlighter,
-    ramp, globalStorage, gui, EventManager,
+    ramp, globalStorage, gui, EventManager, theme,
 
     <span class="hljs-comment">/* Utils */</span>
     utilMisc)</span> {</span><span class="hljs-pi">
         "use strict"</span>;
-        <span class="hljs-comment">/*
-         * Creates the application UI and load all modules within the application
-         * @method initializeMap
-         * @constructor
-         */</span>
+
         <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initializeMap</span><span class="hljs-params">()</span> {</span>
-            RampMap.init(<span class="hljs-string">'mainMap'</span>);</pre></div></div>
+            <span class="hljs-comment">/* Start - RAMP Events, after map is loaded */</span></pre></div></div>
             
         </li>
         
@@ -271,15 +283,12 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>init only creates the grid, does not populate it with data</p>
+              <p>dojoOn.once(RampMap.getMap(), “update-end”, function () {</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            Datagrid.init();
-
-            <span class="hljs-comment">/* Start - RAMP Events, after map is loaded */</span>
-
-            dojoOn.once(RampMap.getMap(), <span class="hljs-string">"update-end"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>            topic.subscribe(EventManager.Map.ALL_LAYERS_LOADED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                console.log(<span class="hljs-string">"map - &gt;&gt; first update-end; init the rest"</span>);</pre></div></div>
             
         </li>
         
@@ -312,7 +321,7 @@ has finished rendering</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>Added current leve so slider will know how to adjust the position</p>
+              <p>Added current level so slider will know how to adjust the position</p>
 
             </div>
             
@@ -347,18 +356,17 @@ has finished rendering</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>initialze the filter</p>
+              <p>initialize the filter</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>                FilterManager.init();
+
+                theme.tooltipster();
             });
+            RampMap.init();
 
-            <span class="hljs-comment">/* Data Grid and Events End*/</span>
-
-            <span class="hljs-comment">/* End - RAMP Events */</span>
-        }
-        <span class="hljs-comment">/* End - Bootstrapper functions */</span></pre></div></div>
+            Datagrid.init();</pre></div></div>
             
         </li>
         
@@ -368,6 +376,24 @@ has finished rendering</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>init only creates the grid, does not populate it with data</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+            <span class="hljs-comment">/* End - RAMP Events */</span>
+        }
+        <span class="hljs-comment">/* End - Bootstrapper functions */</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>Check to make sure the console exists, redefines it to the no-op function
 if it does not (e.g. in IE when the debugger is not on)</p>
@@ -379,30 +405,15 @@ if it does not (e.g. in IE when the debugger is not on)</p>
         </li>
         
         
-        <li id="section-8">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
-              </div>
-              <p>Once all of our modules are loaded and the DOM is ready:</p>
-
-            </div>
-            
-        </li>
-        
-        
         <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <p>call the parser to create the dijit layout dijits</p>
+              <p>Once all of our modules are loaded and the DOM is ready:</p>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre>        parser.parse();</pre></div></div>
             
         </li>
         
@@ -413,11 +424,11 @@ if it does not (e.g. in IE when the debugger is not on)</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
-              <p>turn off cors detection to stop cross domain error from happening.</p>
+              <p>call the parser to create the dijit layout dijits</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        esri.config.defaults.io.corsDetection = <span class="hljs-literal">false</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        parser.parse();</pre></div></div>
             
         </li>
         
@@ -428,17 +439,11 @@ if it does not (e.g. in IE when the debugger is not on)</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
-              <p>To hold values from RAMP service</p>
+              <p>turn off cors detection to stop cross domain error from happening.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-        <span class="hljs-keyword">var</span>   <span class="hljs-comment">//siteURL = new Url(require.toUrl(document.location)),</span>
-            lang = $(<span class="hljs-string">"html"</span>).attr(<span class="hljs-string">"lang"</span>); <span class="hljs-comment">// window.location.href.split("/").last().substring(5, 7); // siteURL.queryObject.lang || window.navigator.userLanguage || window.navigator.language || "en";</span>
-
-        <span class="hljs-keyword">if</span> (lang !== <span class="hljs-string">"en"</span> &amp;&amp; lang !== <span class="hljs-string">"fr"</span>) {
-            lang = <span class="hljs-string">"en"</span>;
-        }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        esri.config.defaults.io.corsDetection = <span class="hljs-literal">false</span>;</pre></div></div>
             
         </li>
         
@@ -449,9 +454,19 @@ if it does not (e.g. in IE when the debugger is not on)</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
-              <hr>
+              <p>To hold values from RAMP service</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>
+        <span class="hljs-keyword">var</span>   <span class="hljs-comment">//siteURL = new Url(require.toUrl(document.location)),</span>
+            lang = $(<span class="hljs-string">"html"</span>).attr(<span class="hljs-string">"lang"</span>), <span class="hljs-comment">// window.location.href.split("/").last().substring(5, 7); // siteURL.queryObject.lang || window.navigator.userLanguage || window.navigator.language || "en";</span>
+            configFile,
+            defJson;
+
+        <span class="hljs-keyword">if</span> (lang !== <span class="hljs-string">"en"</span> &amp;&amp; lang !== <span class="hljs-string">"fr"</span>) {
+            lang = <span class="hljs-string">"en"</span>;
+        }</pre></div></div>
             
         </li>
         
@@ -466,8 +481,7 @@ if it does not (e.g. in IE when the debugger is not on)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-        <span class="hljs-keyword">var</span> configFile = (lang === <span class="hljs-string">"fr"</span>) ? <span class="hljs-string">"config.fr.json"</span> : <span class="hljs-string">"config.en.json"</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        configFile = (lang === <span class="hljs-string">"fr"</span>) ? <span class="hljs-string">"config.fr.json"</span> : <span class="hljs-string">"config.en.json"</span>;</pre></div></div>
             
         </li>
         
@@ -482,7 +496,7 @@ if it does not (e.g. in IE when the debugger is not on)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> defJson = xhr(configFile, {
+            <div class="content"><div class='highlight'><pre>        defJson = xhr(configFile, {
             handleAs: <span class="hljs-string">"json"</span>
         });
 

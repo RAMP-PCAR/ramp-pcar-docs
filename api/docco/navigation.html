@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="RAMP-starter.html">
                 RAMP-starter.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
               </a>
             
               
@@ -237,7 +252,7 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-string">"ramp/globalStorage"</span>, <span class="hljs-string">"ramp/eventManager"</span>,
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-string">"ramp/globalStorage"</span>, <span class="hljs-string">"ramp/eventManager"</span>
 ],
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(
@@ -332,7 +347,7 @@ define([</pre></div></div>
         * Initialize navigaion widget for pan and zooming using global configuration object
         *
         * @method init
-        * @param currentLevel
+        * @param {Number} currentLevel
         */</span>
         init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(currentLevel)</span> {</span></pre></div></div>
             
@@ -367,9 +382,7 @@ define([</pre></div></div>
             </div>
             
             <div class="content"><div class='highlight'><pre>            GlobalStorage.config.navWidget.cssPath = dojoConfig.cssFolderPath + dojoConfig.buildState + cssPath;
-            GlobalStorage.config.navWidget.skin += dojoConfig.extensionPrefix;
-
-            nav = $(<span class="hljs-string">"#map-navigation"</span>).navigation(GlobalStorage.config.navWidget);</pre></div></div>
+            GlobalStorage.config.navWidget.skin += dojoConfig.extensionPrefix;</pre></div></div>
             
         </li>
         
@@ -379,6 +392,22 @@ define([</pre></div></div>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>GlobalStorage.config.navWidget.locale = dojoConfig.locale;</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+            nav = $(<span class="hljs-string">"#"</span> + GlobalStorage.config.divNames.navigation).navigation(GlobalStorage.config.navWidget);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>NOTE: JKW Document the change. Refactor,</p>
 

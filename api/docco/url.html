@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="RAMP-starter.html">
                 RAMP-starter.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
               </a>
             
               
@@ -187,13 +202,14 @@
 * Utility module containint useful static classes.
 *
 * @module Utils
+* @uses dojo/_base/declare
+* @uses dojo/io-query
 */</span>
 
 define([<span class="hljs-string">"dojo/_base/declare"</span>, <span class="hljs-string">"dojo/io-query"</span>],
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(declare, dojoQuery)</span> {</span><span class="hljs-pi">
         "use strict"</span>;
         <span class="hljs-keyword">return</span> declare(<span class="hljs-literal">null</span>, {
-
             <span class="hljs-comment">/**
             * A simple class that replaces the `dojo._Url` functionality that became deprecated
             * Construct a Url object from a url string, then the uri and query
@@ -212,7 +228,7 @@ define([<span class="hljs-string">"dojo/_base/declare"</span>, <span class="hljs
             *
             * @class Url
             * @constructor
-            * @param fullUrl a string denoting the full url of a webpage
+            * @param {String} fullUrl a string denoting the full url of a webpage
             * @uses dojo/_base/declare
             * @uses dojo/io-query
             */</span>

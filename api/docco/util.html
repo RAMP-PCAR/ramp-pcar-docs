@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="RAMP-starter.html">
                 RAMP-starter.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
               </a>
             
               
@@ -207,7 +222,7 @@
 * @uses dojo/topic
 * @uses dojo/Deferred
 */</span>
-define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-string">"dojo/_base/lang"</span>, <span class="hljs-string">"dojo/topic"</span>, <span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-string">"esri/geometry/Extent"</span> ],
+define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-string">"dojo/_base/lang"</span>, <span class="hljs-string">"dojo/topic"</span>, <span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-string">"esri/geometry/Extent"</span>],
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dojoArray, dojoLang, topic, Deferred, Extent)</span> {</span><span class="hljs-pi">
         "use strict"</span>;
 
@@ -221,17 +236,17 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @static
             */</span>
             checkConsole: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                <span class="hljs-keyword">var</span> noop = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span> };
-                <span class="hljs-keyword">var</span> methods = [
-                    <span class="hljs-string">'assert'</span>, <span class="hljs-string">'clear'</span>, <span class="hljs-string">'count'</span>, <span class="hljs-string">'debug'</span>, <span class="hljs-string">'dir'</span>, <span class="hljs-string">'dirxml'</span>, <span class="hljs-string">'error'</span>,
-                    <span class="hljs-string">'exception'</span>, <span class="hljs-string">'group'</span>, <span class="hljs-string">'groupCollapsed'</span>, <span class="hljs-string">'groupEnd'</span>, <span class="hljs-string">'info'</span>, <span class="hljs-string">'log'</span>,
-                    <span class="hljs-string">'markTimeline'</span>, <span class="hljs-string">'profile'</span>, <span class="hljs-string">'profileEnd'</span>, <span class="hljs-string">'table'</span>, <span class="hljs-string">'time'</span>, <span class="hljs-string">'timeEnd'</span>,
-                    <span class="hljs-string">'timeStamp'</span>, <span class="hljs-string">'trace'</span>, <span class="hljs-string">'warn'</span>
-                ];
-                <span class="hljs-keyword">var</span> length = methods.length;
-                <span class="hljs-keyword">var</span> console = (window.console = window.console || {});
+                <span class="hljs-keyword">var</span> noop = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span> },
+                    methods = [
+                        <span class="hljs-string">'assert'</span>, <span class="hljs-string">'clear'</span>, <span class="hljs-string">'count'</span>, <span class="hljs-string">'debug'</span>, <span class="hljs-string">'dir'</span>, <span class="hljs-string">'dirxml'</span>, <span class="hljs-string">'error'</span>,
+                        <span class="hljs-string">'exception'</span>, <span class="hljs-string">'group'</span>, <span class="hljs-string">'groupCollapsed'</span>, <span class="hljs-string">'groupEnd'</span>, <span class="hljs-string">'info'</span>, <span class="hljs-string">'log'</span>,
+                        <span class="hljs-string">'markTimeline'</span>, <span class="hljs-string">'profile'</span>, <span class="hljs-string">'profileEnd'</span>, <span class="hljs-string">'table'</span>, <span class="hljs-string">'time'</span>, <span class="hljs-string">'timeEnd'</span>,
+                        <span class="hljs-string">'timeStamp'</span>, <span class="hljs-string">'trace'</span>, <span class="hljs-string">'warn'</span>
+                    ],
+                    length = methods.length,
+                    console = (window.console = window.console || {}),
+                    method;
 
-                <span class="hljs-keyword">var</span> method;
                 <span class="hljs-keyword">while</span> (length--) {
                     method = methods[length];</pre></div></div>
             
@@ -270,7 +285,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             <div class="content"><div class='highlight'><pre>
             <span class="hljs-comment">/**
             * Returns an String that has it's angle brackets ('&lt;' and '&gt;') escaped (replaced by '&amp;lt;' and '&amp;gt;').
-            * This will effectively cause the String to be displayed in plain text when embedded in an html page.
+            * This will effectively cause the String to be displayed in plain text when embedded in an HTML page.
             *
             * @method escapeHtml
             * @static
@@ -445,7 +460,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             },
 
             <span class="hljs-comment">/**
-            * Subscrives to a set of events, executes the callback when any of the events fire, then removes the handle.
+            * Subscribes to a set of events, executes the callback when any of the events fire, then removes the handle.
             *
             * @method subscribeOnceAny
             * @static
@@ -640,14 +655,14 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @return {Object} The lazy varialbe
             */</span>
             createLazyVariable: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(initFunc)</span> {</span>
-                <span class="hljs-keyword">var</span> value;
+                <span class="hljs-keyword">var</span> value = <span class="hljs-literal">null</span>;
                 <span class="hljs-keyword">return</span> {
                     reset: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                        value = <span class="hljs-literal">undefined</span>;
+                        value = <span class="hljs-literal">null</span>;
                     },
 
                     get: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value === <span class="hljs-literal">undefined</span>) {
+                        <span class="hljs-keyword">if</span> (value == <span class="hljs-literal">null</span>) {
                             value = initFunc();
                         }
                         <span class="hljs-keyword">return</span> value;
@@ -753,9 +768,10 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {String} checkedClass Name of the CSS class to be used when checked
             * @param {String} focusedClass Name of the CSS class to be used when focused
             * @param {object} labels An object containing labels' text { checked: "label when checked", unchecked: "label when unchecked" }
+            * @param {Function} [fnc] Function to run on the label node when it's toggled
             * @return {CheckboxWrapper} A control objects allowing to toggle checkboxes supplying a state, and retrieve original checkbox nodes
             */</span>
-            styleCheckboxes: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(nodes, checkedClass, focusedClass, labels)</span> {</span>
+            styleCheckboxes: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(nodes, checkedClass, focusedClass, labels, fnc)</span> {</span>
                 <span class="hljs-comment">/**
                 * A wrapper class for styled checkboxes that allows to set their states individually and en masse.
                 *
@@ -807,16 +823,15 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
                     }
                 };
                 <span class="hljs-comment">/*
-                 * Goes through an array of checkboxes and if any are selected, add the "checked" css class to
-                 * the label so it displays visually matches the changed state
-                 * @method _toggleLabels
-                 * @param {Object} objs An array of checkboxes to toggle
-                 */</span>
+                * Goes through an array of checkboxes and if any are selected, add the "checked" css class to
+                * the label so it displays visually matches the changed state
+                * @method _toggleLabels
+                * @param {Object} objs An array of checkboxes to toggle
+                */</span>
                 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_toggleLabels</span><span class="hljs-params">(objs)</span> {</span>
                     <span class="hljs-keyword">var</span> label;
 
                     objs.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, obj)</span> {</span>
-                        
                         <span class="hljs-keyword">var</span> node = $(obj),
                             newText;
                         label = node.findInputLabel();
@@ -835,13 +850,16 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
                                 .prop(<span class="hljs-string">'title'</span>, newText)
                                 .find(<span class="hljs-string">"&gt; span"</span>).text(newText);
                         }
+                        <span class="hljs-keyword">if</span> (fnc) {
+                            fnc.call(<span class="hljs-keyword">this</span>, label.parent(), <span class="hljs-literal">null</span>, <span class="hljs-string">"update"</span>);
+                        }
                     });
                 }
                 <span class="hljs-comment">/*
                 * Goes through an array of checkboxes and toggles their checked state value
                 * @method _toggleState
                 * @param {Object} fcn An Array of checkboxes
-                * 
+                *
                 */</span>
                 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_toggleState</span><span class="hljs-params">(fcn)</span> {</span>
                     nodes.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
@@ -893,7 +911,8 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
 
             <span class="hljs-comment">/**
             * Checks if the height of the scrollable content of the body is taller than its height;
-            * if so, offset the content horizontally to accomodate for the scrollbar.
+            * if so, offset the content horizontally to accomodate for the scrollbar assuming target's width is
+            * set to "100%".
             *
             * @method adjustWidthForSrollbar
             * @static
@@ -915,6 +934,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             *
             * @method executeOnLoad
             * @static
+            * @param {Object} target an object on which to wait for function to appear
             * @param {function} func A function whose availability in question
             * @param {function} callback The callback function to be executed after func is available
             */</span>
@@ -1062,17 +1082,18 @@ all html tags with their appropriate special characters</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>            <span class="hljs-comment">/*
-             * Create a new extent based on the current map size, a point (X/Y coordinates), and a pixel tolerance value.
-             * @method pointToExtent
-             * @param {Object} map The map control
-             * @param {Object} point The location on screen (X/Y coordinates) 
-             * @param {Number} toleranceInPixel A value indicating how many screen pixels the extent should be from the point
-             * @returns {Object} a new extent calculated from the given parameters
-             * 
-             */</span>
+            * Create a new extent based on the current map size, a point (X/Y coordinates), and a pixel tolerance value.
+            * @method pointToExtent
+            * @param {Object} map The map control
+            * @param {Object} point The location on screen (X/Y coordinates)
+            * @param {Number} toleranceInPixel A value indicating how many screen pixels the extent should be from the point
+            * @returns {Object} a new extent calculated from the given parameters
+            *
+            */</span>
             pointToExtent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(map, point, toleranceInPixel)</span> {</span>
-                <span class="hljs-keyword">var</span> pixelWidth = map.extent.getWidth() / map.width;
-                <span class="hljs-keyword">var</span> toleraceInMapCoords = toleranceInPixel * pixelWidth;
+                <span class="hljs-keyword">var</span> pixelWidth = map.extent.getWidth() / map.width,
+                    toleraceInMapCoords = toleranceInPixel * pixelWidth;
+
                 <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Extent(point.x - toleraceInMapCoords,
                               point.y - toleraceInMapCoords,
                               point.x + toleraceInMapCoords,
@@ -1096,7 +1117,8 @@ all html tags with their appropriate special characters</p>
                     xml, xsl,
                     dlist = [xmld, xsld],
                     result,
-                    xsltProcessor;
+                    xsltProcessor,
+                    error;
 
                 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loadXMLFileIE</span><span class="hljs-params">(filename)</span> {</span>
                     <span class="hljs-keyword">var</span> xhttp;
@@ -1115,9 +1137,10 @@ all html tags with their appropriate special characters</p>
                 }
 
                 <span class="hljs-keyword">this</span>.afterAll(dlist, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                    xsltProcessor = <span class="hljs-keyword">new</span> XSLTProcessor();
-                    xsltProcessor.importStylesheet(xsl);
-                    result = xsltProcessor.transformToFragment(xml, document);</pre></div></div>
+                    <span class="hljs-keyword">if</span> (!error) {
+                        xsltProcessor = <span class="hljs-keyword">new</span> XSLTProcessor();
+                        xsltProcessor.importStylesheet(xsl);
+                        result = xsltProcessor.transformToFragment(xml, document);</pre></div></div>
             
         </li>
         
@@ -1128,18 +1151,19 @@ all html tags with their appropriate special characters</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
-              <p>turne a document fragment into a proper jQuery object</p>
+              <p>turn a document fragment into a proper jQuery object</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (!returnFragment) {
-                        result = ($(<span class="hljs-string">'body'</span>)
-                            .append(result)
-                            .children().last())
-                            .detach();
+            <div class="content"><div class='highlight'><pre>                        <span class="hljs-keyword">if</span> (!returnFragment) {
+                            result = ($(<span class="hljs-string">'body'</span>)
+                                .append(result)
+                                .children().last())
+                                .detach();
+                        }
                     }
 
-                    callback(result);
+                    callback(error, result);
                 });
 
                 <span class="hljs-keyword">if</span> (window.ActiveXObject || window.hasOwnProperty(<span class="hljs-string">"ActiveXObject"</span>)) {</pre></div></div>
@@ -1172,7 +1196,7 @@ all html tags with their appropriate special characters</p>
                     xslProc.input = xmlDoc;
                     xslProc.transform();
 
-                    callback(xslProc.output);
+                    callback(error, xslProc.output);
                 } <span class="hljs-keyword">else</span> {
                     $.ajax({
                         type: <span class="hljs-string">"GET"</span>,
@@ -1181,6 +1205,10 @@ all html tags with their appropriate special characters</p>
                         cache: <span class="hljs-literal">false</span>,
                         success: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
                             xml = data;
+                            xmld.resolve();
+                        },
+                        error: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                            error = <span class="hljs-literal">true</span>;
                             xmld.resolve();
                         }
                     });
@@ -1192,6 +1220,10 @@ all html tags with their appropriate special characters</p>
                         cache: <span class="hljs-literal">false</span>,
                         success: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
                             xsl = data;
+                            xsld.resolve();
+                        },
+                        error: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                            error = <span class="hljs-literal">true</span>;
                             xsld.resolve();
                         }
                     });

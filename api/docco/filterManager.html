@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="RAMP-starter.html">
                 RAMP-starter.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
               </a>
             
               
@@ -194,7 +209,7 @@
 <span class="hljs-comment">/**
 * FilterManager class. Represents the legend next to the map and the controls to toggle each map layer's visibility and boundary box.
 * The FilterManager also includes a attribute filter that allows the user to hide map features based on a attribute values
-* 
+*
 * For a doc with diagrams on how this class works, please see
 * http://ecollab.ncr.int.ec.gc.ca/projects/science-apps/priv/RAMP/RAMP%20AMD%20Filter%20Module.docx
 *
@@ -213,13 +228,15 @@
 * @uses dojo/topic
 * @uses dojo/aspect
 * @uses dojo/promise/all
-* @uses templates/filter_manager_Template.html
+* @uses templates/filter_manager_template.json
 * @uses esri/tasks/query
 * @uses esri/layers/FeatureLayer
 * @uses RAMP
 * @uses GlobalStorage
-* @uses GUI
-* @uses Legend
+* @uses Map
+* @uses EventManager
+* @uese Theme
+* @uese TmplHelper
 * @uses Util
 * @uses Array
 * @uses Dictionary
@@ -232,15 +249,13 @@ define([
         <span class="hljs-string">"dojo/dom-style"</span>, <span class="hljs-string">"dojo/dom-construct"</span>, <span class="hljs-string">"dojo/_base/connect"</span>, <span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-string">"dojo/topic"</span>,
         <span class="hljs-string">"dojo/aspect"</span>, <span class="hljs-string">"dojo/promise/all"</span>,
 <span class="hljs-comment">/* Text */</span>
-        <span class="hljs-string">"dojo/text!./templates/filter_manager_Template.html"</span>,
-        <span class="hljs-string">"dojo/text!./templates/filter_row_template.json"</span>,
-        <span class="hljs-string">"dojo/text!./templates/filter_global_template.json"</span>,
+        <span class="hljs-string">"dojo/text!./templates/filter_manager_template.json"</span>,
 
 <span class="hljs-comment">/* Esri */</span>
         <span class="hljs-string">"esri/tasks/query"</span>, <span class="hljs-string">"esri/layers/FeatureLayer"</span>,
 
 <span class="hljs-comment">/* Ramp */</span>
-        <span class="hljs-string">"ramp/ramp"</span>, <span class="hljs-string">"ramp/globalStorage"</span>, <span class="hljs-string">"ramp/map"</span>, <span class="hljs-string">"ramp/eventManager"</span>,
+        <span class="hljs-string">"ramp/ramp"</span>, <span class="hljs-string">"ramp/globalStorage"</span>, <span class="hljs-string">"ramp/map"</span>, <span class="hljs-string">"ramp/eventManager"</span>, <span class="hljs-string">"themes/theme"</span>,
 
 <span class="hljs-comment">/* Util */</span>
         <span class="hljs-string">"utils/tmplHelper"</span>, <span class="hljs-string">"utils/util"</span>, <span class="hljs-string">"utils/array"</span>, <span class="hljs-string">"utils/dictionary"</span>, <span class="hljs-string">"utils/popupManager"</span>],
@@ -250,18 +265,16 @@ define([
         declare, lang, query, dojoArray, dom, domClass, domStyle, domConstruct,
         connect, Deferred, topic, aspect, all,
     <span class="hljs-comment">/* Text */</span>
-        filter_manager_Template,
-        filter_row_template_json,
-        filter_global_row_template_json,
+        filter_manager_template_json,
 
     <span class="hljs-comment">/* Esri */</span>
         EsriQuery, FeatureLayer,
 
     <span class="hljs-comment">/* Ramp */</span>
-        Ramp, GlobalStorage, RampMap, EventManager,
+        Ramp, GlobalStorage, RampMap, EventManager, Theme,
 
     <span class="hljs-comment">/* Util */</span>
-        tmplHelper, utilMisc, utilArray, utilDict, popupManager)</span> {</span><span class="hljs-pi">
+        TmplHelper, UtilMisc, UtilArray, UtilDict, PopupManager)</span> {</span><span class="hljs-pi">
         "use strict"</span>;
 
         <span class="hljs-keyword">var</span> config,
@@ -270,14 +283,33 @@ define([
             ui = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                 <span class="hljs-keyword">var</span> layerList,
                     filterGlobalToggles;
+
                 <span class="hljs-comment">/**
-                 * Generates a data grid row with a checkbox.
-                 * @method generateGlobalCheckboxes
-                 * @returns {Object} toggleRow the generated data grid row.
-                 */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">generateGlobalCheckboxes</span><span class="hljs-params">()</span> {</span>
-                    
-                    <span class="hljs-keyword">var</span> toggleRow;</pre></div></div>
+                * Sets UI status of a layer presentation (checkbox and eye) according to the user action: select / de-select a layer.
+                * publishes event "filterManager/box-visibility-toggled" every time a layer status changed.
+                * There should only be one eye and one global checkbox, but
+                * we say checkbox"es" because jquery returns a list and it's
+                * easier to write a function that takes a list of checkboxes
+                * than to write two functions, one to take a list and one to
+                * take an individual checkbox
+                * @method setCheckboxEvents
+                * @private
+                */</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setCheckboxEvents</span><span class="hljs-params">()</span> {</span>
+                    <span class="hljs-keyword">var</span> globalEyeCheckboxes,
+                        globalBoxCheckboxes,
+                        eyeCheckboxes,
+                        boxCheckboxes;
+
+                    globalEyeCheckboxes = UtilMisc.styleCheckboxes(
+                        filterGlobalToggles.find(<span class="hljs-string">".checkbox-custom .eye + input"</span>),
+                        <span class="hljs-string">"checked"</span>, <span class="hljs-string">"focused"</span>,
+                        {
+                            checked: localString.txtHideAllFeatures,
+                            unchecked: localString.txtShowAllFeatures
+                        },
+                        Theme.tooltipster
+                    );</pre></div></div>
             
         </li>
         
@@ -288,27 +320,30 @@ define([
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>reset and load global template</p>
+              <p>Turn off the bounding boxes by default</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    tmpl.cache = {};
-                    tmpl.templates = <span class="hljs-built_in">JSON</span>.parse(tmplHelper.stringifyTemplate(filter_global_row_template_json));
+            <div class="content"><div class='highlight'><pre>                    globalBoxCheckboxes = UtilMisc
+                        .styleCheckboxes(
+                            filterGlobalToggles.find(<span class="hljs-string">".checkbox-custom .box + input"</span>),
+                            <span class="hljs-string">"checked"</span>, <span class="hljs-string">"focused"</span>,
+                            {
+                                checked: localString.txtHideAllBounds,
+                                unchecked: localString.txtShowAllBounds
+                            },
+                            Theme.tooltipster)
+                        .setAll(<span class="hljs-literal">false</span>);
 
-                    toggleRow = tmpl(config.siteTemplate.filterGlobalRowTemplate, config.globalFilter);
-
-                    <span class="hljs-keyword">return</span> toggleRow;
-                }
-
-                <span class="hljs-comment">/**
-                * Generates legend for each interactive layer on the map (non-basemap layers).
-                *
-                * @method generateFilterCheckboxes
-                * @return {String} a string representation of the legends with simplified layer info for identification
-                */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">generateFilterCheckboxes</span><span class="hljs-params">()</span> {</span>
-                    <span class="hljs-keyword">var</span> layers = RampMap.getMap().getLayersVisibleAtScale(),
-                        section = <span class="hljs-string">""</span>;</pre></div></div>
+                    eyeCheckboxes = UtilMisc.styleCheckboxes(
+                        layerList.find(<span class="hljs-string">".checkbox-custom .eye + input"</span>),
+                        <span class="hljs-string">"checked"</span>, <span class="hljs-string">"focused"</span>,
+                        {
+                            checked: localString.txtHideFeatures,
+                            unchecked: localString.txtShowFeatures
+                        },
+                        Theme.tooltipster
+                    );</pre></div></div>
             
         </li>
         
@@ -319,197 +354,25 @@ define([
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>layerLegend data for template,</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">var</span> allLayerData = [];
-
-                    dojoArray.forEach(layers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layer)</span> {</span>
-                        <span class="hljs-keyword">if</span> (!layer.type || layer.type === <span class="hljs-string">"basemap"</span>) {
-                            <span class="hljs-keyword">return</span>;
-                        }
-
-                        <span class="hljs-keyword">var</span> layerConfig = Ramp.getLayerConfig(layer.url),
-
-                            groupName = layer.id,
-                            legendName = <span class="hljs-string">"filterGroup_"</span> + groupName,
-                            attr = <span class="hljs-string">""</span>,
-                            featureId = layerConfig.id;
-
-                        
-                        <span class="hljs-comment">/** Building data for template
-                        * @example
-                        *       var visibilityLegendLabel = { "for": legendName, "attr": attr, "value": groupName,
-                        *       checked": "checked", "label": "Show", "class": "eye checked"
-                        *       };
-                        */</span>
-
-                        <span class="hljs-keyword">var</span> visibilityLegendLabel = {
-                            <span class="hljs-string">"for"</span>: legendName,
-                            <span class="hljs-string">"attr"</span>: attr,
-                            <span class="hljs-string">"value"</span>: groupName,
-                            <span class="hljs-string">"checked"</span>: <span class="hljs-string">"checked"</span>,
-                            <span class="hljs-string">"label"</span>: layerConfig.displayName,
-                            <span class="hljs-string">"class"</span>: <span class="hljs-string">"eye checked"</span>,
-                            <span class="hljs-string">"featureId"</span>: featureId
-                        };
-
-                        <span class="hljs-keyword">var</span> boundingLegendLabel = {
-                            <span class="hljs-string">"for"</span>: legendName + <span class="hljs-string">"1"</span>,
-                            <span class="hljs-string">"attr"</span>: attr + <span class="hljs-string">"1"</span>,
-                            <span class="hljs-string">"value"</span>: groupName,
-                            <span class="hljs-string">"checked"</span>: <span class="hljs-string">"checked"</span>,
-                            <span class="hljs-string">"label"</span>: layerConfig.displayName,
-                            <span class="hljs-string">"class"</span>: <span class="hljs-string">"box checked"</span>,
-                            <span class="hljs-string">"featureId"</span>: featureId
-                        };</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>legend data for current layer</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                        <span class="hljs-keyword">var</span> rowData = { <span class="hljs-string">"imageUrl"</span>: Ramp.getSymbolForLayer(layer).imageUrl,
-                            <span class="hljs-string">"displayName"</span>: Ramp.getLayerConfig(layer.url).displayName,
-                            <span class="hljs-string">"dataLayerUUID"</span>: featureId.replace(<span class="hljs-string">"layer_"</span>, <span class="hljs-string">""</span>),
-                            <span class="hljs-string">"txtMetadata"</span>: localString.txtMetadata,
-                            <span class="hljs-string">"VisibilityLegend"</span>: visibilityLegendLabel,
-                            <span class="hljs-string">"BoundingBoxLegend"</span>: boundingLegendLabel
-                        };
-
-                        <span class="hljs-comment">/* End */</span>
-
-                        <span class="hljs-comment">/* Begin legend sub row: legend for each layer */</span>
-                        <span class="hljs-keyword">var</span> legend = layerConfig.symbology.icons;
-
-                        <span class="hljs-keyword">var</span> subRows = [];
-
-                        utilDict.forEachEntry(legend, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(li)</span> {</span>
-                            <span class="hljs-keyword">var</span> legendKeyValue = li,
-                                    cleanValue = li.replace(<span class="hljs-regexp">/-/g</span>, <span class="hljs-string">""</span>),
-                                    legendIcon;
-
-                            legendIcon = legend[legendKeyValue].imageUrl;
-
-                            <span class="hljs-keyword">var</span> subRow = { <span class="hljs-string">"imageUrl"</span>: legendIcon, <span class="hljs-string">"title"</span>: localString[<span class="hljs-built_in">String</span>.format(<span class="hljs-string">"altFeature_{0}_Icon_{1}"</span>, featureId, cleanValue)] };
-
-                            subRows.push(subRow);
-                        });
-
-                        <span class="hljs-keyword">var</span> layerLegendData = {
-                            <span class="hljs-string">"layerId"</span>: layer.id,
-                            <span class="hljs-string">"rowData"</span>: rowData,
-                            <span class="hljs-string">"subRows"</span>: subRows
-                        };
-
-                        allLayerData.push(layerLegendData);
-                    });
-
-                    <span class="hljs-keyword">var</span> templateKey = <span class="hljs-string">""</span>;
-                    tmpl.cache = {};
-
-                    tmpl.templates = <span class="hljs-built_in">JSON</span>.parse(tmplHelper.stringifyTemplate(filter_row_template_json));</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-5">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <p>generate the content using rowData and given template</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                    section = tmpl(config.siteTemplate.filterRowTemplate, allLayerData);
-
-                    <span class="hljs-keyword">return</span> section;
-                }
-                <span class="hljs-comment">/**
-                 * Sets UI status of a layer presentation (checkbox and eye) according to the user action: select / de-select a layer.
-                 * publishes event "filterManager/box-visibility-toggled" every time a layer status changed.
-                 * There should only be one eye and one global checkbox, but
-                 * we say checkbox"es" because jquery returns a list and it's
-                 * easier to write a function that takes a list of checkboxes
-                 * than to write two functions, one to take a list and one to
-                 * take an individual checkbox
-                 * @method setCheckboxEvents
-                 * @private
-                 */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setCheckboxEvents</span><span class="hljs-params">()</span> {</span>
-                    
-                    <span class="hljs-keyword">var</span> globalEyeCheckboxes,
-	                    globalBoxCheckboxes,
-	                    eyeCheckboxes,
-	                    boxCheckboxes;
-
-                    globalEyeCheckboxes = utilMisc.styleCheckboxes(
-                        filterGlobalToggles.find(<span class="hljs-string">".checkbox-custom .eye + input"</span>),
-                        <span class="hljs-string">"checked"</span>, <span class="hljs-string">"focused"</span>,
-                        { <span class="hljs-string">"checked"</span>: localString.txtHideAllFeatures, <span class="hljs-string">"unchecked"</span>: localString.txtShowAllFeatures }
-                    );</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
               <p>Turn off the bounding boxes by default</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    globalBoxCheckboxes = utilMisc
-                        .styleCheckboxes(
-                            filterGlobalToggles.find(<span class="hljs-string">".checkbox-custom .box + input"</span>),
-                            <span class="hljs-string">"checked"</span>, <span class="hljs-string">"focused"</span>,
-                            { <span class="hljs-string">"checked"</span>: localString.txtHideAllBounds, <span class="hljs-string">"unchecked"</span>: localString.txtShowAllBounds })
-                        .setAll(<span class="hljs-literal">false</span>);
-
-                    eyeCheckboxes = utilMisc.styleCheckboxes(
-                        layerList.find(<span class="hljs-string">".checkbox-custom .eye + input"</span>),
-                        <span class="hljs-string">"checked"</span>, <span class="hljs-string">"focused"</span>,
-                        { <span class="hljs-string">"checked"</span>: localString.txtHideFeatures, <span class="hljs-string">"unchecked"</span>: localString.txtShowFeatures }
-                    );</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-7">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
-              <p>Turn off the bounding boxes by default</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                    boxCheckboxes = utilMisc
+            <div class="content"><div class='highlight'><pre>                    boxCheckboxes = UtilMisc
                         .styleCheckboxes(
                             layerList.find(<span class="hljs-string">".checkbox-custom .box + input"</span>),
                             <span class="hljs-string">"checked"</span>, <span class="hljs-string">"focused"</span>,
-                            { <span class="hljs-string">"checked"</span>: localString.txtHideBounds, <span class="hljs-string">"unchecked"</span>: localString.txtShowBounds })
+                            {
+                                checked: localString.txtHideBounds,
+                                unchecked: localString.txtShowBounds
+                            },
+                            Theme.tooltipster)
                         .setAll(<span class="hljs-literal">false</span>);
                     <span class="hljs-comment">/**
-                     * Toggles each layers visibility when the global visibility button is clicked
-                     * @method toggleGlobalEye
-                     * @param {Boolean} checked The value of the global visibility button's check status (on or off)
-                     */</span>
+                    * Toggles each layers visibility when the global visibility button is clicked
+                    * @method toggleGlobalEye
+                    * @param {Boolean} checked The value of the global visibility button's check status (on or off)
+                    */</span>
                     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">toggleGlobalEye</span><span class="hljs-params">(checked)</span> {</span>
                         eyeCheckboxes.setAll(checked);
 
@@ -546,11 +409,11 @@ define([
         </li>
         
         
-        <li id="section-8">
+        <li id="section-4">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>True if the checkbox got selected, false otherwise</p>
 
@@ -566,11 +429,11 @@ define([
         </li>
         
         
-        <li id="section-9">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>True if the checkbox got selected, false otherwise</p>
 
@@ -585,21 +448,21 @@ define([
 
                     <span class="hljs-comment">/* START INDIVIDUAL "EYE" AND BOUNDING BUTTON EVENTS */</span>
                     <span class="hljs-comment">/**
-                     * Toggles the visibility button (or eye) beside a given layer in the legend. Fires the layer_visibility event.
-                     * @method toggleEye
-                     * @param {Boolean} checked The check status of the visibility button next to the target layer (on or off)
-                     * @param {Object} node The legend item representing the target layer
-                     */</span>
+                    * Toggles the visibility button (or eye) beside a given layer in the legend. Fires the layer_visibility event.
+                    * @method toggleEye
+                    * @param {Boolean} checked The check status of the visibility button next to the target layer (on or off)
+                    * @param {Object} node The legend item representing the target layer
+                    */</span>
                     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">toggleEye</span><span class="hljs-params">(checked, node)</span> {</span></pre></div></div>
             
         </li>
         
         
-        <li id="section-10">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>Figure out whether or not all the checkboxes are selected</p>
 
@@ -614,11 +477,11 @@ define([
         </li>
         
         
-        <li id="section-11">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>True if the checkbox got selected, false otherwise</p>
 
@@ -640,11 +503,11 @@ define([
         </li>
         
         
-        <li id="section-12">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>Figure out whether or not all the checkboxes are selected</p>
 
@@ -667,11 +530,11 @@ define([
         </li>
         
         
-        <li id="section-13">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>Set the checkboxes visually, checkboxes with an id in evt.layerIds gets
 turned on, the rest gets turned off</p>
@@ -680,7 +543,11 @@ turned on, the rest gets turned off</p>
             
             <div class="content"><div class='highlight'><pre>                        eyeCheckboxes.setState(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(checkbox)</span> {</span>
                             <span class="hljs-keyword">var</span> layerId = $(checkbox).findInputLabel().data(<span class="hljs-string">"layer-id"</span>);
-                            <span class="hljs-keyword">return</span> evt.layerIds.contains(layerId);
+                            <span class="hljs-keyword">if</span> (evt.layerIds.contains(layerId)) {
+                                <span class="hljs-keyword">return</span> evt.checked;
+                            } <span class="hljs-keyword">else</span> {
+                                <span class="hljs-keyword">return</span> !evt.checked;
+                            }
                         });
 
                         dojoArray.forEach(eyeCheckboxes.getNodes(), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(checkbox)</span> {</span>
@@ -695,11 +562,11 @@ turned on, the rest gets turned off</p>
         </li>
         
         
-        <li id="section-14">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>Set the checkboxes visually, checkboxes with an id in evt.layerIds gets
 turned on, the rest gets turned off</p>
@@ -708,7 +575,11 @@ turned on, the rest gets turned off</p>
             
             <div class="content"><div class='highlight'><pre>                        boxCheckboxes.setState(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(checkbox)</span> {</span>
                             <span class="hljs-keyword">var</span> layerId = $(checkbox).findInputLabel().data(<span class="hljs-string">"layer-id"</span>);
-                            <span class="hljs-keyword">return</span> evt.layerIds.contains(layerId);
+                            <span class="hljs-keyword">if</span> (evt.layerIds.contains(layerId)) {
+                                <span class="hljs-keyword">return</span> evt.checked;
+                            } <span class="hljs-keyword">else</span> {
+                                <span class="hljs-keyword">return</span> !evt.checked;
+                            }
                         });
 
                         dojoArray.forEach(boxCheckboxes.getNodes(), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(checkbox)</span> {</span>
@@ -721,11 +592,11 @@ turned on, the rest gets turned off</p>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>Event handling for individual “eye” and “box” toggle</p>
 
@@ -733,7 +604,7 @@ turned on, the rest gets turned off</p>
             
             <div class="content"><div class='highlight'><pre>                    eyeCheckboxes.getNodes().on(<span class="hljs-string">"change"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                         <span class="hljs-keyword">var</span> node = $(<span class="hljs-keyword">this</span>),
-		                    checked = node.is(<span class="hljs-string">':checked'</span>);
+                            checked = node.is(<span class="hljs-string">':checked'</span>);
 
                         toggleEye(checked, node);
                     });
@@ -744,30 +615,32 @@ turned on, the rest gets turned off</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <p>True if the checkbox got selected, false otherwise</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>		                    checked = node.is(<span class="hljs-string">':checked'</span>);
+            <div class="content"><div class='highlight'><pre>                            checked = node.is(<span class="hljs-string">':checked'</span>);
 
                         toggleBox(checked, node);
                     });
                     <span class="hljs-comment">/* END INDIVIDUAL "EYE" AND BOUNDING BUTTON EVENTS */</span>
                 }
                 <span class="hljs-comment">/**
-                 * initialize a tooltip for each layer, using the layer name.
-                 * @method initTooltips
-                 * @private
-                 */</span>
+                * initialize a tooltip for each layer, using the layer name.
+                * @method initTooltips
+                * @private
+                */</span>
                 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initTooltips</span><span class="hljs-params">()</span> {</span>
-                   
-                    popupManager.registerPopup(layerList, <span class="hljs-string">"hoverIntent"</span>,
+                    Theme.tooltipster(filterGlobalToggles);
+                    Theme.tooltipster(layerList);
+
+                    PopupManager.registerPopup(layerList, <span class="hljs-string">"hoverIntent"</span>,
                         <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                             <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.target.attr(<span class="hljs-string">"title"</span>)) {
                                 <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.target.isOverflowed()) {
@@ -785,32 +658,29 @@ turned on, the rest gets turned off</p>
                     );
                 }
                 <span class="hljs-comment">/**
-                 * Adjusts UI layout according to a layer event.
-                 * @method setButtonEvents
-                 * @private
-                 */</span>
+                * Adjusts UI layout according to a layer event.
+                * @method setButtonEvents
+                * @private
+                */</span>
                 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setButtonEvents</span><span class="hljs-params">()</span> {</span>
-                   
                     <span class="hljs-keyword">var</span> expandAllButton = filterGlobalToggles.find(<span class="hljs-string">".global-button"</span>),
                         expandAllPopupHandle,
                         expandNodes = layerList.find(<span class="hljs-string">".layerList-container:hidden"</span>),
                         expandButtons = layerList.find(<span class="hljs-string">"button.legend-button"</span>);
                     <span class="hljs-comment">/**
-                * Changes the width of the layers pane to accommodate for the scrollbar if it's needed.
-                * @method adjustPaneWidth
-                * @private
-                */</span>
+                    * Changes the width of the layers pane to accommodate for the scrollbar if it's needed.
+                    * @method adjustPaneWidth
+                    * @private
+                    */</span>
                     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">adjustPaneWidth</span><span class="hljs-params">()</span> {</span>
-                       
-                        utilMisc.adjustWidthForSrollbar(layerList, [filterGlobalToggles]);
+                        UtilMisc.adjustWidthForSrollbar(layerList, [filterGlobalToggles]);
                     }
                     <span class="hljs-comment">/**
-                *  Changes the state of the expand all control if all the nodes are expanded.
-                * @method adjustExpandAllButtonState
-                * @private
-                */</span>
+                    *  Changes the state of the expand all control if all the nodes are expanded.
+                    * @method adjustExpandAllButtonState
+                    * @private
+                    */</span>
                     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">adjustExpandAllButtonState</span><span class="hljs-params">()</span> {</span>
-                        
                         <span class="hljs-keyword">var</span> count = expandNodes.length,
                             hiddenCount = expandNodes.filter(<span class="hljs-string">":hidden"</span>).length;
 
@@ -825,7 +695,7 @@ turned on, the rest gets turned off</p>
                         <span class="hljs-keyword">var</span> handle = $(<span class="hljs-keyword">this</span>),
                             target = handle.parents(<span class="hljs-string">"fieldset"</span>).find(<span class="hljs-string">"&gt; .layerList-container"</span>);
 
-                        popupManager.registerPopup(handle, <span class="hljs-string">"state-expanded"</span>, target, <span class="hljs-string">"click"</span>,
+                        PopupManager.registerPopup(handle, <span class="hljs-string">"state-expanded"</span>, target, <span class="hljs-string">"click"</span>,
                             <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> {</span>
                                 target.slideToggle(<span class="hljs-number">400</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                                     adjustPaneWidth();
@@ -837,7 +707,7 @@ turned on, the rest gets turned off</p>
                         );
                     });
 
-                    expandAllPopupHandle = popupManager.registerPopup(expandAllButton, <span class="hljs-string">"state-expanded"</span>, expandNodes, <span class="hljs-string">"click"</span>,
+                    expandAllPopupHandle = PopupManager.registerPopup(expandAllButton, <span class="hljs-string">"state-expanded"</span>, expandNodes, <span class="hljs-string">"click"</span>,
                         <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> {</span>
                             expandNodes.slideDown(<span class="hljs-number">400</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                                 expandButtons.addClass(<span class="hljs-string">"state-expanded"</span>);
@@ -859,11 +729,11 @@ turned on, the rest gets turned off</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p>metadata buttons
 to be changed…</p>
@@ -878,13 +748,13 @@ to be changed…</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
-              <p>var guid = $(this).data(“guid”) || $(this).data(“guid”, utilMisc.guid()).data(“guid”);</p>
+              <p>var guid = $(this).data(“guid”) || $(this).data(“guid”, UtilMisc.guid()).data(“guid”);</p>
 
             </div>
             
@@ -904,14 +774,23 @@ to be changed…</p>
 
                             metadataUrl = <span class="hljs-string">"assets/metadata/"</span> + guid + <span class="hljs-string">".xml"</span>;
 
-                            utilMisc.transformXML(metadataUrl, <span class="hljs-string">"assets/metadata/xstyle_default_"</span> + config.lang + <span class="hljs-string">".xsl"</span>,
-                                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
-                                    topic.publish(EventManager.GUI.SUBPANEL_OPEN, {
-                                        content: $(data),
-                                        origin: <span class="hljs-string">"filterManager"</span>,
-                                        update: <span class="hljs-literal">true</span>,
-                                        guid: guid
-                                    });
+                            UtilMisc.transformXML(metadataUrl, <span class="hljs-string">"assets/metadata/xstyle_default_"</span> + config.lang + <span class="hljs-string">".xsl"</span>,
+                                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, data)</span> {</span>
+                                    <span class="hljs-keyword">if</span> (error) {
+                                        topic.publish(EventManager.GUI.SUBPANEL_OPEN, {
+                                            content: <span class="hljs-string">"&lt;p&gt;"</span> + localString.txtMetadataNotFound + <span class="hljs-string">"&lt;/p&gt;"</span>,
+                                            origin: <span class="hljs-string">"filterManager"</span>,
+                                            update: <span class="hljs-literal">true</span>,
+                                            guid: guid
+                                        });
+                                    } <span class="hljs-keyword">else</span> {
+                                        topic.publish(EventManager.GUI.SUBPANEL_OPEN, {
+                                            content: $(data),
+                                            origin: <span class="hljs-string">"filterManager"</span>,
+                                            update: <span class="hljs-literal">true</span>,
+                                            guid: guid
+                                        });
+                                    }
                                 });
                         } <span class="hljs-keyword">else</span> {
                             topic.publish(EventManager.GUI.SUBPANEL_CLOSE, { origin: <span class="hljs-string">"filterManager"</span> });
@@ -924,7 +803,6 @@ to be changed…</p>
                 * @private
                 */</span>
                 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initScrollListeners</span><span class="hljs-params">()</span> {</span>
-                    
                     layerList.scroll(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                         <span class="hljs-keyword">var</span> currentScroll = layerList.scrollTop();
                         <span class="hljs-keyword">if</span> (currentScroll === <span class="hljs-number">0</span>) {
@@ -936,15 +814,75 @@ to be changed…</p>
                 }
 
                 <span class="hljs-keyword">return</span> {
-                    init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                        <span class="hljs-keyword">var</span> globalCheckboxes = generateGlobalCheckboxes(),
-                            filterCheckboxes = generateFilterCheckboxes(),
-                            sectionNode = $(<span class="hljs-string">"#searchMapSectionBody"</span>),
-                            section;
+                    init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>reset and load global template
+move the following out from generateGlobalCheckboxes() and merge filter_global_row_template_json into filter_row_template</p>
 
-                        section = <span class="hljs-built_in">String</span>.format(filter_manager_Template,
-                            globalCheckboxes,
-                            filterCheckboxes);</pre></div></div>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                        tmpl.cache = {};
+                        tmpl.templates = <span class="hljs-built_in">JSON</span>.parse(TmplHelper.stringifyTemplate(filter_manager_template_json));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>get visible layers</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                        <span class="hljs-keyword">var</span> layers = RampMap.getMap().getLayersVisibleAtScale(),
+                            lLayers = [];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>limit only to visible layer that is not basemap</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                        dojoArray.forEach(layers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layer)</span> {</span>
+                            <span class="hljs-keyword">if</span> (!layer.type || layer.type === <span class="hljs-string">"basemap"</span>) {
+                                <span class="hljs-keyword">return</span>;
+                            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>modify layer object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                            layer.layerConfig = Ramp.getLayerConfig(layer.url);
+                            lLayers.push(layer);
+                        });</pre></div></div>
             
         </li>
         
@@ -955,17 +893,13 @@ to be changed…</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
-              <p>fade out the loading animation</p>
+              <p>put layer in datawrapper to be used in template</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                        sectionNode.addClass(<span class="hljs-string">'animated fadeOut'</span>);
-                        window.setTimeout(
-                            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                                sectionNode
-							        .empty().append(section)
-							        .removeClass(<span class="hljs-string">"fadeOut"</span>)
-							        .addClass(<span class="hljs-string">'animated fadeIn'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                        <span class="hljs-keyword">var</span> data = TmplHelper.dataBuilder(lLayers),
+                            sectionNode = $(<span class="hljs-string">"#"</span> + GlobalStorage.config.divNames.filter),
+                            section;</pre></div></div>
             
         </li>
         
@@ -975,6 +909,42 @@ to be changed…</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>TODO: generate section using one template, need to refactoring the following fixed string</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                        section = tmpl(<span class="hljs-string">'filter_manager_template'</span>, data);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>fade out the loading animation</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                        sectionNode.addClass(<span class="hljs-string">'animated fadeOut'</span>);
+                        window.setTimeout(
+                            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                                sectionNode
+                                    .empty().append(section)
+                                    .removeClass(<span class="hljs-string">"fadeOut"</span>)
+                                    .addClass(<span class="hljs-string">'animated fadeIn'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>remove the animating css class</p>
 
@@ -1016,11 +986,11 @@ to be changed…</p>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>ui initialization complets</p>
 
@@ -1029,11 +999,11 @@ to be changed…</p>
             <div class="content"><div class='highlight'><pre>                                console.log(EventManager.FilterManager.UI_COMPLETE);
                                 topic.publish(EventManager.FilterManager.UI_COMPLETE);
                             },
-					        <span class="hljs-number">300</span>
+                            <span class="hljs-number">300</span>
                         );
                     }
                 };
-            } ());
+            }());
 
         <span class="hljs-comment">/**
         * Initiates a listener to handle tab deselected event
@@ -1051,20 +1021,20 @@ to be changed…</p>
 
         <span class="hljs-keyword">return</span> {
             <span class="hljs-comment">/**
-             * Reads the application configuration and creates the legend and filter management widget
-             * @method init
-             * @constructor
-             */</span>
+            * Reads the application configuration and creates the legend and filter management widget
+            * @method init
+            * @constructor
+            */</span>
             init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
             
         </li>
         
         
-        <li id="section-22">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>Convenience config objects</p>
 
@@ -1072,37 +1042,27 @@ to be changed…</p>
             
             <div class="content"><div class='highlight'><pre>                config = GlobalStorage.config;
                 localString = GlobalStorage.config.stringResources;
-               
-                localString.txtShowFeatures = <span class="hljs-string">"Show {0}"</span>;
-                localString.txtHideFeatures = <span class="hljs-string">"Hide {0}"</span>;
-                localString.txtShowAllFeatures = <span class="hljs-string">"Show All"</span>;
-                localString.txtHideAllFeatures = <span class="hljs-string">"Hide All"</span>;
-
-                localString.txtShowBounds = <span class="hljs-string">"Show Bounds of {0}"</span>;
-                localString.txtHideBounds = <span class="hljs-string">"Hide Bounds of {0}"</span>;
-                localString.txtShowAllBounds = <span class="hljs-string">"Show All Bounds"</span>;
-                localString.txtHideAllBounds = <span class="hljs-string">"Hide All Bounds"</span>;
 
                 initListeners();
 
                 ui.init();
-            }, 
+            },
             <span class="hljs-comment">/**
-             * Queries all map points on a given feature layer and returns their attributes
-             * @method _getFeatures
-             * @param {Object} fl A feature layer to query
-             * @return {Object} An array of attributes from the designated feature layer
-             */</span>
+            * Queries all map points on a given feature layer and returns their attributes
+            * @method _getFeatures
+            * @param {Object} fl A feature layer to query
+            * @return {Object} An array of attributes from the designated feature layer
+            */</span>
             _getFeatures: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(fl)</span> {</span></pre></div></div>
             
         </li>
         
         
-        <li id="section-23">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>do a query on ALL the map points.</p>
 
@@ -1115,11 +1075,11 @@ to be changed…</p>
         </li>
         
         
-        <li id="section-24">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>query.outFields = outFieldsList;  //note: this list is overridden by fields in featurelayer constructor</p>
 
@@ -1130,12 +1090,12 @@ to be changed…</p>
                 <span class="hljs-keyword">return</span> fl.queryFeatures(queryTask);
             },
             <span class="hljs-comment">/**
-             * Grabs all distinct values of the given field from a featureLayer.
-             * @method _getField
-             * @param {Object} fl A feature layer to query
-             * @param {String} The field (or column) to query in the feature layer 
-             * @return {Object} deferred A deferred object which will resolve to an array of unique values
-             */</span>           
+            * Grabs all distinct values of the given field from a featureLayer.
+            * @method _getField
+            * @param {Object} fl A feature layer to query
+            * @param {String} field The field (or column) to query in the feature layer
+            * @return {Object} deferred A deferred object which will resolve to an array of unique values
+            */</span>
             _getField: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(fl, field)</span> {</span>
                 <span class="hljs-keyword">var</span> deferred = <span class="hljs-keyword">new</span> Deferred();
 

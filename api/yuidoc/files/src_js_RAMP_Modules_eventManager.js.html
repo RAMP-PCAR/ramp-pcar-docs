@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="..\..\..\src\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
+                <h1><img src="..\..\..\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.40-67</em>
+            <em>API Docs for: 1.0.42-5</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -366,7 +366,7 @@ define([],
                 * @event gui.events.HELP_PANEL_CHANGE
                 * @for GUI
                 * @param evt {Object} the event Object
-                * @param visible {boolean} true if the help panel is opened, false if the help panel is closed
+                * @param evt.visible {boolean} true if the help panel is opened, false if the help panel is closed
                 */
                 HELP_PANEL_CHANGE: &quot;gui/help-panel-change&quot;,
 
@@ -452,25 +452,42 @@ define([],
                 * @event gui/add-layer-panel-change
                 * @for GUI
                 * @param evt {Object} the event Object
-                * @param visible {boolean} true if the AddLayer panel is opened, false if the AddLayer panel is closed
+                * @param evt.visible {boolean} true if the AddLayer panel is opened, false if the AddLayer panel is closed
                 */
                 ADD_LAYER_PANEL_CHANGE: &quot;gui/add-layer-panel-change&quot;,
 
+                /**
+                 * Published each time a toolbar section / widget is opened. Used to close other toolbar sections / widgets.
+                 *
+                 * @event gui/toolbar-section-open
+                 * @for GUI
+                 * @param evt {Object} the event Object
+                 * @param evt.id {String} id of the source section / widget
+                 */
                 TOOLBAR_SECTION_OPEN: &quot;gui/toolbar-section-open&quot;,
+
+                /**
+                 * Published each time a toolbar section / widget is closed.
+                 *
+                 * @event gui/toolbar-section-close
+                 * @for GUI
+                 * @param evt {Object} the event Object
+                 * @param evt.id {String} id of the source section / widget
+                 */
                 TOOLBAR_SECTION_CLOSE: &quot;gui/toolbar-section-close&quot;
             },
 
             FeatureHighlighter: {
                 /**
                 * Permanently highlights a given feature on the map; display an interactive tooltip for this feature; reduces opacity of the &#x60;graphicGroup&#x60; layers.
-                * Even when the user moves the cursor away, the feature stays highlihgted; tooltip stays put.
+                * Even when the user moves the cursor away, the feature stays highlighted; tooltip stays put.
                 * Only one feature can be highlighted like this at a time.
                 *
                 * @event featureHighlighter.events.HIGHLIGHT_SHOW [subscribed]
                 * @for FeatureHighlighter
                 * @param {Object} eventAttr ESRI feature click even attributes
                 */
-                HIGHLIGHT_SHOW: &quot;highlighter/hightlight-show&quot;,
+                HIGHLIGHT_SHOW: &quot;highlighter/highlight-show&quot;,
 
                 /**
                 * Dehighlights a currently highlighted feature on the map and restores opacity of the rest of the layers;
@@ -479,7 +496,7 @@ define([],
                 * @event featureHighlighter.events.HIGHLIGHT_HIDE [subscribed]
                 * @for FeatureHighlighter
                 */
-                HIGHLIGHT_HIDE: &quot;highlighter/hightlight-hide&quot;,
+                HIGHLIGHT_HIDE: &quot;highlighter/highlight-hide&quot;,
 
                 /**
                 * Temporarilly highlights (hoverlights) a given feature on the map. Intended to be dehighlighted when the user moves the cursor away; to do that, publish HOVERLIGHT_HIDE event.
@@ -552,7 +569,7 @@ define([],
                 * and the {{#crossLink &quot;Datagrid&quot;}}{{/crossLink}} should scroll to the currently highlighted row.
                 *
                 * @event maptips.events.EXTENT_CHANGE [subscribed]
-                * @param {Boolean} scroll indicates if the {{#crossLink &quot;Datagrid&quot;}}{{/crossLink}} should scroll to the currenlty highlighted row
+                * @param {Boolean} scroll indicates if the {{#crossLink &quot;Datagrid&quot;}}{{/crossLink}} should scroll to the currently highlighted row
                 */
                 EXTENT_CHANGE: &quot;maptip/extent-change&quot;,
 
@@ -570,6 +587,15 @@ define([],
             },
 
             Map: {
+                /**
+                 * Indicates that all the map layers are loaded.
+                 *
+                 * @event RampMap.events.ALL_LAYERS_LOADED
+                 * @for RampMap
+                 *
+                 */
+                ALL_LAYERS_LOADED: &quot;rampMap/all-layers-loaded&quot;,
+
                 /**
                 * Centers the map at the given point.
                 *

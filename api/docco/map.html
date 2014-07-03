@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="RAMP-starter.html">
                 RAMP-starter.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
               </a>
             
               
@@ -195,7 +210,7 @@
 */</span>
 
 <span class="hljs-comment">/**
-* Map class represents the ESRI map object. The map is generated based on the application configuration and templates. 
+* Map class represents the ESRI map object. The map is generated based on the application configuration and templates.
 *
 * @class Map
 * @uses dojo/_base/declare
@@ -222,12 +237,11 @@
 * @uses GlobalStorage
 * @uses RAMP
 * @uses FeatureClickHandler
+* @uses Navigation
+* @uses EventManager
 * @uses Util
 * @uses Array
 * @uses Dictionary
-* @uses GUI
-* @uses Navigation
-* @uses EventManager
 */</span>
 
 define([
@@ -259,7 +273,7 @@ define([
     GlobalStorage, Ramp, FeatureClickHandler, Navigation, EventManager,
 
     <span class="hljs-comment">/* Util */</span>
-    utilMisc, utilArray, utilDict)</span> {</span><span class="hljs-pi">
+    UtilMisc, UtilArray, UtilDict)</span> {</span><span class="hljs-pi">
         "use strict"</span>;
 
         <span class="hljs-comment">/**
@@ -271,13 +285,13 @@ define([
         <span class="hljs-keyword">var</span> featureLayers,
 
         <span class="hljs-comment">/**
-        * Maps graphicsLayerId to a GraphicsLayer Object that represents an extent bounding box.
+        * Maps the id of a graphic layer to the GraphicsLayer Object that represents its extent bounding box.
         * A dictionary of String, {{#crossLink "Esri/layer/GraphicsLayer"}}{{/crossLink}} pairs.
         *
         * @private
-        * @property attributeLayers {Object}
+        * @property boundingBoxMapping {Object}
         */</span>
-            attributeLayers,
+            boundingBoxMapping,
 
         <span class="hljs-comment">/**
         * The map not only contains feature layers, but also other layers such as the
@@ -300,7 +314,6 @@ define([
         *
         * @private
         * @method _showLoadingImg
-        * @param event {Object}
         */</span>
         <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_showLoadingImg</span><span class="hljs-params">()</span> {</span>
             $(<span class="hljs-string">"#map-load-indicator"</span>).removeClass(<span class="hljs-string">"hidden"</span>);
@@ -310,8 +323,7 @@ define([
         * Hides the loading image.
         *
         * @private
-        * @method  _hideLoadingImg
-        * @param event {Object}
+        * @method _hideLoadingImg
         */</span>
         <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_hideLoadingImg</span><span class="hljs-params">()</span> {</span>
             $(<span class="hljs-string">"#map-load-indicator"</span>).addClass(<span class="hljs-string">"hidden"</span>);
@@ -322,12 +334,13 @@ define([
         *
         * @private
         * @method _updateScale
-        * @param event {Object}
+        * @param {Object} event
         */</span>
         <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_updateScale</span><span class="hljs-params">(event)</span> {</span>
             <span class="hljs-keyword">if</span> (event.levelChange) {
-                <span class="hljs-keyword">var</span> currentScale = number.format(event.lod.scale);
-                <span class="hljs-keyword">var</span> scaleLabelText = <span class="hljs-string">"1 : "</span> + currentScale;
+                <span class="hljs-keyword">var</span> currentScale = number.format(event.lod.scale),
+                    scaleLabelText = <span class="hljs-string">"1 : "</span> + currentScale;
+
                 domConstruct.empty(<span class="hljs-string">'scaleLabel'</span>);
                 $(<span class="hljs-string">"#scaleLabel"</span>).text(scaleLabelText);
             }
@@ -337,18 +350,22 @@ define([
         * Initialize Map Scale
         *
         * @private
-        * @method  _initScale
-        * @param event {Object}
+        * @method _initScale
+        * @param {Object} event
         */</span>
         <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_initScale</span><span class="hljs-params">(event)</span> {</span>
-            <span class="hljs-keyword">var</span> map = event.map;
-            <span class="hljs-keyword">var</span> scaleDiv = domConstruct.create(<span class="hljs-string">"div"</span>, {
-                id: <span class="hljs-string">"scaleDiv"</span>,
-                <span class="hljs-string">"class"</span>: <span class="hljs-string">"esriScalebarLabel"</span>
-            });
+            <span class="hljs-keyword">var</span> map = event.map,
+                scaleDiv = domConstruct.create(<span class="hljs-string">"div"</span>, {
+                    id: <span class="hljs-string">"scaleDiv"</span>,
+                    <span class="hljs-keyword">class</span>: <span class="hljs-string">"esriScalebarLabel"</span>
+                }),
+                currentScale,
+                scaleLabelText;
+
             $(scaleDiv).html(<span class="hljs-string">"&lt;span&gt;Scale&lt;/span&gt;&lt;br&gt;&lt;span id='scaleLabel'&gt;&lt;span/&gt;"</span>);
-            <span class="hljs-keyword">var</span> currentScale = number.format(map.getScale());
-            <span class="hljs-keyword">var</span> scaleLabelText = <span class="hljs-string">"1 : "</span> + currentScale;
+            currentScale = number.format(map.getScale());
+            scaleLabelText = <span class="hljs-string">"1 : "</span> + currentScale;
+
             domConstruct.place(scaleDiv, query(<span class="hljs-string">".esriScalebarRuler"</span>)[<span class="hljs-number">0</span>], <span class="hljs-string">"before"</span>);
             domConstruct.empty(<span class="hljs-string">'scaleLabel'</span>);
             $(<span class="hljs-string">"#scaleLabel"</span>).text(scaleLabelText);</pre></div></div>
@@ -408,7 +425,7 @@ the map</p>
         * and react accordingly
         *
         * @method _initListeners
-        * @param map {Object} map object
+        * @param {Object} map map object
         * @private
         */</span>
         <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_initListeners</span><span class="hljs-params">(map)</span> {</span>
@@ -500,7 +517,9 @@ this same as calling map.panUp(), map.panDown(), map.panLeft(), map.panRight()</
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (!eventArg.visible &amp;&amp; (eventArg.origin === <span class="hljs-string">"rampPopup"</span> || eventArg.origin === <span class="hljs-string">"datagrid"</span>)) {
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (!eventArg.visible &amp;&amp;
+                    eventArg.isComplete &amp;&amp;
+                    (eventArg.origin === (<span class="hljs-string">"rampPopup"</span> || <span class="hljs-string">"datagrid"</span>))) {
                     topic.publish(EventManager.FeatureHighlighter.HIGHLIGHT_HIDE, {});
                 }
             });
@@ -508,8 +527,8 @@ this same as calling map.panUp(), map.panDown(), map.panLeft(), map.panRight()</
             <span class="hljs-comment">/* START BOUNDING BOX TOGGLE */</span>
 
             topic.subscribe(EventManager.FilterManager.LAYER_VISIBILITY_TOGGLED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
-                <span class="hljs-keyword">var</span> setTo = evt.node.checked;
-                <span class="hljs-keyword">var</span> layerId = evt.node.value;</pre></div></div>
+                <span class="hljs-keyword">var</span> setTo = evt.node.checked,
+                    layerId = evt.node.value,</pre></div></div>
             
         </li>
         
@@ -525,7 +544,8 @@ map id in config, graphic layer id</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> layer = map.getLayer(layerId);
+            <div class="content"><div class='highlight'><pre>                    layer = map.getLayer(layerId);
+
                 layer.setVisibility(setTo);</pre></div></div>
             
         </li>
@@ -552,8 +572,7 @@ map id in config, graphic layer id</p>
             });
 
             topic.subscribe(EventManager.FilterManager.BOX_VISIBILITY_TOGGLED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
-                <span class="hljs-keyword">var</span> boundingBox = attributeLayers[evt.node.value];
-                boundingBox.setVisibility(evt.checked);
+                setBoundingBoxVisibility(evt.node.value, evt.checked);
             });
 
             topic.subscribe(EventManager.FilterManager.GLOBAL_LAYER_VISIBILITY_TOGGLED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
@@ -585,8 +604,8 @@ map id in config, graphic layer id</p>
             });
 
             topic.subscribe(EventManager.FilterManager.GLOBAL_BOX_VISIBILITY_TOGGLED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
-                utilDict.forEachEntry(attributeLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, layer)</span> {</span>
-                    layer.setVisibility(evt.checked);
+                UtilDict.forEachEntry(boundingBoxMapping, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(id)</span> {</span>
+                    setBoundingBoxVisibility(id, evt.checked);
                 });
             });
 
@@ -606,7 +625,7 @@ map id in config, graphic layer id</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    featureLayerStartIndex = utilArray.indexOf(map.graphicsLayerIds, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerId)</span> {</span>
+            <div class="content"><div class='highlight'><pre>                    featureLayerStartIndex = UtilArray.indexOf(map.graphicsLayerIds, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerId)</span> {</span>
                         <span class="hljs-keyword">var</span> layer = map.getLayer(layerId);
                         <span class="hljs-keyword">return</span> layer.type &amp;&amp; layer.type === <span class="hljs-string">"Feature Layer"</span>;
                     });
@@ -618,9 +637,10 @@ map id in config, graphic layer id</p>
 
             <span class="hljs-comment">/* Add Layer subscription*/</span>
             topic.subscribe(EventManager.Map.ADD_LAYER, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                <span class="hljs-keyword">var</span> type = dom.byId(<span class="hljs-string">"addLayer-select-type"</span>).value;
-                <span class="hljs-keyword">var</span> URL = dom.byId(<span class="hljs-string">"addLayer-URL-input"</span>).value;
-                <span class="hljs-keyword">var</span> opacity = dom.byId(<span class="hljs-string">"addLayer-Opacity"</span>).value;
+                <span class="hljs-keyword">var</span> type = dom.byId(<span class="hljs-string">"addLayer-select-type"</span>).value,
+                    URL = dom.byId(<span class="hljs-string">"addLayer-URL-input"</span>).value,
+                    opacity = dom.byId(<span class="hljs-string">"addLayer-Opacity"</span>).value;
+
                 console.log(type + <span class="hljs-string">" | "</span> + URL + <span class="hljs-string">" | "</span> + opacity);
                 addStaticLayer(type, URL, opacity);
             });
@@ -630,11 +650,15 @@ map id in config, graphic layer id</p>
             });
         }
         <span class="hljs-comment">/**
-         * Creates event handlers for the map control: click, mouse-over, load, extent change, and update events.
-         * @method _initEventHandlers
-         * @param {Object} map A ESRI map object 
-         */</span>
+        * Creates event handlers for the map control: click, mouse-over, load, extent change, and update events.
+        *
+        * @private
+        * @method _initEventHandlers
+        * @param {Object} map A ESRI map object
+        */</span>
         <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_initEventHandlers</span><span class="hljs-params">(map)</span> {</span>
+            <span class="hljs-keyword">var</span> handle;
+
             dojoArray.forEach(featureLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(fl)</span> {</span></pre></div></div>
             
         </li>
@@ -683,9 +707,9 @@ map id in config, graphic layer id</p>
             map.on(<span class="hljs-string">"extent-change"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
                 _updateScale(event);
 
-                console.log(<span class="hljs-string">"map - &gt;&gt; extent-change"</span>);
+                console.log(<span class="hljs-string">"map - &gt;&gt; extent-change"</span>, event);
                 dojoOn.once(map, <span class="hljs-string">"update-end"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                    console.log(<span class="hljs-string">"map - &gt;&gt; update-end CAUGHT!!"</span>);
+                    console.log(<span class="hljs-string">"map - &gt;&gt; update-end - &gt;&gt; Apply extent Filter"</span>);
                     topic.publish(EventManager.Datagrid.APPLY_EXTENT_FILTER);
                 });
             });</pre></div></div>
@@ -752,6 +776,26 @@ map id in config, graphic layer id</p>
             
             <div class="content"><div class='highlight'><pre>            map.on(<span class="hljs-string">"update-start"</span>, _showLoadingImg);
             map.on(<span class="hljs-string">"update-end"</span>, _hideLoadingImg);
+
+            handle = map.on(<span class="hljs-string">"update-end"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                <span class="hljs-keyword">var</span> isAllLoaded = dojoArray.every(
+                        map.graphicsLayerIds.concat(map.layerIds),
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerId)</span> {</span>
+                            <span class="hljs-keyword">var</span> layer = map.getLayer(layerId);
+
+                            console.log(layer.loaded, layer);
+                            <span class="hljs-keyword">return</span> layer.loaded;
+                        }
+                    );
+
+                console.log(<span class="hljs-string">"map -&gt; is all layers loaded: "</span>, isAllLoaded);
+
+                <span class="hljs-keyword">if</span> (isAllLoaded) {
+                    handle.remove();
+                    console.log(<span class="hljs-string">"map -&gt;"</span>, EventManager.Map.ALL_LAYERS_LOADED);
+                    topic.publish(EventManager.Map.ALL_LAYERS_LOADED);
+                }
+            });
         }
 
         <span class="hljs-comment">/**
@@ -759,8 +803,8 @@ map id in config, graphic layer id</p>
         *
         * @private
         * @method createExtent
-        * @param extentConfig {Object} the JSON config object
-        * @param sr {Esri/SpatialReference} the {{#crossLink "Esri/SpatialReference"}}{{/crossLink}}
+        * @param {Object} extentConfig the JSON config object
+        * @param {Esri/SpatialReference} sr the {{#crossLink "Esri/SpatialReference"}}{{/crossLink}}
         * @return {esri/geometry/Extent} An ESRI extent object based on the config data
         */</span>
         <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createExtent</span><span class="hljs-params">(extentConfig, sr)</span> {</span>
@@ -770,6 +814,8 @@ map id in config, graphic layer id</p>
 
         <span class="hljs-comment">/**
         * Add a static, non-interactive Llyer to the map
+        *
+        * @private
         * @method AddStaticLayer
         * @param {String} layer_type A value which controls how the layer is going to be added to the map
         * @param {String} layer_url A URL pointing to a valid map service endpoint
@@ -809,36 +855,19 @@ map id in config, graphic layer id</p>
             });
         }
 
-        <span class="hljs-keyword">return</span> {
-            <span class="hljs-comment">/**
-             * The maximum extent of the map control is allowed to go to
-             * @property getMaxExtent
-             * @type {Object}
-             * 
-             */</span>
-            getMaxExtent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                <span class="hljs-keyword">return</span> maxExtent;
-            },
-            <span class="hljs-comment">/**
-             * Return the map control object
-             * @property getMap
-             * @type {Object}
-             * 
-             */</span>
-            getMap: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                <span class="hljs-keyword">if</span> (utilMisc.isUndefined(map)) {
-                    console.log(<span class="hljs-string">"trying to get map before it is available!"</span>);
-                }
-                <span class="hljs-keyword">return</span> map;
-            },
+        <span class="hljs-comment">/**
+        * Sets the visibility of the bounding box that belongs to the layer with the given layerId.
+        * Note: the layerId needs to be the ID of the featurelayer, not the ID of the actual bounding
+        * box layer.
+        *
+        * @private
+        * @method setBoundingBoxVisibility
+        * @param {String} layerId the id of the layer whose bounding box visibility should be set
+        */</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setBoundingBoxVisibility</span><span class="hljs-params">(layerId, visibility)</span> {</span>
+            <span class="hljs-keyword">var</span> boxLayer = boundingBoxMapping[layerId];
 
-            <span class="hljs-comment">/**
-            * Returns a list of feature layers that are currently visible on the map.
-            * @method getVisibleFeatureLayers
-            * @return {Array} an array of {{#crossLink "Esri/layer/FeatureLayer"}}{{/crossLink}} objects
-            * 
-            */</span>
-            getVisibleFeatureLayers: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+            <span class="hljs-keyword">if</span> (boxLayer.graphics.isEmpty()) {</pre></div></div>
             
         </li>
         
@@ -848,6 +877,93 @@ map id in config, graphic layer id</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Generate the bounding box if this is the first time we’re viewing it</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> featureLayer = map.getLayer(layerId),
+                boundingBoxExtent = esriGraphicUtils.graphicsExtent(featureLayer.graphics);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Make sure the boundingBoxExtent is within the max extent
+you want max for xmin, ymin and min for xmax, ymax because
+you want to make sure the extent is smaller than the maximum extent</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                boundingBoxExtent.xmin = <span class="hljs-built_in">Math</span>.max(boundingBoxExtent.xmin, maxExtent.xmin);
+                boundingBoxExtent.ymin = <span class="hljs-built_in">Math</span>.max(boundingBoxExtent.ymin, maxExtent.ymin);
+                boundingBoxExtent.xmax = <span class="hljs-built_in">Math</span>.min(boundingBoxExtent.xmax, maxExtent.xmax);
+                boundingBoxExtent.ymax = <span class="hljs-built_in">Math</span>.min(boundingBoxExtent.ymax, maxExtent.ymax);
+
+                <span class="hljs-keyword">var</span> extentGraphic = <span class="hljs-keyword">new</span> esri.Graphic({
+                    geometry: boundingBoxExtent,
+                    symbol: {
+                        color: [<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">64</span>],
+                        outline: {
+                            color: [<span class="hljs-number">240</span>, <span class="hljs-number">128</span>, <span class="hljs-number">128</span>, <span class="hljs-number">255</span>],
+                            width: <span class="hljs-number">1</span>,
+                            type: <span class="hljs-string">"esriSLS"</span>,
+                            style: <span class="hljs-string">"esriSLSSolid"</span>
+                        },
+                        type: <span class="hljs-string">"esriSFS"</span>,
+                        style: <span class="hljs-string">"esriSFSSolid"</span>
+                    }
+                });
+                boxLayer.add(extentGraphic);
+            }
+
+            boxLayer.setVisibility(visibility);
+        }
+
+        <span class="hljs-keyword">return</span> {
+            <span class="hljs-comment">/**
+            * The maximum extent of the map control is allowed to go to
+            * @property getMaxExtent
+            * @type {Object}
+            *
+            */</span>
+            getMaxExtent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                <span class="hljs-keyword">return</span> maxExtent;
+            },
+            <span class="hljs-comment">/**
+            * Return the map control object
+            * @property getMap
+            * @type {Object}
+            *
+            */</span>
+            getMap: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                <span class="hljs-keyword">if</span> (UtilMisc.isUndefined(map)) {
+                    console.log(<span class="hljs-string">"trying to get map before it is available!"</span>);
+                }
+                <span class="hljs-keyword">return</span> map;
+            },
+
+            <span class="hljs-comment">/**
+            * Returns a list of feature layers that are currently visible on the map.
+            * @method getVisibleFeatureLayers
+            * @return {Array} an array of {{#crossLink "Esri/layer/FeatureLayer"}}{{/crossLink}} objects
+            *
+            */</span>
+            getVisibleFeatureLayers: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>Return only the feature layers
 TODO do we need to consider static layers here?</p>
@@ -864,11 +980,11 @@ TODO do we need to consider static layers here?</p>
             *
             * @method getFeatureLayer
             * @private
-            * @param featureUrl {String} the url of the feature layer
+            * @param {String} featureUrl the url of the feature layer
             * @return {Esri/layer/FeatureLayer} feature layer
             */</span>
             getFeatureLayer: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(featureUrl)</span> {</span>
-                <span class="hljs-keyword">return</span> utilArray.find(featureLayers,
+                <span class="hljs-keyword">return</span> UtilArray.find(featureLayers,
                     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(featureLayer)</span> {</span>
                         <span class="hljs-keyword">return</span> featureLayer.url === featureUrl;
                     });
@@ -880,9 +996,9 @@ TODO do we need to consider static layers here?</p>
             *
             * NOTE: this method is currently unused!
             *
-            * @param e {esri/geometry/Extent} the extent Object
-            * @param maxExtent {esri/geometry/Extent} the maximum extent
-            * @return {esri/geometry/Extent}An adjusted extent, if the target extent is outside the boundary
+            * @param {esri/geometry/Extent} e the extent Object
+            * @param {esri/geometry/Extent} maxExtent the maximum extent
+            * @return {esri/geometry/Extent} An adjusted extent, if the target extent is outside the boundary
             * @method checkBoundary
             */</span>
             checkBoundary: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e, maxExtent)</span> {</span>
@@ -908,11 +1024,11 @@ TODO do we need to consider static layers here?</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>} else if (extent.ymin &lt; maxExtent.ymin) {</p>
 
@@ -966,22 +1082,22 @@ TODO do we need to consider static layers here?</p>
             * config.extents.fullExtent
             * config.basemaps  arrays of basemap, only one or first one with showOnInit set to true
             * config.featureLayers
-            * 
+            *
             * @method init
             * @param {Object} mapDiv the HTML div that will store the map control
             * @constructor
-            * 
+            *
             */</span>
-            init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(mapDiv)</span> {</span></pre></div></div>
+            init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
             
         </li>
         
         
-        <li id="section-18">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>config object is loaded in bootstrapper.js</p>
 
@@ -1007,7 +1123,7 @@ TODO do we need to consider static layers here?</p>
                 * @private
                 * @type {String}
                 */</span>
-                    url = utilArray.find(config.basemaps, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(basemap)</span> {</span>
+                    url = UtilArray.find(config.basemaps, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(basemap)</span> {</span>
                         <span class="hljs-keyword">return</span> basemap.showOnInit;
                     }).url,
 
@@ -1061,57 +1177,12 @@ TODO do we need to consider static layers here?</p>
 
                 <span class="hljs-comment">/**
                 * A list GraphicsLayer that represent the extent bounding box of the feature layers.
+                * {[esr/layer/featurelayers]} featureLayers A list of feature layers found in the application config
+                * {[esri/layer/graphiclayer]}  An array of graphic layers to add to the map
                 *
                 * @property boundingBoxLayers
                 * @type {array of esri/layer/GraphicsLayer}
-                * @param  {[esr/layer/featurelayers]} featureLayers A list of feature layers found in the application config
-                * @return {[esri/layer/graphiclayer]}  An array of graphic layers to add to the map
-                */</span>
-                <span class="hljs-keyword">var</span> boundingBoxLayers = dojoArray.map(featureLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layer)</span> {</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-19">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
-              </div>
-              <p>Map a list of featurelayers into a list of GraphicsLayer representing
-the extent bounding box of the feature layer (the bounding boxes are initialized
-separately, after the feature layers have finished loading (see attributeLayerAdder function
-below)</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">var</span> attrLayer = <span class="hljs-keyword">new</span> esri.layers.GraphicsLayer({
-                        id: <span class="hljs-built_in">String</span>.format(<span class="hljs-string">"boundingBoxLayer_{0}"</span>, Ramp.getLayerConfig(layer.url).displayName),
-                        visible: <span class="hljs-literal">false</span> <span class="hljs-comment">// bounding boxes are not visible by default</span>
-                    });
-                    <span class="hljs-keyword">return</span> attrLayer;
-                });</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-20">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
-              </div>
-              <p>the map!</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                map = <span class="hljs-keyword">new</span> EsriMap(mapDiv, {
-                    extent: initExtent,
-                    logo: <span class="hljs-literal">false</span>,
-                    minZoom: config.levelOfDetails.minLevel,
-                    maxZoom: config.levelOfDetails.maxLevel,
-                    slider: <span class="hljs-literal">false</span>
-                });</pre></div></div>
+                */</span></pre></div></div>
             
         </li>
         
@@ -1122,22 +1193,13 @@ below)</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
-              <p>Add the basemap layers</p>
+              <p>Maps graphicsLayerId to a GraphicsLayer Object that represents an extent bounding box</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                map.addLayers([baseLayer]);
+            <div class="content"><div class='highlight'><pre>                boundingBoxMapping = {};
 
-                <span class="hljs-comment">/*  START - Add static layers   */</span>
-
-                <span class="hljs-keyword">var</span> staticLayers = [];
-                <span class="hljs-keyword">var</span> perLayerStaticMaps = [];
-                <span class="hljs-keyword">var</span> staticLayerMap = [];
-
-                dojoArray.map(config.featureLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layer)</span> {</span>
-                    perLayerStaticMaps = [];
-                    dojoArray.forEach(layer.staticLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(staticLayer, i)</span> {</span>
-                        <span class="hljs-keyword">var</span> tempLayer;</pre></div></div>
+                <span class="hljs-keyword">var</span> boundingBoxLayers = dojoArray.map(featureLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layer)</span> {</span></pre></div></div>
             
         </li>
         
@@ -1147,6 +1209,62 @@ below)</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Map a list of featurelayers into a list of GraphicsLayer representing
+the extent bounding box of the feature layer. Note each bounding box layer
+at this point are empty, the actual graphic that represent the bounding box
+will be generated the first time the user toggles it on.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">var</span> attrLayer = <span class="hljs-keyword">new</span> esri.layers.GraphicsLayer({
+                        id: <span class="hljs-built_in">String</span>.format(<span class="hljs-string">"boundingBoxLayer_{0}"</span>, Ramp.getLayerConfig(layer.url).displayName),
+                        visible: <span class="hljs-literal">false</span> <span class="hljs-comment">// bounding boxes are not visible by default</span>
+                    });
+                    boundingBoxMapping[layer.id] = attrLayer;
+                    <span class="hljs-keyword">return</span> attrLayer;
+                });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>the map!</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                map = <span class="hljs-keyword">new</span> EsriMap(config.divNames.map, {
+                    extent: initExtent,
+                    logo: <span class="hljs-literal">false</span>,
+                    minZoom: config.levelOfDetails.minLevel,
+                    maxZoom: config.levelOfDetails.maxLevel,
+                    slider: <span class="hljs-literal">false</span>
+                });
+
+                <span class="hljs-comment">/*  START - Add static layers   */</span>
+
+                <span class="hljs-keyword">var</span> staticLayers = [],
+                    perLayerStaticMaps = [],
+                    staticLayerMap = [];
+
+                dojoArray.map(config.featureLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layer)</span> {</span>
+                    perLayerStaticMaps = [];
+                    dojoArray.forEach(layer.staticLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(staticLayer, i)</span> {</span>
+                        <span class="hljs-keyword">var</span> tempLayer;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>determine layer type and process</p>
 
@@ -1182,11 +1300,11 @@ below)</p>
         </li>
         
         
-        <li id="section-23">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>TODO add in other types of maps… wms?  non-esri tile?</p>
 
@@ -1200,11 +1318,11 @@ below)</p>
         </li>
         
         
-        <li id="section-24">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>creates an array of all static layers defined for the current, single feature layer</p>
 
@@ -1216,50 +1334,21 @@ below)</p>
         </li>
         
         
-        <li id="section-25">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
-              </div>
-              <p>adds the static layer id array as a value to an array indexed by feature layer names</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                    staticLayerMap[<span class="hljs-built_in">String</span>.format(<span class="hljs-string">"featureLayer_{0}"</span>, Ramp.getLayerConfig(layer.url).displayName)] = perLayerStaticMaps;
-                });</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-26">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
-              </div>
-              <p>adds the static layers to the map and copies the static layer/feature layer mapping to the Global Config</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                map.addLayers(staticLayers);
-                GlobalStorage.LayerMap = staticLayerMap;
-                <span class="hljs-comment">/*  End - Add static layers   */</span></pre></div></div>
-            
-        </li>
-        
-        
         <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
-              <p>Combine the two layer arrays then add them all at once (for efficiency)</p>
+              <p>adds the static layer id array as a value to an array indexed by feature layer names</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                map.addLayers(boundingBoxLayers.concat(featureLayers));</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                    staticLayerMap[<span class="hljs-built_in">String</span>.format(<span class="hljs-string">"featureLayer_{0}"</span>, Ramp.getLayerConfig(layer.url).displayName)] = perLayerStaticMaps;
+                });
+
+                GlobalStorage.LayerMap = staticLayerMap;
+                <span class="hljs-comment">/*  End - Add static layers   */</span></pre></div></div>
             
         </li>
         
@@ -1270,70 +1359,12 @@ below)</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
-              <p>Maps graphicsLayerId to a GraphicsLayer Object that represents an extent bounding box</p>
+              <p>Combine all layer arrays then add them all at once (for efficiency)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                attributeLayers = {};
-
-                <span class="hljs-keyword">var</span> attributeLayerAdder = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                    dojoArray.forEach(featureLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layer, i)</span> {</span>
-                        <span class="hljs-keyword">var</span> boundingBoxExtent = esriGraphicUtils.graphicsExtent(layer.graphics);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-29">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
-              </div>
-              <p>Make sure the boundingBoxExtent is within the max extent
-you want max for xmin, ymin and min for xmax, ymax because
-you want to make sure the extent is smaller than the maximum extent</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                        boundingBoxExtent.xmin = <span class="hljs-built_in">Math</span>.max(boundingBoxExtent.xmin, maxExtent.xmin);
-                        boundingBoxExtent.ymin = <span class="hljs-built_in">Math</span>.max(boundingBoxExtent.ymin, maxExtent.ymin);
-                        boundingBoxExtent.xmax = <span class="hljs-built_in">Math</span>.min(boundingBoxExtent.xmax, maxExtent.xmax);
-                        boundingBoxExtent.ymax = <span class="hljs-built_in">Math</span>.min(boundingBoxExtent.ymax, maxExtent.ymax);
-
-                        <span class="hljs-keyword">var</span> extentGraphic = <span class="hljs-keyword">new</span> esri.Graphic({
-                            <span class="hljs-string">"geometry"</span>: boundingBoxExtent,
-                            <span class="hljs-string">"symbol"</span>: {
-                                <span class="hljs-string">"color"</span>: [<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">64</span>],
-                                <span class="hljs-string">"outline"</span>: {
-                                    <span class="hljs-string">"color"</span>: [<span class="hljs-number">240</span>, <span class="hljs-number">128</span>, <span class="hljs-number">128</span>, <span class="hljs-number">255</span>],
-                                    <span class="hljs-string">"width"</span>: <span class="hljs-number">1</span>,
-                                    <span class="hljs-string">"type"</span>: <span class="hljs-string">"esriSLS"</span>,
-                                    <span class="hljs-string">"style"</span>: <span class="hljs-string">"esriSLSSolid"</span>
-                                },
-                                <span class="hljs-string">"type"</span>: <span class="hljs-string">"esriSFS"</span>,
-                                <span class="hljs-string">"style"</span>: <span class="hljs-string">"esriSFSSolid"</span>
-                            }
-                        });
-                        boundingBoxLayers[i].add(extentGraphic);
-                        attributeLayers[layer.id] = boundingBoxLayers[i];
-                    });
-                };</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-30">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
-              </div>
-              <p>Add the attribute layers after the map finishes adding the feature layers
-makes sure this listener only fires once</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                dojoOn.once(map, <span class="hljs-string">"update-end"</span>, attributeLayerAdder);
+            <div class="content"><div class='highlight'><pre>
+                map.addLayers([baseLayer].concat(staticLayers, boundingBoxLayers, featureLayers));
 
                 <span class="hljs-comment">/* Start - Show scalebar */</span>
                 <span class="hljs-keyword">var</span> scalebar = <span class="hljs-keyword">new</span> EsriScalebar({

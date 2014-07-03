@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>basemapselector.js</title>
+  <title>basemapSelector.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -104,6 +104,21 @@
               </a>
             
               
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
               </a>
@@ -166,7 +181,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>basemapselector.js</h1>
+                  <h1>basemapSelector.js</h1>
               </div>
           </li>
         
@@ -190,7 +205,7 @@
 */</span>
 
 <span class="hljs-comment">/**
-* Populates the BasemapGallery widget located in the maps toolbar with items found in the application configuration. 
+* Populates the BasemapGallery widget located in the maps toolbar with items found in the application configuration.
 * This module also handles all the event  needed to change the map basemap and update the UI
 *
 *
@@ -202,9 +217,12 @@
 * @uses dojo/query
 * @uses dojo/topic
 * @uses templates/basemap_selector_template.json
-* @uses ramp/globalStorage
+* @uses GlobalStorage
+* @uses Map
+* @uses EventManager
 * @uses esri/dijit/BasemapGallery
-* @uses PopupManager
+* @uses utils/popupManager
+* @uses utils/thmplHelper
 */</span>
 
 define([</pre></div></div>
@@ -300,7 +318,7 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>dojoArray, dojoLang, domAttr, query, topic,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        dojoArray, dojoLang, domAttr, query, topic,</pre></div></div>
             
         </li>
         
@@ -315,7 +333,7 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>          basemapselectorTemplate,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        basemapselectorTemplate,</pre></div></div>
             
         </li>
         
@@ -330,7 +348,7 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>          GlobalStorage, RampMap, EventManager,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        GlobalStorage, RampMap, EventManager,</pre></div></div>
             
         </li>
         
@@ -345,7 +363,7 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>          BasemapGallery,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        BasemapGallery,</pre></div></div>
             
         </li>
         
@@ -360,7 +378,7 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>          popupManager, tmplHelper) {
+            <div class="content"><div class='highlight'><pre>        PopupManager, TmplHelper) {
     <span class="hljs-string">"use strict"</span>;
 
     <span class="hljs-keyword">var</span> basemapGallery,
@@ -382,7 +400,7 @@ define([</pre></div></div>
             * @method init
             * @private
             * @return {object} itself
-            * 
+            *
             */</span>
             init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                 baseMapControls = $(<span class="hljs-string">"#basemapControls"</span>);
@@ -419,9 +437,9 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                tmpl.templates = <span class="hljs-built_in">JSON</span>.parse(tmplHelper.stringifyTemplate(basemapselectorTemplate));
+            <div class="content"><div class='highlight'><pre>                tmpl.templates = <span class="hljs-built_in">JSON</span>.parse(TmplHelper.stringifyTemplate(basemapselectorTemplate));
                 dojoArray.forEach($(<span class="hljs-string">".esriBasemapGalleryNode"</span>), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(node, i)</span> {</span>
-                    $(node).html(tmpl(config.siteTemplate.basemapTemplate, tmplHelper.dataBuilder(config.basemaps[i])));
+                    $(node).html(tmpl(config.siteTemplate.basemapTemplate, TmplHelper.dataBuilder(config.basemaps[i])));
                 });</pre></div></div>
             
         </li>
@@ -437,7 +455,7 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                popupManager.registerPopup(baseMapControls, <span class="hljs-string">"hoverIntent"</span>,
+            <div class="content"><div class='highlight'><pre>                PopupManager.registerPopup(baseMapControls, <span class="hljs-string">"hoverIntent"</span>,
                     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> {</span>
                         basemapGalleryNode.slideDown(<span class="hljs-string">"fast"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span> d.resolve(); });
                     },
@@ -459,7 +477,7 @@ define([</pre></div></div>
              * Changes the text shown on the toolbar to match the currently selected basemap's title
              * @method updateToggleLabel
              * @private
-             * 
+             *
              */</span>
             updateToggleLabel: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                 baseMapToggle.find(<span class="hljs-string">"span:first"</span>).text(basemapGallery.getSelected().title);
@@ -501,10 +519,10 @@ define([</pre></div></div>
 
     <span class="hljs-keyword">return</span> {
         <span class="hljs-comment">/*
-         * Adds all of the basemaps specified in the application configuration to the basemap selector widget and then calls function to initializes event handling 
+         * Adds all of the basemaps specified in the application configuration to the basemap selector widget and then calls function to initializes event handling
          * @method init
          * @constructor
-         * 
+         *
          */</span>
         init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
             config = GlobalStorage.config;
@@ -538,9 +556,9 @@ define([</pre></div></div>
             </div>
             
             <div class="content"><div class='highlight'><pre>            basemapGallery = <span class="hljs-keyword">new</span> BasemapGallery({
-                <span class="hljs-string">"showArcGISBasemaps"</span>: <span class="hljs-literal">false</span>,
-                <span class="hljs-string">"basemaps"</span>: basemaps,
-                <span class="hljs-string">"map"</span>: RampMap.getMap()
+                showArcGISBasemaps: <span class="hljs-literal">false</span>,
+                basemaps: basemaps,
+                map: RampMap.getMap()
             }, placementAnchorId);
             basemapGallery.startup();
             basemapGallery.select(basemaps[<span class="hljs-number">0</span>].id);</pre></div></div>
@@ -559,9 +577,9 @@ define([</pre></div></div>
             </div>
             
             <div class="content"><div class='highlight'><pre>            $(<span class="hljs-string">".esriBasemapGalleryNode"</span>).on(<span class="hljs-string">"mousedown"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
-                <span class="hljs-keyword">var</span> curr_id = basemapGallery.getSelected().id;
-                <span class="hljs-keyword">var</span> selected_node = evt.currentTarget.id;
-                <span class="hljs-keyword">var</span> selected_id = selected_node.slice(selected_node.indexOf(<span class="hljs-string">"_"</span>) + <span class="hljs-number">1</span>);
+                <span class="hljs-keyword">var</span> curr_id = basemapGallery.getSelected().id,
+                    selected_node = evt.currentTarget.id,
+                    selected_id = selected_node.slice(selected_node.indexOf(<span class="hljs-string">"_"</span>) + <span class="hljs-number">1</span>);
 
                 <span class="hljs-keyword">if</span> (curr_id === selected_id) {
                     <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; <span class="hljs-comment">//prevent the basemap from changing</span>

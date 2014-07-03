@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="..\..\..\src\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
+                <h1><img src="..\..\..\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.40-67</em>
+            <em>API Docs for: 1.0.42-5</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -295,6 +295,7 @@ function (
             // update cssPath of the widget so it points to the proper folder: build or src
             GlobalStorage.config.navWidget.cssPath = dojoConfig.cssFolderPath + dojoConfig.buildState + cssPath;
             GlobalStorage.config.navWidget.skin += dojoConfig.extensionPrefix;
+            //GlobalStorage.config.navWidget.locale = dojoConfig.locale;
 
             nav = $(&quot;#&quot; + GlobalStorage.config.divNames.navigation).navigation(GlobalStorage.config.navWidget);
             // NOTE: JKW Document the change. Refactor,

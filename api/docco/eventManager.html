@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="RAMP-starter.html">
                 RAMP-starter.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
               </a>
             
               
@@ -373,7 +388,7 @@ define([],
                 * @event gui.events.HELP_PANEL_CHANGE
                 * @for GUI
                 * @param evt {Object} the event Object
-                * @param visible {boolean} true if the help panel is opened, false if the help panel is closed
+                * @param evt.visible {boolean} true if the help panel is opened, false if the help panel is closed
                 */</span>
                 HELP_PANEL_CHANGE: <span class="hljs-string">"gui/help-panel-change"</span>,
 
@@ -471,22 +486,42 @@ define([],
                 * @event gui/add-layer-panel-change
                 * @for GUI
                 * @param evt {Object} the event Object
-                * @param visible {boolean} true if the AddLayer panel is opened, false if the AddLayer panel is closed
+                * @param evt.visible {boolean} true if the AddLayer panel is opened, false if the AddLayer panel is closed
                 */</span>
-                ADD_LAYER_PANEL_CHANGE: <span class="hljs-string">"gui/add-layer-panel-change"</span>
+                ADD_LAYER_PANEL_CHANGE: <span class="hljs-string">"gui/add-layer-panel-change"</span>,
+
+                <span class="hljs-comment">/**
+                 * Published each time a toolbar section / widget is opened. Used to close other toolbar sections / widgets.
+                 *
+                 * @event gui/toolbar-section-open
+                 * @for GUI
+                 * @param evt {Object} the event Object
+                 * @param evt.id {String} id of the source section / widget
+                 */</span>
+                TOOLBAR_SECTION_OPEN: <span class="hljs-string">"gui/toolbar-section-open"</span>,
+
+                <span class="hljs-comment">/**
+                 * Published each time a toolbar section / widget is closed.
+                 *
+                 * @event gui/toolbar-section-close
+                 * @for GUI
+                 * @param evt {Object} the event Object
+                 * @param evt.id {String} id of the source section / widget
+                 */</span>
+                TOOLBAR_SECTION_CLOSE: <span class="hljs-string">"gui/toolbar-section-close"</span>
             },
 
             FeatureHighlighter: {
                 <span class="hljs-comment">/**
                 * Permanently highlights a given feature on the map; display an interactive tooltip for this feature; reduces opacity of the `graphicGroup` layers.
-                * Even when the user moves the cursor away, the feature stays highlihgted; tooltip stays put.
+                * Even when the user moves the cursor away, the feature stays highlighted; tooltip stays put.
                 * Only one feature can be highlighted like this at a time.
                 *
                 * @event featureHighlighter.events.HIGHLIGHT_SHOW [subscribed]
                 * @for FeatureHighlighter
                 * @param {Object} eventAttr ESRI feature click even attributes
                 */</span>
-                HIGHLIGHT_SHOW: <span class="hljs-string">"highlighter/hightlight-show"</span>,
+                HIGHLIGHT_SHOW: <span class="hljs-string">"highlighter/highlight-show"</span>,
 
                 <span class="hljs-comment">/**
                 * Dehighlights a currently highlighted feature on the map and restores opacity of the rest of the layers;
@@ -495,7 +530,7 @@ define([],
                 * @event featureHighlighter.events.HIGHLIGHT_HIDE [subscribed]
                 * @for FeatureHighlighter
                 */</span>
-                HIGHLIGHT_HIDE: <span class="hljs-string">"highlighter/hightlight-hide"</span>,
+                HIGHLIGHT_HIDE: <span class="hljs-string">"highlighter/highlight-hide"</span>,
 
                 <span class="hljs-comment">/**
                 * Temporarilly highlights (hoverlights) a given feature on the map. Intended to be dehighlighted when the user moves the cursor away; to do that, publish HOVERLIGHT_HIDE event.
@@ -568,7 +603,7 @@ define([],
                 * and the {{#crossLink "Datagrid"}}{{/crossLink}} should scroll to the currently highlighted row.
                 *
                 * @event maptips.events.EXTENT_CHANGE [subscribed]
-                * @param {Boolean} scroll indicates if the {{#crossLink "Datagrid"}}{{/crossLink}} should scroll to the currenlty highlighted row
+                * @param {Boolean} scroll indicates if the {{#crossLink "Datagrid"}}{{/crossLink}} should scroll to the currently highlighted row
                 */</span>
                 EXTENT_CHANGE: <span class="hljs-string">"maptip/extent-change"</span>,
 
@@ -586,6 +621,15 @@ define([],
             },
 
             Map: {
+                <span class="hljs-comment">/**
+                 * Indicates that all the map layers are loaded.
+                 *
+                 * @event RampMap.events.ALL_LAYERS_LOADED
+                 * @for RampMap
+                 *
+                 */</span>
+                ALL_LAYERS_LOADED: <span class="hljs-string">"rampMap/all-layers-loaded"</span>,
+
                 <span class="hljs-comment">/**
                 * Centers the map at the given point.
                 *
@@ -697,7 +741,6 @@ define([],
                 * @for RampMap
                 */</span>
                 ADD_LAYER_READY: <span class="hljs-string">"map/add-layer-ready"</span>
-
             },
 
             BasemapSelector: {
@@ -841,9 +884,9 @@ define([],
                * Published whenever the user clicks on the get link button in the
                * map toolbar.
                *
-               * @event bookmark.events.GETLINKPANEL_CHANGED
+               * @event bookmark.events.GETLINK_PANEL_CHANGED
                */</span>
-                GETLINKPANEL_CHANGED: <span class="hljs-string">"bookmark/getlinkpanel-changed"</span>
+                GETLINK_PANEL_CHANGED: <span class="hljs-string">"bookmark/getlinkpanel-changed"</span>
             }
         };
     });</pre></div></div>

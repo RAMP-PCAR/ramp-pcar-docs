@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="RAMP-starter.html">
                 RAMP-starter.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
               </a>
             
               
@@ -195,13 +210,13 @@
 *
 * The featureClickHandler uses Dojo/Topic to publish centralized global mouse event messages
 * related to feature selection. Any function subscribes to the topic will be able handle the
-* specifice event.
+* specific event.
 *
 * @class FeatureClickHandler
 * @static
-* @uses RAMP
 * @uses GraphicExtension
 * @uses EventManager
+* @uses GlobalStorage
 * @uses dojo/topic
 * @uses dojo/dom-construct
 * @uses Util
@@ -209,7 +224,7 @@
 
 define([
 <span class="hljs-comment">/* RAMP */</span>
-    <span class="hljs-string">"ramp/graphicExtension"</span>, <span class="hljs-string">"ramp/eventManager"</span>,
+    <span class="hljs-string">"ramp/graphicExtension"</span>, <span class="hljs-string">"ramp/eventManager"</span>, <span class="hljs-string">"ramp/globalStorage"</span>,
 
 <span class="hljs-comment">/* Dojo */</span>
     <span class="hljs-string">"dojo/topic"</span>, <span class="hljs-string">"dojo/dom-construct"</span>,
@@ -219,13 +234,13 @@ define([
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(
     <span class="hljs-comment">/* RAMP */</span>
-    GraphicExtension, EventManager,
+    GraphicExtension, EventManager, GlobalStorage,
 
     <span class="hljs-comment">/* Dojo */</span>
     topic, domConstruct,
 
     <span class="hljs-comment">/* Utils */</span>
-    utilMisc)</span> {</span><span class="hljs-pi">
+    UtilMisc)</span> {</span><span class="hljs-pi">
         "use strict"</span>;
         <span class="hljs-keyword">return</span> {
             <span class="hljs-comment">/**
@@ -241,13 +256,13 @@ define([
                 <span class="hljs-keyword">var</span> selectedGraphic = evt.graphic;
 
                 topic.publish(EventManager.GUI.SUBPANEL_OPEN, {
-                    panelName: <span class="hljs-string">"Details"</span>,
+                    panelName: GlobalStorage.config.stringResources.txtGrid_details,
                     title: GraphicExtension.getGraphicTitle(selectedGraphic),
                     content: GraphicExtension.getTextContent(selectedGraphic),
                     target: $(<span class="hljs-string">"#map-div"</span>),
                     origin: <span class="hljs-string">"rampPopup"</span>,
                     consumeOrigin: <span class="hljs-string">"datagrid"</span>,
-                    guid: utilMisc.guid(),
+                    guid: UtilMisc.guid(),
                     showChars: <span class="hljs-number">70</span>,
                     doOnOpen: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
             
@@ -261,17 +276,17 @@ define([
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
               <p>topic.publish(EventManager.Datagrid.HIGHLIGHTROW_SHOW, {
-   “graphic”: selectedGraphic
+   graphic: selectedGraphic
 });</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>
-                        utilMisc.subscribeOnce(EventManager.Maptips.EXTENT_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
+                        UtilMisc.subscribeOnce(EventManager.Maptips.EXTENT_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
                             <span class="hljs-keyword">var</span> scroll = evt.scroll;
                             topic.publish(EventManager.Datagrid.HIGHLIGHTROW_SHOW, {
-                                <span class="hljs-string">"graphic"</span>: selectedGraphic,
-                                <span class="hljs-string">"scroll"</span>: scroll
+                                graphic: selectedGraphic,
+                                scroll: scroll
                             });
                         });</pre></div></div>
             
@@ -289,7 +304,7 @@ define([
             </div>
             
             <div class="content"><div class='highlight'><pre>                        topic.publish(EventManager.FeatureHighlighter.HIGHLIGHT_SHOW, {
-                            <span class="hljs-string">"graphic"</span>: selectedGraphic
+                            graphic: selectedGraphic
                         });
                     },
                     doOnHide: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>

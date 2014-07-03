@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="..\..\..\src\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
+                <h1><img src="..\..\..\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.40-67</em>
+            <em>API Docs for: 1.0.42-5</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -1002,6 +1002,7 @@ define([
             // panelToggleTransition
             panelToggleTimeLine
                 .fromTo(panelDiv, transitionDuration, { right: 0 }, { right: -getPanelWidthDefault(), ease: &quot;easeOutCirc&quot; }, 0)
+                .set(panelDiv, { display: &quot;none&quot; }, transitionDuration)
                 .fromTo(mapDiv, transitionDuration, { right: getPanelWidthDefault() }, { right: 0, ease: &quot;easeOutCirc&quot; }, 0);
 
             fullDataSubpanelChangeTimeLine.fromTo(panelDiv, transitionDuration, { right: &quot;0px&quot;, left: &quot;35px&quot; }, { left: &quot;35px&quot;, right: &quot;430px&quot;, ease: &quot;easeOutCirc&quot; });
@@ -1202,7 +1203,7 @@ define([
                 },
 
                 /**
-                * Fires an even when the subpanel closes or opens.
+                * Fires an event when the subpanel closes or opens.
                 *
                 * @method subPanelChange
                 * @private
@@ -1214,11 +1215,20 @@ define([
                 subPanelChange: function (visible, origin, container, isComplete) {
                     // check if the fullData transition is already underway
                     if (!fullDataTimeLine.isActive() &amp;&amp; _isFullData &amp;&amp; !isComplete) {
-                        // adjust the sidePanel position
+                        // adjust the sidePanel position shifting the right edge to the left, making space for the subpanel to open at
                         if (visible) {
                             fullDataSubpanelChangeTimeLine.play(0);
                         } else if (!visible) {
                             fullDataSubpanelChangeTimeLine.reverse();
+                        }
+                    }
+
+                    // hide the sidepanel toggle when a subpanel is opened to prevent the user from closing sidepanel with subpanel still opened
+                    if (!isComplete) {
+                        if (visible) {
+                            panelToggle.hide();
+                        } else {
+                            panelToggle.show();
                         }
                     }
 

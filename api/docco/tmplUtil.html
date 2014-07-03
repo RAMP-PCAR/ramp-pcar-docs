@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="RAMP-starter.html">
                 RAMP-starter.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
               </a>
             
               
@@ -209,7 +224,7 @@ define([],
             * NOTE: all dependent functions should be wroten as nested functions inside the caller function, otherwise TmplEx templating library won't identify
             *
             * @method getGraphicIcon
-            * @param {Graphic} feature
+            * @param {Graphic} graphic
             * @param {Object} layerConfig
             * @return {String} imageUrl Url to the features symbology image
             */</span>
@@ -248,7 +263,7 @@ define([],
             * NOTE: all dependent functions should be wroten as nested functions inside the caller function, otherwise TmplEx templating library won't identify
             *
             * @method getFeatureName
-            * @param {Graphic} feature
+            * @param {Graphic} graphic
             * @param {Object} layerConfig
             * @return {String} imageUrl Url to the features symbology image
             */</span>
@@ -263,7 +278,7 @@ define([],
             * NOTE: all dependent functions should be wroten as nested functions inside the caller function, otherwise TmplEx templating library won't identify
             *
             * @method getObjectId
-            * @param {Graphic} feature
+            * @param {Graphic} graphic
             * @return {Integer} objectId
             */</span>
             getObjectId: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic)</span> {</span>
@@ -278,6 +293,50 @@ define([],
             */</span>
             getAttributeValueByName: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic, fieldName)</span> {</span>
                 <span class="hljs-keyword">return</span> graphic.attributes[fieldName];
+            },
+
+            <span class="hljs-comment">/* Helper function used by filterManager.*/</span>
+            <span class="hljs-comment">/*
+            * generate visibility legend object
+            * @param o
+            */</span>
+            generateVisibilityLegend: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(o)</span> {</span>
+                <span class="hljs-keyword">var</span> attr = <span class="hljs-string">""</span>,
+                    visibilityLegendLabel = {
+                        <span class="hljs-keyword">for</span>: <span class="hljs-string">"filterGroup_"</span> + o.data[o.idx].id,
+                        attr: attr,
+                        value: o.data[o.idx].id,
+                        checked: <span class="hljs-string">"checked"</span>,
+                        label: o.data[o.idx].layerConfig.displayName,
+                        <span class="hljs-keyword">class</span>: <span class="hljs-string">"eye checked"</span>,
+                        featureId: o.data[o.idx].layerConfig.id
+                    };
+                <span class="hljs-keyword">return</span> visibilityLegendLabel;
+            },
+            <span class="hljs-comment">/*
+            * generate visibility legend object
+            * @param o
+            */</span>
+            generateBoundingBoxLegend: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(o)</span> {</span>
+                <span class="hljs-keyword">var</span> attr = <span class="hljs-string">""</span>,
+                    boundingLegendLabel = {
+                        <span class="hljs-keyword">for</span>: <span class="hljs-string">"filterGroup_"</span> + o.data[o.idx].id + <span class="hljs-string">"1"</span>,
+                        attr: attr + <span class="hljs-string">"1"</span>,
+                        value: o.data[o.idx].id,
+                        checked: <span class="hljs-string">"checked"</span>,
+                        label: o.data[o.idx].layerConfig.displayName,
+                        <span class="hljs-keyword">class</span>: <span class="hljs-string">"box checked"</span>,
+                        featureId: o.data[o.idx].layerConfig.id
+                    };
+
+                <span class="hljs-keyword">return</span> boundingLegendLabel;
+            },
+            <span class="hljs-comment">/*
+            * generate DataLayerUUID by removing layer_ from layer id
+            * @param layerId
+            */</span>
+            getDataLayerUUID: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerId)</span> {</span>
+                <span class="hljs-keyword">return</span> layerId.replace(<span class="hljs-string">"layer_"</span>, <span class="hljs-string">""</span>);
             }
         };
     });</pre></div></div>

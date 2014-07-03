@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="RAMP-starter.html">
                 RAMP-starter.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
               </a>
             
               
@@ -206,10 +221,10 @@
 * @uses dojo/_base/declare
 * @uses dojo/topic
 * @uses GlobalStorage
-* @uses Maptips
+* @uses Map
+* @uses EventManager
 * @uses Util
 * @uses Dictionary
-* @uses EventManager
 */</span>
 
 define([
@@ -221,7 +236,7 @@ define([
 
 <span class="hljs-comment">/* Util */</span>
         <span class="hljs-string">"utils/util"</span>, <span class="hljs-string">"utils/dictionary"</span>
-    ],
+],
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(
     <span class="hljs-comment">/* Dojo */</span>
@@ -231,7 +246,7 @@ define([
         GlobalStorage, RampMap, EventManager,
 
     <span class="hljs-comment">/* Util*/</span>
-        utilMisc, utilDict)</span> {</span><span class="hljs-pi">
+        UtilMisc, UtilDict)</span> {</span><span class="hljs-pi">
         "use strict"</span>;
 
         <span class="hljs-keyword">var</span> map,
@@ -273,8 +288,8 @@ shape or symbol object (which ever one exists)</p>
             
             <div class="content"><div class='highlight'><pre>
             <span class="hljs-keyword">var</span> clone = <span class="hljs-keyword">new</span> esri.Graphic({
-                <span class="hljs-string">"geometry"</span>: graphic.geometry,
-                <span class="hljs-string">"attributes"</span>: {}
+                geometry: graphic.geometry,
+                attributes: {}
             });
 
             clone.symbol = graphic.getLayer().renderer.getSymbol(graphic);</pre></div></div>
@@ -293,7 +308,7 @@ this way the maptip will work</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            utilDict.forEachEntry(graphic.attributes, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> {</span>
+            <div class="content"><div class='highlight'><pre>            UtilDict.forEachEntry(graphic.attributes, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> {</span>
                 clone.attributes[key] = value;
             });
 
@@ -322,7 +337,7 @@ this way the maptip will work</p>
                 graphicGroup.before(hoverl);
                 graphicGroup.before(zooml);
                 graphicGroup.attr({
-                    <span class="hljs-string">"class"</span>: <span class="hljs-string">"graphics"</span>
+                    <span class="hljs-keyword">class</span>: <span class="hljs-string">"graphics"</span>
                 });
             }
         }

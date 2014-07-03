@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="RAMP-starter.html">
                 RAMP-starter.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
               </a>
             
               
@@ -195,11 +210,12 @@
 * A set of functions used to support and standardize the use of templating
 *
 *
-* @class TmplUtil
+* @class TmplHelper
 * @static
 * @uses dojo/_base/lang
-* @uses TmplUtil
 * @uses GlobalStorage
+* @uses RAMP
+* @uses TmplUtil
 */</span>
 
 define([
@@ -211,8 +227,8 @@ define([
         <span class="hljs-string">"ramp/ramp"</span>,
         <span class="hljs-string">"utils/tmplUtil"</span>
 
-    ],
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dojoLang, globalStorage, ramp, tmplUtil)</span> {</span><span class="hljs-pi">
+],
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dojoLang, GlobalStorage, Ramp, TmplUtil)</span> {</span><span class="hljs-pi">
         "use strict"</span>;
 
         <span class="hljs-keyword">return</span> {
@@ -227,25 +243,23 @@ define([
              *      .str = &lt;global config object . stringResources&gt;
              *      .lyr = &lt;global config object . featurelayers [parameter index] &gt;
              *      .fn = object with helper functions assigned to it.
-             * 
+             *
              */</span>
-              dataBuilder: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data, layerUrl)</span> {</span>
-             
-             <span class="hljs-keyword">var</span> dataWrapperPrototype = {
-                 data: <span class="hljs-literal">null</span>,
-                 config: <span class="hljs-literal">null</span>,
-                 str: <span class="hljs-literal">null</span>,
-                 lyr:<span class="hljs-literal">null</span>,
-                 fn:<span class="hljs-literal">null</span>
-                 };
-              <span class="hljs-keyword">var</span> dataWrapper = <span class="hljs-built_in">Object</span>.create(dataWrapperPrototype);
+            dataBuilder: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data, layerUrl)</span> {</span>
+                <span class="hljs-keyword">var</span> dataWrapperPrototype = {
+                    data: <span class="hljs-literal">null</span>,
+                    config: <span class="hljs-literal">null</span>,
+                    str: <span class="hljs-literal">null</span>,
+                    lyr: <span class="hljs-literal">null</span>,
+                    fn: <span class="hljs-literal">null</span>
+                },
+                    dataWrapper = <span class="hljs-built_in">Object</span>.create(dataWrapperPrototype);
 
-              dataWrapper.data=data;
-              dataWrapper.config = globalStorage.config;
-              dataWrapper.str = globalStorage.config.stringResources;
+                dataWrapper.data = data;
+                dataWrapper.config = GlobalStorage.config;
+                dataWrapper.str = GlobalStorage.config.stringResources;
 
-              <span class="hljs-keyword">if</span> (layerUrl !=<span class="hljs-literal">null</span>)
-              {</pre></div></div>
+                <span class="hljs-keyword">if</span> (layerUrl != <span class="hljs-literal">null</span>) {</pre></div></div>
             
         </li>
         
@@ -260,11 +274,40 @@ define([
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                 dataWrapper.lyr= ramp.getLayerConfig(layerUrl);
-              }
+            <div class="content"><div class='highlight'><pre>                    dataWrapper.lyr = Ramp.getLayerConfig(layerUrl);
+                }
 
-              dataWrapper.fn=tmplUtil;
-              <span class="hljs-keyword">return</span> dataWrapper;
+                dataWrapper.fn = TmplUtil;
+                <span class="hljs-keyword">return</span> dataWrapper;
+            },
+            <span class="hljs-comment">/*
+             * Create a data wrapper with properties: data, config, str, fn
+             * @method genericDataBuilder
+             * @param {Object} data A json object passing over.
+             * @param {Number} layerIndex Index value of a layer inside Rest-end url (optional)
+             * @returns {Object} Returns a JSON object with following properties
+             *      .data = {}
+             *      .config = &lt;global config object&gt;
+             *      .str = &lt;global config object . stringResources&gt;
+             *      .lyr = &lt;global config object . featurelayers [parameter index] &gt;
+             *      .fn = object with helper functions assigned to it.
+             *
+             */</span>
+            genericDataBuilder: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
+                <span class="hljs-keyword">var</span> dataWrapperPrototype = {
+                    data: <span class="hljs-literal">null</span>,
+                    config: <span class="hljs-literal">null</span>,
+                    str: <span class="hljs-literal">null</span>,
+                    fn: <span class="hljs-literal">null</span>
+                },
+                    dataWrapper = <span class="hljs-built_in">Object</span>.create(dataWrapperPrototype);
+
+                dataWrapper.data = data;
+                dataWrapper.config = GlobalStorage.config;
+                dataWrapper.str = GlobalStorage.config.stringResources;
+
+                dataWrapper.fn = TmplUtil;
+                <span class="hljs-keyword">return</span> dataWrapper;
             },
 
             <span class="hljs-comment">/*
@@ -272,7 +315,7 @@ define([
              * @method stringifyTemplate
              * @param {String} template A template in JSON format
              * @returns {String} A JSON template without comments
-             * 
+             *
              */</span>
             stringifyTemplate: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(template)</span> {</span>
                 <span class="hljs-keyword">return</span> template</pre></div></div>
@@ -291,13 +334,13 @@ define([
             </div>
             
             <div class="content"><div class='highlight'><pre>                    .replace(<span class="hljs-regexp">/`(?:\\.|[^`])*`|'(?:\\.|[^'])*'|"(?:\\.|[^"])*"|\/\*[^]*?\*\/|\/\/.*\n?/g</span>,
-							             <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(s)</span> {</span>
-			            <span class="hljs-keyword">if</span> (s.charAt(<span class="hljs-number">0</span>) === <span class="hljs-string">'/'</span>) {
-				            <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
-                        } <span class="hljs-keyword">else</span> {
-				            <span class="hljs-keyword">return</span> s;
-                        }
-		        })</pre></div></div>
+                                         <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> {</span>
+                                             <span class="hljs-keyword">if</span> (s.charAt(<span class="hljs-number">0</span>) === <span class="hljs-string">'/'</span>) {
+                                                 <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+                                             } <span class="hljs-keyword">else</span> {
+                                                 <span class="hljs-keyword">return</span> s;
+                                             }
+                                         })</pre></div></div>
             
         </li>
         
@@ -312,7 +355,8 @@ define([
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    .replace(<span class="hljs-regexp">/[\n\r\t]/g</span>, <span class="hljs-string">""</span>);
+            <div class="content"><div class='highlight'><pre>                    .replace(<span class="hljs-regexp">/[\n\r\t]/g</span>, <span class="hljs-string">""</span>)
+                    .replace(<span class="hljs-regexp">/&gt;\s*?&lt;/g</span>, <span class="hljs-string">"&gt;&lt;"</span>);
             }
         };
     });</pre></div></div>

@@ -19,8 +19,8 @@
           <div id="jump_page">
             
               
-              <a class="source" href="basemapselector.html">
-                basemapselector.js
+              <a class="source" href="basemapSelector.html">
+                basemapSelector.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="RAMP-starter.html">
                 RAMP-starter.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
+              </a>
+            
+              
+              <a class="source" href="theme.html">
+                theme.js
               </a>
             
               
@@ -195,18 +210,18 @@
 *
 * @class DatagridClickHandler
 * @static
-* @uses dojo/topic
-* @uses dojo/dom-construct
 * @uses RAMP
 * @uses GraphicExtension
-* @uses Util
-* @uses GUI
 * @uses EventManager
+* @uses GlobalStorage
+* @uses dojo/topic
+* @uses dojo/dom-construct
+* @uses Util
 */</span>
 
 define([
 <span class="hljs-comment">/* RAMP */</span>
-    <span class="hljs-string">"ramp/graphicExtension"</span>, <span class="hljs-string">"ramp/eventManager"</span>,
+    <span class="hljs-string">"ramp/graphicExtension"</span>, <span class="hljs-string">"ramp/eventManager"</span>, <span class="hljs-string">"ramp/globalStorage"</span>,
 
 <span class="hljs-comment">/* Dojo */</span>
     <span class="hljs-string">"dojo/topic"</span>, <span class="hljs-string">"dojo/dom-construct"</span>,
@@ -216,13 +231,13 @@ define([
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(
     <span class="hljs-comment">/* RAMP */</span>
-    GraphicExtension, EventManager,
+    GraphicExtension, EventManager, GlobalStorage,
 
     <span class="hljs-comment">/* Dojo */</span>
     topic, domConstruct,
 
     <span class="hljs-comment">/* Utils */</span>
-    utilMisc)</span> {</span><span class="hljs-pi">
+    UtilMisc)</span> {</span><span class="hljs-pi">
         "use strict"</span>;
         <span class="hljs-keyword">var</span> zoomBackExtent;
 
@@ -247,8 +262,54 @@ define([
             * @param {JObject} buttonNode the "Details" button node
             * @param {Object} selectedGraphic {esri/Graphic} the graphic object associated with the entry in the datagrid
             */</span>
-            onDetailSelect: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(buttonNode, selectedGraphic)</span> {</span>
-                <span class="hljs-keyword">var</span> guid = buttonNode.data(<span class="hljs-string">"guid"</span>) || buttonNode.data(<span class="hljs-string">"guid"</span>, utilMisc.guid()).data(<span class="hljs-string">"guid"</span>);</pre></div></div>
+            onDetailSelect: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(buttonNode, selectedGraphic, mode)</span> {</span>
+                <span class="hljs-keyword">var</span> guid = buttonNode.data(<span class="hljs-string">"guid"</span>) || buttonNode.data(<span class="hljs-string">"guid"</span>, UtilMisc.guid()).data(<span class="hljs-string">"guid"</span>),
+                    content = GraphicExtension.getTextContent(selectedGraphic),
+                    title = GraphicExtension.getGraphicTitle(selectedGraphic),
+                    node = buttonNode.parents(<span class="hljs-string">".record-row"</span>).parent();
+
+                <span class="hljs-keyword">if</span> (mode === <span class="hljs-string">"summary"</span>) {
+                    topic.publish(EventManager.GUI.SUBPANEL_OPEN, {
+                        panelName: GlobalStorage.config.stringResources.txtGrid_details,
+                        title: title,
+                        content: content,
+                        target: node.find(<span class="hljs-string">".record-controls"</span>),
+                        origin: <span class="hljs-string">"datagrid"</span>,
+                        consumeOrigin: <span class="hljs-string">"rampPopup"</span>,
+                        guid: guid,
+                        doOnOpen: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                            UtilMisc.subscribeOnce(EventManager.Maptips.EXTENT_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
+                                <span class="hljs-keyword">var</span> scroll = evt.scroll;
+                                topic.publish(EventManager.Datagrid.HIGHLIGHTROW_SHOW, {
+                                    graphic: selectedGraphic,
+                                    scroll: scroll
+                                });
+                            });
+
+                            topic.publish(EventManager.FeatureHighlighter.HIGHLIGHT_SHOW, {
+                                graphic: selectedGraphic
+                            });
+                        },
+                        doOnHide: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                            topic.publish(EventManager.Datagrid.HIGHLIGHTROW_HIDE);
+                        },
+                        doOnDestroy: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                            selectedGraphic = <span class="hljs-literal">null</span>;
+
+                            topic.publish(EventManager.FeatureHighlighter.HIGHLIGHT_HIDE);
+                        }
+                    });
+                } <span class="hljs-keyword">else</span> {
+                    node = buttonNode;
+
+                    topic.publish(EventManager.GUI.SUBPANEL_OPEN, {
+                        panelName: GlobalStorage.config.stringResources.txtGrid_details,
+                        title: title,
+                        content: content,
+                        target: node,
+                        origin: <span class="hljs-string">"ex-datagrid"</span>,
+                        templateKey: <span class="hljs-string">"full_sub_panel_container"</span>,
+                        guid: guid,</pre></div></div>
             
         </li>
         
@@ -259,44 +320,28 @@ define([
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>temp hack to get the point data</p>
+              <p>doOnOpen: function () {</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> content = GraphicExtension.getTextContent(selectedGraphic),
-                    title = GraphicExtension.getGraphicTitle(selectedGraphic),
-                    node = buttonNode.parents(<span class="hljs-string">".record-row"</span>).parent();
-
-                topic.publish(EventManager.GUI.SUBPANEL_OPEN, {
-                    panelName: <span class="hljs-string">"Details"</span>,
-                    title: title,
-                    content: content,
-                    target: node.find(<span class="hljs-string">".record-controls"</span>),
-                    origin: <span class="hljs-string">"datagrid"</span>,
-                    consumeOrigin: <span class="hljs-string">"rampPopup"</span>,
-                    guid: guid,
-                    doOnOpen: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                        utilMisc.subscribeOnce(EventManager.Maptips.EXTENT_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
-                            <span class="hljs-keyword">var</span> scroll = evt.scroll;
+            <div class="content"><div class='highlight'><pre>                        doAfterUpdate: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                             topic.publish(EventManager.Datagrid.HIGHLIGHTROW_SHOW, {
-                                <span class="hljs-string">"graphic"</span>: selectedGraphic,
-                                <span class="hljs-string">"scroll"</span>: scroll
+                                graphic: selectedGraphic,
+                                scroll: <span class="hljs-literal">true</span>
                             });
-                        });
+                        },
 
-                        topic.publish(EventManager.FeatureHighlighter.HIGHLIGHT_SHOW, {
-                            <span class="hljs-string">"graphic"</span>: selectedGraphic
-                        });
-                    },
-                    doOnHide: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                        topic.publish(EventManager.Datagrid.HIGHLIGHTROW_HIDE);
-                    },
-                    doOnDestroy: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                        selectedGraphic = <span class="hljs-literal">null</span>;
+                        doOnHide: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                            topic.publish(EventManager.Datagrid.HIGHLIGHTROW_HIDE);
+                        },
 
-                        topic.publish(EventManager.FeatureHighlighter.HIGHLIGHT_HIDE);
-                    }
-                });
+                        doOnDestroy: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                            selectedGraphic = <span class="hljs-literal">null</span>;
+
+                            topic.publish(EventManager.FeatureHighlighter.HIGHLIGHT_HIDE);
+                        }
+                    });
+                }
             },
 
             <span class="hljs-comment">/**
@@ -306,18 +351,24 @@ define([
             *
             * @method onDetailDeselect
             */</span>
-            onDetailDeselect: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                topic.publish(EventManager.GUI.SUBPANEL_CLOSE, {
-                    origin: <span class="hljs-string">"rampPopup,datagrid"</span>
-                });
+            onDetailDeselect: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(mode)</span> {</span>
+                <span class="hljs-keyword">if</span> (mode === <span class="hljs-string">"summary"</span>) {
+                    topic.publish(EventManager.GUI.SUBPANEL_CLOSE, {
+                        origin: <span class="hljs-string">"rampPopup,datagrid"</span>
+                    });
+                } <span class="hljs-keyword">else</span> {
+                    topic.publish(EventManager.GUI.SUBPANEL_CLOSE, {
+                        origin: <span class="hljs-string">"ex-datagrid"</span>
+                    });
+                }
             },
 
             <span class="hljs-comment">/**
             * This function is called whenever the user clicks on the "Zoom To" button.
             *
             * @method onZoomTo
-            * @param currentExtent {esri/geometry/Extent} the current extent of the map
-            * @param zoomToGraphic {Object}
+            * @param {esri/geometry/Extent} currentExtent the current extent of the map
+            * @param {Object} zoomToGraphic graphic object of the feature to zoom to
             */</span>
             onZoomTo: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(currentExtent, zoomToGraphic)</span> {</span>
                 zoomBackExtent = currentExtent;
@@ -327,29 +378,30 @@ define([
                         graphic: zoomToGraphic
                     });
 
-                    utilMisc.subscribeOnceAny([<span class="hljs-string">"map/pan-start"</span>, <span class="hljs-string">"map/zoom-start"</span>], onZoomCancel);
+                    UtilMisc.subscribeOnceAny([<span class="hljs-string">"map/pan-start"</span>, <span class="hljs-string">"map/zoom-start"</span>], onZoomCancel);
                 }
 
                 <span class="hljs-keyword">switch</span> (zoomToGraphic.geometry.type) {
                     <span class="hljs-keyword">case</span> <span class="hljs-string">"point"</span>:
                         topic.publish(EventManager.Map.CENTER_AND_ZOOM, {
-                            <span class="hljs-string">"graphic"</span>: zoomToGraphic, <span class="hljs-string">"level"</span>: <span class="hljs-number">9</span>,
-                            <span class="hljs-string">"callback"</span>: callback
+                            graphic: zoomToGraphic,
+                            level: <span class="hljs-number">9</span>,
+                            callback: callback
                         });
                         <span class="hljs-keyword">break</span>;
 
                     <span class="hljs-keyword">case</span> <span class="hljs-string">"polygon"</span>:
 
                         topic.publish(EventManager.Map.SET_EXTENT, {
-                            <span class="hljs-string">"extent"</span>: zoomToGraphic._extent.expand(<span class="hljs-number">1.5</span>),
-                            <span class="hljs-string">"callback"</span>: callback
+                            extent: zoomToGraphic._extent.expand(<span class="hljs-number">1.5</span>),
+                            callback: callback
                         });
                         <span class="hljs-keyword">break</span>;
 
                     <span class="hljs-keyword">default</span>:
                         topic.publish(EventManager.Map.SET_EXTENT, {
-                            <span class="hljs-string">"extent"</span>: zoomToGraphic._extent.expand(<span class="hljs-number">1.5</span>),
-                            <span class="hljs-string">"callback"</span>: callback
+                            extent: zoomToGraphic._extent.expand(<span class="hljs-number">1.5</span>),
+                            callback: callback
                         });
                         <span class="hljs-keyword">break</span>;
                 }
@@ -366,7 +418,7 @@ define([
             */</span>
             onZoomBack: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                 topic.publish(EventManager.Map.SET_EXTENT, {
-                    <span class="hljs-string">"extent"</span>: zoomBackExtent
+                    extent: zoomBackExtent
                 });
 
                 topic.publish(EventManager.FeatureHighlighter.ZOOMLIGHT_HIDE);

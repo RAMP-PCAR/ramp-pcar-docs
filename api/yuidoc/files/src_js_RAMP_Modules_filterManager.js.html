@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="..\..\..\src\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
+                <h1><img src="..\..\..\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.40-67</em>
+            <em>API Docs for: 1.0.42-5</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -297,7 +297,8 @@ define([
                         {
                             checked: localString.txtHideAllFeatures,
                             unchecked: localString.txtShowAllFeatures
-                        }
+                        },
+                        Theme.tooltipster
                     );
 
                     // Turn off the bounding boxes by default
@@ -308,7 +309,8 @@ define([
                             {
                                 checked: localString.txtHideAllBounds,
                                 unchecked: localString.txtShowAllBounds
-                            })
+                            },
+                            Theme.tooltipster)
                         .setAll(false);
 
                     eyeCheckboxes = UtilMisc.styleCheckboxes(
@@ -317,7 +319,8 @@ define([
                         {
                             checked: localString.txtHideFeatures,
                             unchecked: localString.txtShowFeatures
-                        }
+                        },
+                        Theme.tooltipster
                     );
 
                     // Turn off the bounding boxes by default
@@ -328,7 +331,8 @@ define([
                             {
                                 checked: localString.txtHideBounds,
                                 unchecked: localString.txtShowBounds
-                            })
+                            },
+                            Theme.tooltipster)
                         .setAll(false);
                     /**
                     * Toggles each layers visibility when the global visibility button is clicked
@@ -742,16 +746,6 @@ define([
                 // Convenience config objects
                 config = GlobalStorage.config;
                 localString = GlobalStorage.config.stringResources;
-
-                localString.txtShowFeatures = &quot;Show {0}&quot;;
-                localString.txtHideFeatures = &quot;Hide {0}&quot;;
-                localString.txtShowAllFeatures = &quot;Show All&quot;;
-                localString.txtHideAllFeatures = &quot;Hide All&quot;;
-
-                localString.txtShowBounds = &quot;Show Bounds of {0}&quot;;
-                localString.txtHideBounds = &quot;Hide Bounds of {0}&quot;;
-                localString.txtShowAllBounds = &quot;Show All Bounds&quot;;
-                localString.txtHideAllBounds = &quot;Hide All Bounds&quot;;
 
                 initListeners();
 

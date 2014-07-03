@@ -1,10 +1,10 @@
 {
     "project": {
         "name": "ramp-gis-viewer",
-        "version": "1.0.40-67",
+        "version": "1.0.42-5",
         "description": "RAMP GIS viewer - ArcticFox; Sample of an implementation of RAMP",
         "linkNatives": "true",
-        "logo": "../../src/assets/images/arctic_fox_logo_200x100.png"
+        "logo": "../../assets/images/arctic_fox_logo_200x100.png"
     },
     "files": {
         "src\\js\\RAMP\\Modules\\basemapSelector.js": {
@@ -591,7 +591,7 @@
             "namespaces": {},
             "tag": "main",
             "file": "src\\js\\RAMP\\Utils\\util.js",
-            "line": 416,
+            "line": 417,
             "description": "Utility module containing useful static classes.",
             "uses": [
                 "dojo/_base/declare",
@@ -748,6 +748,7 @@
                 "RAMP",
                 "GraphicExtension",
                 "EventManager",
+                "GlobalStorage",
                 "dojo/topic",
                 "dojo/dom-construct",
                 "Util"
@@ -941,11 +942,12 @@
             "namespace": "",
             "file": "src\\js\\RAMP\\Modules\\featureClickHandler.js",
             "line": 10,
-            "description": "Feature click handler class.\n\nThe featureClickHandler uses Dojo/Topic to publish centralized global mouse event messages\nrelated to feature selection. Any function subscribes to the topic will be able handle the\nspecifice event.",
+            "description": "Feature click handler class.\n\nThe featureClickHandler uses Dojo/Topic to publish centralized global mouse event messages\nrelated to feature selection. Any function subscribes to the topic will be able handle the\nspecific event.",
             "static": 1,
             "uses": [
                 "GraphicExtension",
                 "EventManager",
+                "GlobalStorage",
                 "dojo/topic",
                 "dojo/dom-construct",
                 "Util"
@@ -962,9 +964,11 @@
                 "BaseMapSelector",
                 "BookmarkLink",
                 "Datagrid",
+                "DatagridClickHandler",
                 "FilterManager",
                 "GUI",
                 "FeatureHighlighter",
+                "FeatureClickHandler",
                 "Map",
                 "Navigation",
                 "QuickZoom",
@@ -1556,7 +1560,7 @@
             "module": "Utils",
             "namespace": "",
             "file": "src\\js\\RAMP\\Utils\\util.js",
-            "line": 416,
+            "line": 417,
             "description": "A wrapper class for styled checkboxes that allows to set their states individually and en masse.",
             "is_constructor": 1,
             "type": "{Object}"
@@ -1593,6 +1597,7 @@
             "uses": [
                 "dojo/parser",
                 "dojo/on",
+                "dojo/topic",
                 "dojo/request/script",
                 "dojo/request/xhr",
                 "Map",
@@ -2046,7 +2051,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagrid.js",
-            "line": 969,
+            "line": 970,
             "description": "The constructor method for the data grid. Adds the grid's panel to the UI, adds the data rows, and creates all event triggers",
             "itemtype": "method",
             "name": "init",
@@ -2057,7 +2062,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagrid.js",
-            "line": 1013,
+            "line": 1014,
             "description": "Indicates that the Data grid is fully rendered",
             "itemtype": "method",
             "name": "isReady",
@@ -2071,7 +2076,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagrid.js",
-            "line": 1022,
+            "line": 1023,
             "description": "Adjusts the width of the datagrid panel to accommodate the scrollbar.",
             "itemtype": "method",
             "name": "adjustPanelWidth",
@@ -2081,7 +2086,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagrid.js",
-            "line": 1031,
+            "line": 1032,
             "description": "publishes the subPanel_Capture event to the GUI class",
             "itemtype": "method",
             "name": "capturePanel",
@@ -2091,7 +2096,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagrid.js",
-            "line": 1039,
+            "line": 1040,
             "description": "Caches the sorted data from datatables for feature click events to consume.  Builds featureToPage as a\nmapping of (layerName,featureId) => page where layerName and featureId are strings and page is a zero based int.",
             "itemtype": "method",
             "name": "cacheSortedData",
@@ -2103,7 +2108,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagrid.js",
-            "line": 1062,
+            "line": 1063,
             "description": "Returns the config Object for the given featureLayerUrl",
             "itemtype": "method",
             "name": "getGridConfig",
@@ -2124,7 +2129,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagrid.js",
-            "line": 1073,
+            "line": 1074,
             "description": "A handler that handlers the Enter key press and Click mouse event of the data grid.\nIt is actually a binder that binds the key / mouse event to a handler specified.\nThis is wired up to grid cells in the bootstrapper to achieve click/keypress functions",
             "itemtype": "method",
             "name": "handleGridEvent",
@@ -2148,7 +2153,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagrid.js",
-            "line": 1089,
+            "line": 1090,
             "description": "Gets all layer data in the current map extent that are visible, and put the data into the data grid.",
             "itemtype": "method",
             "name": "applyExtentFilter",
@@ -2158,7 +2163,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagrid.js",
-            "line": 1133,
+            "line": 1134,
             "description": "Given a map feature, return a data object used to represent the feature in the datagrid.",
             "itemtype": "method",
             "name": "getDataObject",
@@ -2177,7 +2182,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagrid.js",
-            "line": 1177,
+            "line": 1178,
             "description": "Populate the datagrid with data in visibleFeatures",
             "itemtype": "method",
             "name": "fetchRecords",
@@ -2196,7 +2201,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagrid.js",
-            "line": 1218,
+            "line": 1219,
             "description": "Returns the graphic object of a feature layer which is contained in the given buttonNode.",
             "itemtype": "method",
             "name": "getGraphicFromButton",
@@ -2219,7 +2224,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagrid.js",
-            "line": 1241,
+            "line": 1242,
             "description": "Binding event handling for events:\nfilterManager/layer-visibility-toggled\nfilterManager/global-layer-visibility-toggled\ndatagrid/applyExtentFilter",
             "itemtype": "method",
             "name": "initListeners",
@@ -2231,7 +2236,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagridClickHandler.js",
-            "line": 45,
+            "line": 46,
             "description": "Publishes new events when zoomCancel event happens.  Following events are published:\nhighlighter/zoomlight-hide\ndatagrid/zoomlightrow-hide",
             "itemtype": "method",
             "name": "onZoomCancel",
@@ -2241,7 +2246,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagridClickHandler.js",
-            "line": 59,
+            "line": 60,
             "description": "This function is called whenever the \"Details\" button is clicked in the datagrid.",
             "itemtype": "method",
             "name": "onDetailSelect",
@@ -2263,7 +2268,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagridClickHandler.js",
-            "line": 135,
+            "line": 136,
             "description": "This function is called whenever the \"Details\" button is deselected (either by the user click on\nanother \"Details\" button, clicking on another point, or by clicking on an already highlighted\n\"Details\" button).",
             "itemtype": "method",
             "name": "onDetailDeselect",
@@ -2273,7 +2278,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagridClickHandler.js",
-            "line": 154,
+            "line": 155,
             "description": "This function is called whenever the user clicks on the \"Zoom To\" button.",
             "itemtype": "method",
             "name": "onZoomTo",
@@ -2295,7 +2300,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagridClickHandler.js",
-            "line": 202,
+            "line": 203,
             "description": "This function is called whenever the user clicks on the \"Zoom Back\" button.",
             "itemtype": "method",
             "name": "onZoomBack",
@@ -2305,7 +2310,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\datagridClickHandler.js",
-            "line": 217,
+            "line": 218,
             "description": "This function is called whenever the user deselects the \"Zoom To\" button (either by the\nuser clicking on another point on the map, or by clicking on another \"Zoom To\" button)",
             "itemtype": "method",
             "name": "onZoomCancel",
@@ -2676,12 +2681,14 @@
                 {
                     "name": "evt",
                     "description": "the event Object",
-                    "type": "Object"
-                },
-                {
-                    "name": "visible",
-                    "description": "true if the help panel is opened, false if the help panel is closed",
-                    "type": "Boolean"
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "visible",
+                            "description": "true if the help panel is opened, false if the help panel is closed",
+                            "type": "Boolean"
+                        }
+                    ]
                 }
             ],
             "class": "GUI",
@@ -2829,12 +2836,14 @@
                 {
                     "name": "evt",
                     "description": "the event Object",
-                    "type": "Object"
-                },
-                {
-                    "name": "visible",
-                    "description": "true if the AddLayer panel is opened, false if the AddLayer panel is closed",
-                    "type": "Boolean"
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "visible",
+                            "description": "true if the AddLayer panel is opened, false if the AddLayer panel is closed",
+                            "type": "Boolean"
+                        }
+                    ]
                 }
             ],
             "class": "GUI",
@@ -2842,8 +2851,54 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 276,
-            "description": "Permanently highlights a given feature on the map; display an interactive tooltip for this feature; reduces opacity of the `graphicGroup` layers.\nEven when the user moves the cursor away, the feature stays highlihgted; tooltip stays put.\nOnly one feature can be highlighted like this at a time.",
+            "line": 271,
+            "description": "Published each time a toolbar section / widget is opened. Used to close other toolbar sections / widgets.",
+            "itemtype": "event",
+            "name": "gui/toolbar-section-open",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "the event Object",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "id",
+                            "description": "id of the source section / widget",
+                            "type": "String"
+                        }
+                    ]
+                }
+            ],
+            "class": "GUI",
+            "module": "UI"
+        },
+        {
+            "file": "src\\js\\RAMP\\Modules\\eventManager.js",
+            "line": 281,
+            "description": "Published each time a toolbar section / widget is closed.",
+            "itemtype": "event",
+            "name": "gui/toolbar-section-close",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "the event Object",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "id",
+                            "description": "id of the source section / widget",
+                            "type": "String"
+                        }
+                    ]
+                }
+            ],
+            "class": "GUI",
+            "module": "UI"
+        },
+        {
+            "file": "src\\js\\RAMP\\Modules\\eventManager.js",
+            "line": 293,
+            "description": "Permanently highlights a given feature on the map; display an interactive tooltip for this feature; reduces opacity of the `graphicGroup` layers.\nEven when the user moves the cursor away, the feature stays highlighted; tooltip stays put.\nOnly one feature can be highlighted like this at a time.",
             "itemtype": "event",
             "name": "featureHighlighter.events.HIGHLIGHT_SHOW [subscribed]",
             "params": [
@@ -2858,7 +2913,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 287,
+            "line": 304,
             "description": "Dehighlights a currently highlighted feature on the map and restores opacity of the rest of the layers;\nhides the interactive tooltip.",
             "itemtype": "event",
             "name": "featureHighlighter.events.HIGHLIGHT_HIDE [subscribed]",
@@ -2867,7 +2922,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 296,
+            "line": 313,
             "description": "Temporarilly highlights (hoverlights) a given feature on the map. Intended to be dehighlighted when the user moves the cursor away; to do that, publish HOVERLIGHT_HIDE event.\nEffect is only visible when another feature is already permanently highlighted.\nOnly one feature can be highlighted like this at a time.",
             "itemtype": "event",
             "name": "featureHighlighter.events.HOVERLIGHT_SHOW [subscribed]",
@@ -2883,7 +2938,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 307,
+            "line": 324,
             "description": "Dehighlights a currently highlighted (hoverlighted) feature on the map without restoring opacity of the rest of the layers;",
             "itemtype": "event",
             "name": "featureHighlighter.events.HOVERLIGHT_HIDE [subscribed]",
@@ -2892,7 +2947,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 315,
+            "line": 332,
             "description": "Temporarilly highlights (zoomlightes) a given feature on the map.\nIntended to be dehighlighted when the user makes an action like panning or zooming the map, publish ZOOMLIGHT_HIDE event.\nDisplays a temporary tooltip for this feature;\nOnly one feature can be highlighted (zoomlighted) like this at a time.",
             "itemtype": "event",
             "name": "featureHighlighter.events.ZOOMLIGHT_SHOW [subscribed]",
@@ -2908,7 +2963,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 327,
+            "line": 344,
             "description": "Dehighlights a currently highlighted (zoomlighted) feature on the map;\nRemoves the tooltip.\nRestores the opacity of the graphicGroup layers if no feature is highlighted at present.",
             "itemtype": "event",
             "name": "featureHighlighter.events.ZOOMLIGHT_HIDE [subscribed]",
@@ -2917,7 +2972,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 339,
+            "line": 356,
             "description": "Displays a simple, temporary maptip, positioning it over the `target` jObject; the content of the maptip is build from the\ncontents of the `graphic` object and the mapTip template specified in the config object.",
             "itemtype": "event",
             "name": "maptips.events.SHOW [subscribed]",
@@ -2938,7 +2993,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 350,
+            "line": 367,
             "description": "Displays an permanent, interactive maptip with a close button, positioning it over the `target` jObject; the content of the maptip is build from the\ncontents of the `graphic` object and the mapTip template specified in the config object.\nThe maptip will not be shown if it's covered by the open {{#crossLink \"SubPanel\"}}{{/crossLink}}.",
             "itemtype": "event",
             "name": "maptips.events.SHOW_INTERACTIVE [subscribed]",
@@ -2959,14 +3014,14 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 361,
+            "line": 378,
             "description": "Is fired when an interactive maptip is shown and {{#crossLink \"Maptip\"}}{{/crossLink}} detects if the maptip is hidden behind the\n{{#crossLink \"SubPanel\"}}{{/crossLink}} and extent change is needed. Sets the `scroll` payload attribute to true if the extent change is not needed\nand the {{#crossLink \"Datagrid\"}}{{/crossLink}} should scroll to the currently highlighted row.",
             "itemtype": "event",
             "name": "maptips.events.EXTENT_CHANGE [subscribed]",
             "params": [
                 {
                     "name": "scroll",
-                    "description": "indicates if the {{#crossLink \"Datagrid\"}}{{/crossLink}} should scroll to the currenlty highlighted row",
+                    "description": "indicates if the {{#crossLink \"Datagrid\"}}{{/crossLink}} should scroll to the currently highlighted row",
                     "type": "Boolean"
                 }
             ],
@@ -2975,7 +3030,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 371,
+            "line": 388,
             "description": "Repositions the interactive tooltip that is already displayed when the user pans or zooms the map, or the map is otherwise\nadjusted. If the tooltip is hidden from the view by the {{#crossLink \"SubPanel\"}}{{/crossLink}} or the edge of the map container,\nit is hidden from the page.",
             "itemtype": "event",
             "name": "maptips.events.REPOSITION_INTERACTIVE [subscribed]",
@@ -2991,7 +3046,16 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 385,
+            "line": 402,
+            "description": "Indicates that all the map layers are loaded.",
+            "itemtype": "event",
+            "name": "RampMap.events.ALL_LAYERS_LOADED",
+            "class": "RampMap",
+            "module": "UI"
+        },
+        {
+            "file": "src\\js\\RAMP\\Modules\\eventManager.js",
+            "line": 411,
             "description": "Centers the map at the given point.",
             "itemtype": "event",
             "name": "RampMap.events.CENTER_AT [subscribed]",
@@ -3031,7 +3095,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 398,
+            "line": 424,
             "description": "Center and zoom the map to the given point.",
             "type": "{String}",
             "itemtype": "event",
@@ -3065,7 +3129,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 411,
+            "line": 437,
             "description": "Changes the current extent of the map.",
             "itemtype": "event",
             "name": "RampMap.events.SET_EXTENT [subscribed]",
@@ -3108,7 +3172,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 425,
+            "line": 451,
             "description": "Fires when the reorder of the layers in the layer managers has completed finished.",
             "itemtype": "event",
             "name": "RampMap.events.REORDER_END",
@@ -3117,7 +3181,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 433,
+            "line": 459,
             "description": "Republishes a standard ESRI map compnent event `update-end`.",
             "itemtype": "event",
             "name": "RampMap.events.UPDATE_END",
@@ -3126,7 +3190,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 441,
+            "line": 467,
             "description": "Republishes a standard ESRI map compnent event `extent-change`.",
             "itemtype": "event",
             "name": "RampMap.events.EXTENT_CHANGE",
@@ -3135,7 +3199,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 449,
+            "line": 475,
             "description": "Republishes a standard ESRI map compnent event `zoom-start`.",
             "itemtype": "event",
             "name": "RampMap.events.ZOOM_START",
@@ -3144,7 +3208,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 457,
+            "line": 483,
             "description": "Republishes a standard ESRI map compnent event `zoom-end`.",
             "itemtype": "event",
             "name": "RampMap.events.ZOOM_END",
@@ -3153,7 +3217,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 465,
+            "line": 491,
             "description": "Republishes a standard ESRI map compnent event `pan-start`.",
             "itemtype": "event",
             "name": "RampMap.events.PAN_START",
@@ -3162,7 +3226,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 473,
+            "line": 499,
             "description": "Republishes a standard ESRI map compnent event `pan-end`.",
             "itemtype": "event",
             "name": "RampMap.events.PAN_END",
@@ -3171,7 +3235,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 481,
+            "line": 507,
             "description": "Fires when a layer is added by a user",
             "itemtype": "event",
             "name": "RampMap.events.ADD_LAYER",
@@ -3180,7 +3244,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 489,
+            "line": 515,
             "description": "Fires when a layer added by a user is ready to view",
             "itemtype": "event",
             "name": "RampMap.events.ADD_LAYER_READY",
@@ -3189,7 +3253,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 499,
+            "line": 525,
             "description": "Fires whenever the basemap changes",
             "itemtype": "event",
             "name": "baseMapSelector/basemap-changed",
@@ -3222,7 +3286,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 511,
+            "line": 537,
             "description": "Fires after the basemap selector finished updating its UI (on page load)",
             "itemtype": "event",
             "name": "baseMapSelector/UIComplete",
@@ -3245,7 +3309,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 522,
+            "line": 548,
             "description": "Changes the selected basemap",
             "itemtype": "event",
             "name": "baseMapSelector/toggle [subscribed]",
@@ -3268,7 +3332,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 534,
+            "line": 560,
             "description": "Applies a spatial filter to the datagrid (i.e. only visible points in the current\nextent will be displayed in the datagrid)",
             "itemtype": "event",
             "name": "datagrid.events.APPLY_EXTENT_FILTER [subscribed]",
@@ -3277,7 +3341,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 543,
+            "line": 569,
             "description": "Fires when the table has finished drawing",
             "itemtype": "event",
             "name": "datagrid.events.DRAW_COMPLETE",
@@ -3286,7 +3350,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 550,
+            "line": 576,
             "description": "Fires when the extent-filter has finished updating",
             "itemtype": "event",
             "name": "datagrid.events.EXTENT_FILTER_END",
@@ -3295,7 +3359,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 557,
+            "line": 583,
             "description": "Highlights the row corresponding to the given `graphic` object of the selected feature.",
             "itemtype": "event",
             "name": "datagrid.events.HIGHLIGHTROW_SHOW",
@@ -3318,7 +3382,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 566,
+            "line": 592,
             "description": "Dehighlights the currently highlighted row.",
             "itemtype": "event",
             "name": "datagrid.events.HIGHLIGHTROW_HIDE",
@@ -3327,7 +3391,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 572,
+            "line": 598,
             "description": "Zoomlights the row corresponding to the given `graphic` object of the zoomed to feature.",
             "itemtype": "event",
             "name": "datagrid.events.ZOOMLIGHTROW_SHOW",
@@ -3350,7 +3414,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 581,
+            "line": 607,
             "description": "Dehighlights the currently zoomlighted row.",
             "itemtype": "event",
             "name": "datagrid.events.ZOOMLIGHTROW_HIDE",
@@ -3359,7 +3423,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 592,
+            "line": 618,
             "description": "Published whenever the user clicks on the pan buttons.",
             "itemtype": "event",
             "name": "Navigation.events.PAN",
@@ -3368,7 +3432,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 599,
+            "line": 625,
             "description": "Published whenever the user tries to zoom using the arrow buttons.",
             "itemtype": "event",
             "name": "Navigation.events.ZOOM_STEP",
@@ -3377,7 +3441,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 606,
+            "line": 632,
             "description": "Published whenever the user tries to zoom using the slider.",
             "itemtype": "event",
             "name": "Navigation.events.ZOOM",
@@ -3386,7 +3450,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 613,
+            "line": 639,
             "description": "Published whenever the user clicks on the full extent button in the\nnavigation widget.",
             "itemtype": "event",
             "name": "Navigation.events.FULL_EXTENT",
@@ -3395,7 +3459,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\eventManager.js",
-            "line": 623,
+            "line": 649,
             "description": "Published whenever the user clicks on the get link button in the\nmap toolbar.",
             "itemtype": "event",
             "name": "bookmark.events.GETLINK_PANEL_CHANGED",
@@ -3404,7 +3468,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\featureClickHandler.js",
-            "line": 47,
+            "line": 48,
             "description": "This function is called whenever the feature on the map is clicked/selected by the user.\nPublish the \"Gui/subPanelOpen\" message to indicate a feature has been selected. Panel content\nand Panel event handler information is passed in as the additional object for the event handler.",
             "itemtype": "method",
             "name": "onFeatureSelect",
@@ -3428,7 +3492,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\featureClickHandler.js",
-            "line": 97,
+            "line": 98,
             "description": "This function is called whenever the \"Details\" button is deselected (either by the user click on\nanother \"Details\" button, clicking on another point, or by clicking on an already highlighted\n\"Details\" button, or clicking somewhere on the map where is no features present).",
             "itemtype": "method",
             "name": "onFeatureDeselect",
@@ -3438,7 +3502,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\featureClickHandler.js",
-            "line": 110,
+            "line": 111,
             "description": "This function is called whenever the user hovers over a feature on the map when another feature already has been selected.",
             "itemtype": "method",
             "name": "onFeatureMouseOver",
@@ -3462,7 +3526,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\featureClickHandler.js",
-            "line": 122,
+            "line": 123,
             "description": "This function is called whenever the user moves the mouse away from a feature being hovered over.",
             "itemtype": "method",
             "name": "onFeatureMouseOut",
@@ -3659,7 +3723,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\filterManager.js",
-            "line": 145,
+            "line": 149,
             "description": "Toggles each layers visibility when the global visibility button is clicked",
             "itemtype": "method",
             "name": "toggleGlobalEye",
@@ -3676,7 +3740,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\filterManager.js",
-            "line": 157,
+            "line": 161,
             "description": "Toggles each layers boundary box display check box when the global boundary box button is clicked",
             "itemtype": "method",
             "name": "toggleGlobalBox",
@@ -3693,7 +3757,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\filterManager.js",
-            "line": 198,
+            "line": 202,
             "description": "Toggles the visibility button (or eye) beside a given layer in the legend. Fires the layer_visibility event.",
             "itemtype": "method",
             "name": "toggleEye",
@@ -3715,7 +3779,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\filterManager.js",
-            "line": 218,
+            "line": 222,
             "description": "Toggles the boundary box button beside a given layer in the legend. Fires the box_visibility event.",
             "itemtype": "method",
             "name": "toggleBox",
@@ -3737,7 +3801,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\filterManager.js",
-            "line": 293,
+            "line": 297,
             "description": "initialize a tooltip for each layer, using the layer name.",
             "itemtype": "method",
             "name": "initTooltips",
@@ -3749,7 +3813,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\filterManager.js",
-            "line": 319,
+            "line": 323,
             "description": "Adjusts UI layout according to a layer event.",
             "itemtype": "method",
             "name": "setButtonEvents",
@@ -3761,7 +3825,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\filterManager.js",
-            "line": 329,
+            "line": 333,
             "description": "Changes the width of the layers pane to accommodate for the scrollbar if it's needed.",
             "itemtype": "method",
             "name": "adjustPaneWidth",
@@ -3773,7 +3837,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\filterManager.js",
-            "line": 337,
+            "line": 341,
             "description": "Changes the state of the expand all control if all the nodes are expanded.",
             "itemtype": "method",
             "name": "adjustExpandAllButtonState",
@@ -3785,7 +3849,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\filterManager.js",
-            "line": 434,
+            "line": 438,
             "description": "Adjusts filter style according to the scroll action on the layers.",
             "itemtype": "method",
             "name": "initScrollListeners",
@@ -3797,7 +3861,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\filterManager.js",
-            "line": 533,
+            "line": 537,
             "description": "Initiates a listener to handle tab deselected event",
             "itemtype": "method",
             "name": "initListeners",
@@ -3809,7 +3873,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\filterManager.js",
-            "line": 548,
+            "line": 552,
             "description": "Reads the application configuration and creates the legend and filter management widget",
             "itemtype": "method",
             "name": "init",
@@ -3820,7 +3884,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\filterManager.js",
-            "line": 572,
+            "line": 566,
             "description": "Queries all map points on a given feature layer and returns their attributes",
             "itemtype": "method",
             "name": "_getFeatures",
@@ -3841,7 +3905,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\filterManager.js",
-            "line": 588,
+            "line": 582,
             "description": "Grabs all distinct values of the given field from a featureLayer.",
             "itemtype": "method",
             "name": "_getField",
@@ -4491,7 +4555,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\gui.js",
-            "line": 870,
+            "line": 871,
             "description": "Publishes `PANEL_CHANGE` event when the visibility of the SidePanel changes.",
             "itemtype": "method",
             "name": "panelChange",
@@ -4510,7 +4574,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\gui.js",
-            "line": 884,
+            "line": 885,
             "description": "Slides the SidePanel open.",
             "itemtype": "method",
             "name": "openPanel",
@@ -4529,7 +4593,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\gui.js",
-            "line": 908,
+            "line": 909,
             "description": "Slide the SidePanel close",
             "itemtype": "method",
             "name": "closePanel",
@@ -4548,7 +4612,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\gui.js",
-            "line": 997,
+            "line": 998,
             "description": "Toggles the FullScreen mode of the application",
             "itemtype": "method",
             "name": "toggleFullScreenMode",
@@ -4567,8 +4631,8 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\gui.js",
-            "line": 1016,
-            "description": "Fires an even when the subpanel closes or opens.",
+            "line": 1017,
+            "description": "Fires an event when the subpanel closes or opens.",
             "itemtype": "method",
             "name": "subPanelChange",
             "access": "private",
@@ -4601,7 +4665,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\gui.js",
-            "line": 1046,
+            "line": 1056,
             "description": "Returns the outer most `div` of this SidePanel.",
             "itemtype": "method",
             "name": "getContainer",
@@ -4615,7 +4679,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\gui.js",
-            "line": 1056,
+            "line": 1066,
             "description": "Gets the width of this SidePanel.",
             "itemtype": "method",
             "name": "width",
@@ -4629,7 +4693,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\gui.js",
-            "line": 1068,
+            "line": 1078,
             "description": "Create a new SubPanel with the settings provided.",
             "access": "private",
             "tagname": "",
@@ -4652,7 +4716,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\gui.js",
-            "line": 1086,
+            "line": 1096,
             "description": "Adjusts dimensions of the help panel relative to the mapContent `div`.",
             "itemtype": "method",
             "name": "adjustHelpDimensions",
@@ -4664,7 +4728,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\gui.js",
-            "line": 1098,
+            "line": 1108,
             "description": "Adjusts the dimensions and position of the SubPanel when layout of the page is changing.",
             "itemtype": "method",
             "name": "adjutSubPanelDimensions",
@@ -4683,7 +4747,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\gui.js",
-            "line": 1129,
+            "line": 1139,
             "description": "Creates and opens a new SubPanel with given settings.\nIf the SubPanel with the requested `origin` is already present, updates its content.",
             "itemtype": "method",
             "name": "showSubPanel",
@@ -4702,7 +4766,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\gui.js",
-            "line": 1189,
+            "line": 1199,
             "description": "Closes the SubPanel whose `origin` is specified in the `attr` parameter.",
             "itemtype": "method",
             "name": "hideSubPanel",
@@ -4731,7 +4795,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\gui.js",
-            "line": 1222,
+            "line": 1232,
             "description": "Moves the SubPanel with the specified `origin` in the DOM hierarchy to the new specified `target`; if `target` is not specified, the SubPanel is attached to the SidePanel.",
             "itemtype": "method",
             "name": "dockSubPanel",
@@ -4750,7 +4814,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\gui.js",
-            "line": 1239,
+            "line": 1249,
             "description": "Finds a SubPanel with `origin` equal to the supplied `consumeOrigin` and\n+ changes its `origin` to the supplied `origin`\n+ moves the SubPanel in the DOM hierarchy and attaches it to the specified target",
             "itemtype": "method",
             "name": "captureSubPanel",
@@ -4769,7 +4833,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\gui.js",
-            "line": 1265,
+            "line": 1275,
             "description": "Call load to initialize the GUI module.",
             "itemtype": "method",
             "name": "load",
@@ -4973,7 +5037,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\map.js",
-            "line": 405,
+            "line": 427,
             "description": "Instantiates an extent from a JSON config object and spatial reference",
             "access": "private",
             "tagname": "",
@@ -5001,7 +5065,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\map.js",
-            "line": 419,
+            "line": 441,
             "description": "Add a static, non-interactive Llyer to the map",
             "access": "private",
             "tagname": "",
@@ -5030,7 +5094,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\map.js",
-            "line": 462,
+            "line": 484,
             "description": "Sets the visibility of the bounding box that belongs to the layer with the given layerId.\nNote: the layerId needs to be the ID of the featurelayer, not the ID of the actual bounding\nbox layer.",
             "access": "private",
             "tagname": "",
@@ -5049,7 +5113,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\map.js",
-            "line": 508,
+            "line": 530,
             "description": "The maximum extent of the map control is allowed to go to",
             "itemtype": "property",
             "name": "getMaxExtent",
@@ -5060,7 +5124,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\map.js",
-            "line": 517,
+            "line": 539,
             "description": "Return the map control object",
             "itemtype": "property",
             "name": "getMap",
@@ -5071,7 +5135,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\map.js",
-            "line": 530,
+            "line": 552,
             "description": "Returns a list of feature layers that are currently visible on the map.",
             "itemtype": "method",
             "name": "getVisibleFeatureLayers",
@@ -5085,7 +5149,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\map.js",
-            "line": 544,
+            "line": 566,
             "description": "Return the feature layer corresponding to the given url.",
             "itemtype": "method",
             "name": "getFeatureLayer",
@@ -5108,7 +5172,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\map.js",
-            "line": 559,
+            "line": 581,
             "description": "Given an ESRI Extent Object, returns a new ESRI Extent Object that\ncontains the extent adjusted according to this map's maximum extent\n\nNOTE: this method is currently unused!",
             "params": [
                 {
@@ -5134,7 +5198,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\map.js",
-            "line": 648,
+            "line": 670,
             "description": "The spatial reference of the map",
             "itemtype": "property",
             "name": "spatialReference",
@@ -5147,7 +5211,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\map.js",
-            "line": 659,
+            "line": 681,
             "description": "The URL of the basemap that is on by default",
             "itemtype": "property",
             "name": "url",
@@ -5160,7 +5224,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\map.js",
-            "line": 670,
+            "line": 692,
             "description": "The basemap layer",
             "itemtype": "property",
             "name": "baseLayer",
@@ -5173,7 +5237,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\map.js",
-            "line": 681,
+            "line": 703,
             "description": "The maximum extent of the map",
             "itemtype": "property",
             "name": "maxExtent",
@@ -5186,7 +5250,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\map.js",
-            "line": 690,
+            "line": 712,
             "description": "The initial extent of the map",
             "itemtype": "property",
             "name": "InitExtent",
@@ -5199,7 +5263,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\map.js",
-            "line": 699,
+            "line": 721,
             "description": "Used for full extent in nav widget",
             "itemtype": "property",
             "name": "fullExtent",
@@ -5212,7 +5276,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Modules\\map.js",
-            "line": 718,
+            "line": 740,
             "description": "A list GraphicsLayer that represent the extent bounding box of the feature layers.\n{[esr/layer/featurelayers]} featureLayers A list of feature layers found in the application config\n{[esri/layer/graphiclayer]}  An array of graphic layers to add to the map",
             "itemtype": "property",
             "name": "boundingBoxLayers",
@@ -5669,6 +5733,12 @@
                     "name": "type",
                     "description": "Type of the tooltips to set",
                     "type": "String"
+                },
+                {
+                    "name": "action",
+                    "description": "Action name: \"update\" will update all the tooltips on target with their respective title attributes;\nnull will create new tooltips",
+                    "type": "String",
+                    "optional": true
                 }
             ],
             "return": {
@@ -7232,6 +7302,12 @@
                     "name": "labels",
                     "description": "An object containing labels' text { checked: \"label when checked\", unchecked: \"label when unchecked\" }",
                     "type": "Object"
+                },
+                {
+                    "name": "fnc",
+                    "description": "Function to run on the label node when it's toggled",
+                    "type": "Function",
+                    "optional": true
                 }
             ],
             "return": {
@@ -7243,7 +7319,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Utils\\util.js",
-            "line": 425,
+            "line": 426,
             "description": "Toggle the state of checkboxes.",
             "itemtype": "method",
             "name": "setAll",
@@ -7264,7 +7340,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Utils\\util.js",
-            "line": 442,
+            "line": 443,
             "description": "Toggles the checkboxes based on the return value of the given fcn.",
             "itemtype": "method",
             "name": "setState",
@@ -7285,7 +7361,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Utils\\util.js",
-            "line": 456,
+            "line": 457,
             "description": "Returns original checkbox nodes.",
             "itemtype": "method",
             "name": "getNodes",
@@ -7298,7 +7374,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Utils\\util.js",
-            "line": 526,
+            "line": 530,
             "description": "Returns the width of the scrollbar in pixels. Since different browsers render scrollbars differently, the width may vary.",
             "itemtype": "method",
             "name": "scrollbarWidth",
@@ -7312,7 +7388,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Utils\\util.js",
-            "line": 550,
+            "line": 554,
             "description": "Checks if the height of the scrollable content of the body is taller than its height;\nif so, offset the content horizontally to accomodate for the scrollbar assuming target's width is\nset to \"100%\".",
             "itemtype": "method",
             "name": "adjustWidthForSrollbar",
@@ -7334,7 +7410,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Utils\\util.js",
-            "line": 570,
+            "line": 574,
             "description": "Waits until a given function is available and executes a callback function.",
             "itemtype": "method",
             "name": "executeOnLoad",
@@ -7361,7 +7437,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Utils\\util.js",
-            "line": 597,
+            "line": 601,
             "description": "Loops through all object properties and applies a given function to each. Resolves the given deferred when done.",
             "itemtype": "method",
             "name": "executeOnDone",
@@ -7388,7 +7464,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Utils\\util.js",
-            "line": 645,
+            "line": 649,
             "description": "Generates an rfc4122 version 4 compliant guid.\nTaken from here: http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript",
             "itemtype": "method",
             "name": "guid",
@@ -7402,7 +7478,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Utils\\util.js",
-            "line": 661,
+            "line": 665,
             "description": "Returns an appropriate where clause depending on whether the query\nis a String (returns a where clause with CASE INSENSITIVE comparison)\nor an integer.",
             "itemtype": "method",
             "name": "getWhereClause",
@@ -7428,7 +7504,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Utils\\util.js",
-            "line": 679,
+            "line": 683,
             "description": "Converts html into text by replacing\nall html tags with their appropriate special characters",
             "itemtype": "method",
             "name": "stripHtml",
@@ -7449,7 +7525,7 @@
         },
         {
             "file": "src\\js\\RAMP\\Utils\\util.js",
-            "line": 717,
+            "line": 721,
             "description": "Applies supplied xslt to supplied xml. IE always returns a String; others may return a documentFragment or a jObject.",
             "itemtype": "method",
             "name": "transformXML",
@@ -7483,7 +7559,7 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\js\\RAMP\\Modules\\datagrid.js:1013"
+            "line": " src\\js\\RAMP\\Modules\\datagrid.js:1014"
         },
         {
             "message": "unknown tag: uese",
