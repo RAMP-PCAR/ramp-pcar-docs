@@ -7,7 +7,7 @@ categories: [documentation]
 # RAMP Quick Start Guide {#wb-cont}
 
 Welcome to RAMP Quick Start Guide. In this guide, we will be showing you how to setup your own web map using RAMP.
-[View live sample]({{BASE_PATH}}/demos/NRSTC/ramp-gcwu-fecg-map.html)
+[View live sample]({{BASE_PATH}}/demos/NRSTC/ramp-gcwu-fegc-map.html)
 
 ## Requirements
 
