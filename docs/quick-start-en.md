@@ -7,6 +7,7 @@ categories: [documentation]
 # RAMP Quick Start Guide {#wb-cont}
 
 Welcome to RAMP Quick Start Guide. In this guide, we will be showing you how to setup your own web map using RAMP.
+[View live sample]({{BASE_PATH}}/demos/NRSTC/ramp-gcwu-fecg-map.html)
 
 ## Requirements
 
@@ -34,15 +35,15 @@ Layer 3 - Natural Resources Canada
 
 Layer 4 - National Research Council
 
-Layer 5 - Other Centers
+Layer 5 - Other Centres
 
 ## Setting up your map layers
 
 ### Add a basemap layer
 
-To configure a basemap for your RAMP based web mapping application, open the config.json file via a [text editor](http://www.jsoneditoronline.org). Search for basemaps to locate
-the basemap configuration section. By default, RAMP has 5 basemaps layer configured. You can delete all and add your own, or use existing ones. For our example, we will keep
-basemap baseNrCan and delete the remaining.
+To configure a basemap for your RAMP based web mapping application, open the config.json file via any text editor or [json editor](http://www.jsoneditoronline.org). Search for \"basemaps\" to locate
+the basemaps configuration section. By default, RAMP has 5 basemap layers configured. You can delete all and add your own, or use any existing one. For our example, we will keep
+basemap baseNrCan and delete the remaining basemap configurations.
 
 ![Partial configuration file](../assets/images/qs_basemap_config.png)
 
