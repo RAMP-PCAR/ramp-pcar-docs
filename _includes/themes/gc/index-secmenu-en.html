@@ -102,8 +102,23 @@
             </div>
         </nav>
     </header>
-
     <div class="container">
+        {% if page.ancestors.size > 0 %}
+        <nav role="navigation" id="wb-bc" property="breadcrumb">
+            <h2>You are here:</h2>
+            <div class="container">
+                <div class="row">
+                    <ol class="breadcrumb">
+                        {% for p in page.ancestors %}
+                        <li><a href="{{ p.url }}">{{ p.title }}</a></li>
+                        {% endfor %}
+
+                        <li class="">{{ page.title }}</li>
+                    </ol>
+                </div>
+            </div>
+        </nav>
+        {% endif %}
         <div class="row">
 
             <main role="main" property="mainContentOfPage" class="col-md-9 col-md-push-3">

@@ -1,6 +1,6 @@
 ---
 layout: index-secmenu-en
-title: Architecture Overview
+title: "Architecture Overview"
 categories: [documentation]
 ---
 {% include JB/setup %}

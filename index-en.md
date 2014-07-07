@@ -1,6 +1,6 @@
 ---
 layout: "index-en"
-title: "RAMP-RACP"
+title: "Home"
 tagline: Reusable Accessible Mapping Platform
 published: true
 ---
