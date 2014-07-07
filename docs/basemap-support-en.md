@@ -1,6 +1,6 @@
 ---
 layout: index-secmenu-en
-title: "Basemap Support
+title: "Basemap Support"
 categories: [documentation]
 ---
 {% include JB/setup %}
