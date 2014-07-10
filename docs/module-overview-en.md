@@ -55,19 +55,33 @@ Manages the widget that allows the maps current state to be displayed as a URL. 
 
 The module handles the construction and population of the data grid.
 
+#### Table Creation
 The table structure is generated using the [datatables](external-libraries-en.html#datatables) library. The content and styling of the data grid can be configured using the JSON configuration file. 
-Pagination is a custom plugin into the datatables library. Sorting is provided by the datatables library. 
-
 Population of grid rows consists of determining visible features, generating column data (this includes applying templates), and filling the grid with the result set.
 
+#### Datagrid Modes
 The datagrid has two states: summary and extended. In summary mode, only the most basic information about each feature (such the layer it belongs to, its name, and its icon on the map) is presented.
 In the extended mode, detailed information about each feature is provided in each column. The map is visible when the user is in summary mode, however the map is hidden when the user switches
 to the extended mode. The data grid is destroyed and reconstructed each time the user switches between the summary and extended mode.
 
-The grid contains buttons to obtain details and zoom to row items.  This is done via the dataGridClickHandler module (see below).  In future releases, we plan to have this extensible to allow easy overriding of the controls.
+#### Extent Filtering
+Each time the extent of the map is changed (via a pan or zoom operation), the datagrid updates to show only the features that are visible in the current extent. The bottom of the datagrid contains
+a record count to notify the user of the number of features currently visible on the map versus the total number of features in the entire map. The extent filter behaviour can be toggled in the extended
+grid using the [extendedExtentFilterEnabled](json-config-en.html#datagrid_extendedextentfilterenabled) field. The summary grid will always have the extent filter enabled.
 
+#### Pagination
+Pagination is a custom plugin into the datatables library
+
+#### Sorting
+Sorting is provided out-of-the-box by the datatables library. 
+
+#### Feature Selection
 Whenever the user clicks on a feature on the map, the corresponding row in the summary grid is highlighted. This is done by caching the object IDs of all the features and mapping them to the index of the feature in the datagrid.
 Once the user clicks on a feature, the index is retrieved and the datagrid navigates to the correct page using the datatables pagination functions and scrolls to the correct row using JQuery.
+
+#### Details and Zoom Buttons
+The grid contains buttons to obtain details and zoom to row items.  This is done via the dataGridClickHandler module (see below).  In future releases, we plan to have this extensible to allow easy overriding of the controls.
+
 
 **Relevant Sequence Diagrams**
 
