@@ -189,6 +189,7 @@ This page will walk you through the layout of the application configuration obje
 | datagrid.summaryEnabled	| boolean	| Flag indicate summary grid is enabled
 | datagrid.extendedEnabled	| boolean	| Flag indicate extended grid is enabled
 | datagrid.extendedColumns[]	| collections	| Column definition for extended datagrid
+| datagrid.extendedExtentFilterEnabled   | boolean       | Flag indicate extent filter is enabled for extended grid
 | siteTemplate	| 	|
 | <a name="sitetemplate_basemaptemplate" /> siteTemplate.basemapTemplate 	| string	| The JSON template for each entry in the basemap selector (defaults to name of map and a thumbnail)
 | <a name="sitetemplate_filterglobalrowtemplate" />siteTemplate.filterGlobalRowTemplate	| string	| Template for
