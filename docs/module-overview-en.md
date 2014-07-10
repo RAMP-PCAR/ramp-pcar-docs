@@ -67,7 +67,8 @@ to the extended mode. The data grid is destroyed and reconstructed each time the
 #### Extent Filtering
 Each time the extent of the map is changed (via a pan or zoom operation), the datagrid updates to show only the features that are visible in the current extent. The bottom of the datagrid contains
 a record count to notify the user of the number of features currently visible on the map versus the total number of features in the entire map. The extent filter behaviour can be toggled in the extended
-grid using the [extendedExtentFilterEnabled](json-config-en.html#datagrid_extendedextentfilterenabled) field. The summary grid will always have the extent filter enabled.
+grid using the [extendedExtentFilterEnabled](json-config-en.html#datagrid_extendedextentfilterenabled) field. The summary grid will always have the extent filter enabled. Each time the extent of the map
+changes, the data grid is cleared, a query is sent to fetch a list of features visible in the current extent, and the data grid is repopulated with the new features. 
 
 #### Pagination
 Pagination is a custom plugin into the datatables library
@@ -77,10 +78,14 @@ Sorting is provided out-of-the-box by the datatables library.
 
 #### Feature Selection
 Whenever the user clicks on a feature on the map, the corresponding row in the summary grid is highlighted. This is done by caching the object IDs of all the features and mapping them to the index of the feature in the datagrid.
-Once the user clicks on a feature, the index is retrieved and the datagrid navigates to the correct page using the datatables pagination functions and scrolls to the correct row using JQuery.
+Once the user clicks on a feature, the index is retrieved and the datagrid navigates to the correct page using the datatables pagination functions and scrolls to the correct row using JQuery. If a feature was highlighted prior
+to the extent change, it will remain highlighted after the extent change if it is visible in the current extent. 
 
 #### Details and Zoom Buttons
-The grid contains buttons to obtain details and zoom to row items.  This is done via the dataGridClickHandler module (see below).  In future releases, we plan to have this extensible to allow easy overriding of the controls.
+The grid contains a "details" button that is used to show detailed information about a feature, which will appear in a slide out panel.  The datagrid also
+contains a "zoom to" button that is used to zoom to the feature on the map. Once zoomed in, the "zoom to" button will change to a "zoom back" button which will bring the user back to the original extent prior to the zoom to
+operation. The dataGridClickHandler module (see below) is responsible for the behaviour of the datagrid when the "details" or "zoom to" button is clicked. In future releases, we plan to have this extensible to allow easy overriding 
+of the default behaviour.
 
 
 **Relevant Sequence Diagrams**
