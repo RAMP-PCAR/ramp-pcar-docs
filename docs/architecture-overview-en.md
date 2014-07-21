@@ -58,6 +58,9 @@ Summary Grid
 Topic
 : A publication and subscription framework in [DOJO](http://dojotoolkit.org/reference-guide/1.9/dojo/topic.html).  This is used to pass events in the RAMP source.
 
+WMS
+: [Web Map Service](http://www.opengeospatial.org/standards/wms).  An open-source online service that provides mapping information, often in the form of an image of spatial data.
+
 ## High Level Block Diagram
 
 <section class="wb-lbx lbx-gal">

@@ -61,7 +61,7 @@ Basemap configuration
 
 This will setup your RAMP basemap. When you start your web map application, the NRCan basemap will be displayed.
 
-### Add map layer
+### Add a feature layer
 
 In the Research Centre map layers, we have six layers available. We will be populating featureLayers section with those six layers.
 With the config.json opened, Look for “featureLayers” section.  This section is where we will be adding Research Centre layers.
@@ -152,3 +152,22 @@ Column Template is used in RAMP to generate the content for each column. There a
 * details_button\: generate a button that will open the detail panel for a given feature.
 
 You can add and customize templates by adding or modifying the templates in this file. For more information on customizing template, please refer to the [Template Guide](template-guide-en.html)
+
+
+### Add a WMS layer
+
+To configure a WMS layer for your RAMP based web mapping application, open the config.json file via any text editor or [json editor](http://www.jsoneditoronline.org). Search for \"wmsLayers\" to locate
+the [WMS configuration section](json-config-en.html#wmsLayers).  Add an object to the collection for each WMS layer you wish to add.  
+
+![Partial configuration file](../assets/images/qs_wms_config.png)
+
+WMS Layer configuration
+
+Critical Fields
+
+* extent.spatialReference:  The projection needs to be compatible with the current basemap
+* url: The root service for the WMS
+* layerInfo.name: This must match the Name value of the layer you wish to show.  These values can be found via the WMS getCapabilities function
+* layerInfo.title: Similar to name, must match the WMS layer value
+
+When you start your web map application, the WMS layers will be displayed.

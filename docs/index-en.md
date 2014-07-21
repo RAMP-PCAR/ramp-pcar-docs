@@ -24,5 +24,6 @@ published: true
     * [External Library Implementations](/docs/external-libraries-en.html)
     * [Build Tool](/docs/build-tool-en.html)
     * [Basemap Support](/docs/basemap-support-en.html)
+    * [WMS Support](/docs/wms-support-en.html)
 * [API Reference](/api/yuidoc/index.html)
 * [Known Issues](/docs/known-issues-en.html)
