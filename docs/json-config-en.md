@@ -86,6 +86,33 @@ This page will walk you through the layout of the application configuration obje
     * uuid
     * detailTemplate
     * nameField
+* wmsLayers (collection)
+    * id
+    * displayName
+    * url
+    * uuid
+    * extent
+    * format
+    * settings
+        * enabled
+        * opacity
+    * layerInfo
+        * name
+        * legendURL
+        * title
+        * allExtents (collection)
+        * spatialReferences (collection)
+        * subLayers (collection)
+    * symbology
+        * renderer
+            * type
+            * key1
+            * key2
+            * Key3
+        * icons
+            * default
+                * imageUrl
+                * legendText
 * datagrid
     * globalGridRowsPerPage
     * defaultState
@@ -183,6 +210,23 @@ This page will walk you through the layout of the application configuration obje
 | featureLayers[].uuid	| string	| Feature layer UUID
 | <a name="featurelayers_detailtemplate" /> featureLayers[].detailTemplate	| string	| Template used to generate detail content of a selected feature
 | featureLayers[].nameField	| string	| Field to be used to describe a feature.  Utilized in summary grid, detail content, map tip, and anchored maptip
+| <a name="wmsLayers" /> wmsLayers	| collection	| WMS layers to be added to the map.  Order dictates initial order on the map.
+| wmsLayers[].id	| string	| to identify a layer.  unique across all WMS layers
+| wmsLayers[].url	| string	| the url of the WMS service.  does not specify name of individual layer to show
+| wmsLayers[].uuid	| string	| UUID of the layer
+| wmsLayers[].format	| string	| format of the return image (e.g. png)
+| wmsLayers[].settings	| 	| 
+| wmsLayers[].settings.enabled	| boolean	| determines if a layer can be interacted with in the layer selector
+| wmsLayers[].settings.opacity	| numeric	| opacity of layer (decimal). 1 being fully opaque, 0 being fully transparent
+| wmsLayers[].extent	| [ESRI Extent](https://developers.arcgis.com/javascript/jsapi/extent-amd.html)	| A valid extent object, including spatial reference.  Extent should define a valid extent for the WMS
+| wmsLayers[].layerInfo	|	|
+| wmsLayers[].layerInfo.name	| string	| name of the layer in the WMS we want to display.  must match exactly from the WMS definition
+| wmsLayers[].layerInfo.title	| string	| title of the layer in the WMS we want to display.  must match exactly from the WMS definition
+| wmsLayers[].layerInfo.legendURL	| string	| url to legend image for the layer.  optional
+| wmsLayers[].layerInfo.allExtents	| collection	| empty for now.  possible to utilize this in later versions
+| wmsLayers[].layerInfo.spatialReferences	| collection	| empty for now.  possible to utilize this in later versions
+| wmsLayers[].layerInfo.subLayers	| collection	| empty for now.  possible to utilize this in later versions
+| wmsLayers[].symbology	| object	| identical structure to the featureLayers[].symbology node
 | <a name="datagrid" />datagrid	| 	|
 | datagrid.globalGridRowsPerPage	| numeric	| Number of rows per page to be displayed in datagrid in summary view
 | datagrid.defaultState	| string	| Default state of the datagrid: summary or entexted
