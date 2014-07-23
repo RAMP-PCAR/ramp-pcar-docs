@@ -101,7 +101,24 @@
             </div>
         </nav>
     </header>
+    {% if page.ancestors.size > 0 %}
+    <nav role="navigation" id="wb-bc" property="breadcrumb">
+        <h2>You are here:</h2>
+        <div class="container">
+            <div class="row">
+                <ol class="breadcrumb">
+                    {% for p in page.ancestors %}
+                    <li><a href="{{ p.url }}">{{ p.title }}</a></li>
+                    {% endfor %}
+
+                    <li class="">{{ page.title }}</li>
+                </ol>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
     <main role="main" property="mainContentOfPage" class="container">
+
         {{ content }}
         <dl id="wb-dtmd" property="dateModified">
             <dt>Date modified:&#32;</dt>
