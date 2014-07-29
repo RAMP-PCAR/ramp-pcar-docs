@@ -97,12 +97,14 @@ This page will walk you through the layout of the application configuration obje
         * enabled
         * opacity
     * layerInfo
-        * name
-        * legendURL
+        * name        
         * title
         * allExtents (collection)
         * spatialReferences (collection)
         * subLayers (collection)
+    * legend
+        * enable
+        * legendURL
     * symbology
         * renderer
             * type
@@ -222,10 +224,12 @@ This page will walk you through the layout of the application configuration obje
 | wmsLayers[].layerInfo	|	|
 | wmsLayers[].layerInfo.name	| string	| name of the layer in the WMS we want to display.  must match exactly from the WMS definition
 | wmsLayers[].layerInfo.title	| string	| title of the layer in the WMS we want to display.  must match exactly from the WMS definition
-| wmsLayers[].layerInfo.legendURL	| string	| url to legend image for the layer.  optional
 | wmsLayers[].layerInfo.allExtents	| collection	| empty for now.  possible to utilize this in later versions
 | wmsLayers[].layerInfo.spatialReferences	| collection	| empty for now.  possible to utilize this in later versions
 | wmsLayers[].layerInfo.subLayers	| collection	| empty for now.  possible to utilize this in later versions
+| wmsLayers[].legend	|	|
+| wmsLayers[].legend.enable	| boolean	| true to enable WMS legends, false to disable it
+| wmsLayers[].legend.legendURL	| string	| url to legend image for the layer.  optional
 | wmsLayers[].symbology	| object	| identical structure to the featureLayers[].symbology node
 | <a name="datagrid" />datagrid	| 	|
 | datagrid.globalGridRowsPerPage	| numeric	| Number of rows per page to be displayed in datagrid in summary view
