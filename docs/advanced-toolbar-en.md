@@ -21,7 +21,7 @@ This tool allows a user to specify a buffer size in kilometers, and draw a polyg
 
 ### Measure Tool
 
-This tool allows a suer to draw a polygon on the map.  The area and circumference of the polygon will be displayed.
+This tool allows a user to draw a polygon on the map.  The area and circumference of the polygon will be displayed.
 
 ## Adding New Tools
 
