@@ -207,5 +207,18 @@ The default filter row contain a handle that enables the user to rearrange the o
 | **Template File** | filter_manager_template.json |
 | **Data Object** | Custom |
 
+##Advanced Tools {#advanced_tools}
+
+Describes the input/output box for advanced tools.
+
+**Default Behaviour**
+
+Each tool has its own template.  Templates are simplistic, showing output, or if required, an input box for tool parameters.
+
+| **Template Name** | in custom tool, function displayOutput will call baseclass function displayTemplateOutput, passing in a template name. |
+| **Template File** | Tools\\templates\\tools_template.json |
+| **Data Object** | Custom |
+
+
 [Back To Top](#top)
 {: .text-right}

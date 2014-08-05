@@ -16,9 +16,13 @@ Utilities
 Singleton object
 : a singleton object that contains both fields and functions (in C# or Java, these would be classes that cannot be instantiated, have static fields, and static functions). These are the only objects can have states that change over time (e.g. Map can have different extents, Datagrid can have different points, whereas the Resource dictionary never changes, neither do the Utility classes).
 
+Baseclass
+: a module that is inherited (via mixin) by other modules, providing common functions to the inheritors.
+
 | Module Path | Return Type | Preferred Arg Alias |
 |:--------|:-------|:--------|
-| ramp/basemapselector | singleton object | BasemapSelector |
+| ramp/advancedToolbar | singleton object | AdvancedToolbar |
+| ramp/basemapSelector | singleton object | BasemapSelector |
 | ramp/bookmarklink | singleton object | BookmarkLink |
 | ramp/datagrid | singleton object | Datagrid |
 | ramp/datagridClickHandler | singleton object | DatagridClickHandler |
@@ -34,6 +38,7 @@ Singleton object
 | ramp/navigation | singleton object | Navigation |
 | ramp/quickzoom | class | Quickzoom |
 | ramp/ramp | singleton object | Ramp |
+| tools/baseTool | baseclass | BaseTool |
 | utils/array | utilities | UtilArray |
 | utils/decorator | utilities | Decorator |
 | utils/dictionary | utilities | UtilDict |

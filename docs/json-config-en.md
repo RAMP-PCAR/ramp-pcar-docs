@@ -35,6 +35,13 @@ This page will walk you through the layout of the application configuration obje
     * locale
     * cssPath
     * skin
+* advancedToolbar
+    * enabled
+    * tools
+        * toolname (1 per tool)
+            * name
+            * selector
+            * enabled
 * levelOfDetails
     * minLevel
     * maxLevel
@@ -163,6 +170,13 @@ This page will walk you through the layout of the application configuration obje
 | navWidget.locale	| string	| Navigation widget locale
 | navWidget.cssPath	| string	| Path to CSS
 | navWidget.skin	| string	| Skin style
+| <a name="advancedToolbar" />advancedToolbar	| 	|
+| advancedToolbar.enabled	| boolean	| determines if the advanced toolbar is available in the app
+| advancedToolbar.tools	| object	| holds a child object for each available tool
+| advancedToolbar.tools.toolname	| object	| object defining an individual tool.  object name will be specific to the tool (i.e. it is not called "toolname")
+| advancedToolbar.tools.toolname.name	| string	| name of the tool.  should match the name property of the tool's javascript module
+| advancedToolbar.tools.toolname.selector	| string	| name of the selector tag to use in the html layout.  should be unique amongst tools
+| advancedToolbar.tools.toolname.enabled	| boolean	| determines if the tool should be made available in the toolbar
 | levelOfDetails	| 	|
 | <a name="levelofdetails_minlevel" />levelOfDetails.minLevel	| numeric	| Minimum level of detail
 | <a name="levelofdetails_maxlevel" />levelOfDetails.maxLevel	| numeric	| Maximum level of detail
