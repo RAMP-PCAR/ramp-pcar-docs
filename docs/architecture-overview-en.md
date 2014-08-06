@@ -96,6 +96,7 @@ In RAMP Arctic Fox we do not have any attribute based filtering.  Filtering is d
 The layers exist in the following order on the map
 
 * Basemap Layer
+* WMS Layers
 * Static Layers
 * Bounding Box Layers
 * Feature Layers
@@ -104,9 +105,7 @@ The layers exist in the following order on the map
   * Highlight
   * Hoverlight
 
-The Feature Layers can be re-ordered via the filter control, but always stay in the same range.
-
-Layers are arranged in this order as it makes sense from a drawing perspective.  Highlights have the most visual precedence, followed by the feature layers.  Basemaps are on the bottom as they are solid tile.  Static layers and bounding boxes have lower priority than the feature layers.
+The Feature Layers can be re-ordered via the filter control, but always stay in the same range.  WMS Layers can also be re-ordered; however a WMS Layer must always be beneath the Feature Layers (this includes Static Layers and Bounding Boxes).  The Basemap is always on the bottom of the layer pile.
 
 The Zoomlight layer will highlight a feature that has been zoomed to from the datagrid.  The Hoverlight layer will highlight a feature that the mouse is hovering over.  The Highlight layer will highlight a feature that has been clicked on or has it's details opened.
 

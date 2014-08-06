@@ -22,6 +22,19 @@ $(document).ready(function() {
 
 <div class="toc"></div>
 
+## ramp/advancedToolbar {#advancedToolbar}
+
+Provides a toolbar with tools that violate accessibility rules.  Will load and display tools from config definitions and [customized tool modules](advanced-toolbar-en.html).
+
+
+| **API Page** | [AdvancedToolbar](../api/yuidoc/classes/AdvancedToolbar.html)
+| **Relevant Configuration Nodes** | [advancedToolbar](json-config-en.html#advancedToolbar)
+| **Template Summary** | [Advanced Tools](template-summary-en.html#advanced_tools)
+
+[Back To Top](#top)
+{: .text-right}
+
+
 ## ramp/basemapSelector {#basemapselector}
 
 Manages the widget that allows the user to change the basemap. Utilizes the [esri.dijit.Basemap](https://developers.arcgis.com/javascript/jsapi/basemap-amd.html) dijit.  Populates the widget with basemaps from the config.  All basemaps must be in the same projection.
