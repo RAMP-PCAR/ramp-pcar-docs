@@ -234,7 +234,7 @@ This page will walk you through the layout of the application configuration obje
 | <a name="featurelayers_settings" />featureLayers[].settings	| object	| Object to store layer settings and their presets.
 | featureLayers[].settings.enabled	| boolean	| Indicates whether the settings panel should be accessible to the user.
 | featureLayers[].settings.opacity	| object	| Object to store opacity information.
-| featureLayers[].settings.opacity.enabled	| boolean	| Indicates whether opacity of the layer can be changed by the user or by preset. If settings are disabled, and opacity is enabled, the preset value will still be applied to the opacity level.
+| featureLayers[].settings.opacity.enabled	| boolean	| Indicates whether opacity of the layer can be changed by the user. If settings are disabled, the opacity preset value will still be applied to the opacity level.
 | featureLayers[].settings.opacity.default	| numeric	| Specifies the preset opacity level to be applied to the layer on load.
 | <a name="wmsLayers" /> wmsLayers	| collection	| WMS layers to be added to the map.  Order dictates initial order on the map.
 | wmsLayers[].id	| string	| to identify a layer.  unique across all WMS layers
