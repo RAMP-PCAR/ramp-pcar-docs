@@ -56,7 +56,7 @@ Manages the widget that allows the maps current state to be displayed as a URL. 
 The module handles the construction and population of the data grid.
 
 #### Table Creation
-The table structure is generated using the [datatables](external-libraries-en.html#datatables) library. The content and styling of the data grid can be configured using the JSON configuration file. 
+The table structure is generated using the [datatables](external-libraries-en.html#datatables) library. The content and styling of the data grid can be configured using the JSON configuration file.
 Population of grid rows consists of determining visible features, generating column data (this includes applying templates), and filling the grid with the result set.
 
 #### Datagrid Modes
@@ -73,7 +73,7 @@ grid using the [extendedExtentFilterEnabled](json-config-en.html#datagrid_extend
 Pagination is a custom plugin into the datatables library
 
 #### Sorting
-Sorting is provided out-of-the-box by the datatables library. 
+Sorting is provided out-of-the-box by the datatables library.
 
 #### Feature Selection
 Whenever the user clicks on a feature on the map, the corresponding row in the summary grid is highlighted. This is done by caching the object IDs of all the features and mapping them to the index of the feature in the datagrid.
@@ -81,7 +81,6 @@ Once the user clicks on a feature, the index is retrieved and the datagrid navig
 
 #### Details and Zoom Buttons
 The grid contains buttons to obtain details and zoom to row items.  This is done via the dataGridClickHandler module (see below).  In future releases, we plan to have this extensible to allow easy overriding of the controls.
-
 
 **Relevant Sequence Diagrams**
 
@@ -203,6 +202,7 @@ The following actions are performed by the module
 * Generate the filter interface (including using templates)
 * Handle the toggling of layers
 * Handle the toggling of bounding boxes for layers
+* Handle the changing of layer's opacity through the Settings panel
 * Changing the draw order of layers on the map
 
 **Relevant Sequence Diagrams**
@@ -226,7 +226,7 @@ The following actions are performed by the module
 </section>
 
 | **API Page** | [FilterManager](../api/yuidoc/classes/FilterManager.html)
-| **Relevant Configuration Nodes** |  [featureLayers[].id](json-config-en.html#featurelayers_id) <br /> [featureLayers[].displayName](json-config-en.html#featurelayers_displayname) <br /> [featureLayers[].symbology](json-config-en.html#featurelayers_symbology)
+| **Relevant Configuration Nodes** |  [featureLayers[].id](json-config-en.html#featurelayers_id) <br /> [featureLayers[].displayName](json-config-en.html#featurelayers_displayname) <br /> [featureLayers[].symbology](json-config-en.html#featurelayers_symbology)  <br /> [featureLayers[].settings](json-config-en.html#featurelayers_settings)
 | **Template Summary** | [Filter Global Row](template-summary-en.html#filter_global_row) <br /> [Filter Row](template-summary-en.html#filter_row)
 
 [Back To Top](#top)

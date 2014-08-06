@@ -86,6 +86,11 @@ This page will walk you through the layout of the application configuration obje
     * uuid
     * detailTemplate
     * nameField
+    * settings
+        * enabled
+        * opacity
+            * enabled
+            * default
 * wmsLayers (collection)
     * id
     * displayName
@@ -97,7 +102,7 @@ This page will walk you through the layout of the application configuration obje
         * enabled
         * opacity
     * layerInfo
-        * name        
+        * name
         * title
         * allExtents (collection)
         * spatialReferences (collection)
@@ -212,12 +217,17 @@ This page will walk you through the layout of the application configuration obje
 | featureLayers[].uuid	| string	| Feature layer UUID
 | <a name="featurelayers_detailtemplate" /> featureLayers[].detailTemplate	| string	| Template used to generate detail content of a selected feature
 | featureLayers[].nameField	| string	| Field to be used to describe a feature.  Utilized in summary grid, detail content, map tip, and anchored maptip
+| <a name="featurelayers_settings" />featureLayers[].settings	| object	| Object to store layer settings and their presets.
+| featureLayers[].settings.enabled	| boolean	| Indicates whether the settings panel should be accessible to the user.
+| featureLayers[].settings.opacity	| object	| Object to store opacity information.
+| featureLayers[].settings.opacity.enabled	| boolean	| Indicates whether opacity of the layer can be changed by the user or by preset. If settings are disabled, and opacity is enabled, the preset value will still be applied to the opacity level.
+| featureLayers[].settings.opacity.default	| numeric	| Specifies the preset opacity level to be applied to the layer on load.
 | <a name="wmsLayers" /> wmsLayers	| collection	| WMS layers to be added to the map.  Order dictates initial order on the map.
 | wmsLayers[].id	| string	| to identify a layer.  unique across all WMS layers
 | wmsLayers[].url	| string	| the url of the WMS service.  does not specify name of individual layer to show
 | wmsLayers[].uuid	| string	| UUID of the layer
 | wmsLayers[].format	| string	| format of the return image (e.g. png)
-| wmsLayers[].settings	| 	| 
+| wmsLayers[].settings	| 	|
 | wmsLayers[].settings.enabled	| boolean	| determines if a layer can be interacted with in the layer selector
 | wmsLayers[].settings.opacity	| numeric	| opacity of layer (decimal). 1 being fully opaque, 0 being fully transparent
 | wmsLayers[].extent	| [ESRI Extent](https://developers.arcgis.com/javascript/jsapi/extent-amd.html)	| A valid extent object, including spatial reference.  Extent should define a valid extent for the WMS
@@ -233,7 +243,7 @@ This page will walk you through the layout of the application configuration obje
 | wmsLayers[].symbology	| object	| identical structure to the featureLayers[].symbology node
 | <a name="datagrid" />datagrid	| 	|
 | datagrid.globalGridRowsPerPage	| numeric	| Number of rows per page to be displayed in datagrid in summary view
-| datagrid.defaultState	| string	| Default state of the datagrid: summary or entexted
+| datagrid.defaultState	| string	| Default state of the datagrid: summary or extended
 | datagrid.summaryEnabled	| boolean	| Flag indicate summary grid is enabled
 | datagrid.extendedEnabled	| boolean	| Flag indicate extended grid is enabled
 | datagrid.extendedColumns[]	| collections	| Column definition for extended datagrid
@@ -244,14 +254,14 @@ This page will walk you through the layout of the application configuration obje
 | <a name="sitetemplate_filterrowtemplate" />siteTemplate.filterRowTemplate	| string	| Filter template used to generate filter content for map layers.
 | <a name="globalfilter" /> globalFilter	| 	|
 | <a name="globalfilter_txtalldata" />globalFilter.txtAllData	| string	| Global filter text for All Data
-| <a name="globalfilter_togglelabel" />globalFilter.toggleLabel	| <collection>	| Attributes and settings for individual toggle in the global section of filter manager
+| <a name="globalfilter_togglelabel" />globalFilter.toggleLabel	| collection | Attributes and settings for individual toggle in the global section of filter manager
 | globalFilter.toggleLabel[].id	| string	| Id of the toggle label
 | globalFilter.toggleLabel[].dataAttribute	| string	| Data attribute
 | globalFilter.toggleLabel[].value	| string	|
 | globalFilter.toggleLabel[].checked	| string	| Value of the checked attribute
 | globalFilter.toggleLabel[].title	| string	| Value for the title attribute
 | globalFilter.toggleLabel[].classAddition	| string	| Additional CSS to be added to toggle label style
-| divNames	| 	| RAMP div container names in code and in html
+| divNames	| 	| RAMP div container names in code and in HTML
 | divNames.map	| string	| Map container name; default is mainMap
 | divNames.navigation	| string	| Navigation container name; default is map-navigation
 | divNames.filter	| string	| Filter container name; default is searchMapSectionBody

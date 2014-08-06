@@ -197,11 +197,11 @@ Each row in the filter manager
 
 <section class="wb-lbx lbx-gal">
 <a href="../assets/images/filter_row_screenshot.png">
-<img src="../assets/images/filter_row_screenshot.png" style="width:344px; height:133px; max-width:80%; float:right; padding-left:20px" />
+<img src="../assets/images/filter_row_screenshot.png" class="col-md-5" style="float:right; padding-left:20px" />
 </a>
 </section>
 
-The default filter row contain a handle that enables the user to rearrange the order of the layers on the map, an icon representing the layer, the name of the layer, a metadata button that allows the user open a subpanel to view the metadata in that layer, and an "eye" and "box" toggle box that enables the user to toggle the layer visibility and layer [bounding box](architecture-overview-en.html#bounding_box) visibility respectively.
+The default filter row contain a handle that enables the user to rearrange the order of the layers on the map, an icon representing the layer, the name of the layer, a metadata button that allows the user open a subpanel to view the metadata in that layer, a settings button that allows the user to adjust layer's opacity if enabled in the config, and an "eye" and "box" toggle box that enables the user to toggle the layer visibility and layer [bounding box](architecture-overview-en.html#bounding_box) visibility respectively.
 
 | **Template Name** | <a href="json-config-en.html#sitetemplate_filterrowtemplate">siteTemplate.filterRowTemplate</a> |
 | **Template File** | filter_manager_template.json |
