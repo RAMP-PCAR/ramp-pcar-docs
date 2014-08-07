@@ -98,6 +98,8 @@ This page will walk you through the layout of the application configuration obje
         * opacity
             * enabled
             * default
+	* isStatic (static layer only)
+	* layerType (static layer only)
 * wmsLayers (collection)
     * id
     * displayName
@@ -236,6 +238,8 @@ This page will walk you through the layout of the application configuration obje
 | featureLayers[].settings.opacity	| object	| Object to store opacity information.
 | featureLayers[].settings.opacity.enabled	| boolean	| Indicates whether opacity of the layer can be changed by the user. If settings are disabled, the opacity preset value will still be applied to the opacity level.
 | featureLayers[].settings.opacity.default	| numeric	| Specifies the preset opacity level to be applied to the layer on load.
+| featureLayers[].isStatic	| boolean	| Specifies the current layer as static layer.
+| featureLayers[].layerType	| string	| Specifies the map service layer type (feature, tile, or dynamic.) 
 | <a name="wmsLayers" /> wmsLayers	| collection	| WMS layers to be added to the map.  Order dictates initial order on the map.
 | wmsLayers[].id	| string	| to identify a layer.  unique across all WMS layers
 | wmsLayers[].url	| string	| the url of the WMS service.  does not specify name of individual layer to show
