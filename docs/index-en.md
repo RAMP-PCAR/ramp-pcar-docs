@@ -26,5 +26,6 @@ published: true
     * [Basemap Support](/docs/basemap-support-en.html)
     * [WMS Support](/docs/wms-support-en.html)
 	* [Advanced Toolbar](/docs/advanced-toolbar-en.html)
+	* [Static Layer Support](/docs/static-layer-support-en.html)
 * [API Reference](/api/yuidoc/index.html)
 * [Known Issues](/docs/known-issues-en.html)
