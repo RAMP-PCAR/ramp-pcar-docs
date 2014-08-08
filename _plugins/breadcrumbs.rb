@@ -1,7 +1,7 @@
 ﻿module Jekyll
  
-    ##
-    # Monkey patch Jekyll's Page class
+    ## 
+    # Monkey patch Jekyll's Page class http://biosphere.cc/software-engineering/jekyll-breadcrumbs-navigation-plugin/
     class Page
  
         ##
