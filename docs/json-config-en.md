@@ -243,6 +243,8 @@ This page will walk you through the layout of the application configuration obje
 | featureLayers[].settings.opacity.default	| numeric	| Specifies the preset opacity level to be applied to the layer on load.
 | featureLayers[].isStatic	| boolean	| Specifies the current layer as static layer.
 | featureLayers[].layerType	| string	| Specifies the map service layer type (feature, tile, or dynamic.) 
+| featureLayers[].layerVisible | boolean  | The initial visibility of the layer
+| featureLayers[].boundingBoxVisible | boolean | The initial visibility of the bounding box for this layer (optional for static layers)
 | <a name="wmsLayers" /> wmsLayers	| collection	| WMS layers to be added to the map.  Order dictates initial order on the map.
 | wmsLayers[].id	| string	| to identify a layer.  unique across all WMS layers
 | wmsLayers[].url	| string	| the url of the WMS service.  does not specify name of individual layer to show
@@ -262,6 +264,7 @@ This page will walk you through the layout of the application configuration obje
 | wmsLayers[].legend.enable	| boolean	| true to enable WMS legends, false to disable it
 | wmsLayers[].legend.legendURL	| string	| url to legend image for the layer.  optional
 | wmsLayers[].symbology	| object	| identical structure to the featureLayers[].symbology node
+| wmsLayers[].layerVisible | boolean  | The initial visibility of the WMS layer
 | <a name="datagrid" />datagrid	| 	|
 | datagrid.globalGridRowsPerPage	| numeric	| Number of rows per page to be displayed in datagrid in summary view
 | datagrid.defaultState	| string	| Default state of the datagrid: summary or extended
@@ -287,7 +290,9 @@ This page will walk you through the layout of the application configuration obje
 | divNames.navigation	| string	| Navigation container name; default is map-navigation
 | divNames.filter	| string	| Filter container name; default is searchMapSectionBody
 | divNames.datagrid	| string	| Datagrid container name; default is searchMapSectionBody
-
+| ui | | Stores initial state of the user interface
+| ui.fullscreen | boolean | true if the interface should start in fullscreen mode. False otherwise.
+| ui.sidePanelOpened | boolean | true if the interface should start with the side panel opened. False otherwise.
 
 [Back To Top](#top)
 {: .text-right}
