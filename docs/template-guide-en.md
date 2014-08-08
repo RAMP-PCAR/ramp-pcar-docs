@@ -5,9 +5,13 @@ categories: [documentation]
 ---
 {% include JB/setup %}
 
+<a name="top" />
+
 # RAMP Templating Guide {#wb-cont}
 
-## Libraries
+<div class="toc"></div>
+
+##Libraries
 
 RAMP templating uses the [JavaScript Templates engine by BlueImp](https://github.com/blueimp/JavaScript-Templates).
 
@@ -15,7 +19,10 @@ The library resides in RAMP at /src/js/libs/tmplEx.2.4.1/tmplEx.js, and should b
 
 The library has been modified from its original form.  It has been enhanced to allow the loading of JSON files that contain multiple template definitions.
 
-## Template Structure
+[Back To Top](#top)
+{: .text-right}
+
+##Template Structure
 
 Templates are stored in .json files, but can contain extended json (such as inline comments and embedded javascript)
 
@@ -122,7 +129,10 @@ The template can also include embedded javascript to help construct more complex
 }{% endraw %}
 {% endhighlight %}
 
-## Template Usage
+[Back To Top](#top)
+{: .text-right}
+
+##Template Usage
 
 Once the template is loaded from a file, it must be parsed from the human-readable file form to a computer readable form.  This parsing includes: removing inline comments; removing hard returns; removing tabs.  A function in module __utils/tmplHelper__ called __stringifyTemplate__ will perform this parsing.
 
@@ -138,7 +148,10 @@ Now the template object is ready to generate content using the templates provide
 result = tmpl("myTemplateName", oDataObject)
 {% endhighlight %}
 
-## Full Example
+[Back To Top](#top)
+{: .text-right}
+
+##Full Example
 
 ### Template File
 
@@ -209,7 +222,10 @@ function (tmplHelper, sample_template) { return {
 </div>
 {% endhighlight %}
 
-## Template Files
+[Back To Top](#top)
+{: .text-right}
+
+##Template Files
 
 Template files are currently stored in folder __/javascript/src/RAMP/Modules/templates__.  In the future we may have two folders, one for RAMP core templates, another for custom templates.
 
@@ -220,7 +236,10 @@ Developers are also free to implement alternative loading techniques to suit spe
 * Embedding a simple, pure-JSON template within the main config file
 * Loading a template file via [dojo/xhr](http://dojotoolkit.org/reference-guide/1.9/dojo/xhr.html).  Again, templates should be in proper JSON format (i.e. no comments)
 
-## Template Data Object Standard Properties
+[Back To Top](#top)
+{: .text-right}
+
+##Template Data Object Standard Properties
 
 The template engine allows the caller to pass in any JSON object to supply values to the template.  In RAMP, we look to standardize this input object so that templates can access common data and javascript functions in a consistent and efficient manner.
 
@@ -247,8 +266,14 @@ The dojo module __utils/tmplHelper__ provides the function dataBuilder that gene
 
 The function takes two parameters.  The first parameter determines the JSON object that is stored in o.data.  The second optional parameter is a url for a feature layer.  If provided, the data object will have its o.lyr property pointing to the appropriate layer config node.  If not provided, o.lyr will be undefined.  The other properties in the data object are automatically assigned by the function.
 
-## Common Template Functions
+[Back To Top](#top)
+{: .text-right}
+
+##Common Template Functions
 
 The module __utils/tmplUtil__ provides common functions that can be used inside the templates.  As an example, one function is __getGraphicIcon__, which will return the symbology image for a feature.
 
 Note that a scoping issue exists when calling functions from the template.  Any function called from within the template cannot call a second function, unless that function is defined within the scope of the first function.  __THIS ISSUE MAY NOT ACTUALLY EXIST.  MORE RESEARCH TO BE DONE!__
+
+[Back To Top](#top)
+{: .text-right}

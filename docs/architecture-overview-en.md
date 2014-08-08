@@ -5,9 +5,13 @@ categories: [documentation]
 ---
 {% include JB/setup %}
 
+<a name="top" />
+
 # Architecture Overview {#wb-cont}
 
-## Scope and Exclusions
+<div class="toc"></div>
+
+##Scope and Exclusions
 
 The architecture overview covers how various components of RAMP work together and accomplish the functions that are provided out-of-the-box.  In particular, it covers the functions that reside in the RAMP codebase, but not functions that are provided from 3rd party libraries.
 
@@ -23,7 +27,10 @@ Details on how to use [ArcGIS Server](http://www.esri.com/software/arcgis/arcgis
 
 While RAMP meets [WCAG 2.0](http://www.w3.org/WAI/WCAG20/quickref/) AA compliance, we do not cover the details in meeting those requirements.
 
-## Terminology
+[Back To Top](#top)
+{: .text-right}
+
+##Terminology
 
 AMD
 : [Asynchronous Module Definition](https://github.com/amdjs/amdjs-api/wiki/AMD).  The API DOJO implements to help achieve a more "object oriented" framework in javascript.  Detailed documentation with respect to DOJO's implementation can be found [here](http://dojotoolkit.org/reference-guide/1.9/loader/amd.html)
@@ -61,7 +68,10 @@ Topic
 WMS
 : [Web Map Service](http://www.opengeospatial.org/standards/wms).  An open-source online service that provides mapping information, often in the form of an image of spatial data.
 
-## High Level Block Diagram
+[Back To Top](#top)
+{: .text-right}
+
+##High Level Block Diagram
 
 <section class="wb-lbx lbx-gal">
 	<a href="../assets/images/block_diagram.png">
@@ -69,7 +79,10 @@ WMS
 	</a>
 </section>
 
-## Popup handling
+[Back To Top](#top)
+{: .text-right}
+
+##Popup handling
 
 The utility module PopupManager contains the majority of routines to handle popups.  A popup is something that is hidden until the user performs an action, and then the popup appears on the site with the appropriate content.
 
@@ -77,7 +90,10 @@ The core function in PopupManager is registerPopup, which allows the implementor
 
 Often we will have popups that will close other popups when they open.  Examples of this are the Help panel, the Add Layer panel, and the Bookmark Link panel.  This behavior is achieved via topics: a topic is published when a popup is opened.  If a listening popup is open, it will close itself. The topics to achieve this end in "_PANEL_CHANGED"
 
-## Filtering cycle
+[Back To Top](#top)
+{: .text-right}
+
+##Filtering cycle
 
 In RAMP Arctic Fox we do not have any attribute based filtering.  Filtering is determined by two factors: the map extent and the visibility of feature layers.  A change in either of these two items (user pans/zooms the map, or toggles a layer on or off) will trigger the filtering cycle, which is as follows:
 
@@ -91,7 +107,10 @@ In RAMP Arctic Fox we do not have any attribute based filtering.  Filtering is d
 	</a>
 </section>
 
-## Map layer management
+[Back To Top](#top)
+{: .text-right}
+
+##Map layer management
 
 The layers exist in the following order on the map
 
@@ -109,10 +128,16 @@ The Feature Layers can be re-ordered via the filter control, but always stay in 
 
 The Zoomlight layer will highlight a feature that has been zoomed to from the datagrid.  The Hoverlight layer will highlight a feature that the mouse is hovering over.  The Highlight layer will highlight a feature that has been clicked on or has it's details opened.
 
-## Datagrid Architecture
+[Back To Top](#top)
+{: .text-right}
+
+##Datagrid Architecture
 
 The data grid can exist in two different states.  This allows the map to be accessible (by providing feature data in a screen readable and keyboard navigateable grid), and also allows a more table-centric view of the data.
 
-The default state is the _summary grid_.  This grid provides basic information about features on the map (name, icon, what layer it belongs to) and provides links to zoom to features and view details about them.  This grid works in concert with what is visible on the map; as the user navigates around the map, the grid will stay snynchronized with the view.
+The default state is the _summary grid_.  This grid provides basic information about features on the map (name, icon, what layer it belongs to) and provides links to zoom to features and view details about them.  This grid works in concert with what is visible on the map; as the user navigates around the map, the grid will stay synchronized with the view.
 
 The alternate state is the _extended grid_.  This grid provides a more traditional multi-column view of the data.  When open, the map is no longer visible, and the extent is fixed until the user reverts back to the summary grid.  The extended grid shows data from one feature set at a time (this is because different features can have different columns).  The active feature can be selected from the dropdown combo box above the grid.  It is possible to have the columns in the extended grid be sortable.
+
+[Back To Top](#top)
+{: .text-right}

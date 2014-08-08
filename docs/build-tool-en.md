@@ -8,7 +8,11 @@ published: true
 
 {% include JB/setup %}
 
+<a name="top" />
+
 # Build Tool Setup {#wb-cont}
+
+<div class="toc"></div>
 
 ## Dependencies
 The build tool uses [Grunt](http://gruntjs.com/) for automation of linting, minifying, concatenating and other magical things we do with our JS and CSS files.

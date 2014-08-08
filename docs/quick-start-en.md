@@ -4,12 +4,16 @@ title: RAMP Quick Start Guide
 categories: [documentation]
 ---
 
+<a name="top" />
+
 # RAMP Quick Start Guide {#wb-cont}
 
 Welcome to RAMP Quick Start Guide. In this guide, we will be showing you how to setup your own web map using RAMP.
 [View live sample]({{BASE_PATH}}/demos/NRSTC/ramp-gcwu-fegc-map.html)
 
-## Requirements
+<div class="toc"></div>
+
+##Requirements
 
 This guide assumes you have downloaded the RAMP source from Github, and have run the Grunt build script. If not, please visit the [Getting Started]({{ BASE_PATH }}/docs/started-en.html) page to get your environment setup.
 
@@ -37,7 +41,10 @@ Layer 4 - National Research Council
 
 Layer 5 - Other Centres
 
-## Setting up your map layers
+[Back To Top](#top)
+{: .text-right}
+
+##Setting up your map layers
 
 ### Add a basemap layer
 
@@ -89,7 +96,10 @@ nameField: "Research_Centre_en"
 
 ![Image of Data tab section of the web map application](../assets/images/qs_data_tab.png)
 
-## Map Tip Configuration
+[Back To Top](#top)
+{: .text-right}
+
+##Map Tip Configuration
 By default, hover map tip and anchor map tip use generic RAMP templates called __feature_hover_maptip_template.json__ and __anchored_map_tip.json__ template.
 These templates are located in __src\\js\\RAMP\\Modules\\templates__ folder.
 
@@ -102,7 +112,10 @@ feature, the hover map tip displays the name of the research centre.
 
 To customize the content of map tips, please refer to the [template guide](template-guide-en.html) on how to customize the template.
 
-## Setting up the Datagrid
+[Back To Top](#top)
+{: .text-right}
+
+##Setting up the Datagrid
 
 In RAMP, datagrid comes in two states\: extended datagrid and summary datagrid. By default, summary datagrid is displayed.
 
@@ -171,3 +184,7 @@ Critical Fields
 * layerInfo.title: Similar to name, must match the WMS layer value
 
 When you start your web map application, the WMS layers will be displayed.
+
+
+[Back To Top](#top)
+{: .text-right}

@@ -5,17 +5,6 @@ categories: [documentation]
 ---
 {% include JB/setup %}
 
-<script src="../scripts/toc.js"> </script>
-<script type="text/javascript">
-$(document).ready(function() {
-    $('.toc').toc({
-        title: 'Table of Content',
-        listType: 'ul',
-        selector: 'h2, h3, h4, h5, h6, .include_toc'
-    });
-});
-</script>
-
 <a name="top" />
 
 # RAMP Module Overview {#wb-cont}

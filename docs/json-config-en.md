@@ -3,16 +3,16 @@ layout: index-secmenu-en
 title: JSON Config Definition
 categories: [documentation]
 ---
+
+<a name="top" />
+
 # JSON Config Definition {#wb-cont}
 
 This page will walk you through the layout of the application configuration object and all of its properties.
 
-## Contents
+<div class="toc"></div>
 
-  * [Object Outline](#object-outline)
-  * [Object Property Dictionary](#object-property-dictionary)
-
-## Object Outline
+##Object Outline
 
 * stringResources
 * gridstrings
@@ -98,8 +98,8 @@ This page will walk you through the layout of the application configuration obje
         * opacity
             * enabled
             * default
-	* isStatic (static layer only)
-	* layerType (static layer only)
+    * isStatic (static layer only)
+    * layerType (static layer only)
 * wmsLayers (collection)
     * id
     * displayName
@@ -155,7 +155,10 @@ This page will walk you through the layout of the application configuration obje
     * filter
     * datagrid
 
-## Object Property Dictionary
+[Back To Top](#top)
+{: .text-right}
+
+##Object Property Dictionary
 
 | JSON Object Field	| Data Type	| Description
 |----+----|----+----|----+----
@@ -284,3 +287,7 @@ This page will walk you through the layout of the application configuration obje
 | divNames.navigation	| string	| Navigation container name; default is map-navigation
 | divNames.filter	| string	| Filter container name; default is searchMapSectionBody
 | divNames.datagrid	| string	| Datagrid container name; default is searchMapSectionBody
+
+
+[Back To Top](#top)
+{: .text-right}

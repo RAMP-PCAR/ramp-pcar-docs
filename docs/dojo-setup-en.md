@@ -5,9 +5,13 @@ categories: [documentation]
 ---
 {% include JB/setup %}
 
+<a name="top" />
+
 # Initialization {#wb-cont}
 
-## Loading Dojo and ESRI
+<div class="toc"></div>
+
+##Loading Dojo and ESRI
 
 RAMP uses the [Dojo](http://dojotoolkit.org/) and [ESRI](https://developers.arcgis.com/javascript/) Javascript API, which can be loaded from your main html map page using:
 
@@ -34,7 +38,10 @@ The latter load ESRI and Dojo, the former is a [configuration file](http://dojot
 	};
 {% endhighlight %}
 
-## Dojo Config Parameters
+[Back To Top](#top)
+{: .text-right}
+
+##Dojo Config Parameters
 
 The dojoConfig object contains many different parameters, the ones relevant for RAMP are outlined below, a description of the rest can be found [here](http://dojotoolkit.org/reference-guide/1.9/dojo/_base/config.html).
 
@@ -46,10 +53,16 @@ _async_: if true, Dojo will load all the modules asynchronously (Recommended: tr
 
 _packages_: an array of objects, each object contains a “name” and “location” field, which is used to give alias to module locations. The location should be relative to your HTML map page. In the above example, “ramp” is an alias for “javascript/src/RAMP/Modules/”, thus if there is a module located at: “javascript/src/RAMP/Modules/map.js”, then using the alias, the module can simply be referenced with “ramp/map”.
 
-## Loading the bootstrapper
+[Back To Top](#top)
+{: .text-right}
+
+##Loading the bootstrapper
 
 The bootstrapper module is responsible for loading the JSON configuration file used by RAMP and for loading all the modules in the proper order.
 
 {% highlight html %}
 	<script type="text/javascript" src="./javascript/src/RAMP/bootstrapper.js"></script>
 {% endhighlight %}
+
+[Back To Top](#top)
+{: .text-right}

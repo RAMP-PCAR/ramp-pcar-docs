@@ -8,6 +8,10 @@ published: true
 
 # RAMP Documentation {#wb-cont}
 
+
+<div>
+{: .well}
+
 ## Table of Contents
 
 * [Getting Started](/docs/started-en.html)

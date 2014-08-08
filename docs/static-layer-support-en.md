@@ -5,7 +5,11 @@ categories: [documentation]
 ---
 {% include JB/setup %}
 
+<a name="top" />
+
 # Static Layer Support {#wb-cont}
+
+<div class="toc"></div>
 
 ## Supported static layer in RAMP
 
@@ -15,6 +19,8 @@ A legend can be displayed along with the static layer.  It will be displayed in 
 
 Clicking the static layer will not return any information, no maptip or anchored maptip will be displayed.  MORE INFORMATION TO COME.
 
+[Back To Top](#top)
+{: .text-right}
 
 ## Config a static layer
 
@@ -50,4 +56,5 @@ Please note the above mentioned config settings are the required attributes for 
 
 Please refer to [JSON Config Definition](/docs/json-config-en.html) for more information on RAMP config settings.
 
-
+[Back To Top](#top)
+{: .text-right}

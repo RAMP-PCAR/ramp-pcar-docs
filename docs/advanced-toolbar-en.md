@@ -5,9 +5,13 @@ categories: [documentation]
 ---
 {% include JB/setup %}
 
+<a name="top" />
+
 # Advanced Toolbar {#wb-cont}
 
-## Using the Advanced Toolbar
+<div class="toc"></div>
+
+##Using the Advanced Toolbar
 
 The advanced toolbar provides powerful tools that fall outside the realm of accessibility.  This is mainly due to the mouse-dependant nature of the tools.  One tool at a time can be activated from the advanced toolbar.  Selecting a tool a second time, or closing the toolbar, will de-activate the tool.  Only one tool can be active at one time.
 
@@ -23,7 +27,10 @@ This tool allows a user to specify a buffer size in kilometers, and draw a polyg
 
 This tool allows a user to draw a polygon on the map.  The area and circumference of the polygon will be displayed.
 
-## Adding New Tools
+[Back To Top](#top)
+{: .text-right}
+
+##Adding New Tools
 
 A RAMP implementor can add new tools to the application.  The following areas should be considered and adjusted appropriately.
 
@@ -53,3 +60,6 @@ The tools_template.json file provides a home for the template that will format t
 ### Config File
 
 TODO add details here once config is made for toolbar
+
+[Back To Top](#top)
+{: .text-right}

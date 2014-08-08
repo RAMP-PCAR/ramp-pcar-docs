@@ -5,7 +5,11 @@ categories: [documentation]
 ---
 {% include JB/setup %}
 
+<a name="top" />
+
 # RAMP Naming Conventions {#wb-cont}
+
+<div class="toc"></div>
 
 Resource dictionary
 : a singleton object that only contain read-only fields (in C# or Java, these would be classes that cannot be instantiated and only contain public static fields)
@@ -48,7 +52,10 @@ Baseclass
 | utils/url | class | UtilUrl |
 | utils/util | utilities | UtilMisc |
 
-## Module Architecture
+[Back To Top](#top)
+{: .text-right}
+
+##Module Architecture
 Why everything is singleton in RAMP:
 
 * There is only one map, one navigation widget, one datagrid, etc. There is no point of having an option to create two datagrids or two maps. Even if the datagrid needs a tabbing option, there may be multiple “tab” objects, but there is still only one datagrid.
@@ -56,7 +63,10 @@ Why everything is singleton in RAMP:
 * Each Utility class only needs one instance of itself, there’s no point of having two instance of the same Utility class.
 * Each Resource class only needs one instance of itself for the same reason.
 
-## Additional Coding Conventions
+[Back To Top](#top)
+{: .text-right}
+
+##Additional Coding Conventions
 
 We recommend using [CodeMaid](http://www.codemaid.net/) to clean up javascript files.  This will ensure they have consistant spacing, indenting, etc.  It is also available as a [Visual Studio Plugin](http://visualstudiogallery.msdn.microsoft.com/76293c4d-8c16-4f4a-aee6-21f83a571496)
 
@@ -115,3 +125,6 @@ supernew: false
 validthis: false
 noyield: false
 {% endhighlight %}
+
+[Back To Top](#top)
+{: .text-right}

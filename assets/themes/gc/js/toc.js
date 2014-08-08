@@ -6,7 +6,7 @@
       title: '<i>Jump to...</i>',
       listType: 'ol', // values: [ol|ul]
       showSpeed: 'slow',
-	  selector: 'h1, h2, h3, h4, h5, h6'
+      selector: 'h1, h2, h3, h4, h5, h6'
     },
     settings = $.extend(defaults, options);
     
@@ -14,7 +14,7 @@
       // get all headers with an ID
       return this.id;
     }), output = $(this);
-    if (!headers.length || headers.length < 3 || !output.length) {
+    if (!headers.length || headers.length < 1 || !output.length) {
       return;
     }
     
