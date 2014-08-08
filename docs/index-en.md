@@ -8,10 +8,11 @@ published: true
 
 # RAMP Documentation {#wb-cont}
 
-
-<div>
+{::options parse_block_html="true"/}
 {: .well}
-
+<div> 
+    
+{: .mrgn-tp-0}
 ## Table of Contents
 
 * [Getting Started](/docs/started-en.html)
