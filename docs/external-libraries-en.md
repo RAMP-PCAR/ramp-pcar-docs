@@ -7,14 +7,14 @@ categories: [documentation]
 
 <a name="top" />
 
-#External Library Implementations {#wb-cont}
+# External Library Implementations {#wb-cont}
 
 <div class="toc"></div>
 
 <a name="datatables" />
 
-##Datatables
-v 1.9.4
+## Datatables
+v 1.10
 
 <http://www.datatables.net>
 
@@ -25,7 +25,19 @@ Used for the main grid control in the app.
 [Back To Top](#top)
 {: .text-right}
 
-##jQuery UI
+## GSAP - GreenSock Animation Platform
+v 1.11.8
+
+<http://www.greensock.com/gsap-js/>
+
+GSAP is a suite of tools for scripted, high-performance HTML5 animations that work in all major browsers. 
+
+Used for the power transitional animation of the layout.
+
+[Back To Top](#top)
+{: .text-right}
+
+## jQuery UI
 v 1.10.4
 
 <http://jqueryui.com>
@@ -37,7 +49,19 @@ It is used to generate the navigation widget.  The widget is found in file jquer
 [Back To Top](#top)
 {: .text-right}
 
-##Modernizr
+## Nestoria Sliders jQuery Plugin
+v 1.0.5
+
+<https://github.com/lokku/jquery-nstslider>
+
+Fully customizable with CSS, Single/Double handles, Touch-enabled, IE 7+ Compatibility, Custom Digit Rounding, Non linear step increments!
+
+Power the opacity slider control for the Filter Manager module.
+
+[Back To Top](#top)
+{: .text-right}
+
+## Modernizr
 v 2.7.1
 
 <http://modernizr.com />
@@ -49,7 +73,7 @@ Used to allow the tooltipster library to work in browsers that do not support CS
 [Back To Top](#top)
 {: .text-right}
 
-##ScrollTo
+## ScrollTo
 v 1.4.3.1
 
 <https://github.com/flesler/jquery.scrollTo>
@@ -61,7 +85,7 @@ Used to scroll the datagrid to the selected row (if row is not on the page).
 [Back To Top](#top)
 {: .text-right}
 
-##Shorten
+## Shorten
 v 1.0.0
 
 <https://github.com/viralpatel/jquery.shorten>
@@ -73,7 +97,7 @@ Used in the detail panel to trim long text items
 [Back To Top](#top)
 {: .text-right}
 
-##Snap
+## Snap
 v 0.1.0
 
 <http://snapsvg.io>
@@ -85,7 +109,7 @@ Used for managing graphics layers and repositioning anchor maptips in the featur
 [Back To Top](#top)
 {: .text-right}
 
-##tmplEx
+## tmplEx
 v 2.4.1
 
 <https://github.com/blueimp/JavaScript-Templates>
@@ -97,7 +121,7 @@ Used throughout the application to generate content.  E.g. maptip content, detai
 [Back To Top](#top)
 {: .text-right}
 
-##Tooltipster
+## Tooltipster
 v 3.0.1
 
 <http://iamceege.github.io/tooltipster />
@@ -109,7 +133,7 @@ Used for maptips, and also tooltips on the datagrid and filter manager rows
 [Back To Top](#top)
 {: .text-right}
 
-##Urlshortener
+## Urlshortener
 v 1.0.1
 
 <http://hayageek.com/jquery-url-shortener />
