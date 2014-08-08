@@ -216,6 +216,11 @@ The following actions are performed by the module
 * Handle the toggling of layers
 * Handle the toggling of bounding boxes for layers
 * Handle the changing of layer's opacity through the Settings panel
+    * When opacity is set to 0.0, the layer is toggled invisible
+    * When opacity is set to 0.1 - 0.99, the layer is toggled visible (if it was invisible before)
+    * When a layer is toggled invisible, the opacity slider control is "greyed out"
+    * WHen a layer is toggled visible, the opacity slider control is restored to normal appearance
+    * When a layer is toggled visible, the opacity slider control is set to 1.0 (only if it was set to 0.0)
 * Changing the draw order of layers on the map
 
 **Relevant Sequence Diagrams**
