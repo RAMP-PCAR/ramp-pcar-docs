@@ -129,6 +129,9 @@ This page will walk you through the layout of the application configuration obje
             * default
                 * imageUrl
                 * legendText
+	* featureInfo (optional)
+		* mimeType
+		* parser
 * datagrid
     * globalGridRowsPerPage
     * defaultState
@@ -154,6 +157,7 @@ This page will walk you through the layout of the application configuration obje
     * navigation
     * filter
     * datagrid
+* plugins (collection of strings)
 
 [Back To Top](#top)
 {: .text-right}
@@ -265,6 +269,9 @@ This page will walk you through the layout of the application configuration obje
 | wmsLayers[].legend.legendURL	| string	| url to legend image for the layer.  optional
 | wmsLayers[].symbology	| object	| identical structure to the featureLayers[].symbology node
 | wmsLayers[].layerVisible | boolean  | The initial visibility of the WMS layer
+| wmsLayers[].featureInfo | object  | an optional object section, if defined implies that getFeatureInfo should be enabled for this layer
+| wmsLayers[].featureInfo.mimeType | string  | the mime type to be requested from the server (used in the FORMAT argument of the request)
+| wmsLayers[].featureInfo.parser | string  | the name of the plugin used to parse the response
 | <a name="datagrid" />datagrid	| 	|
 | datagrid.globalGridRowsPerPage	| numeric	| Number of rows per page to be displayed in datagrid in summary view
 | datagrid.defaultState	| string	| Default state of the datagrid: summary or extended
@@ -293,6 +300,7 @@ This page will walk you through the layout of the application configuration obje
 | ui | | Stores initial state of the user interface
 | ui.fullscreen | boolean | true if the interface should start in fullscreen mode. False otherwise.
 | ui.sidePanelOpened | boolean | true if the interface should start with the side panel opened. False otherwise.
+| plugins | collection of strings | a set of plugins to be loaded with RAMP
 
 [Back To Top](#top)
 {: .text-right}
