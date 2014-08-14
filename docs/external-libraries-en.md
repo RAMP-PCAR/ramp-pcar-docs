@@ -25,12 +25,39 @@ Used for the main grid control in the app.
 [Back To Top](#top)
 {: .text-right}
 
+
+## Dojo Toolkit
+v 1.9.1
+
+<http://dojotoolkit.org/>
+
+Main framework used in RAMP.  Provides a module-based structure that helps javascript behave in a manner similar to object oriented languages.  This framework is also used by the ESRI javascript API, and is imported via that API.
+
+Used throughout the application.
+
+[Back To Top](#top)
+{: .text-right}
+
+
+## ESRI Javascript API
+v 3.8
+
+<https://developers.arcgis.com/javascript/>
+
+Main mapping API used in RAMP.  Handles all of the mapping and GIS related functions (e.g. drawing, querying spatial data).
+
+Used throughout the application.
+
+[Back To Top](#top)
+{: .text-right}
+
+
 ## GSAP - GreenSock Animation Platform
 v 1.11.8
 
 <http://www.greensock.com/gsap-js/>
 
-GSAP is a suite of tools for scripted, high-performance HTML5 animations that work in all major browsers. 
+GSAP is a suite of tools for scripted, high-performance HTML5 animations that work in all major browsers.  Specific tools include TweenLite, TimelineLite, EasePack, and CSSPlugin.
 
 Used for the power transitional animation of the layout.
 
