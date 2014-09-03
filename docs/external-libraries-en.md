@@ -64,6 +64,18 @@ Used for the power transitional animation of the layout.
 [Back To Top](#top)
 {: .text-right}
 
+## i18next - i18n for JavaScript
+v 1.7.4
+
+<http://i18next.com/>
+
+i18next is a full-featured i18n javascript library for translating your webapplication.
+
+Used for translation of the webmap.
+
+[Back To Top](#top)
+{: .text-right}
+
 ## jQuery UI
 v 1.10.4
 
@@ -71,7 +83,7 @@ v 1.10.4
 
 A jQuery library with effects, widgets, themes, and other UI-type items in it.
 
-It is used to generate the navigation widget.  The widget is found in file jquery.ui.navigation.js
+It is used to generate the navigation widget. The widget is found in file jquery.ui.navigation.js
 
 [Back To Top](#top)
 {: .text-right}
