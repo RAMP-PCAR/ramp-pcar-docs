@@ -23,9 +23,13 @@ This tool allows a user to draw a polygon on the map.  The population of people 
 
 This tool allows a user to specify a buffer size in kilometers, and draw a polygon on the map.  A buffer of the desired size will be applied to the polygon.
 
-### Measure Tool
+### Area Tool
 
 This tool allows a user to draw a polygon on the map.  The area and circumference of the polygon will be displayed.
+
+### Distance Tool
+
+This tool allows a user to draw a line on the map.  The length of the line will be displayed.
 
 [Back To Top](#top)
 {: .text-right}
@@ -57,9 +61,13 @@ displayOutput
 
 The tools_template.json file provides a home for the template that will format the output of the tool.  The template engine allows flexibility, and the tool module can generate a custom data object to work with the template.
 
+### Language File
+
+Any visible language used by the tool (e.g. text on the input / output panel) should be included in a tool specific language file.  The file should be located in the src/locales/{language folder}/tools/toolName.json.  The tool template should use language from the file.
+
 ### Config File
 
-TODO add details here once config is made for toolbar
+The advancedToolbar node in the config file controls some toolbar behaviors.  The toolbar can be removed from the application by disabling it.  As well, individual tools can be removed from the toolbar.   New tools need to be added to the tools collection before they will appear on the site.
 
 [Back To Top](#top)
 {: .text-right}
