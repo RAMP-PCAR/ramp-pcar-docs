@@ -269,7 +269,7 @@ is replaced by the JS reference to __build/js/lib/lib.min.js__.
 
 is replaced by the JS reference to __build/js/RAMP/RAMP-starter.js__.
 
-It reads two csv files containing English and French strings respectively from __RAMP/src/assets/strings_en.csv__ and __RAMP/src/assets/strings_fr.csv__. The files are a simple set of key-values with the header of __key,value__. The build tool also loads the config file located at _configFileLocation_ and mixes found __stringResources__ with strings from the csv files. After that, it runs a replacement task on the content template, generating a language specific html files.
+It reads two json files containing English and French strings respectively from __RAMP/src/locales/en-CA/translation.json__ and __RAMP/src/locales/fr-CA/translation.json__. These files contain resources used by the i18next library. After that, it runs a simple replacement task (no i18n formatting) on the content template, generating a language specific html files.
 
 Saves the newly created files into the __build__ folder.
 
@@ -404,6 +404,8 @@ The build tool uses a number of Grunt-specific and general [NPM](https://www.npm
 * [grunt-jscs-checker](https://github.com/gustavohenke/grunt-jscs-checker)
 * [grunt-html-build](https://github.com/spatools/grunt-html-build)
 * [grunt-chmod](https://github.com/JamesMGreene/grunt-chmod)
+* [grunt-contrib-compress](https://github.com/gruntjs/grunt-contrib-compress)
+* [grunt-json-minify](https://www.npmjs.org/package/grunt-json-minify)
 
 ### Other
 
