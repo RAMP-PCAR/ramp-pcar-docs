@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -300,7 +345,7 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-string">"utils/popupManager"</span>, <span class="hljs-string">"utils/tmplHelper"</span>],
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-string">"utils/popupManager"</span>, <span class="hljs-string">"utils/tmplHelper"</span>, <span class="hljs-string">"utils/array"</span>],
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(
 </span></span></pre></div></div>
@@ -378,7 +423,7 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        PopupManager, TmplHelper) {
+            <div class="content"><div class='highlight'><pre>        PopupManager, TmplHelper, UtilArray) {
     <span class="hljs-string">"use strict"</span>;
 
     <span class="hljs-keyword">var</span> basemapGallery,
@@ -402,10 +447,10 @@ define([</pre></div></div>
             * @return {object} itself
             *
             */</span>
-            init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 baseMapControls = $(<span class="hljs-string">"#basemapControls"</span>);
                 baseMapToggle = $(<span class="hljs-string">"#baseMapToggle"</span>);
-                basemapGalleryNode = $(<span class="hljs-string">"#basemapGallery"</span>);</pre></div></div>
+                basemapGalleryNode = $(<span class="hljs-string">"#basemapGallery"</span>).attr(<span class="hljs-string">"role"</span>, <span class="hljs-string">"listbox"</span>);</pre></div></div>
             
         </li>
         
@@ -420,7 +465,7 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                dojoArray.forEach(config.basemaps, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(basemap)</span> {</span>
+            <div class="content"><div class='highlight'><pre>                dojoArray.forEach(config.basemaps, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(basemap)</span> </span>{
                     domAttr.set(query(<span class="hljs-built_in">String</span>.format(<span class="hljs-string">"#galleryNode_{0} img"</span>, basemap.id))[<span class="hljs-number">0</span>], <span class="hljs-string">"alt"</span>, basemap.altText);
                 });</pre></div></div>
             
@@ -438,7 +483,7 @@ define([</pre></div></div>
             </div>
             
             <div class="content"><div class='highlight'><pre>                tmpl.templates = <span class="hljs-built_in">JSON</span>.parse(TmplHelper.stringifyTemplate(basemapselectorTemplate));
-                dojoArray.forEach($(<span class="hljs-string">".esriBasemapGalleryNode"</span>), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(node, i)</span> {</span>
+                dojoArray.forEach($(<span class="hljs-string">".esriBasemapGalleryNode"</span>), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(node, i)</span> </span>{
                     $(node).html(tmpl(config.siteTemplate.basemapTemplate, TmplHelper.dataBuilder(config.basemaps[i])));
                 });</pre></div></div>
             
@@ -451,19 +496,19 @@ define([</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
-              <p>turn on the opening and closing of the basemape selector section</p>
+              <p>turn on the opening and closing of the basemap selector section</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>                PopupManager.registerPopup(baseMapControls, <span class="hljs-string">"hoverIntent"</span>,
-                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> {</span>
-                        basemapGalleryNode.slideDown(<span class="hljs-string">"fast"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span> d.resolve(); });
+                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> </span>{
+                        basemapGalleryNode.slideDown(<span class="hljs-string">"fast"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{ d.resolve(); });
                     },
                     {
                         activeClass: cssButtonPressedClass,
                         target: basemapGalleryNode,
-                        closeHandler: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> {</span>
-                            basemapGalleryNode.slideUp(<span class="hljs-string">"fast"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span> d.resolve(); });
+                        closeHandler: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> </span>{
+                            basemapGalleryNode.slideUp(<span class="hljs-string">"fast"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{ d.resolve(); });
                         },
                         timeout: <span class="hljs-number">500</span>
                     }
@@ -479,7 +524,7 @@ define([</pre></div></div>
              * @private
              *
              */</span>
-            updateToggleLabel: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            updateToggleLabel: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 baseMapToggle.find(<span class="hljs-string">"span:first"</span>).text(basemapGallery.getSelected().title);
             }
         };
@@ -490,9 +535,9 @@ define([</pre></div></div>
     * @method initTopics
     * @private
     */</span>
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initTopics</span><span class="hljs-params">()</span> {</span>
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initTopics</span><span class="hljs-params">()</span> </span>{
         <span class="hljs-comment">/* PUBLISH */</span>
-        basemapGallery.on(<span class="hljs-string">"selection-change"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        basemapGallery.on(<span class="hljs-string">"selection-change"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
             <span class="hljs-keyword">var</span> basemap = basemapGallery.getSelected();
 
             ui.updateToggleLabel();
@@ -510,9 +555,9 @@ define([</pre></div></div>
     * @method initListeners
     * @private
     */</span>
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initListeners</span><span class="hljs-params">()</span> {</span>
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initListeners</span><span class="hljs-params">()</span> </span>{
         <span class="hljs-comment">/* SUBSCRIBE */</span>
-        topic.subscribe(EventManager.BasemapSelector.TOGGLE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventArg)</span> {</span>
+        topic.subscribe(EventManager.BasemapSelector.TOGGLE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventArg)</span> </span>{
             basemapGallery.select(eventArg.id);
         });
     }
@@ -524,10 +569,10 @@ define([</pre></div></div>
          * @constructor
          *
          */</span>
-        init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
             config = GlobalStorage.config;
 
-            dojoArray.forEach(config.basemaps, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(basemap)</span> {</span>
+            dojoArray.forEach(config.basemaps, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(basemap)</span> </span>{
                 <span class="hljs-keyword">var</span> layerDijit, basemapDijit;
 
                 layerDijit = <span class="hljs-keyword">new</span> esri.dijit.BasemapLayer({ url: basemap.url });
@@ -560,8 +605,14 @@ define([</pre></div></div>
                 basemaps: basemaps,
                 map: RampMap.getMap()
             }, placementAnchorId);
+
             basemapGallery.startup();
-            basemapGallery.select(basemaps[<span class="hljs-number">0</span>].id);</pre></div></div>
+
+            <span class="hljs-keyword">var</span> startId = UtilArray.find(GlobalStorage.config.basemaps, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(basemap)</span> </span>{
+                <span class="hljs-keyword">return</span> basemap.showOnInit;
+            }).id;
+
+            basemapGallery.select(startId);</pre></div></div>
             
         </li>
         
@@ -576,15 +627,17 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            $(<span class="hljs-string">".esriBasemapGalleryNode"</span>).on(<span class="hljs-string">"mousedown"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
-                <span class="hljs-keyword">var</span> curr_id = basemapGallery.getSelected().id,
-                    selected_node = evt.currentTarget.id,
-                    selected_id = selected_node.slice(selected_node.indexOf(<span class="hljs-string">"_"</span>) + <span class="hljs-number">1</span>);
+            <div class="content"><div class='highlight'><pre>            $(<span class="hljs-string">".esriBasemapGalleryNode"</span>).on(<span class="hljs-string">"mousedown keyup"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> </span>{
+                <span class="hljs-keyword">if</span> (evt.which === <span class="hljs-number">1</span> || evt.which === <span class="hljs-number">13</span> || evt.which === <span class="hljs-number">32</span>) {
+                    <span class="hljs-keyword">var</span> curr_id = basemapGallery.getSelected().id,
+                        selected_node = evt.currentTarget.id,
+                        selected_id = selected_node.slice(selected_node.indexOf(<span class="hljs-string">"_"</span>) + <span class="hljs-number">1</span>);
 
-                <span class="hljs-keyword">if</span> (curr_id === selected_id) {
-                    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; <span class="hljs-comment">//prevent the basemap from changing</span>
-                } <span class="hljs-keyword">else</span> { <span class="hljs-comment">//didnt select the same basemap</span>
-                    basemapGallery.select(selected_id);
+                    <span class="hljs-keyword">if</span> (curr_id === selected_id) {
+                        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; <span class="hljs-comment">//prevent the basemap from changing</span>
+                    } <span class="hljs-keyword">else</span> { <span class="hljs-comment">//didnt select the same basemap</span>
+                        basemapGallery.select(selected_id);
+                    }
                 }
             });
 

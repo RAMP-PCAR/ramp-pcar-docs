@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="..\..\..\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
+                <h1><img src="..\..\..\src\assets\images\bobcat_logo_sharp_smaller_s.png" title="ramp-gis-viewer">Reusable Accessible Mapping Platform</h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.42-5</em>
+            <em>API Docs for: 2.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -41,15 +41,23 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/AdvancedToolbar.html">AdvancedToolbar</a></li>
+            
                 <li><a href="../classes/Array.html">Array</a></li>
             
                 <li><a href="../classes/BaseMapSelector.html">BaseMapSelector</a></li>
+            
+                <li><a href="../classes/BaseTool.html">BaseTool</a></li>
             
                 <li><a href="../classes/BookmarkLink.html">BookmarkLink</a></li>
             
                 <li><a href="../classes/Bootstrapper.html">Bootstrapper</a></li>
             
-                <li><a href="../classes/CheckboxWrapper.html">CheckboxWrapper</a></li>
+                <li><a href="../classes/BufferTool.html">BufferTool</a></li>
+            
+                <li><a href="../classes/Checkbox.html">Checkbox</a></li>
+            
+                <li><a href="../classes/CheckboxGroup.html">CheckboxGroup</a></li>
             
                 <li><a href="../classes/Datagrid.html">Datagrid</a></li>
             
@@ -81,9 +89,15 @@
             
                 <li><a href="../classes/Map.html">Map</a></li>
             
+                <li><a href="../classes/MapClickHandler.html">MapClickHandler</a></li>
+            
                 <li><a href="../classes/Maptips.html">Maptips</a></li>
             
+                <li><a href="../classes/MeasureTool.html">MeasureTool</a></li>
+            
                 <li><a href="../classes/Navigation.html">Navigation</a></li>
+            
+                <li><a href="../classes/PopulationTool.html">PopulationTool</a></li>
             
                 <li><a href="../classes/Popup.html">Popup</a></li>
             
@@ -129,9 +143,13 @@
             
                 <li><a href="../modules/FilterManager.html">FilterManager</a></li>
             
+                <li><a href="../modules/GlobalStorage.html">GlobalStorage</a></li>
+            
                 <li><a href="../modules/Map.html">Map</a></li>
             
                 <li><a href="../modules/Maptips.html">Maptips</a></li>
+            
+                <li><a href="../modules/MeasureTool.html">MeasureTool</a></li>
             
                 <li><a href="../modules/Navigation.html">Navigation</a></li>
             
@@ -142,6 +160,8 @@
                 <li><a href="../modules/Theme.html">Theme</a></li>
             
                 <li><a href="../modules/TmplUtil.html">TmplUtil</a></li>
+            
+                <li><a href="../modules/Tools.html">Tools</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
             
@@ -298,7 +318,7 @@ define([&quot;dojo/_base/array&quot;, &quot;dojo/_base/lang&quot;, &quot;dojo/to
             * @param {array} deferredList A list of Deferred objects
             * @param {function} callback The callback to be executed
             */
-            afterAll: function (deferredList, callback) {
+            afterAll: function (deferredList, callback, context) {
                 if (deferredList.length === 0) {
                     callback();
                     return;
@@ -309,7 +329,7 @@ define([&quot;dojo/_base/array&quot;, &quot;dojo/_base/lang&quot;, &quot;dojo/to
                     deferred.then(function () {
                         completed++;
                         if (completed === deferredList.length) {
-                            callback();
+                            callback.call(context);
                         }
                     });
                 });
@@ -588,134 +608,6 @@ define([&quot;dojo/_base/array&quot;, &quot;dojo/_base/lang&quot;, &quot;dojo/to
             },
 
             /**
-            * Wraps the specified checkboxes to provide an alternative rendering of checkboxes without compromising their functionality.
-            * Handles synchronisation of the checkbox&#x27;s state with its new rendering.
-            * Also adds highlight/unhighlight on focus/unfocus, update label when checked/unchecked
-            *
-            * @method styleCheckboxes
-            * @static
-            * @param {jObject} nodes An array of jQuery objects
-            * @param {String} checkedClass Name of the CSS class to be used when checked
-            * @param {String} focusedClass Name of the CSS class to be used when focused
-            * @param {object} labels An object containing labels&#x27; text { checked: &quot;label when checked&quot;, unchecked: &quot;label when unchecked&quot; }
-            * @param {Function} [fnc] Function to run on the label node when it&#x27;s toggled
-            * @return {CheckboxWrapper} A control objects allowing to toggle checkboxes supplying a state, and retrieve original checkbox nodes
-            */
-            styleCheckboxes: function (nodes, checkedClass, focusedClass, labels, fnc) {
-                /**
-                * A wrapper class for styled checkboxes that allows to set their states individually and en masse.
-                *
-                * @class CheckboxWrapper
-                * @constructor
-                * @for Util
-                * @type {Object}
-                */
-                var checkboxWrapperTemplate = {
-                    /**
-                    * Toggle the state of checkboxes.
-                    *
-                    * @method setAll
-                    * @param {boolean} state Specifies the state of the checkbox: true, false
-                    * @return {object} Control object for chaining
-                    * @chainable
-                    * @for CheckboxWrapper
-                    */
-                    setAll: function (state) {
-                        _toggleState(function () {
-                            return state;
-                        });
-
-                        return this;
-                    },
-
-                    /**
-                    * Toggles the checkboxes based on the return value of the given fcn.
-                    *
-                    * @method setState
-                    * @param {function} fcn A function to be run on each of the nodes to determine the state to be set
-                    * @return {object} Control object for chaining
-                    * @chainable
-                    */
-                    setState: function (fcn) {
-                        _toggleState(fcn);
-
-                        return this;
-                    },
-
-                    /**
-                    * Returns original checkbox nodes.
-                    *
-                    * @method getNodes
-                    * @return {jObject} original checkbox nodes
-                    */
-                    getNodes: function () {
-                        return nodes;
-                    }
-                };
-                /*
-                * Goes through an array of checkboxes and if any are selected, add the &quot;checked&quot; css class to
-                * the label so it displays visually matches the changed state
-                * @method _toggleLabels
-                * @param {Object} objs An array of checkboxes to toggle
-                */
-                function _toggleLabels(objs) {
-                    var label;
-
-                    objs.each(function (i, obj) {
-                        var node = $(obj),
-                            newText;
-                        label = node.findInputLabel();
-                        if (node.is(&#x27;:checked&#x27;)) {
-                            newText = String.format(labels.checked,
-                                label.data(&quot;label-name&quot;));
-                            label
-                                .addClass(checkedClass)
-                                .prop(&#x27;title&#x27;, newText)
-                                .find(&quot;&gt; span&quot;).text(newText);
-                        } else {
-                            newText = String.format(labels.unchecked,
-                                label.data(&quot;label-name&quot;));
-                            label
-                                .removeClass(checkedClass)
-                                .prop(&#x27;title&#x27;, newText)
-                                .find(&quot;&gt; span&quot;).text(newText);
-                        }
-                        if (fnc) {
-                            fnc.call(this, label.parent(), null, &quot;update&quot;);
-                        }
-                    });
-                }
-                /*
-                * Goes through an array of checkboxes and toggles their checked state value
-                * @method _toggleState
-                * @param {Object} fcn An Array of checkboxes
-                *
-                */
-                function _toggleState(fcn) {
-                    nodes.each(function () {
-                        $(this).prop(&#x27;checked&#x27;, fcn($(this)));
-                    });
-
-                    _toggleLabels(nodes);
-                }
-
-                nodes
-                    .on(&quot;change&quot;, function () {
-                        _toggleLabels($(this));
-                    })
-                    .on(&quot;focus&quot;, function () {
-                        $(this).findInputLabel().addClass(focusedClass);
-                    })
-                    .on(&quot;focusout&quot;, function () {
-                        $(this).findInputLabel().removeClass(focusedClass);
-                    });
-
-                _toggleLabels(nodes);
-
-                return Object.create(checkboxWrapperTemplate);
-            },
-
-            /**
             * Returns the width of the scrollbar in pixels. Since different browsers render scrollbars differently, the width may vary.
             *
             * @method scrollbarWidth
@@ -774,7 +666,7 @@ define([&quot;dojo/_base/array&quot;, &quot;dojo/_base/lang&quot;, &quot;dojo/to
 
                 deferred.then(function () {
                     window.clearInterval(handle);
-                    console.log(&quot;deffered resolved&quot;);
+                    //console.log(&quot;deffered resolved&quot;);
 
                     callback();
                 });
@@ -1008,6 +900,145 @@ define([&quot;dojo/_base/array&quot;, &quot;dojo/_base/lang&quot;, &quot;dojo/to
                         }
                     });
                 }
+            },
+
+            /**
+            * [settings.linkLists]: false
+            */
+            keyboardSortable: function (ulNodes, settings) {
+                settings = dojoLang.mixin({
+                    linkLists: false,
+
+                    onStart: function () { },
+                    onUpdate: function () { },
+                    onStop: function () { }
+                }, settings);
+
+                ulNodes.each(function (index, _ulNode) {
+                    var ulNode = $(_ulNode),
+                        liNodes = ulNode.find(&quot;&gt; li&quot;),
+                        sortHandleNodes = liNodes.find(&quot;.sort-handle&quot;),
+                        isReordering = false,
+                        grabbed;
+
+                    // Reset focus, set aria attributes, and styling
+                    function reorderReset(handle, liNodes, liNode) {
+                        handle.focus();
+                        liNodes.attr(&quot;aria-dropeffect&quot;, &quot;move&quot;);
+                        liNode.attr(&quot;aria-grabbed&quot;, &quot;true&quot;).removeAttr(&quot;aria-dropeffect&quot;);
+                    }
+
+                    sortHandleNodes
+                        .focusout(function (event) {
+                            var node = $(this).closest(&quot;li&quot;);
+
+                            // if the list is not being reordered right now, release list item
+                            if (node.hasClass(&quot;list-item-grabbed&quot;) &amp;&amp; !isReordering) {
+                                liNodes.removeAttr(&quot;aria-dropeffect&quot;);
+                                node
+                                    .removeClass(&quot;list-item-grabbed&quot;)
+                                    .attr({ &quot;aria-selected&quot;: false, &quot;aria-grabbed&quot;: false });
+
+                                grabbed = false;
+
+                                console.log(&quot;Keyboard Sortable: OnStop -&gt; &quot;, event);
+                                settings.onStop.call(null, event, { item: null });
+                            }
+                        })
+                        .on(&quot;keyup&quot;, function (event) {
+                            var liNode = $(this).closest(&quot;li&quot;),
+                                liId = liNode[0].id,
+                                liIdArray = ulNode.sortable(&quot;toArray&quot;),
+                                liIndex = dojoArray.indexOf(liIdArray, liId);
+
+                            // Toggle grabbed state and aria attributes (13 = enter, 32 = space bar)
+                            if (event.which === 13 || event.which === 32) {
+                                if (grabbed) {
+                                    liNodes.removeAttr(&quot;aria-dropeffect&quot;);
+                                    liNode
+                                        .attr(&quot;aria-grabbed&quot;, &quot;false&quot;)
+                                        .removeClass(&quot;list-item-grabbed&quot;);
+
+                                    console.log(&quot;Keyboard Sortable: OnStop -&gt; &quot;, liNode);
+                                    settings.onStop.call(null, event, { item: liNode });
+
+                                    grabbed = false;
+                                } else {
+                                    liNodes.attr(&quot;aria-dropeffect&quot;, &quot;move&quot;);
+                                    liNode
+                                        .attr(&quot;aria-grabbed&quot;, &quot;true&quot;)
+                                        .removeAttr(&quot;aria-dropeffect&quot;)
+                                        .addClass(&quot;list-item-grabbed&quot;);
+
+                                    console.log(&quot;Keyboard Sortable: OnStart -&gt; &quot;, liNode);
+                                    settings.onStart.call(null, event, { item: liNode });
+
+                                    grabbed = true;
+                                }
+                                // Keyboard up (38) and down (40)
+                            } else if (event.which === 38) {
+                                if (grabbed) {
+                                    // Don&#x27;t move up if first layer in list
+                                    if (liIndex &gt; 0) {
+                                        isReordering = true;
+
+                                        liNode.prev().before(liNode);
+
+                                        reorderReset($(this), liNodes, liNode);
+
+                                        grabbed = true;
+                                        liIndex -= 1;
+
+                                        console.log(&quot;Keyboard Sortable: OnUpdate -&gt; &quot;, liNode);
+                                        settings.onUpdate.call(null, event, { item: liNode });
+
+                                        isReordering = false;
+                                    }
+                                } else {
+                                    // if lists are linked, jump to the last item of the previous list, if any
+                                    if (settings.linkLists &amp;&amp;
+                                        liIndex === 0 &amp;&amp;
+                                        index !== 0) {
+                                        liNode = $(ulNodes[index - 1]).find(&quot;&gt; li:last&quot;);
+                                    } else {
+                                        liNode = liNode.prev();
+                                    }
+
+                                    liNode.find(&quot;:tabbable:first&quot;).focus();
+                                }
+                            } else if (event.which === 40) {
+                                if (grabbed) {
+                                    // Don&#x27;t move down if last layer in list
+                                    if (liIndex &lt; liNodes.length - 1) {
+                                        isReordering = true;
+
+                                        liNode.next().after(liNode);
+
+                                        reorderReset($(this), liNodes, liNode);
+
+                                        grabbed = true;
+                                        liIndex += 1;
+
+                                        console.log(&quot;Keyboard Sortable: OnUpdate -&gt; &quot;, liNode);
+                                        settings.onUpdate.call(null, event, { item: liNode });
+
+                                        isReordering = false;
+                                    }
+                                } else {
+                                    // if lists are linked, jump to the first item of the next list, if any
+                                    if (settings.linkLists &amp;&amp;
+                                        liIndex === liNodes.length - 1 &amp;&amp;
+                                        index &lt; ulNodes.length - 1) {
+                                        liNode = $(ulNodes[index + 1]).find(&quot;&gt; li:first&quot;);
+                                    } else {
+                                        liNode = liNode.next();
+                                    }
+
+                                    liNode.find(&quot;:tabbable:first&quot;).focus();
+                                }
+                            }
+                        });
+                });
             }
         };
     });

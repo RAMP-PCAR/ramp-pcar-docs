@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -337,7 +382,7 @@ define([</pre></div></div>
             * @param {esri/Graphic} graphic a graphic object or a feature object
             * @return {esri/Graphic}
             */</span>
-            getLayerConfig: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic)</span> {</span>
+            getLayerConfig: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic)</span> </span>{
                 <span class="hljs-keyword">return</span> Ramp.getLayerConfig(graphic.getLayer().url);
             },
 
@@ -347,7 +392,7 @@ define([</pre></div></div>
             * @param {esri/Graphic} graphic
             * @method getOid
             */</span>
-            getOid: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic)</span> {</span>
+            getOid: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic)</span> </span>{
                 <span class="hljs-keyword">var</span> objectIdField = graphic.getLayer().objectIdField;
                 <span class="hljs-keyword">return</span> graphic.attributes[objectIdField];
             },
@@ -362,10 +407,10 @@ define([</pre></div></div>
             * @param {Object} graphic
             * @return {Object} found graphic object
             */</span>
-            getTextContent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic)</span> {</span>
+            getTextContent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic)</span> </span>{
                 <span class="hljs-keyword">var</span> templateName = Ramp.getLayerConfig(graphic.getLayer().url).detailTemplate;
 
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fillTemplate</span><span class="hljs-params">(graphic)</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fillTemplate</span><span class="hljs-params">(graphic)</span> </span>{
                     tmpl.cache = {};
                     tmpl.templates = <span class="hljs-built_in">JSON</span>.parse(
                         TmplHelper.stringifyTemplate(feature_details_template));
@@ -399,7 +444,7 @@ define([</pre></div></div>
             * @param {esri/Graphic} graphic a graphic object or a feature object
             * @return {}
             */</span>
-            getGraphicTitle: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic)</span> {</span>
+            getGraphicTitle: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic)</span> </span>{
                 <span class="hljs-keyword">return</span> graphic.attributes[<span class="hljs-keyword">this</span>.getLayerConfig(graphic).nameField];
             }
         };

@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -296,25 +341,25 @@ define([</pre></div></div>
     * @method initTopics
     * @private
     */</span>
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initTopics</span><span class="hljs-params">()</span> {</span>
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initTopics</span><span class="hljs-params">()</span> </span>{
         nav
-            .on(<span class="hljs-string">"navigation:panClick"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e, direction)</span> {</span>
+            .on(<span class="hljs-string">"navigation:panClick"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e, direction)</span> </span>{
                 topic.publish(EventManager.Navigation.PAN, {
                     direction: direction
                 });
             })
-            .on(<span class="hljs-string">"navigation:zoomClick"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e, in_out)</span> {</span>
+            .on(<span class="hljs-string">"navigation:zoomClick"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e, in_out)</span> </span>{
                 <span class="hljs-keyword">var</span> newLvl = (in_out === <span class="hljs-string">"zoomIn"</span>) ? <span class="hljs-number">1</span> : -<span class="hljs-number">1</span>;
                 topic.publish(EventManager.Navigation.ZOOM_STEP, {
                     level: newLvl
                 });
             })
-            .on(<span class="hljs-string">"navigation:zoomSliderChange"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e, newVal)</span> {</span>
+            .on(<span class="hljs-string">"navigation:zoomSliderChange"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e, newVal)</span> </span>{
                 topic.publish(EventManager.Navigation.ZOOM, {
                     level: newVal
                 });
             })
-            .on(<span class="hljs-string">"navigation:fullExtentClick"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            .on(<span class="hljs-string">"navigation:fullExtentClick"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 topic.publish(EventManager.Navigation.FULL_EXTENT);
             });
     }
@@ -325,12 +370,12 @@ define([</pre></div></div>
     * @method  initListeners
     * @private
     */</span>
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initListeners</span><span class="hljs-params">()</span> {</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">toggleTransition</span><span class="hljs-params">()</span> {</span>
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initListeners</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">toggleTransition</span><span class="hljs-params">()</span> </span>{
             nav.navigation(<span class="hljs-string">"toggleTransition"</span>);
         }
 
-        topic.subscribe(EventManager.Map.EXTENT_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
+        topic.subscribe(EventManager.Map.EXTENT_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
             nav.navigation(<span class="hljs-string">"setSliderVal"</span>, event.lod.level);
         });
 
@@ -349,7 +394,7 @@ define([</pre></div></div>
         * @method init
         * @param {Number} currentLevel
         */</span>
-        init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(currentLevel)</span> {</span></pre></div></div>
+        init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(currentLevel)</span> </span>{</pre></div></div>
             
         </li>
         

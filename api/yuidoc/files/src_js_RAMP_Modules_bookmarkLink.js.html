@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="..\..\..\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
+                <h1><img src="..\..\..\src\assets\images\bobcat_logo_sharp_smaller_s.png" title="ramp-gis-viewer">Reusable Accessible Mapping Platform</h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.42-5</em>
+            <em>API Docs for: 2.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -41,15 +41,23 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/AdvancedToolbar.html">AdvancedToolbar</a></li>
+            
                 <li><a href="../classes/Array.html">Array</a></li>
             
                 <li><a href="../classes/BaseMapSelector.html">BaseMapSelector</a></li>
+            
+                <li><a href="../classes/BaseTool.html">BaseTool</a></li>
             
                 <li><a href="../classes/BookmarkLink.html">BookmarkLink</a></li>
             
                 <li><a href="../classes/Bootstrapper.html">Bootstrapper</a></li>
             
-                <li><a href="../classes/CheckboxWrapper.html">CheckboxWrapper</a></li>
+                <li><a href="../classes/BufferTool.html">BufferTool</a></li>
+            
+                <li><a href="../classes/Checkbox.html">Checkbox</a></li>
+            
+                <li><a href="../classes/CheckboxGroup.html">CheckboxGroup</a></li>
             
                 <li><a href="../classes/Datagrid.html">Datagrid</a></li>
             
@@ -81,9 +89,15 @@
             
                 <li><a href="../classes/Map.html">Map</a></li>
             
+                <li><a href="../classes/MapClickHandler.html">MapClickHandler</a></li>
+            
                 <li><a href="../classes/Maptips.html">Maptips</a></li>
             
+                <li><a href="../classes/MeasureTool.html">MeasureTool</a></li>
+            
                 <li><a href="../classes/Navigation.html">Navigation</a></li>
+            
+                <li><a href="../classes/PopulationTool.html">PopulationTool</a></li>
             
                 <li><a href="../classes/Popup.html">Popup</a></li>
             
@@ -129,9 +143,13 @@
             
                 <li><a href="../modules/FilterManager.html">FilterManager</a></li>
             
+                <li><a href="../modules/GlobalStorage.html">GlobalStorage</a></li>
+            
                 <li><a href="../modules/Map.html">Map</a></li>
             
                 <li><a href="../modules/Maptips.html">Maptips</a></li>
+            
+                <li><a href="../modules/MeasureTool.html">MeasureTool</a></li>
             
                 <li><a href="../modules/Navigation.html">Navigation</a></li>
             
@@ -142,6 +160,8 @@
                 <li><a href="../modules/Theme.html">Theme</a></li>
             
                 <li><a href="../modules/TmplUtil.html">TmplUtil</a></li>
+            
+                <li><a href="../modules/Tools.html">Tools</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
             
@@ -186,7 +206,7 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-/*global define */
+/* global define, i18n */
 
 /**
 * BookmarkLink submodule
@@ -257,9 +277,9 @@ define([
 // Esri
         &quot;esri/geometry/Extent&quot;,
 // Ramp
-        &quot;ramp/globalStorage&quot;, &quot;ramp/map&quot;, &quot;ramp/eventManager&quot;,
+        &quot;ramp/globalStorage&quot;, &quot;ramp/map&quot;, &quot;ramp/eventManager&quot;, &quot;ramp/ramp&quot;,
 // Util
-        &quot;utils/url&quot;, &quot;utils/util&quot;, &quot;utils/dictionary&quot;, &quot;utils/popupManager&quot;
+        &quot;utils/url&quot;, &quot;utils/util&quot;, &quot;utils/dictionary&quot;, &quot;utils/array&quot;, &quot;utils/popupManager&quot;
 ],
 
     function (
@@ -269,24 +289,28 @@ define([
     // Esri
         Extent,
     // Ramp
-        GlobalStorage, RampMap, EventManager,
+        GlobalStorage, RampMap, EventManager, Ramp,
     // Util
-        Url, UtilMisc, UtilDict, PopupManager) {
+        Url, UtilMisc, UtilDict, UtilArray, PopupManager) {
         &quot;use strict&quot;;
 
-        var EVENT_ROOT = &quot;bookmarkLink/&quot;, // trailing &#x27;/&#x27; is important
-
         // Using constants so we can have intellisense and not make silly typos
-            EVENT_EXTENT_CHANGE = &quot;extentChange&quot;,
+        var EVENT_EXTENT_CHANGE = &quot;extentChange&quot;,
             EVENT_FULLSCREEN = &quot;fullscreen&quot;,
             EVENT_PANEL_CHANGE = &quot;panelChange&quot;,
             EVENT_TAB_CHANGE = &quot;selectedTab&quot;,
             EVENT_BASEMAP_CHANGED = &quot;basemapChange&quot;,
-            EVENT_FILTER_GLOBAL_LAYER = &quot;globalLayer&quot;,
-            EVENT_FILTER_GLOBAL_BOX = &quot;globalBox&quot;,
-            EVENT_FILTER_VISIBLE_LAYERS = &quot;activeLayers&quot;,
-            EVENT_FILTER_VISIBLE_BOXES = &quot;activeBoxes&quot;,
+            PARAM = {
+                FILTER: {
+                    VISIBLE_LAYERS: &quot;visibleLayers&quot;,
+                    HIDDEN_LAYERS: &quot;hiddenLayers&quot;,
+                    VISIBLE_BOXES: &quot;visibleBoxes&quot;,
+                    HIDDEN_BOXES: &quot;hiddenBoxes&quot;
+                }
+            },
             HREF_MAILTO_TEMPLATE = &quot;mailto:?subject={0}&amp;body={1}%0D%0A%0D%0A{2}&quot;,
+
+            config,
 
             queryObject,
 
@@ -329,24 +353,32 @@ define([
         */
             anchors = {},
 
-        /**
-        * A dictionary mapping layer id (String) to layer objects (FeatureLayer) that are currently visible on the map.
-        *
-        * @private
-        * @property hiddenLayers
-        * @type {Object}
-        */
-            hiddenLayers = {},
+            /**
+             * A dictionary containing layer id (String) as key and layer visiblility (boolean) as value
+             *
+             * @private
+             * @property layerVisibility
+             * @type {Object}
+             */
+            layerVisibility = {},
 
-        /**
-        * A set containing the names of all the layers that currently have their bounding boxes
-        * toggled on (the key is the name and the value is arbitrary, currently set to &quot;true&quot;).
-        *
-        * @private
-        * @property visibleBoxes
-        * @type {Object}
-        */
-            visibleBoxes = {},
+            /**
+             * A dictionary containing layer id (String) as key and bounding box visibility (boolean) as value
+             *
+             * @private
+             * @property boundingBoxVisibility
+             * @type {Object}
+             */
+            boundingBoxVisibility = {},
+
+            /**
+             * A dictionary with the layer id as key, and the transparency as value.
+             *
+             * @private
+             * @property layerTransparency
+             * @type {Object}
+             */
+            layerTransparency = {},
 
             ui = {
                 /**
@@ -417,7 +449,8 @@ define([
                                     toggleShortLinkMode(false);
                                     d.resolve();
                                 });
-                            }
+                            },
+                            resetFocusOnClose: true
                         }
                     );
 
@@ -428,21 +461,6 @@ define([
                     });*/
                 }
             };
-        /*
-        *
-        *
-        *
-        */
-        function initTopics() {
-            /* PUBLISH */
-        }
-        /*
-        *
-        *
-        */
-        function initListeners() {
-            /* SUBSCRIBE */
-        }
 
         /**
         * Update the parameter dictionary with the new values for the parameter. If paramObj is set to null,
@@ -462,6 +480,7 @@ define([
                 parameters[paramKey] = dojoQuery.objectToQuery(paramObj);
             }
         }
+
         /*
         * Adds an anchor object to a tracking array
         * @method addAnchor
@@ -471,6 +490,7 @@ define([
         function addAnchor(anchorName, anchorObj) {
             anchors[anchorName] = anchorObj;
         }
+
         /*
         * Appends information to the current map&#x27;s URL to create a mail-to link. Set the email buttons target URL.
         * @method setNewUrl
@@ -478,10 +498,10 @@ define([
         */
         function setNewUrl(url) {
             var mailToHref = String.format(HREF_MAILTO_TEMPLATE,
-                GlobalStorage.config.stringResources.txtEmailUrlSubject,
-                GlobalStorage.config.stringResources.txtEmailUrlBody,
+                i18n.t(&quot;bookmarkLink.emailUrlSubject&quot;),
+                i18n.t(&quot;bookmarkLink.emailUrlBody&quot;),
                 encodeURIComponent(url));
-
+            
             linkPaneTextbox.val(url);
             getlinkEmailButton.attr(&quot;href&quot;, mailToHref);
         }
@@ -547,9 +567,163 @@ define([
             var label;
 
             isShortLinkMode = value === true ? true : (value === false ? false : !isShortLinkMode);
-            label = isShortLinkMode ? &quot;long link&quot; : &quot;short link&quot;;
+            label = isShortLinkMode ? i18n.t(&quot;bookmarkLink.longLink&quot;) : i18n.t(&quot;bookmarkLink.shortLink&quot;);
             getlinkShortenButton.text(label);
             updateURL();
+        }
+
+        function updateConfig(homePage) {
+            var event,
+                urlObj = new Url(dojoRequire.toUrl(document.location));
+
+            config = GlobalStorage.config;
+            baseUrl = urlObj.uri;
+            queryObject = dojoQuery.queryToObject(urlObj.query);
+
+            //adds homePage (e.g. default.aspx or rampmap.aspx) if not present;
+            //used in getlink or else the link would be invalid.
+            if (baseUrl.indexOf(homePage) === -1) {
+                baseUrl += homePage;
+            }
+            baseUrl += &quot;?lang=&quot; + config.lang;
+
+            // Move the API key to config.json??
+            jQuery.urlShortener.settings.apiKey = &#x27;AIzaSyB52ByjsXrOYlXxc2Q9GVpClLDwt0Lw6pc&#x27;;
+
+            // Toggle the main panel
+            if (queryObject.panelVisible) {
+                event = {
+                    visible: UtilMisc.parseBool(queryObject.panelVisible)
+                };
+
+                addParameter(EVENT_PANEL_CHANGE, event);
+                config.ui.sidePanelOpened = event.visible;
+            }
+
+            // Toggle fullscreen mode
+            if (queryObject.fullscreen) {
+                event = {
+                    fullscreen: UtilMisc.parseBool(queryObject.fullscreen)
+                };
+                addParameter(EVENT_FULLSCREEN, event);
+                config.ui.fullscreen = event.fullscreen;
+            }
+
+            // Check for map extent queries
+            if (queryObject.xmin) {
+                event = {
+                    xmin: parseFloat(queryObject.xmin.replace(/,/g, &quot;&quot;)),
+                    ymin: parseFloat(queryObject.ymin.replace(/,/g, &quot;&quot;)),
+                    xmax: parseFloat(queryObject.xmax.replace(/,/g, &quot;&quot;)),
+                    ymax: parseFloat(queryObject.ymax.replace(/,/g, &quot;&quot;)),
+                    sr: queryObject.sr
+                };
+
+                addParameter(EVENT_EXTENT_CHANGE, event);
+
+                config.extents.defaultExtent = event;
+                config.spatialReference = JSON.parse(queryObject.sr);
+
+                // Wait for things such as fullscreen or panel collapse
+                // to finish before doing an extent change.
+            }
+
+            // Select the correct basemap
+            if (queryObject.baseMap) {
+                event = {
+                    baseMap: queryObject.baseMap
+                };
+                addParameter(EVENT_BASEMAP_CHANGED, event);
+
+                dojoArray.forEach(config.basemaps, function (basemap) {
+                    basemap.showOnInit = (basemap.id === event.baseMap);
+                });
+            }
+
+            // Modify the layer transparency
+            if (queryObject.layerTransparency) {
+                addParameter(EventManager.FilterManager.LAYER_TRANSPARENCY_CHANGED, {
+                    layerTransparency: queryObject.layerTransparency
+                });
+
+                UtilDict.forEachEntry(JSON.parse(queryObject.layerTransparency), function (key, value) {
+                    var layerConfig = UtilArray.find(config.featureLayers.concat(config.wmsLayers), function (layer) {
+                        return layer.id === key;
+                    });
+                    layerConfig.settings.opacity.default = value;
+                });
+            }
+
+            // check for selected tab queries
+            if (queryObject.selectedTab) {
+                // Just add the parameter, no need to do anything else
+                // since we&#x27;re using anchor tags
+                addParameter(EVENT_TAB_CHANGE, {
+                    index: queryObject.selectedTab
+                });
+            }
+
+            var layerIds;
+
+            if (queryObject.visibleLayers) {
+                layerIds = queryObject.visibleLayers.split(&quot;+&quot;);
+
+                layerIds.forEach(function (layerId) {
+                    var layerConfig = Ramp.getLayerConfigWithId(layerId);
+                    layerConfig.layerVisible = true;
+
+                    layerVisibility[layerId] = true;
+                });
+
+                addParameter(PARAM.FILTER.VISIBLE_LAYERS, {
+                    visibleLayers: queryObject.visibleLayers
+                });
+            }
+
+            if (queryObject.hiddenLayers) {
+                layerIds = queryObject.hiddenLayers.split(&quot;+&quot;);
+
+                layerIds.forEach(function (layerId) {
+                    var layerConfig = Ramp.getLayerConfigWithId(layerId);
+                    layerConfig.layerVisible = false;
+
+                    layerVisibility[layerId] = false;
+                });
+
+                addParameter(PARAM.FILTER.HIDDEN_LAYERS, {
+                    hiddenLayers: queryObject.hiddenLayers
+                });
+            }
+
+            if (queryObject.visibleBoxes) {
+                layerIds = queryObject.visibleBoxes.split(&quot;+&quot;);
+
+                layerIds.forEach(function (layerId) {
+                    var layerConfig = Ramp.getLayerConfigWithId(layerId);
+                    layerConfig.boundingBoxVisible = true;
+
+                    boundingBoxVisibility[layerId] = true;
+                });
+
+                addParameter(PARAM.FILTER.VISIBLE_BOXES, {
+                    visibleBoxes: queryObject.visibleBoxes
+                });
+            }
+
+            if (queryObject.hiddenBoxes) {
+                layerIds = queryObject.hiddenBoxes.split(&quot;+&quot;);
+
+                layerIds.forEach(function (layerId) {
+                    var layerConfig = Ramp.getLayerConfigWithId(layerId);
+                    layerConfig.boundingBoxVisible = false;
+
+                    boundingBoxVisibility[layerId] = false;
+                });
+
+                addParameter(PARAM.FILTER.HIDDEN_BOXES, {
+                    hiddenBoxes: queryObject.hiddenBoxes
+                });
+            }
         }
 
         return {
@@ -559,32 +733,13 @@ define([
             * change).
             *
             * @method init
-            * @param {String} homePage a string denoting the name of the homePage
-            * (e.g. usually &quot;Default.aspx&quot; or &quot;index.html&quot;)
+            * {String} homePage a string denoting the name of the homePage (e.g. usually &quot;Default.aspx&quot; or &quot;index.html&quot;)
             */
-            init: function (homePage) {
-                var urlObj = new Url(dojoRequire.toUrl(document.location));
-                baseUrl = urlObj.uri;
-
-                //adds homePage (e.g. default.aspx or rampmap.aspx) if not present;
-                //used in getlink or else the link would be invalid.
-                if (baseUrl.indexOf(homePage) === -1) {
-                    baseUrl += homePage;
-                }
-                baseUrl += &quot;?lang=&quot; + GlobalStorage.config.lang;
-
-                queryObject = dojoQuery.queryToObject(urlObj.query);
-
-                // Move the API key to config.json??
-                jQuery.urlShortener.settings.apiKey = &#x27;AIzaSyB52ByjsXrOYlXxc2Q9GVpClLDwt0Lw6pc&#x27;;
-
-                initTopics();
-                initListeners();
-
+            createUI: function () {
                 ui.init();
-                this.updateMap();
-                this.subscribeAndUpdate();
             },
+
+            updateConfig: updateConfig,
 
             /**
             * Subscribe to map state changes so the URL displayed can be changed accordingly.
@@ -621,13 +776,15 @@ define([
                         ymin: event.extent.ymin,
                         xmax: event.extent.xmax,
                         ymax: event.extent.ymax,
-                        sr: event.extent.spatialReference.wkid
+                        sr: JSON.stringify(event.extent.spatialReference)
                     });
                     updateURL();
                 });
 
                 topic.subscribe(EventManager.GUI.FULLSCREEN_CHANGE, function (event) {
-                    addParameter(EVENT_FULLSCREEN, event);
+                    addParameter(EVENT_FULLSCREEN, {
+                        fullscreen: event.visible
+                    });
                     updateURL();
                 });
 
@@ -653,82 +810,63 @@ define([
                     updateURL();
                 });
 
-                topic.subscribe(EventManager.FilterManager.GLOBAL_LAYER_VISIBILITY_TOGGLED, function (event) {
-                    addParameter(EVENT_FILTER_GLOBAL_LAYER, {
-                        globalLayer: event.checked
-                    });
-
-                    // Remove the active layers query, since these two are mutually exclusive
-                    addParameter(EVENT_FILTER_VISIBLE_LAYERS, null);
-
-                    updateURL();
-                });
-
-                topic.subscribe(EventManager.FilterManager.GLOBAL_BOX_VISIBILITY_TOGGLED, function (event) {
-                    addParameter(EVENT_FILTER_GLOBAL_BOX, {
-                        globalBox: event.checked
-                    });
-
-                    // Remove the active boxes query, since these two are mutually exclusive
-                    addParameter(EVENT_FILTER_VISIBLE_BOXES, null);
-
-                    updateURL();
-                });
-
                 topic.subscribe(EventManager.FilterManager.LAYER_VISIBILITY_TOGGLED, function (event) {
-                    var layerName = $(event.node).findInputLabel().data(&quot;layer-id&quot;);
+                    var layerName = event.id;
+                    layerVisibility[layerName] = event.state;
 
-                    if (event.checked) {
-                        delete hiddenLayers[layerName];
-                    } else {
-                        hiddenLayers[layerName] = true;
-                    }
-
-                    if (UtilDict.isEmpty(hiddenLayers)) {
-                        // If we have no hidden layers, remove both parameters (since it&#x27;s status quo)
-                        addParameter(EVENT_FILTER_VISIBLE_LAYERS, null);
-                        addParameter(EVENT_FILTER_GLOBAL_LAYER, null);
-                    } else {
-                        // Otherwise add the hidden layers parameter and remove the global layer
-                        // parameter
-                        addParameter(EVENT_FILTER_VISIBLE_LAYERS, {
-                            // Convert an array of string into a &quot;+&quot; delimited string
-                            hiddenLayers: Object.keys(hiddenLayers).join(&quot;+&quot;)
+                    // Only keep attributes that are different from the default config
+                    var visibleLayers = UtilDict.filter(layerVisibility, function (key, layerVisible) {
+                        return layerVisible &amp;&amp; !Ramp.getLayerConfigWithId(key).layerVisible;
+                    }),
+                        hiddenLayers = UtilDict.filter(layerVisibility, function (key, boxVisible) {
+                            return !boxVisible &amp;&amp; Ramp.getLayerConfigWithId(key).layerVisible;
                         });
 
-                        addParameter(EVENT_FILTER_GLOBAL_LAYER, null);
-                    }
+                    addParameter(PARAM.FILTER.HIDDEN_LAYERS, UtilDict.isEmpty(hiddenLayers) ? null : {
+                        // Convert an array of string into a &quot;+&quot; delimited string
+                        hiddenLayers: Object.keys(hiddenLayers).join(&quot;+&quot;)
+                    });
+
+                    addParameter(PARAM.FILTER.VISIBLE_LAYERS, UtilDict.isEmpty(visibleLayers) ? null : {
+                        // Convert an array of string into a &quot;+&quot; delimited string
+                        visibleLayers: Object.keys(visibleLayers).join(&quot;+&quot;)
+                    });
 
                     updateURL();
                 });
 
                 topic.subscribe(EventManager.FilterManager.BOX_VISIBILITY_TOGGLED, function (event) {
-                    var layerName = $(event.node).findInputLabel().data(&quot;layer-id&quot;);
+                    var layerName = event.id;
+                    boundingBoxVisibility[layerName] = event.state;
 
-                    if (event.checked) {
-                        visibleBoxes[layerName] = true;
-                    } else {
-                        delete visibleBoxes[layerName];
-                    }
-
-                    if (UtilDict.isEmpty(visibleBoxes)) {
-                        // If we have no visible boxes, remove the visible boxes parameter
-                        // and set global box to false
-                        addParameter(EVENT_FILTER_VISIBLE_BOXES, null);
-
-                        addParameter(EVENT_FILTER_GLOBAL_BOX, {
-                            globalBox: false
-                        });
-                    } else {
-                        // Otherwise add the visible boxes parameter and remove the global box
-                        // parameter
-                        addParameter(EVENT_FILTER_VISIBLE_BOXES, {
-                            // Convert an array of string into a &quot;+&quot; delimited string
-                            visibleBoxes: Object.keys(visibleBoxes).join(&quot;+&quot;)
+                    // Only keep attributes that are different from the default config
+                    var visibleBoxes = UtilDict.filter(boundingBoxVisibility, function (key, boxVisible) {
+                        return boxVisible &amp;&amp; !Ramp.getLayerConfigWithId(key).boundingBoxVisible;
+                    }),
+                        hiddenBoxes = UtilDict.filter(boundingBoxVisibility, function (key, boxVisible) {
+                            return !boxVisible &amp;&amp; Ramp.getLayerConfigWithId(key).boundingBoxVisible;
                         });
 
-                        addParameter(EVENT_FILTER_GLOBAL_BOX, null);
-                    }
+                    addParameter(PARAM.FILTER.HIDDEN_BOXES, UtilDict.isEmpty(hiddenBoxes) ? null : {
+                        // Convert an array of string into a &quot;+&quot; delimited string
+                        hiddenBoxes: Object.keys(hiddenBoxes).join(&quot;+&quot;)
+                    });
+
+                    addParameter(PARAM.FILTER.VISIBLE_BOXES, UtilDict.isEmpty(visibleBoxes) ? null : {
+                        // Convert an array of string into a &quot;+&quot; delimited string
+                        visibleBoxes: Object.keys(visibleBoxes).join(&quot;+&quot;)
+                    });
+
+                    updateURL();
+                });
+
+                topic.subscribe(EventManager.FilterManager.LAYER_TRANSPARENCY_CHANGED, function (event) {
+                    addParameter(EventManager.FilterManager.LAYER_TRANSPARENCY_CHANGED, event);
+                    layerTransparency[event.layerId] = event.value;
+
+                    addParameter(EventManager.FilterManager.LAYER_TRANSPARENCY_CHANGED, {
+                        layerTransparency: JSON.stringify(layerTransparency)
+                    });
 
                     updateURL();
                 });
@@ -737,184 +875,6 @@ define([
                 // if this call is removed, there will be no URL in the bookmark link
                 // until one of the above events fires
                 updateURL();
-            },
-
-            /**
-            * Publish events based on the query parameter (if any) in the URL.
-            *
-            * @method updateMap
-            */
-            updateMap: function () {
-                // If there is no query just return
-                if (!queryObject) {
-                    return;
-                }
-
-                var event,
-                // List of objects containing an event name and an event argument. The events should
-                // be anything to wait for before publishing a map extent change, it should include
-                // anything that will change the size of the map (e.g. fullscreen, closing the panel).
-                // If the map extent change occurs BEFORE something that changes the size of the map (e.g. fullscreen)
-                // then the map extent will change again.
-                    waitList = [],
-
-                    layerIds;
-
-                // check for selected tab queries
-                if (queryObject.selectedTab) {
-                    event = {
-                        index: queryObject.selectedTab
-                    };
-                    addParameter(EVENT_TAB_CHANGE, event);
-                    topic.publish(EVENT_ROOT + EVENT_TAB_CHANGE, event);
-                }
-
-                // Toggle the main panel
-                if (queryObject.panelVisible) {
-                    event = {
-                        panelVisible: UtilMisc.parseBool(queryObject.panelVisible)
-                    };
-                    addParameter(EVENT_PANEL_CHANGE, event);
-
-                    if (!event.panelVisible) {
-                        // NOTE: panel change not triggered here (see map extent change below)
-                        waitList.push({
-                            publishName: EventManager.GUI.PANEL_TOGGLE,
-                            eventArg: {
-                                origin: &quot;bootstrapper&quot;
-                            },
-                            subscribeName: EventManager.GUI.PANEL_CHANGE
-                        });
-                    }
-                }
-
-                // Toggle fullscreen mode
-                if (queryObject.fullscreen) {
-                    event = {
-                        fullscreen: UtilMisc.parseBool(queryObject.fullscreen)
-                    };
-                    addParameter(EVENT_FULLSCREEN, event);
-
-                    if (event.fullscreen) {
-                        // NOTE: fullscreen not triggered here (see map extent change below)
-                        waitList.push({
-                            publishName: EventManager.GUI.TOGGLE_FULLSCREEN,
-                            eventArg: {
-                                expand: true
-                            },
-                            subscribeName: EventManager.GUI.FULLSCREEN_CHANGE
-                        });
-                    }
-                }
-
-                // Select the correct basemap
-                if (queryObject.baseMap) {
-                    event = {
-                        id: queryObject.baseMap
-                    };
-                    addParameter(EVENT_BASEMAP_CHANGED, event);
-                    topic.publish(EventManager.BasemapSelector.TOGGLE, event);
-                }
-
-                // check for map extent queries
-                if (queryObject.xmin) {
-                    event = {
-                        xmin: parseFloat(queryObject.xmin.replace(/,/g, &quot;&quot;)),
-                        ymin: parseFloat(queryObject.ymin.replace(/,/g, &quot;&quot;)),
-                        xmax: parseFloat(queryObject.xmax.replace(/,/g, &quot;&quot;)),
-                        ymax: parseFloat(queryObject.ymax.replace(/,/g, &quot;&quot;))
-                    };
-
-                    addParameter(EVENT_EXTENT_CHANGE, event);
-
-                    if (waitList.isEmpty()) {
-                        topic.publish(EventManager.Map.SET_EXTENT, {
-                            extent: new Extent(event)
-                        });
-                    } else {
-                        // Wait for things such as fullscreen or panel collapse
-                        // to finish before doing an extent change.
-
-                        // Note it&#x27;s important to subscribe to the events, then
-                        // publish them, that&#x27;s why it was done in such an obscure way
-                        // using the waitList (otherwise if we just publish the
-                        // event like above, then subscribe to it here, the event
-                        // might have completed before reaching this point)
-                        var eventNames = dojoArray.map(waitList, function (obj) {
-                            return obj.subscribeName;
-                        });
-
-                        UtilMisc.subscribeAll(eventNames, function () {
-                            topic.publish(EventManager.Map.SET_EXTENT, {
-                                extent: new Extent(event)
-                            });
-                        });
-
-                        dojoArray.forEach(waitList, function (obj) {
-                            topic.publish(obj.publishName, obj.eventArg);
-                        });
-                    }
-                }
-
-                if (queryObject.globalLayer) {
-                    topic.publish(EventManager.FilterManager.TOGGLE_GLOBAL_LAYER_VISIBILITY, {
-                        visible: UtilMisc.parseBool(queryObject.globalLayer)
-                    });
-
-                    addParameter(EVENT_FILTER_GLOBAL_LAYER, {
-                        globalLayer: queryObject.globalLayer
-                    });
-                } else if (queryObject.hiddenLayers) {
-                    // Doing &quot;else if&quot; here instead of &quot;if&quot; because these two options are exclusive
-
-                    layerIds = queryObject.hiddenLayers.split(&quot;+&quot;);
-
-                    // Selectively turn off the ones that were in the query (the rest will be
-                    // turned on)
-                    topic.publish(EventManager.FilterManager.TOGGLE_LAYER_VISIBILITY, {
-                        layerIds: layerIds,
-                        checked: false
-                    });
-
-                    addParameter(EVENT_FILTER_VISIBLE_LAYERS, {
-                        hiddenLayers: queryObject.hiddenLayers
-                    });
-                }
-
-                if (queryObject.globalBox) {
-                    topic.publish(EventManager.FilterManager.TOGGLE_GLOBAL_BOX_VISIBILITY, {
-                        visible: UtilMisc.parseBool(queryObject.globalBox)
-                    });
-
-                    addParameter(EVENT_FILTER_GLOBAL_BOX, {
-                        globalBox: queryObject.globalBox
-                    });
-                } else if (queryObject.visibleBoxes) {
-                    // Doing &quot;else if&quot; here instead of &quot;if&quot; because these two options are exclusive
-
-                    // Selective turn on the bounding boxes, no need to turn off all bounding boxes
-                    // first since all bounding boxes are off by default
-
-                    layerIds = queryObject.visibleBoxes.split(&quot;+&quot;);
-
-                    topic.publish(EventManager.FilterManager.TOGGLE_BOX_VISIBILITY, {
-                        layerIds: layerIds,
-                        checked: true
-                    });
-
-                    addParameter(EVENT_FILTER_VISIBLE_BOXES, {
-                        visibleBoxes: queryObject.visibleBoxes
-                    });
-                }
-
-                // store the small keys as well
-                if (queryObject.keys) {
-                    // We&#x27;re not using the smallkeys elsewhere, so the parameter
-                    // name doesn&#x27;t really matter
-                    addParameter(&quot;smallkeys&quot;, {
-                        keys: queryObject.keys
-                    });
-                }
             }
         };
     });

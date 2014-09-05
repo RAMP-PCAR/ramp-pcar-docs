@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="..\..\..\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
+                <h1><img src="..\..\..\src\assets\images\bobcat_logo_sharp_smaller_s.png" title="ramp-gis-viewer">Reusable Accessible Mapping Platform</h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.42-5</em>
+            <em>API Docs for: 2.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -41,15 +41,23 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/AdvancedToolbar.html">AdvancedToolbar</a></li>
+            
                 <li><a href="../classes/Array.html">Array</a></li>
             
                 <li><a href="../classes/BaseMapSelector.html">BaseMapSelector</a></li>
+            
+                <li><a href="../classes/BaseTool.html">BaseTool</a></li>
             
                 <li><a href="../classes/BookmarkLink.html">BookmarkLink</a></li>
             
                 <li><a href="../classes/Bootstrapper.html">Bootstrapper</a></li>
             
-                <li><a href="../classes/CheckboxWrapper.html">CheckboxWrapper</a></li>
+                <li><a href="../classes/BufferTool.html">BufferTool</a></li>
+            
+                <li><a href="../classes/Checkbox.html">Checkbox</a></li>
+            
+                <li><a href="../classes/CheckboxGroup.html">CheckboxGroup</a></li>
             
                 <li><a href="../classes/Datagrid.html">Datagrid</a></li>
             
@@ -81,9 +89,15 @@
             
                 <li><a href="../classes/Map.html">Map</a></li>
             
+                <li><a href="../classes/MapClickHandler.html">MapClickHandler</a></li>
+            
                 <li><a href="../classes/Maptips.html">Maptips</a></li>
             
+                <li><a href="../classes/MeasureTool.html">MeasureTool</a></li>
+            
                 <li><a href="../classes/Navigation.html">Navigation</a></li>
+            
+                <li><a href="../classes/PopulationTool.html">PopulationTool</a></li>
             
                 <li><a href="../classes/Popup.html">Popup</a></li>
             
@@ -129,9 +143,13 @@
             
                 <li><a href="../modules/FilterManager.html">FilterManager</a></li>
             
+                <li><a href="../modules/GlobalStorage.html">GlobalStorage</a></li>
+            
                 <li><a href="../modules/Map.html">Map</a></li>
             
                 <li><a href="../modules/Maptips.html">Maptips</a></li>
+            
+                <li><a href="../modules/MeasureTool.html">MeasureTool</a></li>
             
                 <li><a href="../modules/Navigation.html">Navigation</a></li>
             
@@ -142,6 +160,8 @@
                 <li><a href="../modules/Theme.html">Theme</a></li>
             
                 <li><a href="../modules/TmplUtil.html">TmplUtil</a></li>
+            
+                <li><a href="../modules/Tools.html">Tools</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
             
@@ -186,7 +206,7 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-﻿/*global define, tmpl, TimelineLite, TweenLite, window */
+﻿/*global define, tmpl, TimelineLite, TweenLite, window, i18n */
 /*jslint white: true */
 
 /**
@@ -264,18 +284,42 @@ define([
         Ramp, GraphicExtension, GlobalStorage, DatagridClickHandler, RampMap, EventManager, Theme,
 
     // Util
-        utilMisc, utilArray, utilDict, popupManager, tmplHelper) {
+        utilMisc, UtilArray, utilDict, popupManager, tmplHelper) {
         &quot;use strict&quot;;
 
         var GRID_MODE_SUMMARY = &quot;summary&quot;,
             GRID_MODE_FULL = &quot;full&quot;,
+
+            /**
+            * Name of the attribute used to store the oid
+            * in the details and zoomTo buttons
+            *
+            * @private
+            * @property featureOidField
+            */
+            featureOidField = &quot;feature-oid&quot;,
+
+            /**
+            * Name of the attribute used to store the feature url
+            * in the details and zoomTo buttons
+            *
+            * @private
+            * @property featureUrlField
+            */
+            featureUrlField = &quot;feature-url&quot;,
+
             data_grid_template_json = JSON.parse(tmplHelper.stringifyTemplate(data_grid_template)),
             extended_datagrid_template_json = JSON.parse(tmplHelper.stringifyTemplate(extended_datagrid_template)),
             config,
-            layerConfig,
+            //layerConfig,
             gridConfig,
 
-        // The jquery table
+            /**
+            * The jquery table
+            *
+            * @private
+            * @property oTable
+            */
             oTable,
 
         // The JQuery Object representing the grid
@@ -286,19 +330,19 @@ define([
 
         // A boolean used to keep track of whether or not the grid should apply an
         // extent filter when the datagrid gets selected
-        extentFilterExpired = true,
+            extentFilterExpired = true,
 
             zoomToGraphic,
 
             lastExtent,
 
-        // Name of the attribute used to store the oid
-        // in the details and zoomTo buttons
-            featureOidField = &quot;feature-oid&quot;,
-
-        // Name of the attribute used to store the feature url
-        // in the details and zoomTo buttons
-            featureUrlField = &quot;feature-url&quot;,
+            /**
+            * Total number of features in all the visible layers on the map
+            *
+            * @private
+            * @property totalRecords
+            */
+            totalRecords = 0,
 
             ui = (function () {
                 /**
@@ -471,7 +515,7 @@ define([
                     // provided. A temporary property name &quot;attribute&quot; is used. Not sure if this will be
                     // used by ECDMP, therefore, leave the empty value in the template
                     var toggleButtonData = {
-                        buttonLabel: config.stringResources.txtSort,
+                        buttonLabel: i18n.t(&quot;datagrid.sort&quot;),
                         classAddition: &quot;font-medium global-button&quot;,
                         someAttribute: &quot;&quot;
                     };
@@ -551,9 +595,11 @@ define([
                             pagingType: &quot;ramp&quot;, //&quot;full_numbers&quot;,
                             scrollX: true,
                             destroy: true,
-                            searching: false, // disable filtering, otherwise there will be a performance hit
                             pageLength: gridConfig.rowsPerPage,
-                            language: config.gridstrings
+                            language: i18n.t(&quot;datagrid.gridstrings&quot;, { returnObjectTrees: true }),
+                            getTotalRecords: function () {
+                                return totalRecords;
+                            }
                         };
 
                     if (datagridMode === GRID_MODE_SUMMARY) {
@@ -567,14 +613,15 @@ define([
                                     render: rowRenderer,
                                     orderable: true
                                 }],
-                                dom: &#x27;&lt;&quot;jqgrid_table_wrapper summary-table&quot;t&gt;&lt;&quot;status-line&quot;p&gt;&#x27;
+                                dom: &#x27;&lt;&quot;jqgrid_table_wrapper summary-table&quot;t&gt;&lt;&quot;status-line&quot;p&gt;&#x27;,
+                                searching: true
                             }
                         );
                     } else {
                         //layout for variable column (extended grid)
                         tableOptions = lang.mixin(tableOptions,
                             {
-                                columns: dojoArray.map(getGridConfig(ui.getSelectedDatasetUrl()).gridColumns, function (column) {
+                                columns: ui.getSelectedDatasetUrl() === null ? [{ title: &quot;&quot; }] : dojoArray.map(getGridConfig(ui.getSelectedDatasetUrl()).gridColumns, function (column) {
                                     return {
                                         title: column.title,
                                         width: column.width ? column.width : &quot;100px&quot;,
@@ -584,7 +631,8 @@ define([
                                     };
                                 }),
                                 dom: &#x27;&lt;&quot;jqgrid_table_wrapper full-table&quot;t&gt;&lt;&quot;status-line&quot;p&gt;&#x27;,
-                                scrollY: &quot;500px&quot; // just a placeholder; it will be dynamically updated later
+                                scrollY: &quot;500px&quot;, // just a placeholder; it will be dynamically updated later
+                                searching: config.datagrid.extendedExtentFilterEnabled
                             }
                         );
                     }
@@ -709,7 +757,7 @@ define([
                         zoomlightRow.focusedButton = &quot;button.zoomto&quot;;
 
                         // Zoom To
-                        if (zoomNode.text() === config.stringResources.txtGrid_zoomTo) {
+                        if (zoomNode.text() === i18n.t(&quot;datagrid.zoomTo&quot;)) {
                             handleGridEvent(evt, function () {
                                 zoomToGraphic = getGraphicFromButton(zoomNode);
 
@@ -726,12 +774,20 @@ define([
                                     var newNode = $(String.format(&quot;button.zoomto[data-{0}=&#x27;{1}&#x27;][data-{2}=&#x27;{3}&#x27;]:eq(0)&quot;,
                                                     featureOidField, GraphicExtension.getOid(zoomToGraphic),
                                                     featureUrlField, zoomToGraphic.getLayer().url));
-                                    newNode.text(config.stringResources.txtGrid_zoomBack);
+                                    newNode.text(i18n.t(&quot;datagrid.zoomBack&quot;));
                                 });
                             });
                         } else { // Zoom back
                             DatagridClickHandler.onZoomBack(zoomToGraphic);
-                            zoomNode.text(config.stringResources.txtGrid_zoomTo);
+                            zoomNode.text(i18n.t(&quot;datagrid.zoomTo&quot;));
+
+                            // Reset focus back to &quot;Zoom To&quot; link after map extent change
+                            utilMisc.subscribeOnce(EventManager.Datagrid.EXTENT_FILTER_END, function () {
+                                var newNode = $(String.format(&quot;button.zoomto[data-{0}=&#x27;{1}&#x27;][data-{2}=&#x27;{3}&#x27;]:eq(0)&quot;,
+                                        featureOidField, GraphicExtension.getOid(zoomToGraphic),
+                                        featureUrlField, zoomToGraphic.getLayer().url));
+                                newNode.focus();
+                            });
                         }
                     });
 
@@ -762,7 +818,7 @@ define([
 
                         refreshPanel(d);
 
-                        topic.publish(&quot;gui/grid/expand&quot;);
+                        topic.publish(EventManager.GUI.DATAGRID_EXPAND);
                     });
 
                     sectionNode.on(&quot;change&quot;, &quot;#datasetSelector&quot;, function () {
@@ -797,6 +853,7 @@ define([
 
                             closeHandler: function (d) {
                                 this.target.addClass(&quot;wb-invisible&quot;);
+
                                 d.resolve();
                             },
 
@@ -962,8 +1019,8 @@ define([
                     datasetSelectorSubmitButton
                         .attr(&quot;disabled&quot;, state)
                         .text(state ?
-                            GlobalStorage.config.stringResources.txtDatasetSelectorButtonLoaded
-                            : GlobalStorage.config.stringResources.txtDatasetSelectorButtonLoad);
+                            i18n.t(&quot;datagrid.ex.datasetSelectorButtonLoaded&quot;)
+                            : i18n.t(&quot;datagrid.ex.datasetSelectorButtonLoad&quot;));
 
                     layer = dojoArray.filter(GlobalStorage.config.featureLayers,
                         function (layer) {
@@ -1041,7 +1098,7 @@ define([
 
                     if (datagridMode === GRID_MODE_SUMMARY) {
                         templateKey = &quot;datagrid_manager_Template&quot;;
-                        templateData.buttons.toggleTitle = GlobalStorage.config.stringResources.txtFullData;
+                        templateData.buttons.toggleTitle = i18n.t(&quot;datagrid.fullData&quot;);
 
                         if (extendedTabTitle) {
                             extendedTabTitle.remove();
@@ -1049,11 +1106,17 @@ define([
                     } else {
                         templateKey = &quot;datagrid_full_manager_Template&quot;;
 
+                        // filter out static layers
+                        var nonStaticFeatureLayers = dojoArray.filter(GlobalStorage.config.featureLayers, function (layerConfig) {
+                            var layer = GlobalStorage.map.getLayer(layerConfig.id);
+                            return layer.ramp.type !== GlobalStorage.layerType.Static &amp;&amp; layer.visible;
+                        });
+
                         templateData.buttons = lang.mixin(templateData.buttons,
                             {
-                                datasets: GlobalStorage.config.featureLayers,
-                                toggleTitle: GlobalStorage.config.stringResources.txtDataSummary,
-                                txtDataset: GlobalStorage.config.stringResources.txtDataset
+                                datasets: nonStaticFeatureLayers,
+                                toggleTitle: i18n.t(&quot;datagrid.ex.dataSummary&quot;),
+                                txtDataset: i18n.t(&quot;datagrid.ex.dataset&quot;)
                             }
                         );
 
@@ -1190,7 +1253,11 @@ define([
                             if (datasetSelector.find(&quot;option:selected&quot;).length &gt; 0) {
                                 selectedDatasetUrl = datasetSelector.find(&quot;option:selected&quot;)[0].value;
                             } else {
-                                selectedDatasetUrl = GlobalStorage.config.featureLayers[0].url;
+                                var firstVisibleLayer = UtilArray.find(GlobalStorage.config.featureLayers, function (layerConfig) {
+                                    var layer = GlobalStorage.map.getLayer(layerConfig.id);
+                                    return layer.visible &amp;&amp; layer.ramp.type !== GlobalStorage.layerType.Static;
+                                });
+                                selectedDatasetUrl = firstVisibleLayer === null ? null : firstVisibleLayer.url;
                             }
                         } else {
                             datasetSelector.find(&quot;option[value=&#x27;&quot; + selectedDatasetUrl + &quot;&#x27;]&quot;).prop(&#x27;selected&#x27;, true);
@@ -1267,7 +1334,7 @@ define([
         * @method handleGridEvent
         * @private
         * @param {Event} e the event object
-        * @param {Function} callback fcn the callback function
+        * @param {Function} callback the callback function
         */
         function handleGridEvent(e, callback) {
             if ((e.type === &quot;keypress&quot; &amp;&amp; e.keyCode === 13) || e.type === &quot;click&quot;) {
@@ -1277,7 +1344,10 @@ define([
         }
         /**
         * Gets all layer data in the current map extent that are visible, and put the data into the data grid.
+        *
         * @method applyExtentFilter
+        * @param {A Deferred object} d
+        *
         */
         function applyExtentFilter(d) {
             var visibleFeatures = {},
@@ -1285,26 +1355,39 @@ define([
                 dataGridMode = ui.getDatagridMode(),
                 q = new EsriQuery();
 
+            // filter out static layers
+            visibleGridLayers = dojoArray.filter(visibleGridLayers, function (layer) {
+                return layer.ramp.type !== GlobalStorage.layerType.Static;
+            });
+
             if (dataGridMode === GRID_MODE_FULL) {
                 visibleGridLayers = dojoArray.filter(visibleGridLayers, function (layer) {
                     return layer.url === ui.getSelectedDatasetUrl();
                 });
+
+                if (config.datagrid.extendedExtentFilterEnabled) {
+                    q.geometry = RampMap.getMap().extent;
+                } else {
+                    // Grab everything!
+                    q.where = &quot;1 = 1&quot;;
+                }
+            } else { // Summary Mode
+                q.geometry = RampMap.getMap().extent;
             }
 
-            q.geometry = RampMap.getMap().extent;
             q.outFields = [&quot;*&quot;];
+
+            // Update total records
+            totalRecords = 0;
+            dojoArray.forEach(visibleGridLayers, function (layer) {
+                totalRecords += layer.graphics.length;
+            });
 
             var deferredList = dojoArray.map(visibleGridLayers, function (gridLayer) {
                 return gridLayer.queryFeatures(q).then(function (features) {
                     if (features.features.length &gt; 0) {
-                        var layer = features.features[0].getLayer(),
-                            layerUrl = layer.url;
-
-                        if (!layer.visible &amp;&amp; dataGridMode === GRID_MODE_SUMMARY) {
-                            delete visibleFeatures[layerUrl];
-                        } else {
-                            visibleFeatures[layerUrl] = features.features;
-                        }
+                        var layer = features.features[0].getLayer();
+                        visibleFeatures[layer.url] = features.features;
                     }
                 });
             });
@@ -1363,6 +1446,10 @@ define([
             return innerArray;
         }
 
+        function updateRecordsCount(visibleRecords) {
+            $(&quot;.pagination-record-number&quot;).text(String.format(&quot;{0}/{1} {2}&quot;, visibleRecords, totalRecords, i18n.t(&quot;datagrid.gridstrings.oPaginate.sRecords&quot;)));
+        }
+
         /**
         * Populate the datagrid with data in visibleFeatures
         *
@@ -1372,9 +1459,15 @@ define([
         * @private
         */
         function fetchRecords(visibleFeatures) {
+            if (jqgrid === undefined) {
+                // fetchRecords call made prior ty jqgrid creation
+                // TODO: consider adding a log.warning(&#x27;fetchRecords called prior to grid initialization&#x27;)
+                return;
+            }
             jqgrid.DataTable().clear(); // Do NOT redraw the datatable at this point
 
             if (Object.keys(visibleFeatures).isEmpty()) {
+                updateRecordsCount(0);
                 jqgrid.DataTable().draw();
                 return;
             }
@@ -1391,6 +1484,8 @@ define([
                     return feature[ui.getDatagridMode()] ? feature[ui.getDatagridMode()] : feature[ui.getDatagridMode()] = getDataObject(feature);
                 }));
             });
+
+            updateRecordsCount(data.length);
 
             oTable.one(&quot;draw.dt&quot;, function () {
                 topic.publish(EventManager.Datagrid.EXTENT_FILTER_END);
@@ -1419,7 +1514,7 @@ define([
                 oid = parseInt(buttonNode.data(featureOidField)),
                 featureLayer = RampMap.getFeatureLayer(featureUrl),
 
-                graphic = utilArray.binaryFind(featureLayer.graphics,
+                graphic = UtilArray.binaryFind(featureLayer.graphics,
                     function (a_graphic) {
                         return GraphicExtension.getOid(a_graphic) - oid;
                     });
@@ -1430,7 +1525,6 @@ define([
         /**
         * Binding event handling for events:
         * filterManager/layer-visibility-toggled
-        * filterManager/global-layer-visibility-toggled
         * datagrid/applyExtentFilter
         *
         * @method initListeners
@@ -1438,10 +1532,6 @@ define([
         */
         function initListeners() {
             topic.subscribe(EventManager.FilterManager.LAYER_VISIBILITY_TOGGLED, function () {
-                extentFilterExpired = true;
-            });
-
-            topic.subscribe(EventManager.FilterManager.GLOBAL_LAYER_VISIBILITY_TOGGLED, function () {
                 extentFilterExpired = true;
             });
 
@@ -1469,31 +1559,46 @@ define([
             });
 
             topic.subscribe(EventManager.Datagrid.APPLY_EXTENT_FILTER, function () {
-                if (!ui.isReady()) {
-                    ui.init();
-                } else if (ui.getDatagridMode() !== GRID_MODE_FULL) {
+                if (ui.getDatagridMode() !== GRID_MODE_FULL) {
                     applyExtentFilter();
                 }
-            });
+            });            
 
             topic.subscribe(EventManager.GUI.SUBPANEL_CHANGE, function (evt) {
                 if (evt.origin === &quot;ex-datagrid&quot; &amp;&amp;
                     evt.isComplete) {
                     ui.adjustPanelWidth();
                 }
-            });
+            });            
         }
 
         return {
+            /**
+            * Initialize the datagrid. must be called before any properties can be accessed.
+            *
+            * @method init
+            */
             init: function () {
-                /// &lt;summary&gt;
-                /// initialize the datagrid. must be called before any properties can be accessed.
-                /// &lt;/summary&gt;
                 config = GlobalStorage.config;
-                layerConfig = config.featureLayers;
-                gridConfig = layerConfig[0].datagrid;  //this is just to configure the structure of the grid.  since all layers have same structure, just pick first one
+
+                // Added to make sure the layer is not static
+                var layerConfigs = dojoArray.filter(config.featureLayers, function (layerConfig) {
+                    return !layerConfig.isStatic;
+                });
+
+                // layerConfig = config.featureLayers;
+                gridConfig = layerConfigs[0].datagrid;  //this is just to configure the structure of the grid.  since all layers have same structure, just pick first one
+
+                /*
+                $.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                        return data[0].indexOf(&quot;Water Regions&quot;) &gt; -1;
+                    }
+                );*/
 
                 initListeners();
+
+                ui.init();
             } //InitDataGrid
         };
     });

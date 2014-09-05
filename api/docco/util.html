@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -223,7 +268,7 @@
 * @uses dojo/Deferred
 */</span>
 define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-string">"dojo/_base/lang"</span>, <span class="hljs-string">"dojo/topic"</span>, <span class="hljs-string">"dojo/Deferred"</span>, <span class="hljs-string">"esri/geometry/Extent"</span>],
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dojoArray, dojoLang, topic, Deferred, Extent)</span> {</span><span class="hljs-pi">
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dojoArray, dojoLang, topic, Deferred, Extent)</span> </span>{<span class="hljs-pi">
         "use strict"</span>;
 
         <span class="hljs-keyword">return</span> {
@@ -235,8 +280,8 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @method checkConsole
             * @static
             */</span>
-            checkConsole: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                <span class="hljs-keyword">var</span> noop = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span> },
+            checkConsole: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                <span class="hljs-keyword">var</span> noop = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{ },
                     methods = [
                         <span class="hljs-string">'assert'</span>, <span class="hljs-string">'clear'</span>, <span class="hljs-string">'count'</span>, <span class="hljs-string">'debug'</span>, <span class="hljs-string">'dir'</span>, <span class="hljs-string">'dirxml'</span>, <span class="hljs-string">'error'</span>,
                         <span class="hljs-string">'exception'</span>, <span class="hljs-string">'group'</span>, <span class="hljs-string">'groupCollapsed'</span>, <span class="hljs-string">'groupEnd'</span>, <span class="hljs-string">'info'</span>, <span class="hljs-string">'log'</span>,
@@ -244,7 +289,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
                         <span class="hljs-string">'timeStamp'</span>, <span class="hljs-string">'trace'</span>, <span class="hljs-string">'warn'</span>
                     ],
                     length = methods.length,
-                    console = (window.console = window.console || {}),
+                    <span class="hljs-built_in">console</span> = (<span class="hljs-built_in">window</span>.console = <span class="hljs-built_in">window</span>.console || {}),
                     method;
 
                 <span class="hljs-keyword">while</span> (length--) {
@@ -263,8 +308,8 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (!console[method]) {
-                        console[method] = noop;
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">console</span>[method]) {
+                        <span class="hljs-built_in">console</span>[method] = noop;
                     }
                 }
             },</pre></div></div>
@@ -292,7 +337,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {String} html String to escape
             * @return {String} escapeHtml Escaped string
             */</span>
-            escapeHtml: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(html)</span> {</span>
+            escapeHtml: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(html)</span> </span>{
                 <span class="hljs-keyword">return</span> html.replaceAll(<span class="hljs-string">"&lt;"</span>, <span class="hljs-string">"&amp;lt;"</span>).replaceAll(<span class="hljs-string">"&gt;"</span>, <span class="hljs-string">"&amp;gt;"</span>);
             },
 
@@ -304,7 +349,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {String} input The string to check
             * @return {boolean} True if number
             */</span>
-            isNumber: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(input)</span> {</span>
+            isNumber: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(input)</span> </span>{
                 <span class="hljs-keyword">return</span> <span class="hljs-built_in">isFinite</span>(<span class="hljs-built_in">String</span>(input).trim() || <span class="hljs-literal">NaN</span>);
             },
 
@@ -317,7 +362,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {String} str The string to check
             * @return {boolean} True if `true`
             */</span>
-            parseBool: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(str)</span> {</span>
+            parseBool: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(str)</span> </span>{
                 <span class="hljs-keyword">return</span> (str.toLowerCase() === <span class="hljs-string">'true'</span>);
             },</pre></div></div>
             
@@ -344,18 +389,18 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {array} deferredList A list of Deferred objects
             * @param {function} callback The callback to be executed
             */</span>
-            afterAll: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(deferredList, callback)</span> {</span>
+            afterAll: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(deferredList, callback, context)</span> </span>{
                 <span class="hljs-keyword">if</span> (deferredList.length === <span class="hljs-number">0</span>) {
                     callback();
                     <span class="hljs-keyword">return</span>;
                 }
 
                 <span class="hljs-keyword">var</span> completed = <span class="hljs-number">0</span>; <span class="hljs-comment">// Keeps track of the number of deferred that has resolved</span>
-                dojoArray.forEach(deferredList, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(deferred)</span> {</span>
-                    deferred.then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                dojoArray.forEach(deferredList, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(deferred)</span> </span>{
+                    deferred.then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         completed++;
                         <span class="hljs-keyword">if</span> (completed === deferredList.length) {
-                            callback();
+                            callback.call(context);
                         }
                     });
                 });
@@ -389,7 +434,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {array} array An array of primitives to be serialized
             * @return {String} A serialized representation of the given array
             */</span>
-            arrayToQuery: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(array)</span> {</span>
+            arrayToQuery: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(array)</span> </span>{
                 <span class="hljs-keyword">return</span> array.join(<span class="hljs-string">"+"</span>);
             },
 
@@ -404,7 +449,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {String} query A query string to be converted
             * @return {String} A resulting array of strings
             */</span>
-            queryToArray: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(query)</span> {</span>
+            queryToArray: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(query)</span> </span>{
                 <span class="hljs-keyword">return</span> query.split(<span class="hljs-string">"+"</span>);
             },</pre></div></div>
             
@@ -432,7 +477,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {function} callback The callback to be executed
             * @param {object} scope Scope of the callback
             */</span>
-            subscribe: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(name, callback, scope)</span> {</span>
+            subscribe: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(name, callback, scope)</span> </span>{
                 <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isUndefined(scope)) {
                     topic.subscribe(name, callback);
                 } <span class="hljs-keyword">else</span> {
@@ -449,9 +494,9 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {String} name Event name
             * @param {function} callback The callback to be executed
             */</span>
-            subscribeOnce: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(name, callback)</span> {</span>
+            subscribeOnce: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(name, callback)</span> </span>{
                 <span class="hljs-keyword">var</span> handle = <span class="hljs-literal">null</span>,
-                    wrapper = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
+                    wrapper = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> </span>{
                         handle.remove();
                         callback(evt);
                     };
@@ -467,11 +512,11 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param  {String} names An array of event names
             * @param  {Function} callback The callback to be executed
             */</span>
-            subscribeOnceAny: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(names, callback)</span> {</span>
+            subscribeOnceAny: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(names, callback)</span> </span>{
                 <span class="hljs-keyword">var</span> handles = [];
 
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">wrapper</span><span class="hljs-params">(evt)</span> {</span>
-                    dojoArray.forEach(handles, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handle)</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">wrapper</span><span class="hljs-params">(evt)</span> </span>{
+                    dojoArray.forEach(handles, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handle)</span> </span>{
                         handle.remove();
                     });
 
@@ -479,7 +524,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
                 }
 
                 dojoArray.forEach(names, dojoLang.hitch(<span class="hljs-keyword">this</span>,
-                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(name)</span> {</span>
+                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(name)</span> </span>{
                         handles.push(<span class="hljs-keyword">this</span>.subscribeOnce(name, wrapper));
                     }));
             },
@@ -528,7 +573,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {array} nameArray An array of Strings containing the names of events to subscribe to
             * @param {function} callback The callback to be executed
             */</span>
-            subscribeAll: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(nameArray, callback)</span> {</span></pre></div></div>
+            subscribeAll: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(nameArray, callback)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -545,13 +590,13 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             
             <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> events = [];
 
-                dojoArray.forEach(nameArray, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventName, i)</span> {</span>
+                dojoArray.forEach(nameArray, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventName, i)</span> </span>{
                     events.push({
                         fired: <span class="hljs-literal">false</span>,
                         args: <span class="hljs-literal">null</span>
                     });
 
-                    topic.subscribe(eventName, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+                    topic.subscribe(eventName, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -597,7 +642,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                            <span class="hljs-keyword">if</span> (dojoArray.every(events, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
+            <div class="content"><div class='highlight'><pre>                            <span class="hljs-keyword">if</span> (dojoArray.every(events, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
                                 <span class="hljs-keyword">return</span> event.fired;
                             })) {</pre></div></div>
             
@@ -615,7 +660,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             </div>
             
             <div class="content"><div class='highlight'><pre>                                <span class="hljs-keyword">var</span> eventArgs = [];
-                                dojoArray.forEach(events, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
+                                dojoArray.forEach(events, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
                                     eventArgs.append(event.args);
                                 });
                                 callback(eventArgs);
@@ -654,14 +699,14 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {function} initFunc A function to call to resolve the variable value
             * @return {Object} The lazy varialbe
             */</span>
-            createLazyVariable: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(initFunc)</span> {</span>
+            createLazyVariable: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(initFunc)</span> </span>{
                 <span class="hljs-keyword">var</span> value = <span class="hljs-literal">null</span>;
                 <span class="hljs-keyword">return</span> {
-                    reset: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                    reset: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         value = <span class="hljs-literal">null</span>;
                     },
 
-                    get: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                    get: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         <span class="hljs-keyword">if</span> (value == <span class="hljs-literal">null</span>) {
                             value = initFunc();
                         }
@@ -693,9 +738,9 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {function} func Function to be decorated
             * @return {function} Decorated function that can be executed once
             */</span>
-            once: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(func)</span> {</span>
+            once: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(func)</span> </span>{
                 <span class="hljs-keyword">var</span> ran = <span class="hljs-literal">false</span>;
-                <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">if</span> (!ran) {
                         func();
                         ran = <span class="hljs-literal">true</span>;
@@ -725,7 +770,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {object} obj Object to be checked
             * @return {boolean} True if the given object is undefined, false otherwise
             */</span>
-            isUndefined: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj)</span> {</span>
+            isUndefined: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj)</span> </span>{
                 <span class="hljs-keyword">return</span> (<span class="hljs-keyword">typeof</span> obj === <span class="hljs-string">'undefined'</span>);
             },
 
@@ -738,7 +783,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param  {Object} two Graphic object
             * @return {boolean} True if the objects represent the same feature
             */</span>
-            compareGraphics: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(one, two)</span> {</span>
+            compareGraphics: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(one, two)</span> </span>{
                 <span class="hljs-keyword">var</span> oneKey = <span class="hljs-string">"0"</span>,
                     twoKey = <span class="hljs-string">"1"</span>,
                     objectIdField,
@@ -758,134 +803,6 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             },
 
             <span class="hljs-comment">/**
-            * Wraps the specified checkboxes to provide an alternative rendering of checkboxes without compromising their functionality.
-            * Handles synchronisation of the checkbox's state with its new rendering.
-            * Also adds highlight/unhighlight on focus/unfocus, update label when checked/unchecked
-            *
-            * @method styleCheckboxes
-            * @static
-            * @param {jObject} nodes An array of jQuery objects
-            * @param {String} checkedClass Name of the CSS class to be used when checked
-            * @param {String} focusedClass Name of the CSS class to be used when focused
-            * @param {object} labels An object containing labels' text { checked: "label when checked", unchecked: "label when unchecked" }
-            * @param {Function} [fnc] Function to run on the label node when it's toggled
-            * @return {CheckboxWrapper} A control objects allowing to toggle checkboxes supplying a state, and retrieve original checkbox nodes
-            */</span>
-            styleCheckboxes: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(nodes, checkedClass, focusedClass, labels, fnc)</span> {</span>
-                <span class="hljs-comment">/**
-                * A wrapper class for styled checkboxes that allows to set their states individually and en masse.
-                *
-                * @class CheckboxWrapper
-                * @constructor
-                * @for Util
-                * @type {Object}
-                */</span>
-                <span class="hljs-keyword">var</span> checkboxWrapperTemplate = {
-                    <span class="hljs-comment">/**
-                    * Toggle the state of checkboxes.
-                    *
-                    * @method setAll
-                    * @param {boolean} state Specifies the state of the checkbox: true, false
-                    * @return {object} Control object for chaining
-                    * @chainable
-                    * @for CheckboxWrapper
-                    */</span>
-                    setAll: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(state)</span> {</span>
-                        _toggleState(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                            <span class="hljs-keyword">return</span> state;
-                        });
-
-                        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
-                    },
-
-                    <span class="hljs-comment">/**
-                    * Toggles the checkboxes based on the return value of the given fcn.
-                    *
-                    * @method setState
-                    * @param {function} fcn A function to be run on each of the nodes to determine the state to be set
-                    * @return {object} Control object for chaining
-                    * @chainable
-                    */</span>
-                    setState: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(fcn)</span> {</span>
-                        _toggleState(fcn);
-
-                        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
-                    },
-
-                    <span class="hljs-comment">/**
-                    * Returns original checkbox nodes.
-                    *
-                    * @method getNodes
-                    * @return {jObject} original checkbox nodes
-                    */</span>
-                    getNodes: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                        <span class="hljs-keyword">return</span> nodes;
-                    }
-                };
-                <span class="hljs-comment">/*
-                * Goes through an array of checkboxes and if any are selected, add the "checked" css class to
-                * the label so it displays visually matches the changed state
-                * @method _toggleLabels
-                * @param {Object} objs An array of checkboxes to toggle
-                */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_toggleLabels</span><span class="hljs-params">(objs)</span> {</span>
-                    <span class="hljs-keyword">var</span> label;
-
-                    objs.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i, obj)</span> {</span>
-                        <span class="hljs-keyword">var</span> node = $(obj),
-                            newText;
-                        label = node.findInputLabel();
-                        <span class="hljs-keyword">if</span> (node.is(<span class="hljs-string">':checked'</span>)) {
-                            newText = <span class="hljs-built_in">String</span>.format(labels.checked,
-                                label.data(<span class="hljs-string">"label-name"</span>));
-                            label
-                                .addClass(checkedClass)
-                                .prop(<span class="hljs-string">'title'</span>, newText)
-                                .find(<span class="hljs-string">"&gt; span"</span>).text(newText);
-                        } <span class="hljs-keyword">else</span> {
-                            newText = <span class="hljs-built_in">String</span>.format(labels.unchecked,
-                                label.data(<span class="hljs-string">"label-name"</span>));
-                            label
-                                .removeClass(checkedClass)
-                                .prop(<span class="hljs-string">'title'</span>, newText)
-                                .find(<span class="hljs-string">"&gt; span"</span>).text(newText);
-                        }
-                        <span class="hljs-keyword">if</span> (fnc) {
-                            fnc.call(<span class="hljs-keyword">this</span>, label.parent(), <span class="hljs-literal">null</span>, <span class="hljs-string">"update"</span>);
-                        }
-                    });
-                }
-                <span class="hljs-comment">/*
-                * Goes through an array of checkboxes and toggles their checked state value
-                * @method _toggleState
-                * @param {Object} fcn An Array of checkboxes
-                *
-                */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_toggleState</span><span class="hljs-params">(fcn)</span> {</span>
-                    nodes.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                        $(<span class="hljs-keyword">this</span>).prop(<span class="hljs-string">'checked'</span>, fcn($(<span class="hljs-keyword">this</span>)));
-                    });
-
-                    _toggleLabels(nodes);
-                }
-
-                nodes
-                    .on(<span class="hljs-string">"change"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                        _toggleLabels($(<span class="hljs-keyword">this</span>));
-                    })
-                    .on(<span class="hljs-string">"focus"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                        $(<span class="hljs-keyword">this</span>).findInputLabel().addClass(focusedClass);
-                    })
-                    .on(<span class="hljs-string">"focusout"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                        $(<span class="hljs-keyword">this</span>).findInputLabel().removeClass(focusedClass);
-                    });
-
-                _toggleLabels(nodes);
-
-                <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.create(checkboxWrapperTemplate);
-            },
-
-            <span class="hljs-comment">/**
             * Returns the width of the scrollbar in pixels. Since different browsers render scrollbars differently, the width may vary.
             *
             * @method scrollbarWidth
@@ -893,7 +810,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @return {int} The width of the scrollbar in pixels
             * @for Util
             */</span>
-            scrollbarWidth: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            scrollbarWidth: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 <span class="hljs-keyword">var</span> $inner = jQuery(<span class="hljs-string">'&lt;div style="width: 100%; height:200px;"&gt;test&lt;/div&gt;'</span>),
                     $outer = jQuery(<span class="hljs-string">'&lt;div style="width:200px;height:150px; position: absolute; top: 0; left: 0; visibility: hidden; overflow:hidden;"&gt;&lt;/div&gt;'</span>).append($inner),
                     inner = $inner[<span class="hljs-number">0</span>],
@@ -919,10 +836,10 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {jObject} body A DOM node with a scrollbar (or not)
             * @param {jObject} targets An array of jObjects to add the offset to
             */</span>
-            adjustWidthForSrollbar: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(body, targets)</span> {</span>
+            adjustWidthForSrollbar: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(body, targets)</span> </span>{
                 <span class="hljs-keyword">var</span> offset = body.innerHeight() &lt; body[<span class="hljs-number">0</span>].scrollHeight ? <span class="hljs-keyword">this</span>.scrollbarWidth() : <span class="hljs-number">0</span>;
 
-                dojoArray.map(targets, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(target)</span> {</span>
+                dojoArray.map(targets, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(target)</span> </span>{
                     target.css({
                         right: offset
                     });
@@ -938,18 +855,31 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {function} func A function whose availability in question
             * @param {function} callback The callback function to be executed after func is available
             */</span>
-            executeOnLoad: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(target, func, callback)</span> {</span>
+            executeOnLoad: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(target, func, callback)</span> </span>{
                 <span class="hljs-keyword">var</span> deferred = <span class="hljs-keyword">new</span> Deferred(),
                     handle;
 
-                deferred.then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                    window.clearInterval(handle);
-                    console.log(<span class="hljs-string">"deffered resolved"</span>);
+                deferred.then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                    <span class="hljs-built_in">window</span>.clearInterval(handle);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>console.log(“deffered resolved”);</p>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
                     callback();
                 });
 
-                handle = window.setInterval(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                handle = <span class="hljs-built_in">window</span>.setInterval(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">if</span> ($.isFunction(target[func])) {
                         deferred.resolve(<span class="hljs-literal">true</span>);
                     }
@@ -965,16 +895,16 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {function} func A function to be executed with each object propety. Accepts two parameters: property and deferred to be resolved when it's done.
             * @param {object} d A deferred to be resolved when all properties have been processed.
             */</span>
-            executeOnDone: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(o, func, d)</span> {</span>
+            executeOnDone: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(o, func, d)</span> </span>{
                 <span class="hljs-keyword">var</span> counter = <span class="hljs-number">0</span>,
                     arr = [],
                     deferred;
 
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnOnDeferredCancel</span><span class="hljs-params">()</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnOnDeferredCancel</span><span class="hljs-params">()</span> </span>{
                     d.cancel();
                 }
 
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnOnDeferredThen</span><span class="hljs-params">()</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnOnDeferredThen</span><span class="hljs-params">()</span> </span>{
                     counter--;
                     <span class="hljs-keyword">if</span> (counter === <span class="hljs-number">0</span>) {
                         d.resolve(<span class="hljs-literal">true</span>);
@@ -991,7 +921,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
 
                 counter = arr.length;
 
-                arr.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(p)</span> {</span>
+                arr.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(p)</span> </span>{
                     deferred = <span class="hljs-keyword">new</span> Deferred(fnOnDeferredCancel);
 
                     deferred.then(fnOnDeferredThen);
@@ -1012,8 +942,8 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @static
             * @return {String} The generated guid string
             */</span>
-            guid: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                <span class="hljs-keyword">return</span> <span class="hljs-string">'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'</span>.replace(<span class="hljs-regexp">/[xy]/g</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(c)</span> {</span>
+            guid: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                <span class="hljs-keyword">return</span> <span class="hljs-string">'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'</span>.replace(<span class="hljs-regexp">/[xy]/g</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(c)</span> </span>{
                     <span class="hljs-keyword">var</span> r = <span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">16</span> | <span class="hljs-number">0</span>,
                         v = c === <span class="hljs-string">'x'</span> ? r : (r &amp; <span class="hljs-number">0x3</span> | <span class="hljs-number">0x8</span>);
                     <span class="hljs-keyword">return</span> v.toString(<span class="hljs-number">16</span>);
@@ -1031,7 +961,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {String | Number} query A query string
             * @return {String} The generated "where" clause
             */</span>
-            getWhereClause: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(varName, query)</span> {</span>
+            getWhereClause: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(varName, query)</span> </span>{
                 <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isNumber(query)) {
                     <span class="hljs-keyword">return</span> <span class="hljs-built_in">String</span>.format(<span class="hljs-string">"{0}={1}"</span>, varName, query);
                 }
@@ -1047,17 +977,17 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {String} html HTML to be converted to text
             * @return {String} The HTML in text form
             */</span>
-            stripHtml: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(html)</span> {</span>
-                <span class="hljs-keyword">var</span> tmp = document.createElement(<span class="hljs-string">"DIV"</span>);</pre></div></div>
+            stripHtml: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(html)</span> </span>{
+                <span class="hljs-keyword">var</span> tmp = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"DIV"</span>);</pre></div></div>
             
         </li>
         
         
-        <li id="section-15">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>jquery .text function converts html into text by replacing
 all html tags with their appropriate special characters</p>
@@ -1071,11 +1001,11 @@ all html tags with their appropriate special characters</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>Query geometry</p>
 
@@ -1090,7 +1020,7 @@ all html tags with their appropriate special characters</p>
             * @returns {Object} a new extent calculated from the given parameters
             *
             */</span>
-            pointToExtent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(map, point, toleranceInPixel)</span> {</span>
+            pointToExtent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(map, point, toleranceInPixel)</span> </span>{
                 <span class="hljs-keyword">var</span> pixelWidth = map.extent.getWidth() / map.width,
                     toleraceInMapCoords = toleranceInPixel * pixelWidth;
 
@@ -1111,7 +1041,7 @@ all html tags with their appropriate special characters</p>
             * @param {Function} callback The callback to be executed
             * @param {Boolean} returnFragment True if you want a document fragment returned (doesn't work in IE)}
             */</span>
-            transformXML: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(xmlurl, xslurl, callback, returnFragment)</span> {</span>
+            transformXML: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(xmlurl, xslurl, callback, returnFragment)</span> </span>{
                 <span class="hljs-keyword">var</span> xmld = <span class="hljs-keyword">new</span> Deferred(),
                     xsld = <span class="hljs-keyword">new</span> Deferred(),
                     xml, xsl,
@@ -1120,10 +1050,10 @@ all html tags with their appropriate special characters</p>
                     xsltProcessor,
                     error;
 
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loadXMLFileIE</span><span class="hljs-params">(filename)</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loadXMLFileIE</span><span class="hljs-params">(filename)</span> </span>{
                     <span class="hljs-keyword">var</span> xhttp;
 
-                    <span class="hljs-keyword">if</span> (window.ActiveXObject) {
+                    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.ActiveXObject) {
                         xhttp = <span class="hljs-keyword">new</span> ActiveXObject(<span class="hljs-string">"Msxml2.XMLHTTP"</span>);
                     } <span class="hljs-keyword">else</span> {
                         xhttp = <span class="hljs-keyword">new</span> XMLHttpRequest();
@@ -1136,20 +1066,20 @@ all html tags with their appropriate special characters</p>
                     <span class="hljs-keyword">return</span> xhttp.responseXML;
                 }
 
-                <span class="hljs-keyword">this</span>.afterAll(dlist, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                <span class="hljs-keyword">this</span>.afterAll(dlist, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">if</span> (!error) {
                         xsltProcessor = <span class="hljs-keyword">new</span> XSLTProcessor();
                         xsltProcessor.importStylesheet(xsl);
-                        result = xsltProcessor.transformToFragment(xml, document);</pre></div></div>
+                        result = xsltProcessor.transformToFragment(xml, <span class="hljs-built_in">document</span>);</pre></div></div>
             
         </li>
         
         
-        <li id="section-17">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>turn a document fragment into a proper jQuery object</p>
 
@@ -1166,16 +1096,16 @@ all html tags with their appropriate special characters</p>
                     callback(error, result);
                 });
 
-                <span class="hljs-keyword">if</span> (window.ActiveXObject || window.hasOwnProperty(<span class="hljs-string">"ActiveXObject"</span>)) {</pre></div></div>
+                <span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.ActiveXObject || <span class="hljs-built_in">window</span>.hasOwnProperty(<span class="hljs-string">"ActiveXObject"</span>)) {</pre></div></div>
             
         </li>
         
         
-        <li id="section-18">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>second part is for IE11 benefit - for some reason it fail the first check</p>
 
@@ -1203,11 +1133,11 @@ all html tags with their appropriate special characters</p>
                         url: xmlurl,
                         dataType: <span class="hljs-string">"xml"</span>,
                         cache: <span class="hljs-literal">false</span>,
-                        success: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
+                        success: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> </span>{
                             xml = data;
                             xmld.resolve();
                         },
-                        error: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        error: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             error = <span class="hljs-literal">true</span>;
                             xmld.resolve();
                         }
@@ -1218,16 +1148,256 @@ all html tags with their appropriate special characters</p>
                         url: xslurl,
                         dataType: <span class="hljs-string">"xml"</span>,
                         cache: <span class="hljs-literal">false</span>,
-                        success: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
+                        success: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> </span>{
                             xsl = data;
                             xsld.resolve();
                         },
-                        error: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        error: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             error = <span class="hljs-literal">true</span>;
                             xsld.resolve();
                         }
                     });
                 }
+            },
+
+            <span class="hljs-comment">/**
+            * [settings.linkLists]: false
+            */</span>
+            keyboardSortable: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ulNodes, settings)</span> </span>{
+                settings = dojoLang.mixin({
+                    linkLists: <span class="hljs-literal">false</span>,
+
+                    onStart: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{ },
+                    onUpdate: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{ },
+                    onStop: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{ }
+                }, settings);
+
+                ulNodes.each(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(index, _ulNode)</span> </span>{
+                    <span class="hljs-keyword">var</span> ulNode = $(_ulNode),
+                        liNodes = ulNode.find(<span class="hljs-string">"&gt; li"</span>),
+                        sortHandleNodes = liNodes.find(<span class="hljs-string">".sort-handle"</span>),
+                        isReordering = <span class="hljs-literal">false</span>,
+                        grabbed;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Reset focus, set aria attributes, and styling</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reorderReset</span><span class="hljs-params">(handle, liNodes, liNode)</span> </span>{
+                        handle.focus();
+                        liNodes.attr(<span class="hljs-string">"aria-dropeffect"</span>, <span class="hljs-string">"move"</span>);
+                        liNode.attr(<span class="hljs-string">"aria-grabbed"</span>, <span class="hljs-string">"true"</span>).removeAttr(<span class="hljs-string">"aria-dropeffect"</span>);
+                    }
+
+                    sortHandleNodes
+                        .focusout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
+                            <span class="hljs-keyword">var</span> node = $(<span class="hljs-keyword">this</span>).closest(<span class="hljs-string">"li"</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>if the list is not being reordered right now, release list item</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                            <span class="hljs-keyword">if</span> (node.hasClass(<span class="hljs-string">"list-item-grabbed"</span>) &amp;&amp; !isReordering) {
+                                liNodes.removeAttr(<span class="hljs-string">"aria-dropeffect"</span>);
+                                node
+                                    .removeClass(<span class="hljs-string">"list-item-grabbed"</span>)
+                                    .attr({ <span class="hljs-string">"aria-selected"</span>: <span class="hljs-literal">false</span>, <span class="hljs-string">"aria-grabbed"</span>: <span class="hljs-literal">false</span> });
+
+                                grabbed = <span class="hljs-literal">false</span>;
+
+                                <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Keyboard Sortable: OnStop -&gt; "</span>, event);
+                                settings.onStop.call(<span class="hljs-literal">null</span>, event, { item: <span class="hljs-literal">null</span> });
+                            }
+                        })
+                        .on(<span class="hljs-string">"keyup"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
+                            <span class="hljs-keyword">var</span> liNode = $(<span class="hljs-keyword">this</span>).closest(<span class="hljs-string">"li"</span>),
+                                liId = liNode[<span class="hljs-number">0</span>].id,
+                                liIdArray = ulNode.sortable(<span class="hljs-string">"toArray"</span>),
+                                liIndex = dojoArray.indexOf(liIdArray, liId);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Toggle grabbed state and aria attributes (13 = enter, 32 = space bar)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                            <span class="hljs-keyword">if</span> (event.which === <span class="hljs-number">13</span> || event.which === <span class="hljs-number">32</span>) {
+                                <span class="hljs-keyword">if</span> (grabbed) {
+                                    liNodes.removeAttr(<span class="hljs-string">"aria-dropeffect"</span>);
+                                    liNode
+                                        .attr(<span class="hljs-string">"aria-grabbed"</span>, <span class="hljs-string">"false"</span>)
+                                        .removeClass(<span class="hljs-string">"list-item-grabbed"</span>);
+
+                                    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Keyboard Sortable: OnStop -&gt; "</span>, liNode);
+                                    settings.onStop.call(<span class="hljs-literal">null</span>, event, { item: liNode });
+
+                                    grabbed = <span class="hljs-literal">false</span>;
+                                } <span class="hljs-keyword">else</span> {
+                                    liNodes.attr(<span class="hljs-string">"aria-dropeffect"</span>, <span class="hljs-string">"move"</span>);
+                                    liNode
+                                        .attr(<span class="hljs-string">"aria-grabbed"</span>, <span class="hljs-string">"true"</span>)
+                                        .removeAttr(<span class="hljs-string">"aria-dropeffect"</span>)
+                                        .addClass(<span class="hljs-string">"list-item-grabbed"</span>);
+
+                                    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Keyboard Sortable: OnStart -&gt; "</span>, liNode);
+                                    settings.onStart.call(<span class="hljs-literal">null</span>, event, { item: liNode });
+
+                                    grabbed = <span class="hljs-literal">true</span>;
+                                }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Keyboard up (38) and down (40)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (event.which === <span class="hljs-number">38</span>) {
+                                <span class="hljs-keyword">if</span> (grabbed) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Don’t move up if first layer in list</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                                    <span class="hljs-keyword">if</span> (liIndex &gt; <span class="hljs-number">0</span>) {
+                                        isReordering = <span class="hljs-literal">true</span>;
+
+                                        liNode.prev().before(liNode);
+
+                                        reorderReset($(<span class="hljs-keyword">this</span>), liNodes, liNode);
+
+                                        grabbed = <span class="hljs-literal">true</span>;
+                                        liIndex -= <span class="hljs-number">1</span>;
+
+                                        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Keyboard Sortable: OnUpdate -&gt; "</span>, liNode);
+                                        settings.onUpdate.call(<span class="hljs-literal">null</span>, event, { item: liNode });
+
+                                        isReordering = <span class="hljs-literal">false</span>;
+                                    }
+                                } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>if lists are linked, jump to the last item of the previous list, if any</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                                    <span class="hljs-keyword">if</span> (settings.linkLists &amp;&amp;
+                                        liIndex === <span class="hljs-number">0</span> &amp;&amp;
+                                        index !== <span class="hljs-number">0</span>) {
+                                        liNode = $(ulNodes[index - <span class="hljs-number">1</span>]).find(<span class="hljs-string">"&gt; li:last"</span>);
+                                    } <span class="hljs-keyword">else</span> {
+                                        liNode = liNode.prev();
+                                    }
+
+                                    liNode.find(<span class="hljs-string">":tabbable:first"</span>).focus();
+                                }
+                            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (event.which === <span class="hljs-number">40</span>) {
+                                <span class="hljs-keyword">if</span> (grabbed) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Don’t move down if last layer in list</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                                    <span class="hljs-keyword">if</span> (liIndex &lt; liNodes.length - <span class="hljs-number">1</span>) {
+                                        isReordering = <span class="hljs-literal">true</span>;
+
+                                        liNode.next().after(liNode);
+
+                                        reorderReset($(<span class="hljs-keyword">this</span>), liNodes, liNode);
+
+                                        grabbed = <span class="hljs-literal">true</span>;
+                                        liIndex += <span class="hljs-number">1</span>;
+
+                                        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Keyboard Sortable: OnUpdate -&gt; "</span>, liNode);
+                                        settings.onUpdate.call(<span class="hljs-literal">null</span>, event, { item: liNode });
+
+                                        isReordering = <span class="hljs-literal">false</span>;
+                                    }
+                                } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>if lists are linked, jump to the first item of the next list, if any</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                                    <span class="hljs-keyword">if</span> (settings.linkLists &amp;&amp;
+                                        liIndex === liNodes.length - <span class="hljs-number">1</span> &amp;&amp;
+                                        index &lt; ulNodes.length - <span class="hljs-number">1</span>) {
+                                        liNode = $(ulNodes[index + <span class="hljs-number">1</span>]).find(<span class="hljs-string">"&gt; li:first"</span>);
+                                    } <span class="hljs-keyword">else</span> {
+                                        liNode = liNode.next();
+                                    }
+
+                                    liNode.find(<span class="hljs-string">":tabbable:first"</span>).focus();
+                                }
+                            }
+                        });
+                });
             }
         };
     });</pre></div></div>

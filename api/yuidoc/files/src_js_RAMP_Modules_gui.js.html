@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="..\..\..\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
+                <h1><img src="..\..\..\src\assets\images\bobcat_logo_sharp_smaller_s.png" title="ramp-gis-viewer">Reusable Accessible Mapping Platform</h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.42-5</em>
+            <em>API Docs for: 2.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -41,15 +41,23 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/AdvancedToolbar.html">AdvancedToolbar</a></li>
+            
                 <li><a href="../classes/Array.html">Array</a></li>
             
                 <li><a href="../classes/BaseMapSelector.html">BaseMapSelector</a></li>
+            
+                <li><a href="../classes/BaseTool.html">BaseTool</a></li>
             
                 <li><a href="../classes/BookmarkLink.html">BookmarkLink</a></li>
             
                 <li><a href="../classes/Bootstrapper.html">Bootstrapper</a></li>
             
-                <li><a href="../classes/CheckboxWrapper.html">CheckboxWrapper</a></li>
+                <li><a href="../classes/BufferTool.html">BufferTool</a></li>
+            
+                <li><a href="../classes/Checkbox.html">Checkbox</a></li>
+            
+                <li><a href="../classes/CheckboxGroup.html">CheckboxGroup</a></li>
             
                 <li><a href="../classes/Datagrid.html">Datagrid</a></li>
             
@@ -81,9 +89,15 @@
             
                 <li><a href="../classes/Map.html">Map</a></li>
             
+                <li><a href="../classes/MapClickHandler.html">MapClickHandler</a></li>
+            
                 <li><a href="../classes/Maptips.html">Maptips</a></li>
             
+                <li><a href="../classes/MeasureTool.html">MeasureTool</a></li>
+            
                 <li><a href="../classes/Navigation.html">Navigation</a></li>
+            
+                <li><a href="../classes/PopulationTool.html">PopulationTool</a></li>
             
                 <li><a href="../classes/Popup.html">Popup</a></li>
             
@@ -129,9 +143,13 @@
             
                 <li><a href="../modules/FilterManager.html">FilterManager</a></li>
             
+                <li><a href="../modules/GlobalStorage.html">GlobalStorage</a></li>
+            
                 <li><a href="../modules/Map.html">Map</a></li>
             
                 <li><a href="../modules/Maptips.html">Maptips</a></li>
+            
+                <li><a href="../modules/MeasureTool.html">MeasureTool</a></li>
             
                 <li><a href="../modules/Navigation.html">Navigation</a></li>
             
@@ -142,6 +160,8 @@
                 <li><a href="../modules/Theme.html">Theme</a></li>
             
                 <li><a href="../modules/TmplUtil.html">TmplUtil</a></li>
+            
+                <li><a href="../modules/Tools.html">Tools</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
             
@@ -186,7 +206,7 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-﻿/*global define, $, window, TweenLite, TimelineLite, tmpl */
+﻿/*global define, $, window, TweenLite, TimelineLite, tmpl, i18n */
 /*jslint white: true */
 
 /**
@@ -522,11 +542,11 @@ define([
                 *
                 * @property _animatePanelDuration
                 * @private
-                * @default 400
+                * @default 0.5
                 * @type {Number}
                 */
 
-                _animatePanelDuration: 500, //400,
+                _animatePanelDuration: 0.5, //0.4,
 
                 timeLine: null,
 
@@ -716,7 +736,7 @@ define([
                         dojoLang.mixin(
                             this._attr,
                             {
-                                closeTitle: GlobalStorage.config.stringResources.txtClose
+                                closeTitle: i18n.t(&#x27;gui.actions.close&#x27;)
                             }
                         )
                     );
@@ -724,7 +744,7 @@ define([
                     //subPanelContent = String.format(subPanelContentTemplate, this._attr.panelName, this._attr.title);
                     //subPanelString = String.format(subPanelTemplate2, this._attr.containerClass, subPanelContent);
 
-                    this.container = this._attr.target.after(subPanelString).parent().find(&quot;.sub-panel-container&quot;);
+                    this.container = $(subPanelString).insertAfter(this._attr.target);
                     this.panel = this.container.find(&quot;.sub-panel&quot;);
 
                     this._subPanelContentDiv = this.panel.find(&quot;.sub-panel-content&quot;);
@@ -747,7 +767,7 @@ define([
                             },
                             onCompleteScope: this
                         })
-                        .to(this.panel, this._animatePanelDuration / 1000,
+                        .to(this.panel, this._animatePanelDuration,
                             {
                                 left: 0,
                                 ease: &quot;easeOutCirc&quot;
@@ -902,6 +922,7 @@ define([
                 mapDiv = $(&quot;#map-div&quot;),
                 mapContent = $(&quot;#mapContent&quot;),
                 fullScreenToggle = $(&quot;#fullScreenToggle&quot;),
+                fullScreenPopup,
 
                 mapToolbar = $(&quot;#map-toolbar&quot;),
                 basemapControls = $(&quot;#basemapControls&quot;),
@@ -911,11 +932,11 @@ define([
                 panelPopup,
                 panelWidthDefault,
 
+                windowWidth,
+
                 duration = 0.5,
 
                 layoutChange,
-
-                _isFullScreen = false,
 
                 _isFullData = false,
                 fullDataTimeLine = new TimelineLite({
@@ -959,6 +980,10 @@ define([
             function onFullScreenComplete() {
                 adjustHeight();
                 layoutChange();
+                
+                topic.publish(EventManager.GUI.FULLSCREEN_CHANGE, {
+                    visible: Theme.isFullScreen()
+                });
             }
 
             /**
@@ -976,86 +1001,52 @@ define([
                 return panelWidthDefault;
             }
 
-            // fullDataTransition
-            fullDataTimeLine
-                .set(viewport, { className: &quot;+=full-data-mode&quot; })
-                .fromTo(mapDiv, transitionDuration, { width: &quot;auto&quot; }, { right: &quot;auto&quot;, width: 35, ease: &quot;easeOutCirc&quot; }, 0)
+            function createTimelines() {
+                // fullDataTransition
+                fullDataTimeLine
+                    .set(viewport, { className: &quot;+=full-data-mode&quot; })
+                    .fromTo(mapDiv, transitionDuration, { width: &quot;auto&quot; }, { right: &quot;auto&quot;, width: 35, ease: &quot;easeOutCirc&quot; }, 0)
 
-                .fromTo(mapContent, transitionDuration, { opacity: 1 }, { opacity: 0, ease: &quot;easeOutCirc&quot; }, 0)
-                .set(mapContent, { top: &quot;500px&quot; })
+                    .fromTo(mapContent, transitionDuration, { opacity: 1 }, { opacity: 0, ease: &quot;easeOutCirc&quot; }, 0)
+                    .set(mapContent, { top: &quot;500px&quot; })
 
-                .to(panelToggle, transitionDuration, { right: -13, ease: &quot;easeOutCirc&quot; }, 0)
-                .set(panelToggle, { display: &quot;none&quot; })
+                    .to(panelToggle, transitionDuration, { right: -13, ease: &quot;easeOutCirc&quot; }, 0)
+                    .set(panelToggle, { display: &quot;none&quot; })
 
-                .to(basemapControls, transitionDuration / 2, { opacity: 0, ease: &quot;easeOutCirc&quot; }, 0)
-                .to(basemapControls, 0, { display: &quot;none&quot; }, transitionDuration / 2)
-                .fromTo(mapToolbar, transitionDuration / 2,
-                    { width: &quot;100%&quot;, height: &quot;31px&quot; },
-                    { width: 31, height: $(&quot;#map-div&quot;).height(), ease: &quot;easeOutCirc&quot; }, duration / 2)
+                    .to(basemapControls, transitionDuration / 2, { opacity: 0, ease: &quot;easeOutCirc&quot; }, 0)
+                    .to(basemapControls, 0, { display: &quot;none&quot; }, transitionDuration / 2)
+                    .fromTo(mapToolbar, transitionDuration / 2,
+                        { width: &quot;100%&quot;, height: &quot;31px&quot; },
+                        { width: &quot;32px&quot;, height: $(&quot;#map-div&quot;).height(), ease: &quot;easeOutCirc&quot; }, duration / 2)
 
-                .to(mapToolbar.find(&quot;.map-toolbar-item-button span&quot;), transitionDuration / 2, { width: 0, ease: &quot;easeOutCirc&quot; }, 0)
-                .set(mapToolbar.find(&quot;.map-toolbar-item-button span&quot;), { display: &quot;none&quot; }, transitionDuration / 2)
+                    .to(mapToolbar.find(&quot;.map-toolbar-item-button span&quot;), transitionDuration / 2, { width: 0, ease: &quot;easeOutCirc&quot; }, 0)
+                    .set(mapToolbar.find(&quot;.map-toolbar-item-button span&quot;), { display: &quot;none&quot; }, transitionDuration / 2)
 
-                .fromTo(panelDiv.find(&quot;.tabs li:first&quot;), transitionDuration, { width: &quot;50%&quot; }, { width: &quot;0%&quot;, ease: &quot;easeOutCirc&quot; }, 0)
-                .fromTo(panelDiv.find(&quot;.tabs li:last&quot;), transitionDuration, { width: &quot;50%&quot; }, { width: &quot;100%&quot;, className: &quot;+=font-large&quot;, ease: &quot;easeOutCirc&quot; }, 0);
+                    .fromTo(panelDiv.find(&quot;.tabs li:first&quot;), transitionDuration, { width: &quot;50%&quot; }, { width: &quot;0%&quot;, ease: &quot;easeOutCirc&quot; }, 0)
+                    .fromTo(panelDiv.find(&quot;.tabs li:last&quot;), transitionDuration, { width: &quot;50%&quot; }, { width: &quot;100%&quot;, className: &quot;+=font-large&quot;, ease: &quot;easeOutCirc&quot; }, 0);
 
-            // panelToggleTransition
-            panelToggleTimeLine
-                .fromTo(panelDiv, transitionDuration, { right: 0 }, { right: -getPanelWidthDefault(), ease: &quot;easeOutCirc&quot; }, 0)
-                .set(panelDiv, { display: &quot;none&quot; }, transitionDuration)
-                .fromTo(mapDiv, transitionDuration, { right: getPanelWidthDefault() }, { right: 0, ease: &quot;easeOutCirc&quot; }, 0);
+                // panelToggleTransition
+                panelToggleTimeLine
+                    .fromTo(panelDiv, transitionDuration, { right: 0 }, { right: -getPanelWidthDefault(), ease: &quot;easeOutCirc&quot; }, 0)
+                    .set(panelDiv, { display: &quot;none&quot; }, transitionDuration)
+                    .fromTo(mapDiv, transitionDuration, { right: getPanelWidthDefault() }, { right: 0, ease: &quot;easeOutCirc&quot; }, 0);
 
-            fullDataSubpanelChangeTimeLine.fromTo(panelDiv, transitionDuration, { right: &quot;0px&quot;, left: &quot;35px&quot; }, { left: &quot;35px&quot;, right: &quot;430px&quot;, ease: &quot;easeOutCirc&quot; });
-
-            /*function _toggleFullScreenMode_(fullscreen) {
-            megaMenu.css({
-            position: &quot;static&quot;
-            });
-            subTitleText.css({
-            position: &quot;static&quot;
-            });
-
-            toggleSubPanelContainer();
-            toggleFooter();
-
-            wbCore.animate({
-            height: viewPortHeight + fullScreenDelta2
-            }, &quot;slow&quot;);
-
-            titleBanner.animate({
-            height: titleBanner.height() - titleBannerHalfHeight
-            }, &quot;slow&quot;);
-
-            if (UtilMisc.isUndefined(fullscreen)) {
-            // If expand is undefined, we toggle
-            titleBannerHalfHeight *= -1;
-            fullScreenDelta2 *= -1;
-            } else if (fullscreen) {
-            titleBannerHalfHeight = -1;
-            fullScreenDelta2 = -Math.abs(fullScreenDelta2);
-            } else {
-            titleBannerHalfHeight = 1;
-            fullScreenDelta2 = Math.abs(fullScreenDelta2);
+                fullDataSubpanelChangeTimeLine
+                    .fromTo(panelDiv, transitionDuration, { right: &quot;0px&quot;, left: &quot;35px&quot; }, { left: &quot;35px&quot;, right: getPanelWidthDefault(), ease: &quot;easeOutCirc&quot; });
             }
 
-            var strings = GlobalStorage.config.stringResources;
-            fullScreenToggle.text(fullScreenDelta2 &lt; 0 ? strings.txtShowHeaders : strings.txtFullScreen);
+            function killTimelines() {
+                fullDataSubpanelChangeTimeLine.kill();
+                panelToggleTimeLine.kill();
+                fullDataTimeLine.kill();
+            }
 
-            navigation.slideToggle(&quot;slow&quot;);
-            //subTitleText.slideToggle(&quot;fast&quot;);
-            megaMenuDiv.slideToggle(&quot;slow&quot;,
-            function () {
-            megaMenu.removeAttr(&#x27;style&#x27;);
-            // needed to prevent &quot;disappearing toolbar&quot; effect
-            megamenuBar.css({
-            &quot;min-height&quot;: &quot;32px&quot;
-            });
-
-            adjustHeight();
-            adjutSubPanelDimensions();
-            });
-            }*/
-
+            function recreateTimelines() {
+                panelWidthDefault = null;
+                killTimelines();
+                createTimelines();
+            }
+            
             /**
             * Publishes &#x60;PANEL_CHANGE&#x60; event when the visibility of the SidePanel changes.
             *
@@ -1085,8 +1076,8 @@ define([
                             panelChange(true);
 
                             panelToggle
-                                .tooltipster(&quot;content&quot;, GlobalStorage.config.stringResources.txtClose)
-                                .find(&quot;span.wb-invisible&quot;).text(GlobalStorage.config.stringResources.txtClose);
+                                .tooltipster(&quot;content&quot;, i18n.t(&quot;gui.actions.close&quot;))
+                                .find(&quot;span.wb-invisible&quot;).text(i18n.t(&quot;gui.actions.close&quot;));
 
                             d.resolve();
                         }, [], this);
@@ -1105,15 +1096,13 @@ define([
                 /*jshint validthis: true */
                 panelToggleTimeLine.eventCallback(&quot;onComplete&quot;,
                         function () {
-                            UtilMisc.subscribeOnce(&quot;map/update-end&quot;, function () {
-                                console.log(&quot;GUI &lt;-- map/update-end from gui&quot;);
-                                panelChange(false);
-                            });
+                            console.log(&quot;GUI &lt;-- map/update-end from gui&quot;);
                             layoutChange();
+                            panelChange(false);
 
                             panelToggle
-                                .tooltipster(&quot;content&quot;, GlobalStorage.config.stringResources.txtOpen)
-                                .find(&quot;span.wb-invisible&quot;).text(GlobalStorage.config.stringResources.txtOpen);
+                                .tooltipster(&quot;content&quot;, i18n.t(&quot;gui.actions.open&quot;))
+                                .find(&quot;span.wb-invisible&quot;).text(i18n.t(&quot;gui.actions.open&quot;));
 
                             d.resolve();
                         }, [], this);
@@ -1122,18 +1111,18 @@ define([
             }
 
             function _toggleFullDataMode(fullData) {
-                _isFullData = UtilMisc.isUndefined(fullData) ? !_isFullData : _isFullData;
+                _isFullData = UtilMisc.isUndefined(fullData) ? !_isFullData : fullData;
 
                 if (_isFullData) {
                     TweenLite.fromTo(panelDiv, transitionDuration,
-                        { width: 430, right: 0, left: &quot;auto&quot; },
+                        { width: getPanelWidthDefault(), right: 0, left: &quot;auto&quot; },
                         { left: 35, right: 0, width: &quot;auto&quot;, ease: &quot;easeOutCirc&quot; });
 
                     fullDataTimeLine.play();
                 } else {
                     TweenLite.fromTo(panelDiv, transitionDuration,
                         { left: 35, width: &quot;auto&quot;, right: panelDiv.css(&quot;right&quot;) },
-                        { right: 0, width: 430, ease: &quot;easeInCirc&quot; });
+                        { right: 0, width: getPanelWidthDefault(), ease: &quot;easeInCirc&quot; });
 
                     fullDataTimeLine.reverse();
                 }
@@ -1145,9 +1134,25 @@ define([
                 });
             }
 
+            function optimizeLayout() {
+                if ((windowWidth &lt; 1200 &amp;&amp; jWindow.width() &gt; 1200) || 
+                    (windowWidth &gt; 1200 &amp;&amp; jWindow.width() &lt; 1200)) {                  
+                    recreateTimelines();
+
+                    windowWidth = jWindow.width();
+                }                
+            }
+
             return {
                 init: function () {
-                    //jWindow.on(&quot;resize&quot;, adjustWidth);
+                    createTimelines();
+
+                    windowWidth = jWindow.width();
+                    jWindow.on(&quot;resize&quot;, optimizeLayout);
+
+                    Theme
+                        .fullScreenCallback(&quot;onComplete&quot;, onFullScreenComplete)
+                        .fullScreenCallback(&quot;onReverseComplete&quot;, onFullScreenComplete);
 
                     // initialize the panel popup
                     panelPopup = popupManager.registerPopup(panelToggle, &quot;click&quot;,
@@ -1158,29 +1163,27 @@ define([
                     );
 
                     // set listener to the panel toggle
-                    topic.subscribe(EventManager.GUI.PANEL_TOGGLE, function () {
-                        panelPopup.toggle();
+                    topic.subscribe(EventManager.GUI.PANEL_TOGGLE, function (event) {
+                        panelPopup.toggle(null, event.visible);
                     });
-
-                    Theme
-                        .fullScreenCallback(&quot;onComplete&quot;, onFullScreenComplete)
-                        .fullScreenCallback(&quot;onReverseComplete&quot;, onFullScreenComplete);
+                    
+                    // set listener to the full-screen toggle
+                    fullScreenPopup = popupManager.registerPopup(fullScreenToggle, &quot;click&quot;,
+                        function (d) {
+                            Theme.toggleFullScreenMode();
+                            d.resolve();
+                        }, {
+                            activeClass: &quot;button-pressed&quot;,
+                            setClassBefore: true
+                        }
+                    );                    
 
                     // if the vertical space is too small, trigger the full-screen
                     if (mapContent.height() &lt; jWindow.height() * 0.6) {
-                        Theme.toggleFullScreenMode(true);
+                        fullScreenPopup.open();
                     }
 
-                    // set listener to the full-screen toggle
-                    fullScreenToggle.click(function () {
-                        Theme.toggleFullScreenMode();
-                    });
-
                     adjustHeight();
-                },
-
-                isFullScreen: function () {
-                    return _isFullScreen;
                 },
 
                 /**
@@ -1191,7 +1194,7 @@ define([
                 * @param  {boolean} fullscreen true - expand; false - collapse; undefined - toggle;
                 */
                 toggleFullScreenMode: function (fullscreen) {
-                    Theme.toggleFullScreenMode(fullscreen);
+                    fullScreenPopup.toggle(null, fullscreen);
                 },
 
                 isFullData: function () {
@@ -1344,6 +1347,11 @@ define([
                 subPanel.getPanel().find(&quot;.sub-panel-toggle&quot;)
                     .on(&quot;click&quot;, dojoLang.hitch(this, function () {
                         hideSubPanel(attr);
+
+                        // reset focus back to link where the subpanel was created from
+                        if (attr.target.selector !== &quot;#map-div&quot;) {
+                            $(attr.target).find(&quot;:tabbable&quot;).first().focus();
+                        }
                     }));
 
                 loadIndicator.animate({
@@ -1505,7 +1513,8 @@ define([
                             helpSectionContainer.slideToggle(&quot;fast&quot;, function () {
                                 d.resolve();
                             });
-                        }
+                        },
+                        resetFocusOnClose: true
                     }
                 );
 
@@ -1539,19 +1548,20 @@ define([
                             addLayerSectionContainer.slideToggle(&quot;fast&quot;, function () {
                                 d.resolve();
                             });
-                        }
+                        },
+                        resetFocusOnClose: true
                     }
                 );
 
                 $(&quot;#addLayer-add&quot;).on(&quot;click&quot;, function () {
                     topic.publish(EventManager.Map.ADD_LAYER, null);
 
-                    addLayerSectionContainer.slideToggle(&quot;fast&quot;);
+                    addLayerPanelPopup.close();
                 });
                 //End Add Layer
 
                 //start extended grid
-                topic.subscribe(&quot;gui/grid/expand&quot;, function () {
+                topic.subscribe(EventManager.GUI.DATAGRID_EXPAND, function () {
                     layoutController.toggleFullDataMode();
                 });
                 //end extended grid
@@ -1633,8 +1643,63 @@ define([
                         });
                 });
 
+                // List of objects containing an event name and an event argument. The events should
+                // be anything to wait for before publishing a map extent change, it should include
+                // anything that will change the size of the map (e.g. fullscreen, closing the panel).
+                // If the map extent change occurs BEFORE something that changes the size of the map (e.g. fullscreen)
+                // then the map extent will change again.
+                var waitList = [];
+
+                if (!GlobalStorage.config.ui.sidePanelOpened) {
+                    // NOTE: panel change not triggered here (see map extent change below)
+                    waitList.push({
+                        publishName: EventManager.GUI.PANEL_TOGGLE,
+                        eventArg: {
+                            origin: &quot;bootstrapper&quot;,
+                            visible: GlobalStorage.config.ui.sidePanelOpened
+                        },
+                        subscribeName: EventManager.GUI.PANEL_CHANGE
+                    });
+                }
+
+                if (GlobalStorage.config.ui.fullscreen) {
+                    // NOTE: fullscreen not triggered here (see map extent change below)
+                    waitList.push({
+                        publishName: EventManager.GUI.TOGGLE_FULLSCREEN,
+                        eventArg: {
+                            expand: true
+                        },
+                        subscribeName: EventManager.GUI.FULLSCREEN_CHANGE
+                    });
+                }
+
                 // return the callback
                 load();
+
+                // This should be the last thing that happens
+                if (waitList.isEmpty()) {
+                    topic.publish(EventManager.GUI.UPDATE_COMPLETE);
+                } else {
+                    // Wait for things such as fullscreen or panel collapse
+                    // to finish before publishing the UPDATE_COMPLETE.
+
+                    // Note it&#x27;s important to subscribe to the events, then
+                    // publish them, that&#x27;s why it was done in such an obscure way
+                    // using the waitList (otherwise if we just publish the
+                    // event like above, then subscribe to it here, the event
+                    // might have completed before reaching this point)
+                    var eventNames = dojoArray.map(waitList, function (obj) {
+                        return obj.subscribeName;
+                    });
+
+                    UtilMisc.subscribeAll(eventNames, function () {
+                        topic.publish(EventManager.GUI.UPDATE_COMPLETE);
+                    });
+
+                    dojoArray.forEach(waitList, function (obj) {
+                        topic.publish(obj.publishName, obj.eventArg);
+                    });
+                }
             }
         };
     }

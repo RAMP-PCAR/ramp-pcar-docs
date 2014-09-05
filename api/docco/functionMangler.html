@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -229,7 +274,7 @@ define([
         topic, dojoLang, dojoOn,
 
     <span class="hljs-comment">/* Utils */</span>
-        UtilMisc)</span> {</span><span class="hljs-pi">
+        UtilMisc)</span> </span>{<span class="hljs-pi">
         "use strict"</span>;
 
         <span class="hljs-comment">/**
@@ -242,9 +287,9 @@ define([
         * @method _initDojoPrototype
         * @private
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_initDojoPrototype</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_initDojoPrototype</span><span class="hljs-params">()</span> </span>{
             <span class="hljs-keyword">var</span> originalOn = dojoOn;
-            dojoOn = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(target, type, listener, scope)</span> {</span>
+            dojoOn = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(target, type, listener, scope)</span> </span>{
                 <span class="hljs-keyword">if</span> (UtilMisc.isUndefined(scope)) {
                     <span class="hljs-keyword">return</span> originalOn(target, type, listener);
                 } <span class="hljs-keyword">else</span> {
@@ -253,10 +298,10 @@ define([
             };
 
             <span class="hljs-keyword">var</span> originalSubscribe = topic.subscribe;
-            topic.subscribe = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventName, listener)</span> {</span>
+            topic.subscribe = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventName, listener)</span> </span>{
                 <span class="hljs-keyword">if</span> (UtilMisc.isUndefined(eventName)) {
-                    console.error(<span class="hljs-string">"Trying to subscribe to an undefined event"</span>);
-                    console.trace();
+                    <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Trying to subscribe to an undefined event"</span>);
+                    <span class="hljs-built_in">console</span>.trace();
                 } <span class="hljs-keyword">else</span> {
                     <span class="hljs-keyword">return</span> originalSubscribe(eventName, listener);
                 }
@@ -273,7 +318,7 @@ define([
             * @param  {[type]} load    [description]
             * @return {[type]}         [description]
             */</span>
-            load: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(id, require, load)</span> {</span>
+            load: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(id, require, load)</span> </span>{
                 _initDojoPrototype();
 
                 load();

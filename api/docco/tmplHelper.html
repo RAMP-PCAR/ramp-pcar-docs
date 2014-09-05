@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -228,7 +273,7 @@ define([
         <span class="hljs-string">"utils/tmplUtil"</span>
 
 ],
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dojoLang, GlobalStorage, Ramp, TmplUtil)</span> {</span><span class="hljs-pi">
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dojoLang, GlobalStorage, Ramp, TmplUtil)</span> </span>{<span class="hljs-pi">
         "use strict"</span>;
 
         <span class="hljs-keyword">return</span> {
@@ -240,12 +285,11 @@ define([
              * @returns {Object} Returns a JSON object with following properties
              *      .data = {}
              *      .config = &lt;global config object&gt;
-             *      .str = &lt;global config object . stringResources&gt;
              *      .lyr = &lt;global config object . featurelayers [parameter index] &gt;
              *      .fn = object with helper functions assigned to it.
              *
              */</span>
-            dataBuilder: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data, layerUrl)</span> {</span>
+            dataBuilder: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data, layerUrl)</span> </span>{
                 <span class="hljs-keyword">var</span> dataWrapperPrototype = {
                     data: <span class="hljs-literal">null</span>,
                     config: <span class="hljs-literal">null</span>,
@@ -257,7 +301,6 @@ define([
 
                 dataWrapper.data = data;
                 dataWrapper.config = GlobalStorage.config;
-                dataWrapper.str = GlobalStorage.config.stringResources;
 
                 <span class="hljs-keyword">if</span> (layerUrl != <span class="hljs-literal">null</span>) {</pre></div></div>
             
@@ -270,7 +313,7 @@ define([
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>get configturation from the layer with layerIndex</p>
+              <p>get configuration from the layer with layerIndex</p>
 
             </div>
             
@@ -288,12 +331,11 @@ define([
              * @returns {Object} Returns a JSON object with following properties
              *      .data = {}
              *      .config = &lt;global config object&gt;
-             *      .str = &lt;global config object . stringResources&gt;
              *      .lyr = &lt;global config object . featurelayers [parameter index] &gt;
              *      .fn = object with helper functions assigned to it.
              *
              */</span>
-            genericDataBuilder: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
+            genericDataBuilder: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> </span>{
                 <span class="hljs-keyword">var</span> dataWrapperPrototype = {
                     data: <span class="hljs-literal">null</span>,
                     config: <span class="hljs-literal">null</span>,
@@ -304,7 +346,6 @@ define([
 
                 dataWrapper.data = data;
                 dataWrapper.config = GlobalStorage.config;
-                dataWrapper.str = GlobalStorage.config.stringResources;
 
                 dataWrapper.fn = TmplUtil;
                 <span class="hljs-keyword">return</span> dataWrapper;
@@ -317,7 +358,7 @@ define([
              * @returns {String} A JSON template without comments
              *
              */</span>
-            stringifyTemplate: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(template)</span> {</span>
+            stringifyTemplate: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(template)</span> </span>{
                 <span class="hljs-keyword">return</span> template</pre></div></div>
             
         </li>
@@ -334,7 +375,7 @@ define([
             </div>
             
             <div class="content"><div class='highlight'><pre>                    .replace(<span class="hljs-regexp">/`(?:\\.|[^`])*`|'(?:\\.|[^'])*'|"(?:\\.|[^"])*"|\/\*[^]*?\*\/|\/\/.*\n?/g</span>,
-                                         <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> {</span>
+                                         <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> </span>{
                                              <span class="hljs-keyword">if</span> (s.charAt(<span class="hljs-number">0</span>) === <span class="hljs-string">'/'</span>) {
                                                  <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
                                              } <span class="hljs-keyword">else</span> {

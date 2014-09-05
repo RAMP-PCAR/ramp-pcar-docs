@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="..\..\..\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
+                <h1><img src="..\..\..\src\assets\images\bobcat_logo_sharp_smaller_s.png" title="ramp-gis-viewer">Reusable Accessible Mapping Platform</h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.42-5</em>
+            <em>API Docs for: 2.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -41,15 +41,23 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/AdvancedToolbar.html">AdvancedToolbar</a></li>
+            
                 <li><a href="../classes/Array.html">Array</a></li>
             
                 <li><a href="../classes/BaseMapSelector.html">BaseMapSelector</a></li>
+            
+                <li><a href="../classes/BaseTool.html">BaseTool</a></li>
             
                 <li><a href="../classes/BookmarkLink.html">BookmarkLink</a></li>
             
                 <li><a href="../classes/Bootstrapper.html">Bootstrapper</a></li>
             
-                <li><a href="../classes/CheckboxWrapper.html">CheckboxWrapper</a></li>
+                <li><a href="../classes/BufferTool.html">BufferTool</a></li>
+            
+                <li><a href="../classes/Checkbox.html">Checkbox</a></li>
+            
+                <li><a href="../classes/CheckboxGroup.html">CheckboxGroup</a></li>
             
                 <li><a href="../classes/Datagrid.html">Datagrid</a></li>
             
@@ -81,9 +89,15 @@
             
                 <li><a href="../classes/Map.html">Map</a></li>
             
+                <li><a href="../classes/MapClickHandler.html">MapClickHandler</a></li>
+            
                 <li><a href="../classes/Maptips.html">Maptips</a></li>
             
+                <li><a href="../classes/MeasureTool.html">MeasureTool</a></li>
+            
                 <li><a href="../classes/Navigation.html">Navigation</a></li>
+            
+                <li><a href="../classes/PopulationTool.html">PopulationTool</a></li>
             
                 <li><a href="../classes/Popup.html">Popup</a></li>
             
@@ -129,9 +143,13 @@
             
                 <li><a href="../modules/FilterManager.html">FilterManager</a></li>
             
+                <li><a href="../modules/GlobalStorage.html">GlobalStorage</a></li>
+            
                 <li><a href="../modules/Map.html">Map</a></li>
             
                 <li><a href="../modules/Maptips.html">Maptips</a></li>
+            
+                <li><a href="../modules/MeasureTool.html">MeasureTool</a></li>
             
                 <li><a href="../modules/Navigation.html">Navigation</a></li>
             
@@ -142,6 +160,8 @@
                 <li><a href="../modules/Theme.html">Theme</a></li>
             
                 <li><a href="../modules/TmplUtil.html">TmplUtil</a></li>
+            
+                <li><a href="../modules/Tools.html">Tools</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
             
@@ -193,8 +213,6 @@
                 
                     <li><a href="EventManager.html">EventManager</a></li>
                 
-                    <li><a href="GlobalStorage.html">GlobalStorage</a></li>
-                
                     <li><a href="http://dojotoolkit.org/reference-guide/1.9/dojo/topic.html">dojo/topic</a></li>
                 
                     <li><a href="http://dojotoolkit.org/reference-guide/1.9/dojo/dom-construct.html">dojo/dom-construct</a></li>
@@ -243,8 +261,6 @@ specific event.</p>
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
         
         
-        
-            <li class="api-class-tab attrs"><a href="#attrs">Attributes</a></li>
         
         
     </ul>
@@ -321,18 +337,6 @@ specific event.</p>
 
             
 
-            
-                <div class="index-section attrs">
-                    <h3>Attributes</h3>
-
-                    <ul class="index-list attrs">
-                        
-                            <li class="index-item attr inherited">
-                                <a href="#attr_getConfigUrl">getConfigUrl</a>
-                            </li>
-                        
-                    </ul>
-                </div>
             
 
             
@@ -768,7 +772,7 @@ This logic is customized per project</p>
             
         
         
-        <a href="../files/src_js_RAMP_Modules_featureClickHandler.js.html#l98"><code>src\js\RAMP\Modules\featureClickHandler.js:98</code></a>
+        <a href="../files/src_js_RAMP_Modules_featureClickHandler.js.html#l97"><code>src\js\RAMP\Modules\featureClickHandler.js:97</code></a>
         
         </p>
 
@@ -835,7 +839,7 @@ another &quot;Details&quot; button, clicking on another point, or by clicking on
             
         
         
-        <a href="../files/src_js_RAMP_Modules_featureClickHandler.js.html#l123"><code>src\js\RAMP\Modules\featureClickHandler.js:123</code></a>
+        <a href="../files/src_js_RAMP_Modules_featureClickHandler.js.html#l122"><code>src\js\RAMP\Modules\featureClickHandler.js:122</code></a>
         
         </p>
 
@@ -942,7 +946,7 @@ another &quot;Details&quot; button, clicking on another point, or by clicking on
             
         
         
-        <a href="../files/src_js_RAMP_Modules_featureClickHandler.js.html#l111"><code>src\js\RAMP\Modules\featureClickHandler.js:111</code></a>
+        <a href="../files/src_js_RAMP_Modules_featureClickHandler.js.html#l110"><code>src\js\RAMP\Modules\featureClickHandler.js:110</code></a>
         
         </p>
 
@@ -1049,7 +1053,7 @@ another &quot;Details&quot; button, clicking on another point, or by clicking on
             
         
         
-        <a href="../files/src_js_RAMP_Modules_featureClickHandler.js.html#l48"><code>src\js\RAMP\Modules\featureClickHandler.js:48</code></a>
+        <a href="../files/src_js_RAMP_Modules_featureClickHandler.js.html#l47"><code>src\js\RAMP\Modules\featureClickHandler.js:47</code></a>
         
         </p>
 
@@ -1120,64 +1124,6 @@ and Panel event handler information is passed in as the additional object for th
 
         
 
-        
-            <div id="attrs" class="api-class-tabpanel">
-                <h2 class="off-left">Attributes</h2>
-
-                
-                    <div id="attr_getConfigUrl" class="attr item inherited">
-    <a name="config_getConfigUrl"></a> 
-    <h3 class="name"><code>getConfigUrl</code></h3>
-    <span class="type"></span>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag readonly">readonly</span>
-    
-
-    <div class="meta">
-        
-            
-                <p>Inherited from
-                <a href="../classes/GlobalStorage.html#attr_getConfigUrl">GlobalStorage</a>:
-            
-        
-        
-        <a href="../files/src_js_RAMP_Modules_globalStorage.js.html#l22"><code>src\js\RAMP\Modules\globalStorage.js:22</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Returns a URL that points to the application configuration (JSON format) if it&#39;s hosted on a web service.
-This is not required if the application has a JSON config file in the website&#39;s folder</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-            </div>
         
 
         

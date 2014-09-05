@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -196,7 +241,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>﻿<span class="hljs-comment">/* global define */</span>
+            <div class="content"><div class='highlight'><pre>﻿<span class="hljs-comment">/* global define, i18n */</span>
 
 <span class="hljs-comment">/**
 *
@@ -216,7 +261,6 @@
 * @static
 * @uses GraphicExtension
 * @uses EventManager
-* @uses GlobalStorage
 * @uses dojo/topic
 * @uses dojo/dom-construct
 * @uses Util
@@ -224,7 +268,7 @@
 
 define([
 <span class="hljs-comment">/* RAMP */</span>
-    <span class="hljs-string">"ramp/graphicExtension"</span>, <span class="hljs-string">"ramp/eventManager"</span>, <span class="hljs-string">"ramp/globalStorage"</span>,
+    <span class="hljs-string">"ramp/graphicExtension"</span>, <span class="hljs-string">"ramp/eventManager"</span>,
 
 <span class="hljs-comment">/* Dojo */</span>
     <span class="hljs-string">"dojo/topic"</span>, <span class="hljs-string">"dojo/dom-construct"</span>,
@@ -234,13 +278,13 @@ define([
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(
     <span class="hljs-comment">/* RAMP */</span>
-    GraphicExtension, EventManager, GlobalStorage,
+    GraphicExtension, EventManager,
 
     <span class="hljs-comment">/* Dojo */</span>
     topic, domConstruct,
 
     <span class="hljs-comment">/* Utils */</span>
-    UtilMisc)</span> {</span><span class="hljs-pi">
+    UtilMisc)</span> </span>{<span class="hljs-pi">
         "use strict"</span>;
         <span class="hljs-keyword">return</span> {
             <span class="hljs-comment">/**
@@ -252,11 +296,11 @@ define([
             * @param  {Object} evt
             * @param  {Object} evt.graphic ESRI graphic object
             */</span>
-            onFeatureSelect: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
+            onFeatureSelect: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> </span>{
                 <span class="hljs-keyword">var</span> selectedGraphic = evt.graphic;
 
                 topic.publish(EventManager.GUI.SUBPANEL_OPEN, {
-                    panelName: GlobalStorage.config.stringResources.txtGrid_details,
+                    panelName: i18n.t(<span class="hljs-string">'datagrid.details'</span>),
                     title: GraphicExtension.getGraphicTitle(selectedGraphic),
                     content: GraphicExtension.getTextContent(selectedGraphic),
                     target: $(<span class="hljs-string">"#map-div"</span>),
@@ -264,7 +308,7 @@ define([
                     consumeOrigin: <span class="hljs-string">"datagrid"</span>,
                     guid: UtilMisc.guid(),
                     showChars: <span class="hljs-number">70</span>,
-                    doOnOpen: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+                    doOnOpen: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -282,7 +326,7 @@ define([
             </div>
             
             <div class="content"><div class='highlight'><pre>
-                        UtilMisc.subscribeOnce(EventManager.Maptips.EXTENT_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
+                        UtilMisc.subscribeOnce(EventManager.Maptips.EXTENT_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> </span>{
                             <span class="hljs-keyword">var</span> scroll = evt.scroll;
                             topic.publish(EventManager.Datagrid.HIGHLIGHTROW_SHOW, {
                                 graphic: selectedGraphic,
@@ -307,10 +351,10 @@ define([
                             graphic: selectedGraphic
                         });
                     },
-                    doOnHide: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                    doOnHide: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         topic.publish(EventManager.Datagrid.HIGHLIGHTROW_HIDE);
                     },
-                    doOnDestroy: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                    doOnDestroy: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         selectedGraphic = <span class="hljs-literal">null</span>;</pre></div></div>
             
         </li>
@@ -337,7 +381,7 @@ define([
             *
             * @method onFeatureDeselect
             */</span>
-            onFeatureDeselect: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            onFeatureDeselect: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 topic.publish(EventManager.GUI.SUBPANEL_CLOSE, {
                     origin: <span class="hljs-string">"rampPopup,datagrid"</span>
                 });
@@ -350,7 +394,7 @@ define([
             * @param {Object} evt [description]
             * @param {Object} evt.graphic ESRI graphic object that is being hovered over
             */</span>
-            onFeatureMouseOver: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
+            onFeatureMouseOver: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> </span>{
                 topic.publish(EventManager.Maptips.SHOW, evt);
                 topic.publish(EventManager.FeatureHighlighter.HOVERLIGHT_SHOW, evt);
             },
@@ -362,7 +406,7 @@ define([
             * @param {Object} evt [description]
             * @param {Object} evt.graphic ESRI graphic object that is moved away from
             */</span>
-            onFeatureMouseOut: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span></pre></div></div>
+            onFeatureMouseOut: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> </span>{</pre></div></div>
             
         </li>
         

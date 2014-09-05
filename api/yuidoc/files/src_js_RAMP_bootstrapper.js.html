@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="..\..\..\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
+                <h1><img src="..\..\..\src\assets\images\bobcat_logo_sharp_smaller_s.png" title="ramp-gis-viewer">Reusable Accessible Mapping Platform</h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.42-5</em>
+            <em>API Docs for: 2.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -41,15 +41,23 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/AdvancedToolbar.html">AdvancedToolbar</a></li>
+            
                 <li><a href="../classes/Array.html">Array</a></li>
             
                 <li><a href="../classes/BaseMapSelector.html">BaseMapSelector</a></li>
+            
+                <li><a href="../classes/BaseTool.html">BaseTool</a></li>
             
                 <li><a href="../classes/BookmarkLink.html">BookmarkLink</a></li>
             
                 <li><a href="../classes/Bootstrapper.html">Bootstrapper</a></li>
             
-                <li><a href="../classes/CheckboxWrapper.html">CheckboxWrapper</a></li>
+                <li><a href="../classes/BufferTool.html">BufferTool</a></li>
+            
+                <li><a href="../classes/Checkbox.html">Checkbox</a></li>
+            
+                <li><a href="../classes/CheckboxGroup.html">CheckboxGroup</a></li>
             
                 <li><a href="../classes/Datagrid.html">Datagrid</a></li>
             
@@ -81,9 +89,15 @@
             
                 <li><a href="../classes/Map.html">Map</a></li>
             
+                <li><a href="../classes/MapClickHandler.html">MapClickHandler</a></li>
+            
                 <li><a href="../classes/Maptips.html">Maptips</a></li>
             
+                <li><a href="../classes/MeasureTool.html">MeasureTool</a></li>
+            
                 <li><a href="../classes/Navigation.html">Navigation</a></li>
+            
+                <li><a href="../classes/PopulationTool.html">PopulationTool</a></li>
             
                 <li><a href="../classes/Popup.html">Popup</a></li>
             
@@ -129,9 +143,13 @@
             
                 <li><a href="../modules/FilterManager.html">FilterManager</a></li>
             
+                <li><a href="../modules/GlobalStorage.html">GlobalStorage</a></li>
+            
                 <li><a href="../modules/Map.html">Map</a></li>
             
                 <li><a href="../modules/Maptips.html">Maptips</a></li>
+            
+                <li><a href="../modules/MeasureTool.html">MeasureTool</a></li>
             
                 <li><a href="../modules/Navigation.html">Navigation</a></li>
             
@@ -142,6 +160,8 @@
                 <li><a href="../modules/Theme.html">Theme</a></li>
             
                 <li><a href="../modules/TmplUtil.html">TmplUtil</a></li>
+            
+                <li><a href="../modules/Tools.html">Tools</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
             
@@ -186,7 +206,7 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-﻿/*global require, window, esri */
+﻿/*global require, window, esri, dojoConfig, i18n */
 
 /**
 * Ramp module
@@ -222,6 +242,10 @@
 * @uses GlobalStorage
 * @uses GUI
 * @uses EventManager
+* @uses AdvancedToolbar
+* @uses PopulationTool
+* @uses MeasureTool
+* @uses BufferTool
 *
 
 * @uses Util
@@ -233,38 +257,62 @@ require([
 /* Dojo */
     &quot;dojo/parser&quot;, &quot;dojo/on&quot;, &quot;dojo/topic&quot;,
     &quot;dojo/request/script&quot;,
-    &quot;dojo/request/xhr&quot;,
+    &quot;dojo/request/xhr&quot;, &quot;dojo/_base/array&quot;,
 
 /* RAMP */
     &quot;ramp/map&quot;, &quot;ramp/basemapSelector&quot;, &quot;ramp/maptips&quot;, &quot;ramp/datagrid&quot;,
     &quot;ramp/navigation&quot;, &quot;ramp/filterManager&quot;, &quot;ramp/bookmarkLink&quot;,
     &quot;utils/url&quot;, &quot;ramp/featureHighlighter&quot;,
     &quot;ramp/ramp&quot;, &quot;ramp/globalStorage&quot;, &quot;ramp/gui&quot;, &quot;ramp/eventManager&quot;,
+    &quot;ramp/advancedToolbar&quot;,
     &quot;themes/theme&quot;,
 
 /* Utils */
     &quot;utils/util&quot;,
+
+/* Tools */
+    //&quot;tools/populationTool&quot;, &quot;tools/measureTool&quot;, &quot;tools/bufferTool&quot;,
 
 /* Plugins */
     &quot;utils/prototype!&quot;, &quot;utils/functionMangler!&quot;],
 
     function (
     /* Dojo */
-    parser, dojoOn, topic, requestScript, xhr,
+    parser, dojoOn, topic, requestScript, xhr, dojoArray,
 
     /* RAMP */
     RampMap, BasemapSelector, Maptips, Datagrid, NavWidget, FilterManager,
     BookmarkLink, Url, FeatureHighlighter,
-    ramp, globalStorage, gui, EventManager, theme,
+    Ramp, globalStorage, gui, EventManager, AdvancedToolbar, theme,
 
     /* Utils */
-    utilMisc) {
+    UtilMisc//,
+
+        /* Tools */
+        //PopulationTool, MeasureTool, BufferTool
+    ) {
         &quot;use strict&quot;;
+
+        /**
+        * loadPlugin takes a plugin file and loads it into the DOM.
+        * Creates a dynamic script tag to load the script at runtime.
+        *
+        * @method loadPlugin
+        * @private
+        * @param {String} pluginName, the file name of the plugin to be loaded (should be in the plugins folder)
+        */
+        function loadPlugin(pluginName) {
+            var head = document.getElementsByTagName(&#x27;head&#x27;)[0],
+                script = document.createElement(&#x27;script&#x27;);
+            script.type = &#x27;text/javascript&#x27;;
+            script.src = dojoConfig.fullPluginPath + pluginName;
+            console.log(&#x27;loading plugin: &#x27; + script.src);
+            head.appendChild(script);
+        }
 
         function initializeMap() {
             /* Start - RAMP Events, after map is loaded */
 
-            //dojoOn.once(RampMap.getMap(), &quot;update-end&quot;, function () {
             topic.subscribe(EventManager.Map.ALL_LAYERS_LOADED, function () {
                 console.log(&quot;map - &gt;&gt; first update-end; init the rest&quot;);
 
@@ -274,9 +322,13 @@ require([
                 // but in the future, if other modules start publishing their own UI complete events, it needs
                 // to be subscribe to here so BookmarkLink will not attempt to call the module before its GUI
                 // has finished rendering
-                utilMisc.subscribeAll([EventManager.BasemapSelector.UI_COMPLETE, EventManager.FilterManager.UI_COMPLETE], function () {
-                    BookmarkLink.init(window.location.pathname.split(&quot;/&quot;).last());
-                });
+                UtilMisc.subscribeAll(
+                    [
+                        EventManager.BasemapSelector.UI_COMPLETE,
+                        EventManager.FilterManager.UI_COMPLETE
+                    ], function () {
+                        BookmarkLink.subscribeAndUpdate();
+                    });
                 // Added current level so slider will know how to adjust the position
                 var currentLevel = (RampMap.getMap().__LOD.level) ? RampMap.getMap().__LOD.level : 0;
 
@@ -291,12 +343,22 @@ require([
                 //initialize the filter
                 FilterManager.init();
 
+                // Initialize the advanced toolbar and tools.
+                //TODO idea: have the tools init only if they are included in the config?
+                if (globalStorage.config.advancedToolbar.enabled) {
+                    AdvancedToolbar.init();
+                } else {
+                    $(&quot;li.map-toolbar-item #advanced-toggle&quot;).remove();
+                }
+
+                Datagrid.init();
+
                 theme.tooltipster();
             });
             RampMap.init();
 
-            Datagrid.init();
-            //init only creates the grid, does not populate it with data
+            // a workaround for bug#3460; ideally each module&#x27;s ui component would call tooltipster on its own; probably a good idea would to implement this when working on mobile view
+            theme.tooltipster();            
 
             /* End - RAMP Events */
         }
@@ -304,7 +366,7 @@ require([
 
         // Check to make sure the console exists, redefines it to the no-op function
         // if it does not (e.g. in IE when the debugger is not on)
-        utilMisc.checkConsole();
+        UtilMisc.checkConsole();
 
         // Once all of our modules are loaded and the DOM is ready:
 
@@ -325,6 +387,39 @@ require([
             lang = &quot;en&quot;;
         }
 
+        i18n.init(
+        {
+            lng: lang + &quot;-CA&quot;,
+            load: &quot;current&quot;,
+            fallbackLng: false
+        }/*,
+        function (t) {
+            // tests
+            // translate nav
+            $(&quot;.mb-menu&quot;).i18n();
+
+            var bname = &quot;baseNrCan&quot;;
+
+            console.log(t(&quot;basemaps.&quot; + bname, { context: &quot;name&quot; }));
+            console.log(t(&quot;basemaps.&quot; + bname, { context: &quot;description&quot; }));
+
+            console.log(t(&quot;basemaps&quot; + &quot;.&quot; + bname + &quot;.&quot; + &quot;name&quot;));
+            console.log(t(&quot;basemaps&quot; + &quot;.&quot; + bname + &quot;.&quot; + &quot;description&quot;));
+
+            console.log(&quot;-&gt;&quot;, t(&quot;translation2.measure&quot;));
+
+            i18n.loadNamespace(&#x27;tools/translation2&#x27;, function () {
+                console.log(&quot;---&gt;&quot;, i18n.t(&quot;tools/translation2.measure&quot;));
+                console.log(&quot;--&gt;&quot;, i18n.t(&quot;tools/translation2:measure&quot;, { defaultValue: &quot;my text&quot; }));
+            });
+
+            window.setTimeout(function () {
+                console.log(&quot;----&gt;&quot;, i18n.t(&quot;tools/translation2:measure&quot;, { defaultValue: &quot;my text&quot; }));
+            }, 1000);
+            
+        }*/
+        );
+
         //loading config object from JSON file
         configFile = (lang === &quot;fr&quot;) ? &quot;config.fr.json&quot; : &quot;config.en.json&quot;;
 
@@ -335,14 +430,37 @@ require([
 
         defJson.then(
             function (fileContent) {
+                var pluginConfig;
                 //there is no need to convert the result to an object.  it comes through pre-parsed
 
                 globalStorage.config = fileContent;
 
+                pluginConfig = globalStorage.config.plugins;
+                if (pluginConfig) {
+                    dojoArray.map(pluginConfig, function (pName) {
+                        loadPlugin(pName);
+                    });
+                }
+                // Modify the config based on the url
+                // needs to do this before the gui loads because the gui module
+                // also reads from the config
+                BookmarkLink.updateConfig(window.location.pathname.split(&quot;/&quot;).last());
+
+                // Initialize the map only after the gui loads
+                // if we do it beforehand, the map extent may get messed up since
+                // the available screen size may still be changing (e.g. due to fullscreen
+                // or subpanel closing)
+                topic.subscribe(EventManager.GUI.UPDATE_COMPLETE, function () {
+                    initializeMap();
+                });
+
                 gui.load(null, null, function () { });
 
-                initializeMap();
-                ramp.loadStrings();
+                // Create the panel that the bookmark link sits in
+                // can only do this after the gui loads
+                BookmarkLink.createUI();
+
+                Ramp.loadStrings();
             },
             function (error) {
                 console.log(&quot;An error occurred when retrieving the JSON Config: &quot; + error);
@@ -374,7 +492,7 @@ require([
 
         globalStorage.config = json.fromJson(fileContent.json);
         initializeMap();
-        ramp.loadStrings();
+        Ramp.loadStrings();
 
         var handle = window.setTimeout(function () {
         }, 2000);

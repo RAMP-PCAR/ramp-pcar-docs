@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -330,8 +375,7 @@ define([</pre></div></div>
             *
             * @method loadStrings
             */</span>
-            loadStrings: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                <span class="hljs-keyword">var</span> stringResources = GlobalStorage.config.stringResources;</pre></div></div>
+            loadStrings: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -342,93 +386,71 @@ define([</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p><Title>
-dojoQuery(“title”)[0].text(stringResources.txtPageTitle + “ “ + stringResources.txtPageSubTitle);</p>
+              <p>doesn’t seem to be doing a lot, this function</p>
 
             </div>
             
-        </li>
-        
-        
-        <li id="section-9">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
-              </div>
-              <p>H1
-$(“#H1”)[0].text(stringResources.txtMapTitle);</p>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-10">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
-              </div>
-              <p>pageTitle
-$(“#pageTitle”)[0].text(stringResources.txtPageTitle);</p>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-11">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
-              </div>
-              <p>envm</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                $(<span class="hljs-string">"#envm"</span>)[<span class="hljs-number">0</span>].text(stringResources.txtPageSubTitle);
-            },
+            <div class="content"><div class='highlight'><pre>            },
 
             <span class="hljs-comment">/**
             * Returns the feature layer config for the given url
             *
             * @param {String} url
+            * @param {String} wmsName WMS Layer name.  Optional.  Should only be provided if attempting to get a WMS layer.
             * @method getLayerConfig
             */</span>
-            getLayerConfig: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url)</span> {</span>
+            getLayerConfig: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url, wmsName)</span> </span>{
                 <span class="hljs-keyword">if</span> (!GlobalStorage.urlCfg) {
                     GlobalStorage.urlCfg = {};
                 }
 
-                <span class="hljs-keyword">if</span> (GlobalStorage.urlCfg[url] === <span class="hljs-literal">undefined</span>) {
-                    <span class="hljs-keyword">var</span> res = UtilArray.find(GlobalStorage.config.featureLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerConfig)</span> {</span>
+                <span class="hljs-keyword">var</span> res = UtilArray.find(GlobalStorage.config.wmsLayers.concat(GlobalStorage.config.featureLayers), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerConfig)</span> </span>{
+                    <span class="hljs-keyword">if</span> (wmsName == <span class="hljs-literal">null</span>) {
                         <span class="hljs-keyword">return</span> layerConfig.url === url;
-                    });
+                    } <span class="hljs-keyword">else</span> {
+                        <span class="hljs-keyword">return</span> (layerConfig.url.indexOf(url) &gt;= <span class="hljs-number">0</span> &amp;&amp; layerConfig.layerInfo.name === wmsName);
+                    }
+                });
 
-                    GlobalStorage.urlCfg[url] = res;
-                }
+                GlobalStorage.urlCfg[url] = res;
 
                 <span class="hljs-keyword">return</span> GlobalStorage.urlCfg[url];
             },
+
+            getLayerConfigwithGuid: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(uuid)</span> </span>{
+                <span class="hljs-keyword">return</span> UtilArray.find(GlobalStorage.config.wmsLayers.concat(GlobalStorage.config.featureLayers),
+                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerConfig)</span> </span>{
+                        <span class="hljs-keyword">return</span> layerConfig.uuid === uuid;
+                    });
+            },
+
+            getLayerConfigWithId: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(id)</span> </span>{
+                <span class="hljs-keyword">return</span> UtilArray.find(GlobalStorage.config.wmsLayers.concat(GlobalStorage.config.featureLayers),
+                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerConfig)</span> </span>{
+                        <span class="hljs-keyword">return</span> layerConfig.id === id;
+                    });
+            },
+
             <span class="hljs-comment">/**
              * Gets the defined symbology from a layer's web service
              * @method _getSymbolConfig
              * @param {String} layerUrl A URL to the feature layer service
+             * @param {String} wmsName WMS Layer name.  Optional.  Should only be provided if attempting to get a WMS layer.
              * @returns {esri/layer/symbology} The defined symbology from the layer definition
              */</span>
-            _getSymbolConfig: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerUrl)</span> {</span>
-                <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.getLayerConfig(layerUrl).symbology;
+            _getSymbolConfig: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerUrl, wmsName)</span> </span>{
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.getLayerConfig(layerUrl, wmsName).symbology;
             },
+
             <span class="hljs-comment">/**
              * Gets the default symbology icon from a layer's web service
-             * @method _getSymbolConfig
+             * @method getSymbolForLayer
              * @param {Object} layer A feature layer
+             * @param {String} wmsName WMS Layer name.  Optional.  Should only be provided if attempting to get a WMS layer.
              * @returns {icon} The default icon from the layer's symbology
              */</span>
-            getSymbolForLayer: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layer)</span> {</span>
-                <span class="hljs-keyword">var</span> symbolConfig = <span class="hljs-keyword">this</span>._getSymbolConfig(layer.url);
+            getSymbolForLayer: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layer, wmsName)</span> </span>{
+                <span class="hljs-keyword">var</span> symbolConfig = <span class="hljs-keyword">this</span>._getSymbolConfig(layer.url, wmsName);
                 <span class="hljs-keyword">return</span> symbolConfig.icons[<span class="hljs-string">"default"</span>];
             },
 
@@ -441,17 +463,17 @@ $(“#pageTitle”)[0].text(stringResources.txtPageTitle);</p>
             * @return {icon} The default icon used to represent the feature layer
             * @method getSymbolForFeature
             */</span>
-            getSymbolForFeature: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(feature)</span> {</span>
+            getSymbolForFeature: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(feature)</span> </span>{
                 <span class="hljs-keyword">var</span> layerConfig = <span class="hljs-keyword">this</span>.getLayerConfig(feature.getLayer().url);</pre></div></div>
             
         </li>
         
         
-        <li id="section-12">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>as this function is used by templating, we piggyback the logic here</p>
 
@@ -467,7 +489,7 @@ $(“#pageTitle”)[0].text(stringResources.txtPageTitle);</p>
              * @param {String} language culture code either 'en' or 'fr'
              *
              */</span>
-            getServiceURL: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rampService, mapID, language)</span> {</span>
+            getServiceURL: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rampService, mapID, language)</span> </span>{
                 <span class="hljs-keyword">var</span> serviceURL = rampService + <span class="hljs-string">"configservice/map?mapid="</span> + mapID + <span class="hljs-string">"&amp;lang="</span> + language;
                 <span class="hljs-keyword">return</span> serviceURL;
             }

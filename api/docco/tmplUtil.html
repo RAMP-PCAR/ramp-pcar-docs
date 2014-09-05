@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -212,8 +257,8 @@
 * @static
 */</span>
 
-define([],
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span><span class="hljs-pi">
+define([<span class="hljs-string">"ramp/globalStorage"</span>],
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(GlobalStorage)</span> </span>{<span class="hljs-pi">
         "use strict"</span>;
 
         <span class="hljs-keyword">return</span> {
@@ -221,14 +266,14 @@ define([],
             * Given a feature object or a graphic object (or any object that has a getLayer method and an
             * attributes field) return the image URL for that feature/graphic object.
             *
-            * NOTE: all dependent functions should be wroten as nested functions inside the caller function, otherwise TmplEx templating library won't identify
+            * NOTE: all dependent functions should be written as nested functions inside the caller function, otherwise TmplEx templating library won't identify
             *
             * @method getGraphicIcon
             * @param {Graphic} graphic
             * @param {Object} layerConfig
             * @return {String} imageUrl Url to the features symbology image
             */</span>
-            getGraphicIcon: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic, layerConfig)</span> {</span>
+            getGraphicIcon: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic, layerConfig)</span> </span>{
                 <span class="hljs-keyword">var</span> symbolConfig = layerConfig.symbology;</pre></div></div>
             
         </li>
@@ -258,16 +303,16 @@ define([],
 
             <span class="hljs-comment">/**
             * Given a feature object or a graphic object (or any object that has a getLayer method and an
-            * attributes field) return the attribute value for its designaed "name" field
+            * attributes field) return the attribute value for its designed "name" field
             *
-            * NOTE: all dependent functions should be wroten as nested functions inside the caller function, otherwise TmplEx templating library won't identify
+            * NOTE: all dependent functions should be written as nested functions inside the caller function, otherwise TmplEx templating library won't identify
             *
             * @method getFeatureName
             * @param {Graphic} graphic
             * @param {Object} layerConfig
             * @return {String} imageUrl Url to the features symbology image
             */</span>
-            getFeatureName: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic, layerConfig)</span> {</span>
+            getFeatureName: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic, layerConfig)</span> </span>{
                 <span class="hljs-keyword">return</span> graphic.attributes[layerConfig.nameField];
             },
 
@@ -275,13 +320,13 @@ define([],
             * Given a feature object return the objectid for that item.
             * This will likely fail on a non-feature object (e.g. a plain graphic)
             *
-            * NOTE: all dependent functions should be wroten as nested functions inside the caller function, otherwise TmplEx templating library won't identify
+            * NOTE: all dependent functions should be written as nested functions inside the caller function, otherwise TmplEx templating library won't identify
             *
             * @method getObjectId
             * @param {Graphic} graphic
             * @return {Integer} objectId
             */</span>
-            getObjectId: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic)</span> {</span>
+            getObjectId: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic)</span> </span>{
                 <span class="hljs-keyword">return</span> graphic.attributes[graphic.getLayer().objectIdField];
             },
             <span class="hljs-comment">/*
@@ -291,7 +336,7 @@ define([],
             * @param {Object} graphic ?
             * @param {String} fieldName ?
             */</span>
-            getAttributeValueByName: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic, fieldName)</span> {</span>
+            getAttributeValueByName: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(graphic, fieldName)</span> </span>{
                 <span class="hljs-keyword">return</span> graphic.attributes[fieldName];
             },
 
@@ -300,7 +345,7 @@ define([],
             * generate visibility legend object
             * @param o
             */</span>
-            generateVisibilityLegend: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(o)</span> {</span>
+            generateVisibilityLegend: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(o)</span> </span>{
                 <span class="hljs-keyword">var</span> attr = <span class="hljs-string">""</span>,
                     visibilityLegendLabel = {
                         <span class="hljs-keyword">for</span>: <span class="hljs-string">"filterGroup_"</span> + o.data[o.idx].id,
@@ -309,7 +354,7 @@ define([],
                         checked: <span class="hljs-string">"checked"</span>,
                         label: o.data[o.idx].layerConfig.displayName,
                         <span class="hljs-keyword">class</span>: <span class="hljs-string">"eye checked"</span>,
-                        featureId: o.data[o.idx].layerConfig.id
+                        layerId: o.data[o.idx].id
                     };
                 <span class="hljs-keyword">return</span> visibilityLegendLabel;
             },
@@ -317,26 +362,71 @@ define([],
             * generate visibility legend object
             * @param o
             */</span>
-            generateBoundingBoxLegend: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(o)</span> {</span>
-                <span class="hljs-keyword">var</span> attr = <span class="hljs-string">""</span>,
-                    boundingLegendLabel = {
-                        <span class="hljs-keyword">for</span>: <span class="hljs-string">"filterGroup_"</span> + o.data[o.idx].id + <span class="hljs-string">"1"</span>,
-                        attr: attr + <span class="hljs-string">"1"</span>,
-                        value: o.data[o.idx].id,
-                        checked: <span class="hljs-string">"checked"</span>,
-                        label: o.data[o.idx].layerConfig.displayName,
-                        <span class="hljs-keyword">class</span>: <span class="hljs-string">"box checked"</span>,
-                        featureId: o.data[o.idx].layerConfig.id
-                    };
+            generateBoundingBoxLegend: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(o)</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>adding flag for the generated o object
+o.disabled will indicate the bounding checkbox is to be disabled.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> checkboxDisabled = <span class="hljs-literal">false</span>,
+                    attr = <span class="hljs-string">""</span>,
+                    boundingLegendLabel;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>determine if given layer is static or WMS</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                checkboxDisabled = <span class="hljs-built_in">Boolean</span>(o.data[o.idx].ramp.type === GlobalStorage.layerType.Static ||
+                    o.data[o.idx].ramp.type === GlobalStorage.layerType.WMS);
+
+                boundingLegendLabel = {
+                    <span class="hljs-keyword">for</span>: <span class="hljs-string">"filterGroup_"</span> + o.data[o.idx].id + <span class="hljs-string">"1"</span>,
+                    attr: attr + <span class="hljs-string">"1"</span>,
+                    value: o.data[o.idx].id,
+                    checked: <span class="hljs-string">"checked"</span>,
+                    label: o.data[o.idx].layerConfig.displayName,
+                    <span class="hljs-keyword">class</span>: <span class="hljs-string">"box checked"</span>,
+                    disabled: checkboxDisabled,
+                    layerId: o.data[o.idx].id
+                };
 
                 <span class="hljs-keyword">return</span> boundingLegendLabel;
             },
+
             <span class="hljs-comment">/*
-            * generate DataLayerUUID by removing layer_ from layer id
-            * @param layerId
+            * Generate settings toggle object.
+            *
+            * @method generateSettingsToggle
+            * @param o
             */</span>
-            getDataLayerUUID: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerId)</span> {</span>
-                <span class="hljs-keyword">return</span> layerId.replace(<span class="hljs-string">"layer_"</span>, <span class="hljs-string">""</span>);
+            generateSettingsToggle: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(o)</span> </span>{
+                <span class="hljs-keyword">var</span> <span class="hljs-comment">//attr = "",</span>
+                    boundingLegendLabel = {
+                        str: o.str,
+                        layerId: o.data[o.idx].id,
+                        settings: o.data[o.idx].layerConfig.settings
+                    };
+
+                <span class="hljs-keyword">return</span> boundingLegendLabel;
             }
         };
     });</pre></div></div>

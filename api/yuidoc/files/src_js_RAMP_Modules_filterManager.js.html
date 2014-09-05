@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="..\..\..\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
+                <h1><img src="..\..\..\src\assets\images\bobcat_logo_sharp_smaller_s.png" title="ramp-gis-viewer">Reusable Accessible Mapping Platform</h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.42-5</em>
+            <em>API Docs for: 2.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -41,15 +41,23 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/AdvancedToolbar.html">AdvancedToolbar</a></li>
+            
                 <li><a href="../classes/Array.html">Array</a></li>
             
                 <li><a href="../classes/BaseMapSelector.html">BaseMapSelector</a></li>
+            
+                <li><a href="../classes/BaseTool.html">BaseTool</a></li>
             
                 <li><a href="../classes/BookmarkLink.html">BookmarkLink</a></li>
             
                 <li><a href="../classes/Bootstrapper.html">Bootstrapper</a></li>
             
-                <li><a href="../classes/CheckboxWrapper.html">CheckboxWrapper</a></li>
+                <li><a href="../classes/BufferTool.html">BufferTool</a></li>
+            
+                <li><a href="../classes/Checkbox.html">Checkbox</a></li>
+            
+                <li><a href="../classes/CheckboxGroup.html">CheckboxGroup</a></li>
             
                 <li><a href="../classes/Datagrid.html">Datagrid</a></li>
             
@@ -81,9 +89,15 @@
             
                 <li><a href="../classes/Map.html">Map</a></li>
             
+                <li><a href="../classes/MapClickHandler.html">MapClickHandler</a></li>
+            
                 <li><a href="../classes/Maptips.html">Maptips</a></li>
             
+                <li><a href="../classes/MeasureTool.html">MeasureTool</a></li>
+            
                 <li><a href="../classes/Navigation.html">Navigation</a></li>
+            
+                <li><a href="../classes/PopulationTool.html">PopulationTool</a></li>
             
                 <li><a href="../classes/Popup.html">Popup</a></li>
             
@@ -129,9 +143,13 @@
             
                 <li><a href="../modules/FilterManager.html">FilterManager</a></li>
             
+                <li><a href="../modules/GlobalStorage.html">GlobalStorage</a></li>
+            
                 <li><a href="../modules/Map.html">Map</a></li>
             
                 <li><a href="../modules/Maptips.html">Maptips</a></li>
+            
+                <li><a href="../modules/MeasureTool.html">MeasureTool</a></li>
             
                 <li><a href="../modules/Navigation.html">Navigation</a></li>
             
@@ -142,6 +160,8 @@
                 <li><a href="../modules/Theme.html">Theme</a></li>
             
                 <li><a href="../modules/TmplUtil.html">TmplUtil</a></li>
+            
+                <li><a href="../modules/Tools.html">Tools</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
             
@@ -186,7 +206,7 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-﻿/*global define, window, tmpl */
+﻿/*global define, window, tmpl, i18n */
 
 /**
 * FilterManager submodule
@@ -210,6 +230,7 @@
 * @uses dojo/query
 * @uses dojo/_base/array
 * @uses dojo/dom
+* @uses dojo/on
 * @uses dojo/dom-class
 * @uses dojo/dom-style
 * @uses dojo/dom-construct
@@ -231,48 +252,122 @@
 * @uses Array
 * @uses Dictionary
 * @uses PopupManager
+* @uses Checkbox
+* @uses CheckboxGroup
 */
 
 define([
 /* Dojo */
-        &quot;dojo/_base/declare&quot;, &quot;dojo/_base/lang&quot;, &quot;dojo/query&quot;, &quot;dojo/_base/array&quot;, &quot;dojo/dom&quot;, &quot;dojo/dom-class&quot;,
+        &quot;dojo/_base/declare&quot;, &quot;dojo/_base/lang&quot;, &quot;dojo/query&quot;, &quot;dojo/_base/array&quot;, &quot;dojo/on&quot;, &quot;dojo/dom&quot;, &quot;dojo/dom-class&quot;,
         &quot;dojo/dom-style&quot;, &quot;dojo/dom-construct&quot;, &quot;dojo/_base/connect&quot;, &quot;dojo/Deferred&quot;, &quot;dojo/topic&quot;,
         &quot;dojo/aspect&quot;, &quot;dojo/promise/all&quot;,
 /* Text */
         &quot;dojo/text!./templates/filter_manager_template.json&quot;,
+        &quot;dojo/text!./templates/filter_wms_meta_Template.html&quot;,
 
 /* Esri */
-        &quot;esri/tasks/query&quot;, &quot;esri/layers/FeatureLayer&quot;,
+        &quot;esri/tasks/query&quot;, &quot;esri/layers/FeatureLayer&quot;, &quot;esri/layers/WMSLayer&quot;,
 
 /* Ramp */
         &quot;ramp/ramp&quot;, &quot;ramp/globalStorage&quot;, &quot;ramp/map&quot;, &quot;ramp/eventManager&quot;, &quot;themes/theme&quot;,
 
 /* Util */
-        &quot;utils/tmplHelper&quot;, &quot;utils/util&quot;, &quot;utils/array&quot;, &quot;utils/dictionary&quot;, &quot;utils/popupManager&quot;],
+        &quot;utils/tmplHelper&quot;, &quot;utils/util&quot;, &quot;utils/array&quot;, &quot;utils/dictionary&quot;, &quot;utils/popupManager&quot;, &quot;utils/checkbox&quot;, &quot;utils/checkboxGroup&quot;],
 
     function (
     /* Dojo */
-        declare, lang, query, dojoArray, dom, domClass, domStyle, domConstruct,
+        declare, lang, query, dojoArray, on, dom, domClass, domStyle, domConstruct,
         connect, Deferred, topic, aspect, all,
     /* Text */
         filter_manager_template_json,
+        filter_wms_meta_Template,
 
     /* Esri */
-        EsriQuery, FeatureLayer,
+        EsriQuery, FeatureLayer, WMSLayer,
 
     /* Ramp */
         Ramp, GlobalStorage, RampMap, EventManager, Theme,
 
     /* Util */
-        TmplHelper, UtilMisc, UtilArray, UtilDict, PopupManager) {
+        TmplHelper, UtilMisc, UtilArray, UtilDict, PopupManager, Checkbox, CheckboxGroup) {
         &quot;use strict&quot;;
 
         var config,
-            localString,
+            layerIdField = &quot;layer-id&quot;,
 
             ui = (function () {
-                var layerList,
-                    filterGlobalToggles;
+                var sectionNode,
+                    layerList,
+                    filterGlobalToggles,
+                    layerSettings;
+
+                layerSettings = (function () {
+                    function initTransparencySliders() {
+                        var transparencySliders;
+
+                        // initializes all sliders in the layer list
+                        transparencySliders = layerList.find(&quot;.nstSlider&quot;)
+                            .nstSlider({
+                                left_grip_selector: &quot;.leftGrip&quot;,
+                                rounding: 0.01,
+                                highlight: {
+                                    grip_class: &quot;gripHighlighted&quot;,
+                                    panel_selector: &quot;.highlightPanel&quot;
+                                },
+                                value_changed_callback: function (cause, leftValue) { //, rightValue, prevMin, prevMax) {
+                                    var slider = $(this),
+                                        sliderId = slider.data(layerIdField),
+                                        leftValueFormatted = Math.round(leftValue * 100) + &quot;%&quot;,
+                                        newState;
+
+                                    // update the slider label and highlight range
+                                    slider
+                                        .parent().find(&#x27;.leftLabel&#x27;).text(leftValueFormatted).end().end()
+                                        .nstSlider(&#x27;highlight_range&#x27;, 0, leftValue);
+
+                                    topic.publish(EventManager.FilterManager.LAYER_TRANSPARENCY_CHANGED, {
+                                        layerId: sliderId,
+                                        value: leftValue
+                                    });
+
+                                    // Setting Opacity to 0.0, sets layer to invisible
+                                    // Setting Opacity to &gt;0.0, sets layer to visible
+                                    newState = leftValue === 0 ? false : slider.hasClass(&quot;disabled&quot;) ? true : newState;
+
+                                    if (!UtilMisc.isUndefined(newState)) {
+                                        topic.publish(EventManager.FilterManager.TOGGLE_LAYER_VISIBILITY, {
+                                            state: newState,
+                                            layerId: sliderId
+                                        });
+                                    }
+
+                                    //console.log(cause, leftValue, rightValue, prevMin, prevMax);
+                                }
+                            });
+                        //.nstSlider(&quot;set_step_histogram&quot;, [4, 6, 10, 107]);
+
+                        topic.subscribe(EventManager.FilterManager.LAYER_VISIBILITY_TOGGLED, function (evt) {
+                            var slider = transparencySliders.filter(&quot;[data-layer-id=&#x27;&quot; + evt.id + &quot;&#x27;]&quot;),
+                                value;
+
+                            if (slider.length &gt; 0) {
+                                slider.toggleClass(&quot;disabled&quot;, !evt.state);
+                                value = slider.nstSlider(&quot;get_current_min_value&quot;);
+
+                                // Toggling layer to Visible when Opacity is 0.0, sets Opacity to 1.0
+                                if (value === 0 &amp;&amp; evt.state) {
+                                    slider.nstSlider(&quot;set_position&quot;, 1);
+                                }
+                            }
+                        });
+                    }
+
+                    return {
+                        init: function () {
+                            initTransparencySliders();
+                        }
+                    };
+                }());
 
                 /**
                 * Sets UI status of a layer presentation (checkbox and eye) according to the user action: select / de-select a layer.
@@ -286,201 +381,131 @@ define([
                 * @private
                 */
                 function setCheckboxEvents() {
-                    var globalEyeCheckboxes,
-                        globalBoxCheckboxes,
-                        eyeCheckboxes,
-                        boxCheckboxes;
+                    var boxCheckboxGroup,
+                        eyeCheckboxGroup;
 
-                    globalEyeCheckboxes = UtilMisc.styleCheckboxes(
-                        filterGlobalToggles.find(&quot;.checkbox-custom .eye + input&quot;),
-                        &quot;checked&quot;, &quot;focused&quot;,
+                    boxCheckboxGroup = new CheckboxGroup(
+                        layerList.find(&quot;.checkbox-custom .box + input&quot;),
                         {
-                            checked: localString.txtHideAllFeatures,
-                            unchecked: localString.txtShowAllFeatures
-                        },
-                        Theme.tooltipster
-                    );
+                            nodeIdAttr: layerIdField,
 
-                    // Turn off the bounding boxes by default
-                    globalBoxCheckboxes = UtilMisc
-                        .styleCheckboxes(
-                            filterGlobalToggles.find(&quot;.checkbox-custom .box + input&quot;),
-                            &quot;checked&quot;, &quot;focused&quot;,
-                            {
-                                checked: localString.txtHideAllBounds,
-                                unchecked: localString.txtShowAllBounds
+                            cssClass: {
+                                active: &quot;active&quot;,
+                                focus: &quot;focused&quot;,
+                                check: &quot;checked&quot;
                             },
-                            Theme.tooltipster)
-                        .setAll(false);
 
-                    eyeCheckboxes = UtilMisc.styleCheckboxes(
-                        layerList.find(&quot;.checkbox-custom .eye + input&quot;),
-                        &quot;checked&quot;, &quot;focused&quot;,
-                        {
-                            checked: localString.txtHideFeatures,
-                            unchecked: localString.txtShowFeatures
-                        },
-                        Theme.tooltipster
-                    );
-
-                    // Turn off the bounding boxes by default
-                    boxCheckboxes = UtilMisc
-                        .styleCheckboxes(
-                            layerList.find(&quot;.checkbox-custom .box + input&quot;),
-                            &quot;checked&quot;, &quot;focused&quot;,
-                            {
-                                checked: localString.txtHideBounds,
-                                unchecked: localString.txtShowBounds
+                            label: {
+                                check: i18n.t(&#x27;filterManager.hideBounds&#x27;), 
+                                uncheck: i18n.t(&#x27;filterManager.showBounds&#x27;)
                             },
-                            Theme.tooltipster)
-                        .setAll(false);
-                    /**
-                    * Toggles each layers visibility when the global visibility button is clicked
-                    * @method toggleGlobalEye
-                    * @param {Boolean} checked The value of the global visibility button&#x27;s check status (on or off)
-                    */
-                    function toggleGlobalEye(checked) {
-                        eyeCheckboxes.setAll(checked);
 
-                        topic.publish(EventManager.FilterManager.GLOBAL_LAYER_VISIBILITY_TOGGLED, {
-                            checked: checked
-                        });
-                    }
-                    /**
-                    * Toggles each layers boundary box display check box when the global boundary box button is clicked
-                    * @method toggleGlobalBox
-                    * @param {Boolean} checked The value of the global boundary box button&#x27;s check status (on or off)
-                    */
-                    function toggleGlobalBox(checked) {
-                        boxCheckboxes.setAll(checked);
+                            onChange: function () {
+                                Theme.tooltipster(this.labelNode.parent(), null, &quot;update&quot;);
+                            },
 
-                        topic.publish(EventManager.FilterManager.GLOBAL_BOX_VISIBILITY_TOGGLED, {
-                            checked: checked
-                        });
-                    }
+                            master: {
+                                node: filterGlobalToggles.find(&quot;.checkbox-custom .box + input&quot;),
 
-                    topic.subscribe(EventManager.FilterManager.TOGGLE_GLOBAL_LAYER_VISIBILITY, function (evt) {
-                        globalEyeCheckboxes.setAll(evt.visible);
-                        toggleGlobalEye(evt.visible);
-                    });
+                                nodeIdAttr: &quot;id&quot;,/*
 
-                    topic.subscribe(EventManager.FilterManager.TOGGLE_GLOBAL_BOX_VISIBILITY, function (evt) {
-                        globalBoxCheckboxes.setAll(evt.visible);
-                        toggleGlobalBox(evt.visible);
-                    });
+                                cssClass: {
+                                    active: &quot;active&quot;,
+                                    focus: &quot;focused&quot;,
+                                    check: &quot;checked&quot;
+                                },*/
 
-                    /* START GLOBAL &quot;EYE&quot; AND BOUNDING BOX BUTTON EVENTS */
-                    globalEyeCheckboxes.getNodes().on(&quot;change&quot;, function () {
-                        // True if the checkbox got selected, false otherwise
-                        var checked = $(this).is(&#x27;:checked&#x27;);
+                                label: {
+                                    check: i18n.t(&#x27;filterManager.hideAllBounds&#x27;),
+                                    uncheck: i18n.t(&#x27;filterManager.showAllBounds&#x27;)
+                                }/*,
 
-                        toggleGlobalEye(checked);
-                    });
-
-                    globalBoxCheckboxes.getNodes().on(&quot;change&quot;, function () {
-                        // True if the checkbox got selected, false otherwise
-                        var checked = $(this).is(&#x27;:checked&#x27;);
-
-                        toggleGlobalBox(checked);
-                    });
-
-                    /* END GLOBAL &quot;EYE&quot; AND BOUNDING BOX BUTTONS */
-
-                    /* START INDIVIDUAL &quot;EYE&quot; AND BOUNDING BUTTON EVENTS */
-                    /**
-                    * Toggles the visibility button (or eye) beside a given layer in the legend. Fires the layer_visibility event.
-                    * @method toggleEye
-                    * @param {Boolean} checked The check status of the visibility button next to the target layer (on or off)
-                    * @param {Object} node The legend item representing the target layer
-                    */
-                    function toggleEye(checked, node) {
-                        // Figure out whether or not all the checkboxes are selected
-                        var allChecked = dojoArray.every(eyeCheckboxes.getNodes(), function (checkbox) {
-                            return $(checkbox).is(&#x27;:checked&#x27;);
-                        });
-
-                        globalEyeCheckboxes.setAll(allChecked);
-
-                        // True if the checkbox got selected, false otherwise
-                        topic.publish(EventManager.FilterManager.LAYER_VISIBILITY_TOGGLED, {
-                            checked: checked,
-                            node: node[0]
-                        });
-                    }
-                    /**
-                    * Toggles the boundary box button beside a given layer in the legend. Fires the box_visibility event.
-                    * @method toggleBox
-                    * @param {Boolean} checked The check status of the boundary box button next to the target layer (on or off)
-                    * @param {Object} node The legend item representing the target layer
-                    */
-                    function toggleBox(checked, node) {
-                        // Figure out whether or not all the checkboxes are selected
-                        var allChecked = dojoArray.every(boxCheckboxes.getNodes(), function (checkbox) {
-                            return $(checkbox).is(&#x27;:checked&#x27;);
-                        });
-
-                        globalBoxCheckboxes.setAll(allChecked);
-
-                        topic.publish(EventManager.FilterManager.BOX_VISIBILITY_TOGGLED, {
-                            checked: checked,
-                            node: node[0]
-                        });
-                    }
-
-                    topic.subscribe(EventManager.FilterManager.TOGGLE_LAYER_VISIBILITY, function (evt) {
-                        // Set the checkboxes visually, checkboxes with an id in evt.layerIds gets
-                        // turned on, the rest gets turned off
-                        eyeCheckboxes.setState(function (checkbox) {
-                            var layerId = $(checkbox).findInputLabel().data(&quot;layer-id&quot;);
-                            if (evt.layerIds.contains(layerId)) {
-                                return evt.checked;
-                            } else {
-                                return !evt.checked;
+                                onChange: Theme.tooltipster*/
                             }
                         });
+                    boxCheckboxGroup.setEachState(function (checkbox) {
+                        var layerConfig = Ramp.getLayerConfigWithId(checkbox.node.data(layerIdField));
+                        return layerConfig.boundingBoxVisible;
+                    });
 
-                        dojoArray.forEach(eyeCheckboxes.getNodes(), function (checkbox) {
-                            checkbox = $(checkbox);
-                            var layerId = checkbox.findInputLabel().data(&quot;layer-id&quot;);
-                            toggleEye(evt.layerIds.contains(layerId), checkbox);
+                    boxCheckboxGroup.on(boxCheckboxGroup.event.MEMBER_TOGGLE, function (evt) {
+                        console.log(&quot;Filter Manager -&gt; Checkbox&quot;, evt.checkbox.id, &quot;set by&quot;, evt.agency, &quot;to&quot;, evt.checkbox.state);
+
+                        topic.publish(EventManager.FilterManager.BOX_VISIBILITY_TOGGLED, {
+                            id: evt.checkbox.id,
+                            state: evt.checkbox.state
                         });
+                    });
+
+                    boxCheckboxGroup.on(boxCheckboxGroup.event.MASTER_TOGGLE, function (evt) {
+                        console.log(&quot;Filter Manager -&gt; Master Checkbox&quot;, evt.checkbox.id, &quot;set by&quot;, evt.agency, &quot;to&quot;, evt.checkbox.state);
                     });
 
                     topic.subscribe(EventManager.FilterManager.TOGGLE_BOX_VISIBILITY, function (evt) {
-                        // Set the checkboxes visually, checkboxes with an id in evt.layerIds gets
-                        // turned on, the rest gets turned off
-                        boxCheckboxes.setState(function (checkbox) {
-                            var layerId = $(checkbox).findInputLabel().data(&quot;layer-id&quot;);
-                            if (evt.layerIds.contains(layerId)) {
-                                return evt.checked;
-                            } else {
-                                return !evt.checked;
+                        boxCheckboxGroup.setState(evt.state, evt.layerId);
+                    });
+
+                    eyeCheckboxGroup = new CheckboxGroup(
+                        layerList.find(&quot;.checkbox-custom .eye + input&quot;),
+                        {
+                            nodeIdAttr: layerIdField,
+
+                            cssClass: {
+                                active: &quot;active&quot;,
+                                focus: &quot;focused&quot;,
+                                check: &quot;checked&quot;
+                            },
+
+                            label: {
+                                check: i18n.t(&#x27;filterManager.hideFeatures&#x27;),
+                                uncheck: i18n.t(&#x27;filterManager.showFeatures&#x27;)
+                            },
+
+                            onChange: function () {
+                                Theme.tooltipster(this.labelNode.parent(), null, &quot;update&quot;);
+                            },
+
+                            master: {
+                                node: filterGlobalToggles.find(&quot;.checkbox-custom .eye + input&quot;),
+
+                                nodeIdAttr: &quot;id&quot;,/*
+
+                                cssClass: {
+                                    active: &quot;active&quot;,
+                                    focus: &quot;focused&quot;,
+                                    check: &quot;checked&quot;
+                                }*/
+
+                                label: {
+                                    check: i18n.t(&#x27;filterManager.hideAllFeatures&#x27;),
+                                    uncheck: i18n.t(&#x27;filterManager.showAllFeatures&#x27;)
+                                }/*,
+
+                                onChange: Theme.tooltipster*/
                             }
                         });
 
-                        dojoArray.forEach(boxCheckboxes.getNodes(), function (checkbox) {
-                            checkbox = $(checkbox);
-                            var layerId = checkbox.findInputLabel().data(&quot;layer-id&quot;);
-                            toggleBox(evt.layerIds.contains(layerId), checkbox);
+                    eyeCheckboxGroup.setEachState(function (checkbox) {
+                        var layerConfig = Ramp.getLayerConfigWithId(checkbox.node.data(layerIdField));
+                        return layerConfig.layerVisible;
+                    });
+
+                    eyeCheckboxGroup.on(eyeCheckboxGroup.event.MEMBER_TOGGLE, function (evt) {
+                        console.log(&quot;Filter Manager -&gt; Checkbox&quot;, evt.checkbox.id, &quot;set by&quot;, evt.agency, &quot;to&quot;, evt.checkbox.state);
+
+                        topic.publish(EventManager.FilterManager.LAYER_VISIBILITY_TOGGLED, {
+                            id: evt.checkbox.id,
+                            state: evt.checkbox.state
                         });
                     });
 
-                    // Event handling for individual &quot;eye&quot; and &quot;box&quot; toggle
-                    eyeCheckboxes.getNodes().on(&quot;change&quot;, function () {
-                        var node = $(this),
-                            checked = node.is(&#x27;:checked&#x27;);
-
-                        toggleEye(checked, node);
+                    eyeCheckboxGroup.on(eyeCheckboxGroup.event.MASTER_TOGGLE, function (evt) {
+                        console.log(&quot;Filter Manager -&gt; Master Checkbox&quot;, evt.checkbox.id, &quot;set by&quot;, evt.agency, &quot;to&quot;, evt.checkbox.state);
                     });
 
-                    boxCheckboxes.getNodes().on(&quot;change&quot;, function () {
-                        var node = $(this),
-                        // True if the checkbox got selected, false otherwise
-                            checked = node.is(&#x27;:checked&#x27;);
-
-                        toggleBox(checked, node);
+                    topic.subscribe(EventManager.FilterManager.TOGGLE_LAYER_VISIBILITY, function (evt) {
+                        eyeCheckboxGroup.setState(evt.state, evt.layerId);
                     });
-                    /* END INDIVIDUAL &quot;EYE&quot; AND BOUNDING BUTTON EVENTS */
                 }
                 /**
                 * initialize a tooltip for each layer, using the layer name.
@@ -577,18 +602,47 @@ define([
                             });
                         });
 
+                    PopupManager.registerPopup(layerList, &quot;hover, focus&quot;,
+                        function (d) {
+                            d.resolve();
+                        },
+                        {
+                            handleSelector: &quot;li.layerList1:not(.list-item-grabbed):not(.ui-sortable-helper)&quot;,
+                            targetSelector: &quot;:tabbable&quot;,
+                            activeClass: &quot;background-light&quot;,
+                            useAria: false
+                        }
+                    );
+
+                    PopupManager.registerPopup(layerList, &quot;click&quot;,
+                        function (d) {
+                            this.target.slideToggle(&quot;fast&quot;, function () {
+                                d.resolve();
+                            });
+                            this.target.find(&quot;.nstSlider&quot;).nstSlider(&quot;refresh&quot;);
+                        },
+                        {
+                            handleSelector: &quot;.settings-button&quot;,
+                            targetContainerSelector: &quot;li.layerList1&quot;,
+                            targetSelector: &quot;.filter-row-settings&quot;,
+                            activeClass: &quot;button-pressed&quot;
+                        }
+                    );
+
                     // metadata buttons
                     // to be changed...
                     layerList.find(&quot;legend button.metadata-button&quot;).on(&quot;click&quot;, function () {
-                        var node = $(this).parents(&quot;legend&quot;);
+                        var button = $(this),
+                            node = button.parents(&quot;legend&quot;);
 
                         if (!node.hasClass(&quot;selected-row&quot;)) {
                             //var guid = $(this).data(&quot;guid&quot;) || $(this).data(&quot;guid&quot;, UtilMisc.guid()).data(&quot;guid&quot;);
-                            var guid = $(this).data(&quot;layer-uuid&quot;),
+                            var guid = button.data(&quot;layer-uuid&quot;),
+                                layerConfig = Ramp.getLayerConfigwithGuid(guid),
                                 metadataUrl;
 
                             topic.publish(EventManager.GUI.SUBPANEL_OPEN, {
-                                panelName: localString.txtMetadata,
+                                panelName: i18n.t(&#x27;filterManager.metadata&#x27;),
                                 title: node.find(&quot;.layer-name span&quot;).text(), // + &quot; &quot; + guid,
                                 content: null,
                                 target: node.find(&quot;.layer-details&quot;),
@@ -598,26 +652,55 @@ define([
                                 doOnHide: function () { layerList.find(&quot;.selected-row&quot;).removeClass(&quot;selected-row&quot;); }
                             });
 
-                            metadataUrl = &quot;assets/metadata/&quot; + guid + &quot;.xml&quot;;
+                            //only wms layers have this value
+                            if (layerConfig.layerInfo != null) {
+                                if (layerConfig.legend.enable) {
+                                    var legendUrl = layerConfig.legend.legendURL,
+                                        wmsmeta = String.format(filter_wms_meta_Template,
+                                            i18n.t(&#x27;filterManager.legend&#x27;),
+                                            legendUrl,
+                                            i18n.t(&#x27;filterManager.linkToCap&#x27;),
+                                            layerConfig.url + &quot;&amp;request=GetCapabilities&quot;);
 
-                            UtilMisc.transformXML(metadataUrl, &quot;assets/metadata/xstyle_default_&quot; + config.lang + &quot;.xsl&quot;,
-                                function (error, data) {
-                                    if (error) {
-                                        topic.publish(EventManager.GUI.SUBPANEL_OPEN, {
-                                            content: &quot;&lt;p&gt;&quot; + localString.txtMetadataNotFound + &quot;&lt;/p&gt;&quot;,
-                                            origin: &quot;filterManager&quot;,
-                                            update: true,
-                                            guid: guid
-                                        });
-                                    } else {
-                                        topic.publish(EventManager.GUI.SUBPANEL_OPEN, {
-                                            content: $(data),
-                                            origin: &quot;filterManager&quot;,
-                                            update: true,
-                                            guid: guid
-                                        });
-                                    }
-                                });
+                                    topic.publish(EventManager.GUI.SUBPANEL_OPEN, {
+                                        content: $(wmsmeta),
+                                        origin: &quot;filterManager&quot;,
+                                        update: true,
+                                        guid: guid
+                                    });
+                                } else {
+                                    topic.publish(EventManager.GUI.SUBPANEL_OPEN, {
+                                        content: &quot;&lt;p&gt;&quot; + i18n.t(&#x27;filterManager.metadataNotFound&#x27;) + &quot;&lt;/p&gt;&quot;,
+                                        origin: &quot;filterManager&quot;,
+                                        update: true,
+                                        guid: guid
+                                    });
+                                }
+                            } else {
+                                //for feature layer
+                                // metadataUrl =String.format(&quot;http://intranet.ecdmp-dev.cmc.ec.gc.ca/geonetwork/srv/eng/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=csw:IsoRecord&amp;id={0}&quot;, guid);
+
+                                metadataUrl = &quot;assets/metadata/&quot; + guid + &quot;.xml&quot;;
+
+                                UtilMisc.transformXML(metadataUrl, &quot;assets/metadata/xstyle_default_&quot; + config.lang + &quot;.xsl&quot;,
+                                    function (error, data) {
+                                        if (error) {
+                                            topic.publish(EventManager.GUI.SUBPANEL_OPEN, {
+                                                content: &quot;&lt;p&gt;&quot; + i18n.t(&#x27;filterManager.metadataNotFound&#x27;) + &quot;&lt;/p&gt;&quot;,
+                                                origin: &quot;filterManager&quot;,
+                                                update: true,
+                                                guid: guid
+                                            });
+                                        } else {
+                                            topic.publish(EventManager.GUI.SUBPANEL_OPEN, {
+                                                content: $(data),
+                                                origin: &quot;filterManager&quot;,
+                                                update: true,
+                                                guid: guid
+                                            });
+                                        }
+                                    });
+                            }
                         } else {
                             topic.publish(EventManager.GUI.SUBPANEL_CLOSE, { origin: &quot;filterManager&quot; });
                         }
@@ -639,6 +722,75 @@ define([
                     });
                 }
 
+                /**
+                * Sets all the events to handle layer reordering with both mouse and keyboard.
+                * @method setLayerReorderingEvents
+                * @private
+                */
+                function setLayerReorderingEvents() {
+                    // Drag and drop layer reordering using jQuery UI Sortable widget
+                    layerList = $(&quot;#layerList &gt; ul&quot;);
+
+                    var layerGroupSeparator = layerList.parent().find(&quot;.layer-group-separator&quot;),
+                        reorderLists = layerList.filter(function (i, elm) { return $(elm).find(&quot;&gt; li&quot;).length &gt; 1; }),
+
+                        onUpdate = function (event, ui) {
+                            var layerId = ui.item[0].id,
+                                idArray = layerList
+                                    .map(function (i, elm) { return $(elm).find(&quot;&gt; li&quot;).toArray().reverse(); }) // for each layer list, find its items and reverse their order
+                                    .map(function (i, elm) { return elm.id; }), // get ids
+                                index = dojoArray.indexOf(idArray, layerId);
+
+                            topic.publish(EventManager.GUI.SUBPANEL_CLOSE, {
+                                origin: &quot;rampPopup,datagrid&quot;
+                            });
+
+                            topic.publish(EventManager.FilterManager.SELECTION_CHANGED, {
+                                id: layerId,
+                                index: index
+                            });
+
+                            console.log(&quot;Layer&quot;, layerId, &quot;moved -&gt;&quot;, index);
+                        },
+
+                        onStop = function () {
+                            layerList
+                                .removeClass(&quot;sort-active&quot;)
+                                .removeClass(&quot;sort-disabled&quot;);
+
+                            layerGroupSeparator.removeClass(&quot;active&quot;);
+
+                            console.log(&quot;Layer Reordering complete.&quot;);
+                        },
+
+                        onStart = function (event, ui) {
+                            layerList
+                                .has(ui.item).addClass(&quot;sort-active&quot;)
+                                .end().filter(&quot;:not(.sort-active)&quot;).addClass(&quot;sort-disabled&quot;);
+                            ui.item.removeClass(&quot;background-light&quot;);
+
+                            layerGroupSeparator.addClass(&quot;active&quot;);
+
+                            console.log(&quot;Layer Reordering starts.&quot;);
+                        };
+
+                    reorderLists.sortable({
+                        axis: &quot;y&quot;,
+                        handle: &quot;.sort-handle&quot;,
+                        placeholder: &quot;sortable-placeholder&quot;,
+                        update: onUpdate,
+                        stop: onStop,
+                        start: onStart
+                    });
+
+                    UtilMisc.keyboardSortable(reorderLists, {
+                        linkLists: true,
+                        onUpdate: onUpdate,
+                        onStart: onStart,
+                        onStop: onStop
+                    });
+                }
+
                 return {
                     init: function () {
                         // reset and load global template
@@ -646,26 +798,45 @@ define([
                         tmpl.cache = {};
                         tmpl.templates = JSON.parse(TmplHelper.stringifyTemplate(filter_manager_template_json));
 
-                        // get visible layers
-                        var layers = RampMap.getMap().getLayersVisibleAtScale(),
-                            lLayers = [];
+                        // get visible layers reversing their order; that&#x27;s important
+                        var layers = RampMap.getMap().getLayersVisibleAtScale().reverse(),
+                            layerGroups = {
+                                feature: [
+
+                                ],
+
+                                wms: [
+
+                                ]
+                            },
+                            data,
+                            section;
 
                         // limit only to visible layer that is not basemap
                         dojoArray.forEach(layers, function (layer) {
-                            if (!layer.type || layer.type === &quot;basemap&quot;) {
-                                return;
-                            }
+                            var wmsLayerName = null;
+                            if (layer.ramp.type === GlobalStorage.layerType.WMS) {
+                                wmsLayerName = layer.layerInfos[0].name;
 
-                            // modify layer object
-                            layer.layerConfig = Ramp.getLayerConfig(layer.url);
-                            lLayers.push(layer);
+                                layer.layerConfig = Ramp.getLayerConfig(layer.url, wmsLayerName);
+                                layerGroups.wms.push(layer);
+                            } else if (layer.ramp.type === GlobalStorage.layerType.Feature || layer.ramp.type === GlobalStorage.layerType.Static) {
+                                layer.layerConfig = Ramp.getLayerConfig(layer.url, wmsLayerName);
+
+                                layerGroups.feature.push(layer);
+                            }
                         });
 
                         // put layer in datawrapper to be used in template
-                        var data = TmplHelper.dataBuilder(lLayers),
-                            sectionNode = $(&quot;#&quot; + GlobalStorage.config.divNames.filter),
-                            section;
+                        data = {
+                            config: GlobalStorage.config,
+                            layerGroups: {
+                                feature: TmplHelper.dataBuilder(layerGroups.feature),
+                                wms: TmplHelper.dataBuilder(layerGroups.wms)
+                            }
+                        };
 
+                        sectionNode = $(&quot;#&quot; + GlobalStorage.config.divNames.filter);
                         // TODO: generate section using one template, need to refactoring the following fixed string
                         section = tmpl(&#x27;filter_manager_template&#x27;, data);
 
@@ -681,28 +852,9 @@ define([
                                 // remove the animating css class
                                 window.setTimeout(function () { sectionNode.removeClass(&#x27;animated fadeIn&#x27;); }, 300);
 
-                                layerList = $(&quot;#layerList&quot;);
-                                if (layerList.find(&quot;&gt; li&quot;).length &gt; 1) {
-                                    layerList.sortable(
-                                        {
-                                            axis: &quot;y&quot;,
-                                            handle: &quot;.sort-handle&quot;,
-                                            placeholder: &quot;sortable-placeholder&quot;,
-                                            update: function (event, ui) {
-                                                var layerId = ui.item[0].id,
-                                                    index = dojoArray.indexOf($(&quot;#layerList&quot;).sortable(&quot;toArray&quot;), layerId);
-
-                                                topic.publish(EventManager.GUI.SUBPANEL_CLOSE, { origin: &quot;rampPopup,datagrid&quot; });
-
-                                                topic.publish(EventManager.FilterManager.SELECTION_CHANGED, {
-                                                    id: layerId,
-                                                    index: index
-                                                });
-                                            }
-                                        }
-                                    );
-                                }
                                 filterGlobalToggles = $(&#x27;#filterGlobalToggles&#x27;);
+
+                                setLayerReorderingEvents();
 
                                 setCheckboxEvents();
 
@@ -712,7 +864,9 @@ define([
 
                                 initScrollListeners();
 
-                                // ui initialization complets
+                                layerSettings.init();
+
+                                // ui initialization completes
                                 console.log(EventManager.FilterManager.UI_COMPLETE);
                                 topic.publish(EventManager.FilterManager.UI_COMPLETE);
                             },
@@ -745,7 +899,6 @@ define([
             init: function () {
                 // Convenience config objects
                 config = GlobalStorage.config;
-                localString = GlobalStorage.config.stringResources;
 
                 initListeners();
 

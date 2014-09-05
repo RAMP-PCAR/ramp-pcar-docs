@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -196,7 +241,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/*global define */</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/* global define, i18n */</span>
 
 <span class="hljs-comment">/**
 * BookmarkLink submodule
@@ -306,7 +351,7 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-string">"ramp/globalStorage"</span>, <span class="hljs-string">"ramp/map"</span>, <span class="hljs-string">"ramp/eventManager"</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-string">"ramp/globalStorage"</span>, <span class="hljs-string">"ramp/map"</span>, <span class="hljs-string">"ramp/eventManager"</span>, <span class="hljs-string">"ramp/ramp"</span>,</pre></div></div>
             
         </li>
         
@@ -321,7 +366,7 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-string">"utils/url"</span>, <span class="hljs-string">"utils/util"</span>, <span class="hljs-string">"utils/dictionary"</span>, <span class="hljs-string">"utils/popupManager"</span>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-string">"utils/url"</span>, <span class="hljs-string">"utils/util"</span>, <span class="hljs-string">"utils/dictionary"</span>, <span class="hljs-string">"utils/array"</span>, <span class="hljs-string">"utils/popupManager"</span>
 ],
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(
@@ -371,7 +416,7 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        GlobalStorage, RampMap, EventManager,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        GlobalStorage, RampMap, EventManager, Ramp,</pre></div></div>
             
         </li>
         
@@ -386,10 +431,8 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        Url, UtilMisc, UtilDict, PopupManager) {
-        <span class="hljs-string">"use strict"</span>;
-
-        <span class="hljs-keyword">var</span> EVENT_ROOT = <span class="hljs-string">"bookmarkLink/"</span>, <span class="hljs-comment">// trailing '/' is important</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>        Url, UtilMisc, UtilDict, UtilArray, PopupManager) {
+        <span class="hljs-string">"use strict"</span>;</pre></div></div>
             
         </li>
         
@@ -404,16 +447,22 @@ define([</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            EVENT_EXTENT_CHANGE = <span class="hljs-string">"extentChange"</span>,
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> EVENT_EXTENT_CHANGE = <span class="hljs-string">"extentChange"</span>,
             EVENT_FULLSCREEN = <span class="hljs-string">"fullscreen"</span>,
             EVENT_PANEL_CHANGE = <span class="hljs-string">"panelChange"</span>,
             EVENT_TAB_CHANGE = <span class="hljs-string">"selectedTab"</span>,
             EVENT_BASEMAP_CHANGED = <span class="hljs-string">"basemapChange"</span>,
-            EVENT_FILTER_GLOBAL_LAYER = <span class="hljs-string">"globalLayer"</span>,
-            EVENT_FILTER_GLOBAL_BOX = <span class="hljs-string">"globalBox"</span>,
-            EVENT_FILTER_VISIBLE_LAYERS = <span class="hljs-string">"activeLayers"</span>,
-            EVENT_FILTER_VISIBLE_BOXES = <span class="hljs-string">"activeBoxes"</span>,
+            PARAM = {
+                FILTER: {
+                    VISIBLE_LAYERS: <span class="hljs-string">"visibleLayers"</span>,
+                    HIDDEN_LAYERS: <span class="hljs-string">"hiddenLayers"</span>,
+                    VISIBLE_BOXES: <span class="hljs-string">"visibleBoxes"</span>,
+                    HIDDEN_BOXES: <span class="hljs-string">"hiddenBoxes"</span>
+                }
+            },
             HREF_MAILTO_TEMPLATE = <span class="hljs-string">"mailto:?subject={0}&amp;body={1}%0D%0A%0D%0A{2}"</span>,
+
+            config,
 
             queryObject,
 
@@ -456,24 +505,32 @@ define([</pre></div></div>
         */</span>
             anchors = {},
 
-        <span class="hljs-comment">/**
-        * A dictionary mapping layer id (String) to layer objects (FeatureLayer) that are currently visible on the map.
-        *
-        * @private
-        * @property hiddenLayers
-        * @type {Object}
-        */</span>
-            hiddenLayers = {},
+            <span class="hljs-comment">/**
+             * A dictionary containing layer id (String) as key and layer visiblility (boolean) as value
+             *
+             * @private
+             * @property layerVisibility
+             * @type {Object}
+             */</span>
+            layerVisibility = {},
 
-        <span class="hljs-comment">/**
-        * A set containing the names of all the layers that currently have their bounding boxes
-        * toggled on (the key is the name and the value is arbitrary, currently set to "true").
-        *
-        * @private
-        * @property visibleBoxes
-        * @type {Object}
-        */</span>
-            visibleBoxes = {},
+            <span class="hljs-comment">/**
+             * A dictionary containing layer id (String) as key and bounding box visibility (boolean) as value
+             *
+             * @private
+             * @property boundingBoxVisibility
+             * @type {Object}
+             */</span>
+            boundingBoxVisibility = {},
+
+            <span class="hljs-comment">/**
+             * A dictionary with the layer id as key, and the transparency as value.
+             *
+             * @private
+             * @property layerTransparency
+             * @type {Object}
+             */</span>
+            layerTransparency = {},
 
             ui = {
                 <span class="hljs-comment">/**
@@ -483,7 +540,7 @@ define([</pre></div></div>
                 * @private
                 * @constructor
                 */</span>
-                init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     getlinkloadinganimation = $(<span class="hljs-string">"#getlink-section .loadingAnimation"</span>);
 
                     getlinkEmailButton = $(<span class="hljs-string">".getlink-email-button"</span>);
@@ -507,13 +564,13 @@ define([</pre></div></div>
             
             <div class="content"><div class='highlight'><pre>                    linkPaneTextbox =
                         $(<span class="hljs-string">"#getlink-input"</span>)
-                        .on(<span class="hljs-string">'focus'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        .on(<span class="hljs-string">'focus'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             <span class="hljs-keyword">var</span> $<span class="hljs-keyword">this</span> = $(<span class="hljs-keyword">this</span>)
-                                .one(<span class="hljs-string">'mouseup.mouseupSelect'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                                .one(<span class="hljs-string">'mouseup.mouseupSelect'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                                     $<span class="hljs-keyword">this</span>.select();
                                     <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
                                 })
-                                .one(<span class="hljs-string">'mousedown'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+                                .one(<span class="hljs-string">'mousedown'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -551,10 +608,10 @@ define([</pre></div></div>
                         .on(<span class="hljs-string">"click"</span>, toggleShortLinkMode);
 
                     getlinkPopup = PopupManager.registerPopup(getlinkToggle, <span class="hljs-string">"click"</span>,
-                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> {</span>
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> </span>{
                             topic.publish(EventManager.BookmarkLink.GETLINK_PANEL_CHANGED, { visible: <span class="hljs-literal">true</span> });
                             topic.publish(EventManager.GUI.TOOLBAR_SECTION_OPEN, { id: <span class="hljs-string">"get-link-section"</span> });
-                            console.log(EventManager.BookmarkLink.GETLINK_PANEL_CHANGED + <span class="hljs-string">" visible:"</span>, <span class="hljs-literal">true</span>);</pre></div></div>
+                            <span class="hljs-built_in">console</span>.log(EventManager.BookmarkLink.GETLINK_PANEL_CHANGED + <span class="hljs-string">" visible:"</span>, <span class="hljs-literal">true</span>);</pre></div></div>
             
         </li>
         
@@ -570,30 +627,31 @@ define([</pre></div></div>
             </div>
             
             <div class="content"><div class='highlight'><pre>                            UtilMisc.subscribeOnce(EventManager.GUI.TOOLBAR_SECTION_OPEN, dojoLang.hitch(<span class="hljs-keyword">this</span>,
-                                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                                     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isOpen()) {
                                         <span class="hljs-keyword">this</span>.close();
                                     }
                                 })
                             );
 
-                            getlinkSectionContainer.slideDown(<span class="hljs-string">"fast"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                            getlinkSectionContainer.slideDown(<span class="hljs-string">"fast"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                                 d.resolve();
                             });
                         },
                         {
                             activeClass: cssButtonPressedClass,
                             target: getlinkSectionContainer,
-                            closeHandler: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> {</span>
+                            closeHandler: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> </span>{
                                 topic.publish(EventManager.BookmarkLink.GETLINK_PANEL_CHANGED, { visible: <span class="hljs-literal">false</span> });
                                 topic.publish(EventManager.GUI.TOOLBAR_SECTION_CLOSE, { id: <span class="hljs-string">"get-link-section"</span> });
-                                console.log(EventManager.BookmarkLink.GETLINK_PANEL_CHANGED + <span class="hljs-string">" visible:"</span>, <span class="hljs-literal">false</span>);
+                                <span class="hljs-built_in">console</span>.log(EventManager.BookmarkLink.GETLINK_PANEL_CHANGED + <span class="hljs-string">" visible:"</span>, <span class="hljs-literal">false</span>);
 
-                                getlinkSectionContainer.slideUp(<span class="hljs-string">"fast"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                                getlinkSectionContainer.slideUp(<span class="hljs-string">"fast"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                                     toggleShortLinkMode(<span class="hljs-literal">false</span>);
                                     d.resolve();
                                 });
-                            }
+                            },
+                            resetFocusOnClose: <span class="hljs-literal">true</span>
                         }
                     );
 
@@ -604,21 +662,6 @@ define([</pre></div></div>
                     });*/</span>
                 }
             };
-        <span class="hljs-comment">/*
-        *
-        *
-        *
-        */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initTopics</span><span class="hljs-params">()</span> {</span>
-            <span class="hljs-comment">/* PUBLISH */</span>
-        }
-        <span class="hljs-comment">/*
-        *
-        *
-        */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initListeners</span><span class="hljs-params">()</span> {</span>
-            <span class="hljs-comment">/* SUBSCRIBE */</span>
-        }
 
         <span class="hljs-comment">/**
         * Update the parameter dictionary with the new values for the parameter. If paramObj is set to null,
@@ -631,33 +674,35 @@ define([</pre></div></div>
         * of the URL (can be null, in which case the parameter will NOT be included in the URL)
         *
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addParameter</span><span class="hljs-params">(paramKey, paramObj)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addParameter</span><span class="hljs-params">(paramKey, paramObj)</span> </span>{
             <span class="hljs-keyword">if</span> (paramObj === <span class="hljs-literal">null</span>) {
                 parameters[paramKey] = <span class="hljs-literal">null</span>;
             } <span class="hljs-keyword">else</span> {
                 parameters[paramKey] = dojoQuery.objectToQuery(paramObj);
             }
         }
+
         <span class="hljs-comment">/*
         * Adds an anchor object to a tracking array
         * @method addAnchor
         * @param {String} anchorName a key value for the anchor
         * @param {Object} anchorObj an anchor object
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addAnchor</span><span class="hljs-params">(anchorName, anchorObj)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addAnchor</span><span class="hljs-params">(anchorName, anchorObj)</span> </span>{
             anchors[anchorName] = anchorObj;
         }
+
         <span class="hljs-comment">/*
         * Appends information to the current map's URL to create a mail-to link. Set the email buttons target URL.
         * @method setNewUrl
         * @param {String} url the base URL that defines the current state of the map
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setNewUrl</span><span class="hljs-params">(url)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setNewUrl</span><span class="hljs-params">(url)</span> </span>{
             <span class="hljs-keyword">var</span> mailToHref = <span class="hljs-built_in">String</span>.format(HREF_MAILTO_TEMPLATE,
-                GlobalStorage.config.stringResources.txtEmailUrlSubject,
-                GlobalStorage.config.stringResources.txtEmailUrlBody,
+                i18n.t(<span class="hljs-string">"bookmarkLink.emailUrlSubject"</span>),
+                i18n.t(<span class="hljs-string">"bookmarkLink.emailUrlBody"</span>),
                 <span class="hljs-built_in">encodeURIComponent</span>(url));
-
+            
             linkPaneTextbox.val(url);
             getlinkEmailButton.attr(<span class="hljs-string">"href"</span>, mailToHref);
         }
@@ -669,12 +714,12 @@ define([</pre></div></div>
         * @method updateURL
         * @private
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateURL</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateURL</span><span class="hljs-params">()</span> </span>{
             <span class="hljs-keyword">var</span> link = baseUrl;
 
             <span class="hljs-comment">/* Appends all the query parameters to the link (a query parameter can be
             * excluded by setting it to null) */</span>
-            UtilDict.forEachEntry(parameters, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> {</span>
+            UtilDict.forEachEntry(parameters, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> </span>{
                 <span class="hljs-keyword">if</span> (value) { <span class="hljs-comment">// Value cannot be null or the empty String</span>
                     link += <span class="hljs-string">"&amp;"</span> + value;
                 }
@@ -711,7 +756,7 @@ the last query will contain the anchors</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            UtilDict.forEachEntry(anchors, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> {</span>
+            <div class="content"><div class='highlight'><pre>            UtilDict.forEachEntry(anchors, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> </span>{
                 link += <span class="hljs-string">"#"</span> + value;
             });
 
@@ -721,12 +766,12 @@ the last query will contain the anchors</p>
 
                     jQuery.urlShortener({
                         longUrl: link,
-                        success: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(shortUrl)</span> {</span>
+                        success: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(shortUrl)</span> </span>{
                             setNewUrl(shortUrl);
                             getlinkloadinganimation.hide();
                         },
-                        error: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(err)</span> {</span>
-                            console.error(<span class="hljs-built_in">JSON</span>.stringify(err));
+                        error: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(err)</span> </span>{
+                            <span class="hljs-built_in">console</span>.error(<span class="hljs-built_in">JSON</span>.stringify(err));
                             getlinkloadinganimation.hide();
                         }
                     });
@@ -743,28 +788,22 @@ the last query will contain the anchors</p>
         * @param {Object} value true - shortLinkMode; false - !shortlinkMore; undefined - toggle;
         * @private
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">toggleShortLinkMode</span><span class="hljs-params">(value)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">toggleShortLinkMode</span><span class="hljs-params">(value)</span> </span>{
             <span class="hljs-keyword">var</span> label;
 
             isShortLinkMode = value === <span class="hljs-literal">true</span> ? <span class="hljs-literal">true</span> : (value === <span class="hljs-literal">false</span> ? <span class="hljs-literal">false</span> : !isShortLinkMode);
-            label = isShortLinkMode ? <span class="hljs-string">"long link"</span> : <span class="hljs-string">"short link"</span>;
+            label = isShortLinkMode ? i18n.t(<span class="hljs-string">"bookmarkLink.longLink"</span>) : i18n.t(<span class="hljs-string">"bookmarkLink.shortLink"</span>);
             getlinkShortenButton.text(label);
             updateURL();
         }
 
-        <span class="hljs-keyword">return</span> {
-            <span class="hljs-comment">/**
-            * Instantiates a BookmarkLink. Subscribes to all the events that causes
-            * the bookmark link to update (e.g. map extent change or feature layer visibility
-            * change).
-            *
-            * @method init
-            * @param {String} homePage a string denoting the name of the homePage
-            * (e.g. usually "Default.aspx" or "index.html")
-            */</span>
-            init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(homePage)</span> {</span>
-                <span class="hljs-keyword">var</span> urlObj = <span class="hljs-keyword">new</span> Url(dojoRequire.toUrl(document.location));
-                baseUrl = urlObj.uri;</pre></div></div>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateConfig</span><span class="hljs-params">(homePage)</span> </span>{
+            <span class="hljs-keyword">var</span> event,
+                urlObj = <span class="hljs-keyword">new</span> Url(dojoRequire.toUrl(<span class="hljs-built_in">document</span>.location));
+
+            config = GlobalStorage.config;
+            baseUrl = urlObj.uri;
+            queryObject = dojoQuery.queryToObject(urlObj.query);</pre></div></div>
             
         </li>
         
@@ -780,12 +819,10 @@ used in getlink or else the link would be invalid.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (baseUrl.indexOf(homePage) === -<span class="hljs-number">1</span>) {
-                    baseUrl += homePage;
-                }
-                baseUrl += <span class="hljs-string">"?lang="</span> + GlobalStorage.config.lang;
-
-                queryObject = dojoQuery.queryToObject(urlObj.query);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (baseUrl.indexOf(homePage) === -<span class="hljs-number">1</span>) {
+                baseUrl += homePage;
+            }
+            baseUrl += <span class="hljs-string">"?lang="</span> + config.lang;</pre></div></div>
             
         </li>
         
@@ -800,15 +837,255 @@ used in getlink or else the link would be invalid.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                jQuery.urlShortener.settings.apiKey = <span class="hljs-string">'AIzaSyB52ByjsXrOYlXxc2Q9GVpClLDwt0Lw6pc'</span>;
+            <div class="content"><div class='highlight'><pre>            jQuery.urlShortener.settings.apiKey = <span class="hljs-string">'AIzaSyB52ByjsXrOYlXxc2Q9GVpClLDwt0Lw6pc'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Toggle the main panel</p>
 
-                initTopics();
-                initListeners();
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (queryObject.panelVisible) {
+                event = {
+                    visible: UtilMisc.parseBool(queryObject.panelVisible)
+                };
 
+                addParameter(EVENT_PANEL_CHANGE, event);
+                config.ui.sidePanelOpened = event.visible;
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Toggle fullscreen mode</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (queryObject.fullscreen) {
+                event = {
+                    fullscreen: UtilMisc.parseBool(queryObject.fullscreen)
+                };
+                addParameter(EVENT_FULLSCREEN, event);
+                config.ui.fullscreen = event.fullscreen;
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Check for map extent queries</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (queryObject.xmin) {
+                event = {
+                    xmin: <span class="hljs-built_in">parseFloat</span>(queryObject.xmin.replace(<span class="hljs-regexp">/,/g</span>, <span class="hljs-string">""</span>)),
+                    ymin: <span class="hljs-built_in">parseFloat</span>(queryObject.ymin.replace(<span class="hljs-regexp">/,/g</span>, <span class="hljs-string">""</span>)),
+                    xmax: <span class="hljs-built_in">parseFloat</span>(queryObject.xmax.replace(<span class="hljs-regexp">/,/g</span>, <span class="hljs-string">""</span>)),
+                    ymax: <span class="hljs-built_in">parseFloat</span>(queryObject.ymax.replace(<span class="hljs-regexp">/,/g</span>, <span class="hljs-string">""</span>)),
+                    sr: queryObject.sr
+                };
+
+                addParameter(EVENT_EXTENT_CHANGE, event);
+
+                config.extents.defaultExtent = event;
+                config.spatialReference = <span class="hljs-built_in">JSON</span>.parse(queryObject.sr);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Wait for things such as fullscreen or panel collapse
+to finish before doing an extent change.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Select the correct basemap</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (queryObject.baseMap) {
+                event = {
+                    baseMap: queryObject.baseMap
+                };
+                addParameter(EVENT_BASEMAP_CHANGED, event);
+
+                dojoArray.forEach(config.basemaps, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(basemap)</span> </span>{
+                    basemap.showOnInit = (basemap.id === event.baseMap);
+                });
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Modify the layer transparency</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (queryObject.layerTransparency) {
+                addParameter(EventManager.FilterManager.LAYER_TRANSPARENCY_CHANGED, {
+                    layerTransparency: queryObject.layerTransparency
+                });
+
+                UtilDict.forEachEntry(<span class="hljs-built_in">JSON</span>.parse(queryObject.layerTransparency), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> </span>{
+                    <span class="hljs-keyword">var</span> layerConfig = UtilArray.find(config.featureLayers.concat(config.wmsLayers), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layer)</span> </span>{
+                        <span class="hljs-keyword">return</span> layer.id === key;
+                    });
+                    layerConfig.settings.opacity.default = value;
+                });
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>check for selected tab queries</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (queryObject.selectedTab) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Just add the parameter, no need to do anything else
+since we’re using anchor tags</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                addParameter(EVENT_TAB_CHANGE, {
+                    index: queryObject.selectedTab
+                });
+            }
+
+            <span class="hljs-keyword">var</span> layerIds;
+
+            <span class="hljs-keyword">if</span> (queryObject.visibleLayers) {
+                layerIds = queryObject.visibleLayers.split(<span class="hljs-string">"+"</span>);
+
+                layerIds.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerId)</span> </span>{
+                    <span class="hljs-keyword">var</span> layerConfig = Ramp.getLayerConfigWithId(layerId);
+                    layerConfig.layerVisible = <span class="hljs-literal">true</span>;
+
+                    layerVisibility[layerId] = <span class="hljs-literal">true</span>;
+                });
+
+                addParameter(PARAM.FILTER.VISIBLE_LAYERS, {
+                    visibleLayers: queryObject.visibleLayers
+                });
+            }
+
+            <span class="hljs-keyword">if</span> (queryObject.hiddenLayers) {
+                layerIds = queryObject.hiddenLayers.split(<span class="hljs-string">"+"</span>);
+
+                layerIds.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerId)</span> </span>{
+                    <span class="hljs-keyword">var</span> layerConfig = Ramp.getLayerConfigWithId(layerId);
+                    layerConfig.layerVisible = <span class="hljs-literal">false</span>;
+
+                    layerVisibility[layerId] = <span class="hljs-literal">false</span>;
+                });
+
+                addParameter(PARAM.FILTER.HIDDEN_LAYERS, {
+                    hiddenLayers: queryObject.hiddenLayers
+                });
+            }
+
+            <span class="hljs-keyword">if</span> (queryObject.visibleBoxes) {
+                layerIds = queryObject.visibleBoxes.split(<span class="hljs-string">"+"</span>);
+
+                layerIds.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerId)</span> </span>{
+                    <span class="hljs-keyword">var</span> layerConfig = Ramp.getLayerConfigWithId(layerId);
+                    layerConfig.boundingBoxVisible = <span class="hljs-literal">true</span>;
+
+                    boundingBoxVisibility[layerId] = <span class="hljs-literal">true</span>;
+                });
+
+                addParameter(PARAM.FILTER.VISIBLE_BOXES, {
+                    visibleBoxes: queryObject.visibleBoxes
+                });
+            }
+
+            <span class="hljs-keyword">if</span> (queryObject.hiddenBoxes) {
+                layerIds = queryObject.hiddenBoxes.split(<span class="hljs-string">"+"</span>);
+
+                layerIds.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerId)</span> </span>{
+                    <span class="hljs-keyword">var</span> layerConfig = Ramp.getLayerConfigWithId(layerId);
+                    layerConfig.boundingBoxVisible = <span class="hljs-literal">false</span>;
+
+                    boundingBoxVisibility[layerId] = <span class="hljs-literal">false</span>;
+                });
+
+                addParameter(PARAM.FILTER.HIDDEN_BOXES, {
+                    hiddenBoxes: queryObject.hiddenBoxes
+                });
+            }
+        }
+
+        <span class="hljs-keyword">return</span> {
+            <span class="hljs-comment">/**
+            * Instantiates a BookmarkLink. Subscribes to all the events that causes
+            * the bookmark link to update (e.g. map extent change or feature layer visibility
+            * change).
+            *
+            * @method init
+            * {String} homePage a string denoting the name of the homePage (e.g. usually "Default.aspx" or "index.html")
+            */</span>
+            createUI: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 ui.init();
-                <span class="hljs-keyword">this</span>.updateMap();
-                <span class="hljs-keyword">this</span>.subscribeAndUpdate();
             },
+
+            updateConfig: updateConfig,
 
             <span class="hljs-comment">/**
             * Subscribe to map state changes so the URL displayed can be changed accordingly.
@@ -837,17 +1114,17 @@ used in getlink or else the link would be invalid.</p>
             * @method subscribeAndUpdate
             * @private
             */</span>
-            subscribeAndUpdate: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                topic.subscribe(EventManager.Map.EXTENT_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span></pre></div></div>
+            subscribeAndUpdate: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                topic.subscribe(EventManager.Map.EXTENT_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-19">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>Event fields: extent, delta, levelChange, lod;</p>
 
@@ -858,26 +1135,28 @@ used in getlink or else the link would be invalid.</p>
                         ymin: event.extent.ymin,
                         xmax: event.extent.xmax,
                         ymax: event.extent.ymax,
-                        sr: event.extent.spatialReference.wkid
+                        sr: <span class="hljs-built_in">JSON</span>.stringify(event.extent.spatialReference)
                     });
                     updateURL();
                 });
 
-                topic.subscribe(EventManager.GUI.FULLSCREEN_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
-                    addParameter(EVENT_FULLSCREEN, event);
+                topic.subscribe(EventManager.GUI.FULLSCREEN_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
+                    addParameter(EVENT_FULLSCREEN, {
+                        fullscreen: event.visible
+                    });
                     updateURL();
                 });
 
-                topic.subscribe(EventManager.GUI.TAB_SELECTED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span></pre></div></div>
+                topic.subscribe(EventManager.GUI.TAB_SELECTED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-20">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>Need to remove the “-link” part for the id to work
 since when the page first loads, if the tab is deselected,
@@ -889,201 +1168,23 @@ it’s id will be missing the “-link” at the end.</p>
                     updateURL();
                 });
 
-                topic.subscribe(EventManager.GUI.PANEL_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
+                topic.subscribe(EventManager.GUI.PANEL_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
                     addParameter(EVENT_PANEL_CHANGE, {
                         panelVisible: event.visible
                     });
                     updateURL();
                 });
 
-                topic.subscribe(EventManager.BasemapSelector.BASEMAP_CHANGED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
+                topic.subscribe(EventManager.BasemapSelector.BASEMAP_CHANGED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
                     addParameter(EVENT_BASEMAP_CHANGED, {
                         baseMap: event.id
                     });
                     updateURL();
                 });
 
-                topic.subscribe(EventManager.FilterManager.GLOBAL_LAYER_VISIBILITY_TOGGLED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
-                    addParameter(EVENT_FILTER_GLOBAL_LAYER, {
-                        globalLayer: event.checked
-                    });</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-21">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
-              </div>
-              <p>Remove the active layers query, since these two are mutually exclusive</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                    addParameter(EVENT_FILTER_VISIBLE_LAYERS, <span class="hljs-literal">null</span>);
-
-                    updateURL();
-                });
-
-                topic.subscribe(EventManager.FilterManager.GLOBAL_BOX_VISIBILITY_TOGGLED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
-                    addParameter(EVENT_FILTER_GLOBAL_BOX, {
-                        globalBox: event.checked
-                    });</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-22">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
-              </div>
-              <p>Remove the active boxes query, since these two are mutually exclusive</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                    addParameter(EVENT_FILTER_VISIBLE_BOXES, <span class="hljs-literal">null</span>);
-
-                    updateURL();
-                });
-
-                topic.subscribe(EventManager.FilterManager.LAYER_VISIBILITY_TOGGLED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
-                    <span class="hljs-keyword">var</span> layerName = $(event.node).findInputLabel().data(<span class="hljs-string">"layer-id"</span>);
-
-                    <span class="hljs-keyword">if</span> (event.checked) {
-                        <span class="hljs-keyword">delete</span> hiddenLayers[layerName];
-                    } <span class="hljs-keyword">else</span> {
-                        hiddenLayers[layerName] = <span class="hljs-literal">true</span>;
-                    }
-
-                    <span class="hljs-keyword">if</span> (UtilDict.isEmpty(hiddenLayers)) {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-23">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
-              </div>
-              <p>If we have no hidden layers, remove both parameters (since it’s status quo)</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                        addParameter(EVENT_FILTER_VISIBLE_LAYERS, <span class="hljs-literal">null</span>);
-                        addParameter(EVENT_FILTER_GLOBAL_LAYER, <span class="hljs-literal">null</span>);
-                    } <span class="hljs-keyword">else</span> {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-24">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
-              </div>
-              <p>Otherwise add the hidden layers parameter and remove the global layer
-parameter</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                        addParameter(EVENT_FILTER_VISIBLE_LAYERS, {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-25">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
-              </div>
-              <p>Convert an array of string into a “+” delimited string</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                            hiddenLayers: <span class="hljs-built_in">Object</span>.keys(hiddenLayers).join(<span class="hljs-string">"+"</span>)
-                        });
-
-                        addParameter(EVENT_FILTER_GLOBAL_LAYER, <span class="hljs-literal">null</span>);
-                    }
-
-                    updateURL();
-                });
-
-                topic.subscribe(EventManager.FilterManager.BOX_VISIBILITY_TOGGLED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span>
-                    <span class="hljs-keyword">var</span> layerName = $(event.node).findInputLabel().data(<span class="hljs-string">"layer-id"</span>);
-
-                    <span class="hljs-keyword">if</span> (event.checked) {
-                        visibleBoxes[layerName] = <span class="hljs-literal">true</span>;
-                    } <span class="hljs-keyword">else</span> {
-                        <span class="hljs-keyword">delete</span> visibleBoxes[layerName];
-                    }
-
-                    <span class="hljs-keyword">if</span> (UtilDict.isEmpty(visibleBoxes)) {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-26">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
-              </div>
-              <p>If we have no visible boxes, remove the visible boxes parameter
-and set global box to false</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                        addParameter(EVENT_FILTER_VISIBLE_BOXES, <span class="hljs-literal">null</span>);
-
-                        addParameter(EVENT_FILTER_GLOBAL_BOX, {
-                            globalBox: <span class="hljs-literal">false</span>
-                        });
-                    } <span class="hljs-keyword">else</span> {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-27">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
-              </div>
-              <p>Otherwise add the visible boxes parameter and remove the global box
-parameter</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                        addParameter(EVENT_FILTER_VISIBLE_BOXES, {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-28">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
-              </div>
-              <p>Convert an array of string into a “+” delimited string</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                            visibleBoxes: <span class="hljs-built_in">Object</span>.keys(visibleBoxes).join(<span class="hljs-string">"+"</span>)
-                        });
-
-                        addParameter(EVENT_FILTER_GLOBAL_BOX, <span class="hljs-literal">null</span>);
-                    }
-
-                    updateURL();
-                });</pre></div></div>
+                topic.subscribe(EventManager.FilterManager.LAYER_VISIBILITY_TOGGLED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
+                    <span class="hljs-keyword">var</span> layerName = event.id;
+                    layerVisibility[layerName] = event.state;</pre></div></div>
             
         </li>
         
@@ -1094,21 +1195,18 @@ parameter</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
-              <p>This call is necessary to fill in the URL in the bookmark link
-if this call is removed, there will be no URL in the bookmark link
-until one of the above events fires</p>
+              <p>Only keep attributes that are different from the default config</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                updateURL();
-            },
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">var</span> visibleLayers = UtilDict.filter(layerVisibility, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, layerVisible)</span> </span>{
+                        <span class="hljs-keyword">return</span> layerVisible &amp;&amp; !Ramp.getLayerConfigWithId(key).layerVisible;
+                    }),
+                        hiddenLayers = UtilDict.filter(layerVisibility, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, boxVisible)</span> </span>{
+                            <span class="hljs-keyword">return</span> !boxVisible &amp;&amp; Ramp.getLayerConfigWithId(key).layerVisible;
+                        });
 
-            <span class="hljs-comment">/**
-            * Publish events based on the query parameter (if any) in the URL.
-            *
-            * @method updateMap
-            */</span>
-            updateMap: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+                    addParameter(PARAM.FILTER.HIDDEN_LAYERS, UtilDict.isEmpty(hiddenLayers) ? <span class="hljs-literal">null</span> : {</pre></div></div>
             
         </li>
         
@@ -1119,15 +1217,14 @@ until one of the above events fires</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
-              <p>If there is no query just return</p>
+              <p>Convert an array of string into a “+” delimited string</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (!queryObject) {
-                    <span class="hljs-keyword">return</span>;
-                }
+            <div class="content"><div class='highlight'><pre>                        hiddenLayers: <span class="hljs-built_in">Object</span>.keys(hiddenLayers).join(<span class="hljs-string">"+"</span>)
+                    });
 
-                <span class="hljs-keyword">var</span> event,</pre></div></div>
+                    addParameter(PARAM.FILTER.VISIBLE_LAYERS, UtilDict.isEmpty(visibleLayers) ? <span class="hljs-literal">null</span> : {</pre></div></div>
             
         </li>
         
@@ -1138,17 +1235,19 @@ until one of the above events fires</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
-              <p>List of objects containing an event name and an event argument. The events should
-be anything to wait for before publishing a map extent change, it should include
-anything that will change the size of the map (e.g. fullscreen, closing the panel).
-If the map extent change occurs BEFORE something that changes the size of the map (e.g. fullscreen)
-then the map extent will change again.</p>
+              <p>Convert an array of string into a “+” delimited string</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    waitList = [],
+            <div class="content"><div class='highlight'><pre>                        visibleLayers: <span class="hljs-built_in">Object</span>.keys(visibleLayers).join(<span class="hljs-string">"+"</span>)
+                    });
 
-                    layerIds;</pre></div></div>
+                    updateURL();
+                });
+
+                topic.subscribe(EventManager.FilterManager.BOX_VISIBILITY_TOGGLED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
+                    <span class="hljs-keyword">var</span> layerName = event.id;
+                    boundingBoxVisibility[layerName] = event.state;</pre></div></div>
             
         </li>
         
@@ -1159,17 +1258,18 @@ then the map extent will change again.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
-              <p>check for selected tab queries</p>
+              <p>Only keep attributes that are different from the default config</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (queryObject.selectedTab) {
-                    event = {
-                        index: queryObject.selectedTab
-                    };
-                    addParameter(EVENT_TAB_CHANGE, event);
-                    topic.publish(EVENT_ROOT + EVENT_TAB_CHANGE, event);
-                }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">var</span> visibleBoxes = UtilDict.filter(boundingBoxVisibility, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, boxVisible)</span> </span>{
+                        <span class="hljs-keyword">return</span> boxVisible &amp;&amp; !Ramp.getLayerConfigWithId(key).boundingBoxVisible;
+                    }),
+                        hiddenBoxes = UtilDict.filter(boundingBoxVisibility, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, boxVisible)</span> </span>{
+                            <span class="hljs-keyword">return</span> !boxVisible &amp;&amp; Ramp.getLayerConfigWithId(key).boundingBoxVisible;
+                        });
+
+                    addParameter(PARAM.FILTER.HIDDEN_BOXES, UtilDict.isEmpty(hiddenBoxes) ? <span class="hljs-literal">null</span> : {</pre></div></div>
             
         </li>
         
@@ -1180,17 +1280,14 @@ then the map extent will change again.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
-              <p>Toggle the main panel</p>
+              <p>Convert an array of string into a “+” delimited string</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (queryObject.panelVisible) {
-                    event = {
-                        panelVisible: UtilMisc.parseBool(queryObject.panelVisible)
-                    };
-                    addParameter(EVENT_PANEL_CHANGE, event);
+            <div class="content"><div class='highlight'><pre>                        hiddenBoxes: <span class="hljs-built_in">Object</span>.keys(hiddenBoxes).join(<span class="hljs-string">"+"</span>)
+                    });
 
-                    <span class="hljs-keyword">if</span> (!event.panelVisible) {</pre></div></div>
+                    addParameter(PARAM.FILTER.VISIBLE_BOXES, UtilDict.isEmpty(visibleBoxes) ? <span class="hljs-literal">null</span> : {</pre></div></div>
             
         </li>
         
@@ -1201,19 +1298,26 @@ then the map extent will change again.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
-              <p>NOTE: panel change not triggered here (see map extent change below)</p>
+              <p>Convert an array of string into a “+” delimited string</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                        waitList.push({
-                            publishName: EventManager.GUI.PANEL_TOGGLE,
-                            eventArg: {
-                                origin: <span class="hljs-string">"bootstrapper"</span>
-                            },
-                            subscribeName: EventManager.GUI.PANEL_CHANGE
-                        });
-                    }
-                }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                        visibleBoxes: <span class="hljs-built_in">Object</span>.keys(visibleBoxes).join(<span class="hljs-string">"+"</span>)
+                    });
+
+                    updateURL();
+                });
+
+                topic.subscribe(EventManager.FilterManager.LAYER_TRANSPARENCY_CHANGED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
+                    addParameter(EventManager.FilterManager.LAYER_TRANSPARENCY_CHANGED, event);
+                    layerTransparency[event.layerId] = event.value;
+
+                    addParameter(EventManager.FilterManager.LAYER_TRANSPARENCY_CHANGED, {
+                        layerTransparency: <span class="hljs-built_in">JSON</span>.stringify(layerTransparency)
+                    });
+
+                    updateURL();
+                });</pre></div></div>
             
         </li>
         
@@ -1224,271 +1328,13 @@ then the map extent will change again.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
-              <p>Toggle fullscreen mode</p>
+              <p>This call is necessary to fill in the URL in the bookmark link
+if this call is removed, there will be no URL in the bookmark link
+until one of the above events fires</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (queryObject.fullscreen) {
-                    event = {
-                        fullscreen: UtilMisc.parseBool(queryObject.fullscreen)
-                    };
-                    addParameter(EVENT_FULLSCREEN, event);
-
-                    <span class="hljs-keyword">if</span> (event.fullscreen) {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-36">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
-              </div>
-              <p>NOTE: fullscreen not triggered here (see map extent change below)</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                        waitList.push({
-                            publishName: EventManager.GUI.TOGGLE_FULLSCREEN,
-                            eventArg: {
-                                expand: <span class="hljs-literal">true</span>
-                            },
-                            subscribeName: EventManager.GUI.FULLSCREEN_CHANGE
-                        });
-                    }
-                }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-37">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
-              </div>
-              <p>Select the correct basemap</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (queryObject.baseMap) {
-                    event = {
-                        id: queryObject.baseMap
-                    };
-                    addParameter(EVENT_BASEMAP_CHANGED, event);
-                    topic.publish(EventManager.BasemapSelector.TOGGLE, event);
-                }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-38">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
-              </div>
-              <p>check for map extent queries</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (queryObject.xmin) {
-                    event = {
-                        xmin: <span class="hljs-built_in">parseFloat</span>(queryObject.xmin.replace(<span class="hljs-regexp">/,/g</span>, <span class="hljs-string">""</span>)),
-                        ymin: <span class="hljs-built_in">parseFloat</span>(queryObject.ymin.replace(<span class="hljs-regexp">/,/g</span>, <span class="hljs-string">""</span>)),
-                        xmax: <span class="hljs-built_in">parseFloat</span>(queryObject.xmax.replace(<span class="hljs-regexp">/,/g</span>, <span class="hljs-string">""</span>)),
-                        ymax: <span class="hljs-built_in">parseFloat</span>(queryObject.ymax.replace(<span class="hljs-regexp">/,/g</span>, <span class="hljs-string">""</span>))
-                    };
-
-                    addParameter(EVENT_EXTENT_CHANGE, event);
-
-                    <span class="hljs-keyword">if</span> (waitList.isEmpty()) {
-                        topic.publish(EventManager.Map.SET_EXTENT, {
-                            extent: <span class="hljs-keyword">new</span> Extent(event)
-                        });
-                    } <span class="hljs-keyword">else</span> {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-39">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
-              </div>
-              <p>Wait for things such as fullscreen or panel collapse
-to finish before doing an extent change.</p>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-40">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
-              </div>
-              <p>Note it’s important to subscribe to the events, then
-publish them, that’s why it was done in such an obscure way
-using the waitList (otherwise if we just publish the
-event like above, then subscribe to it here, the event
-might have completed before reaching this point)</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                        <span class="hljs-keyword">var</span> eventNames = dojoArray.map(waitList, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj)</span> {</span>
-                            <span class="hljs-keyword">return</span> obj.subscribeName;
-                        });
-
-                        UtilMisc.subscribeAll(eventNames, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                            topic.publish(EventManager.Map.SET_EXTENT, {
-                                extent: <span class="hljs-keyword">new</span> Extent(event)
-                            });
-                        });
-
-                        dojoArray.forEach(waitList, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj)</span> {</span>
-                            topic.publish(obj.publishName, obj.eventArg);
-                        });
-                    }
-                }
-
-                <span class="hljs-keyword">if</span> (queryObject.globalLayer) {
-                    topic.publish(EventManager.FilterManager.TOGGLE_GLOBAL_LAYER_VISIBILITY, {
-                        visible: UtilMisc.parseBool(queryObject.globalLayer)
-                    });
-
-                    addParameter(EVENT_FILTER_GLOBAL_LAYER, {
-                        globalLayer: queryObject.globalLayer
-                    });
-                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (queryObject.hiddenLayers) {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-41">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-41">&#182;</a>
-              </div>
-              <p>Doing “else if” here instead of “if” because these two options are exclusive</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-                    layerIds = queryObject.hiddenLayers.split(<span class="hljs-string">"+"</span>);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-42">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-42">&#182;</a>
-              </div>
-              <p>Selectively turn off the ones that were in the query (the rest will be
-turned on)</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                    topic.publish(EventManager.FilterManager.TOGGLE_LAYER_VISIBILITY, {
-                        layerIds: layerIds,
-                        checked: <span class="hljs-literal">false</span>
-                    });
-
-                    addParameter(EVENT_FILTER_VISIBLE_LAYERS, {
-                        hiddenLayers: queryObject.hiddenLayers
-                    });
-                }
-
-                <span class="hljs-keyword">if</span> (queryObject.globalBox) {
-                    topic.publish(EventManager.FilterManager.TOGGLE_GLOBAL_BOX_VISIBILITY, {
-                        visible: UtilMisc.parseBool(queryObject.globalBox)
-                    });
-
-                    addParameter(EVENT_FILTER_GLOBAL_BOX, {
-                        globalBox: queryObject.globalBox
-                    });
-                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (queryObject.visibleBoxes) {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-43">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-43">&#182;</a>
-              </div>
-              <p>Doing “else if” here instead of “if” because these two options are exclusive</p>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-44">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-44">&#182;</a>
-              </div>
-              <p>Selective turn on the bounding boxes, no need to turn off all bounding boxes
-first since all bounding boxes are off by default</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-                    layerIds = queryObject.visibleBoxes.split(<span class="hljs-string">"+"</span>);
-
-                    topic.publish(EventManager.FilterManager.TOGGLE_BOX_VISIBILITY, {
-                        layerIds: layerIds,
-                        checked: <span class="hljs-literal">true</span>
-                    });
-
-                    addParameter(EVENT_FILTER_VISIBLE_BOXES, {
-                        visibleBoxes: queryObject.visibleBoxes
-                    });
-                }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-45">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-45">&#182;</a>
-              </div>
-              <p>store the small keys as well</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (queryObject.keys) {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-46">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-46">&#182;</a>
-              </div>
-              <p>We’re not using the smallkeys elsewhere, so the parameter
-name doesn’t really matter</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                    addParameter(<span class="hljs-string">"smallkeys"</span>, {
-                        keys: queryObject.keys
-                    });
-                }
+            <div class="content"><div class='highlight'><pre>                updateURL();
             }
         };
     });</pre></div></div>

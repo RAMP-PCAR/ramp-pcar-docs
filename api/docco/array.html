@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -212,7 +257,7 @@
 * @uses dojo/_base/lang
 */</span>
 define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-string">"dojo/_base/lang"</span>],
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dojoArray, dojoLang)</span> {</span><span class="hljs-pi">
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dojoArray, dojoLang)</span> </span>{<span class="hljs-pi">
         "use strict"</span>;
         <span class="hljs-keyword">return</span> {
             <span class="hljs-comment">/**
@@ -223,8 +268,8 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {Array} array Array to be searched
             * @return {Array} array that has only unique values
             */</span>
-            unique: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(array)</span> {</span>
-                <span class="hljs-keyword">return</span> array.reverse().filter(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e, i, array)</span> {</span>
+            unique: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(array)</span> </span>{
+                <span class="hljs-keyword">return</span> array.reverse().filter(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e, i, array)</span> </span>{
                     <span class="hljs-keyword">return</span> array.indexOf(e, i + <span class="hljs-number">1</span>) === -<span class="hljs-number">1</span>;
                 }).reverse();
             },
@@ -248,7 +293,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {Object} scope ???
             * @return {Object} first elemtn that satisfies the given preidcate; `null` if no such element is found
             */</span>
-            find: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(arr, predicate, scope)</span> {</span>
+            find: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(arr, predicate, scope)</span> </span>{
                 <span class="hljs-keyword">var</span> index = <span class="hljs-keyword">this</span>.indexOf(arr, predicate, scope);
                 <span class="hljs-keyword">if</span> (index === -<span class="hljs-number">1</span>) {
                     <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
@@ -269,17 +314,17 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {Object} scope ???
             * @return {Number} index of the first element that satisfied the predicate; `-1` if no such element is found
             */</span>
-            indexOf: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(arr, predicate, scope)</span> {</span>
+            indexOf: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(arr, predicate, scope)</span> </span>{
                 <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> scope !== <span class="hljs-string">'undefined'</span>) {
                     predicate = dojoLang.hitch(scope, predicate);
                 }
                 <span class="hljs-keyword">var</span> i;
                 <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; arr.length; i++) {
                     <span class="hljs-keyword">if</span> (predicate(arr[i])) {
-                        <span class="hljs-keyword">break</span>;
+                        <span class="hljs-keyword">return</span> i;
                     }
                 }
-                <span class="hljs-keyword">return</span> i;
+                <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
             },
 
             <span class="hljs-comment">/**
@@ -292,7 +337,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {Function} compareFcn ???
             * @return {Number} the index of the element that causes the given function to return 0, returns -1 if no such element exists
             */</span>
-            binaryIndexOf: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(arr, compareFcn)</span> {</span>
+            binaryIndexOf: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(arr, compareFcn)</span> </span>{
                 <span class="hljs-keyword">var</span> minIndex = <span class="hljs-number">0</span>,
                     maxIndex = arr.length - <span class="hljs-number">1</span>,
                     currentIndex,
@@ -324,7 +369,7 @@ define([<span class="hljs-string">"dojo/_base/array"</span>, <span class="hljs-s
             * @param {Function} compareFcn ???
             * @return {Number} the index of the element that causes the given function to return 0, returns -1 if no such element exists&lt;/returns&gt;
             */</span>
-            binaryFind: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(arr, compareFcn)</span> {</span>
+            binaryFind: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(arr, compareFcn)</span> </span>{
                 <span class="hljs-keyword">var</span> index = <span class="hljs-keyword">this</span>.binaryIndexOf(arr, compareFcn);
                 <span class="hljs-keyword">return</span> arr[index];
             }

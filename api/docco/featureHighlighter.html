@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -246,7 +291,7 @@ define([
         GlobalStorage, RampMap, EventManager,
 
     <span class="hljs-comment">/* Util*/</span>
-        UtilMisc, UtilDict)</span> {</span><span class="hljs-pi">
+        UtilMisc, UtilDict)</span> </span>{<span class="hljs-pi">
         "use strict"</span>;
 
         <span class="hljs-keyword">var</span> map,
@@ -270,7 +315,7 @@ define([
         * @param {Object} graphic Graphic object to clone
         * @return clone A cloned Graphic object
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">cloneGraphic</span><span class="hljs-params">(graphic)</span> {</span></pre></div></div>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">cloneGraphic</span><span class="hljs-params">(graphic)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -308,7 +353,7 @@ this way the maptip will work</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            UtilDict.forEachEntry(graphic.attributes, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> {</span>
+            <div class="content"><div class='highlight'><pre>            UtilDict.forEachEntry(graphic.attributes, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> </span>{
                 clone.attributes[key] = value;
             });
 
@@ -322,7 +367,7 @@ this way the maptip will work</p>
         * @method sortLayers
         * @private
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sortLayers</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sortLayers</span><span class="hljs-params">()</span> </span>{
             <span class="hljs-keyword">if</span> (!graphicGroup) {
                 <span class="hljs-keyword">var</span> svg = Snap.select(<span class="hljs-string">"svg"</span>),
                     layers = svg.selectAll(<span class="hljs-string">"svg g"</span>), <span class="hljs-comment">// &gt; g:not(.highlightLayer)"),</span>
@@ -350,7 +395,7 @@ this way the maptip will work</p>
         * @private
         * @param {Object} eventArg ???
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">highlightGraphic</span><span class="hljs-params">(eventArg)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">highlightGraphic</span><span class="hljs-params">(eventArg)</span> </span>{
             <span class="hljs-keyword">var</span> graphic = eventArg.graphic,
                 newGraphic = cloneGraphic(graphic);
 
@@ -402,7 +447,7 @@ this way the maptip will work</p>
         * @method highlightGraphicHide
         * @private
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">highlightGraphicHide</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">highlightGraphicHide</span><span class="hljs-params">()</span> </span>{
             <span class="hljs-keyword">if</span> (highlightedGraphic) {
                 highlightedGraphic = <span class="hljs-literal">null</span>;
 
@@ -424,7 +469,7 @@ this way the maptip will work</p>
         * @private
         * @param {Object} eventArg ???
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hoverLight</span><span class="hljs-params">(eventArg)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hoverLight</span><span class="hljs-params">(eventArg)</span> </span>{
             <span class="hljs-keyword">var</span> graphic = eventArg.graphic,
                 newGraphic = cloneGraphic(graphic);
 
@@ -440,7 +485,7 @@ this way the maptip will work</p>
         * @method hoverLightHide
         * @private
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hoverLightHide</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hoverLightHide</span><span class="hljs-params">()</span> </span>{
             hoverlightLayer.clear();
         }
 
@@ -452,7 +497,7 @@ this way the maptip will work</p>
         * @private
         * @param {Object} eventArg ???
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">zoomLight</span><span class="hljs-params">(eventArg)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">zoomLight</span><span class="hljs-params">(eventArg)</span> </span>{
             <span class="hljs-keyword">var</span> graphic = eventArg.graphic,
                 newGraphic = cloneGraphic(graphic);
 
@@ -490,7 +535,7 @@ this way the maptip will work</p>
         * @method zoomLightHide
         * @private
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">zoomLightHide</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">zoomLightHide</span><span class="hljs-params">()</span> </span>{
             <span class="hljs-keyword">if</span> (zoomlightGraphic) {
                 zoomlightGraphic = <span class="hljs-literal">null</span>;
                 zoomlightLayer.clear();
@@ -510,9 +555,9 @@ this way the maptip will work</p>
         * @method repositionInteractive
         * @private
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">repositionInteractive</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">repositionInteractive</span><span class="hljs-params">()</span> </span>{
             <span class="hljs-keyword">if</span> (highlightedGraphic) {
-                window.setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                <span class="hljs-built_in">window</span>.setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">var</span> snapGraphic = Snap.select(<span class="hljs-string">"svg .highlightLayer &gt; *:first-child"</span>),
                         offset;
 
@@ -534,7 +579,7 @@ this way the maptip will work</p>
         * @method initListeners
         * @private
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initListeners</span><span class="hljs-params">()</span> {</span></pre></div></div>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initListeners</span><span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -575,7 +620,7 @@ detect when a new graphic is added to the highlihgt layer and display in interac
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            highlightLayer.on(<span class="hljs-string">"graphic-node-add"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
+            <div class="content"><div class='highlight'><pre>            highlightLayer.on(<span class="hljs-string">"graphic-node-add"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> </span>{
                 topic.publish(EventManager.Maptips.SHOW_INTERACTIVE, {
                     target: $(evt.node),
                     graphic: highlightedGraphic
@@ -596,7 +641,7 @@ temporary tooltip only if the zoomlighted graphic is not already highlighted</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            zoomlightLayer.on(<span class="hljs-string">"graphic-node-add"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
+            <div class="content"><div class='highlight'><pre>            zoomlightLayer.on(<span class="hljs-string">"graphic-node-add"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> </span>{
                 <span class="hljs-keyword">var</span> zgKey = <span class="hljs-string">"0"</span>,
                     hgKey = <span class="hljs-string">"1"</span>,
                     objectIdField,
@@ -648,7 +693,7 @@ temporary tooltip only if the zoomlighted graphic is not already highlighted</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            topic.subscribe(EventManager.Map.REORDER_END, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>            topic.subscribe(EventManager.Map.REORDER_END, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 graphicGroup = <span class="hljs-literal">null</span>;
             });
         }
@@ -659,7 +704,7 @@ temporary tooltip only if the zoomlighted graphic is not already highlighted</p>
             *
             * @method init
             */</span>
-            init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 config = GlobalStorage.config;
                 map = RampMap.getMap();</pre></div></div>
             
@@ -678,7 +723,10 @@ temporary tooltip only if the zoomlighted graphic is not already highlighted</p>
             <div class="content"><div class='highlight'><pre>                highlightLayer = <span class="hljs-keyword">new</span> esri.layers.GraphicsLayer({
                     id: <span class="hljs-string">"highlightLayer"</span>,
                     className: <span class="hljs-string">"highlightLayer"</span>
-                });</pre></div></div>
+                });
+                highlightLayer.ramp = {
+                    type: GlobalStorage.layerType.Highlight
+                };</pre></div></div>
             
         </li>
         
@@ -698,7 +746,10 @@ selected</p>
             <div class="content"><div class='highlight'><pre>                hoverlightLayer = <span class="hljs-keyword">new</span> esri.layers.GraphicsLayer({
                     id: <span class="hljs-string">"hoverlightLayer"</span>,
                     className: <span class="hljs-string">"hoverlightLayer"</span>
-                });</pre></div></div>
+                });
+                hoverlightLayer.ramp = {
+                    type: GlobalStorage.layerType.Hoverlight
+                };</pre></div></div>
             
         </li>
         
@@ -718,6 +769,9 @@ presses zoom to on a point</p>
                     id: <span class="hljs-string">"zoomLightLayer"</span>,
                     className: <span class="hljs-string">"zoomlightLayer"</span>
                 });
+                zoomlightLayer.ramp = {
+                    type: GlobalStorage.layerType.Zoomlight
+                };
 
                 map.addLayer(highlightLayer);
                 map.addLayer(hoverlightLayer, <span class="hljs-number">0</span>);

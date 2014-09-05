@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -260,7 +305,7 @@ define([
     <span class="hljs-comment">/* Ramp */</span>
     GlobalStorage, RampMap,
     <span class="hljs-comment">/* Util */</span>
-    UtilMisc)</span> {</span><span class="hljs-pi">
+    UtilMisc)</span> </span>{<span class="hljs-pi">
         "use strict"</span>;
         <span class="hljs-keyword">return</span> declare(<span class="hljs-literal">null</span>, {
             <span class="hljs-comment">/*
@@ -269,7 +314,7 @@ define([
              * @constructor
              *
              */</span>
-            constructor: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            constructor: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 <span class="hljs-keyword">this</span>.config = GlobalStorage.config;
 
                 <span class="hljs-keyword">this</span>.form = <span class="hljs-keyword">new</span> Form({
@@ -303,11 +348,11 @@ define([
                 });
 
                 <span class="hljs-keyword">var</span> that = <span class="hljs-keyword">this</span>; <span class="hljs-comment">// for local access to "this"</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_addNode</span><span class="hljs-params">(domNode)</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_addNode</span><span class="hljs-params">(domNode)</span> </span>{
                     that.form.domNode.appendChild(domNode);
                 }
 
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_addLabel</span><span class="hljs-params">(text)</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_addLabel</span><span class="hljs-params">(text)</span> </span>{
                     <span class="hljs-keyword">var</span> node = domConstruct.create(<span class="hljs-string">"label"</span>, {
                         <span class="hljs-keyword">class</span>: className,
                         innerHTML: text
@@ -329,8 +374,8 @@ define([
                 <span class="hljs-keyword">this</span>.errorText = _addLabel(<span class="hljs-string">""</span>);
             },
 
-            _setError: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(errorMsg)</span> {</span>
-                console.log(errorMsg);
+            _setError: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(errorMsg)</span> </span>{
+                <span class="hljs-built_in">console</span>.log(errorMsg);
                 $(<span class="hljs-keyword">this</span>.errorText).text(errorMsg);
             },
             <span class="hljs-comment">/*
@@ -340,7 +385,7 @@ define([
              * @param {Object} where A DOM object where the dropdowns will be placed
              * @constructor
              */</span>
-            init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(where)</span> {</span>
+            init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(where)</span> </span>{
                 <span class="hljs-keyword">var</span> provinceSelect = <span class="hljs-keyword">this</span>.provinceSelect,
                     citySelect = <span class="hljs-keyword">this</span>.citySelect,
                     config = <span class="hljs-keyword">this</span>.config,
@@ -355,12 +400,12 @@ define([
                 * @param {String} url
                 * @param {Object} query
                 */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">changeExtent</span><span class="hljs-params">(url, query)</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">changeExtent</span><span class="hljs-params">(url, query)</span> </span>{
                     query.returnGeometry = <span class="hljs-literal">true</span>;
 
                     <span class="hljs-keyword">var</span> queryTask = <span class="hljs-keyword">new</span> QueryTask(url);
                     queryTask.execute(query,
-                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(featureSet)</span> {</span>
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(featureSet)</span> </span>{
                             <span class="hljs-keyword">if</span> (featureSet.features.isEmpty()) {
                                 that._setError(<span class="hljs-string">"invalid query"</span>);
                                 <span class="hljs-keyword">return</span>;
@@ -373,9 +418,9 @@ define([
                                 that._setError(<span class="hljs-string">"beyond max extent"</span>);
                             }
                         },
-                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error)</span> {</span>
-                            console.log(<span class="hljs-string">"Could not load extent from service"</span>);
-                            console.log(error);
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error)</span> </span>{
+                            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Could not load extent from service"</span>);
+                            <span class="hljs-built_in">console</span>.log(error);
                         });
                 }
 
@@ -388,7 +433,7 @@ define([
                 * @param {Object} query to execute
                 * @param {Function} mapFunc the function to convert each element in the retrieved data to a label that can be added to the dropdown menu
                 */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">populateDropDown</span><span class="hljs-params">(url, select, query, mapFunc)</span> {</span></pre></div></div>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">populateDropDown</span><span class="hljs-params">(url, select, query, mapFunc)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -407,7 +452,7 @@ define([
 
                     <span class="hljs-keyword">var</span> queryTask = <span class="hljs-keyword">new</span> QueryTask(url);
                     queryTask.execute(query,
-                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(featureSet)</span> {</span></pre></div></div>
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(featureSet)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -425,9 +470,9 @@ from service</p>
             
             <div class="content"><div class='highlight'><pre>                            select.addOption(dojoArray.map(featureSet.features, mapFunc));
                         },
-                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error)</span> {</span>
-                            console.log(<span class="hljs-string">"Could not populate dropdown"</span>);
-                            console.log(error);
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error)</span> </span>{
+                            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Could not populate dropdown"</span>);
+                            <span class="hljs-built_in">console</span>.log(error);
                         });
                 }</pre></div></div>
             
@@ -445,7 +490,7 @@ from service</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                provinceSelect.loadDropDown(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>                provinceSelect.loadDropDown(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">var</span> provinceConfig = config.quickzoom.province,
                         query = <span class="hljs-keyword">new</span> Query();
 
@@ -453,7 +498,7 @@ from service</p>
                     query.outFields = [provinceConfig.shortName, provinceConfig.name];
 
                     populateDropDown(provinceConfig.url, provinceSelect, query,
-                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(feature)</span> {</span>
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(feature)</span> </span>{
                             <span class="hljs-keyword">var</span> shortName = feature.attributes[provinceConfig.shortName];
                             <span class="hljs-keyword">return</span> {
                                 label: feature.attributes[provinceConfig.name],
@@ -471,14 +516,14 @@ from service</p>
                 * @private
                 * @param {String} prov
                 */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">populateCityDropDown</span><span class="hljs-params">(prov)</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">populateCityDropDown</span><span class="hljs-params">(prov)</span> </span>{
                     <span class="hljs-keyword">var</span> cityConfig = config.quickzoom.city,
                         query = <span class="hljs-keyword">new</span> Query();
 
                     query.where = UtilMisc.getWhereClause(cityConfig.province, prov);
                     query.outFields = [cityConfig.name, cityConfig.id];
                     populateDropDown(cityConfig.url, citySelect, query,
-                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(feature)</span> {</span>
+                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(feature)</span> </span>{
                         <span class="hljs-keyword">return</span> {
                             label: feature.attributes[cityConfig.name],
                             value: feature.attributes[cityConfig.id],
@@ -487,7 +532,7 @@ from service</p>
                     });
                 }
 
-                citySelect.loadDropDown(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+                citySelect.loadDropDown(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -505,7 +550,7 @@ from service</p>
             <div class="content"><div class='highlight'><pre>                    populateCityDropDown(config.quickzoom.province.selectedProv);
                 });
 
-                provinceSelect.on(<span class="hljs-string">"change"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+                provinceSelect.on(<span class="hljs-string">"change"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -529,7 +574,7 @@ from service</p>
                     populateCityDropDown(prov);
                 });
 
-                citySelect.on(<span class="hljs-string">"change"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                citySelect.on(<span class="hljs-string">"change"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">var</span> cityConfig = config.quickzoom.city,
                         city = citySelect.get(<span class="hljs-string">"value"</span>),
                         query = <span class="hljs-keyword">new</span> Query();
@@ -545,7 +590,7 @@ from service</p>
                 * @private
                 * @param {String} fsa fsa
                 */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">validatePostalCode</span><span class="hljs-params">(fsa)</span> {</span></pre></div></div>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">validatePostalCode</span><span class="hljs-params">(fsa)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -597,7 +642,7 @@ from service</p>
                     <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
                 }
 
-                <span class="hljs-keyword">this</span>.button.on(<span class="hljs-string">"click"</span>, dojoLang.hitch(<span class="hljs-keyword">this</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                <span class="hljs-keyword">this</span>.button.on(<span class="hljs-string">"click"</span>, dojoLang.hitch(<span class="hljs-keyword">this</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">var</span> postalCode = <span class="hljs-keyword">this</span>.postalCodeTextbox.get(<span class="hljs-string">"value"</span>);
                     <span class="hljs-keyword">if</span> (validatePostalCode(postalCode)) {
                         <span class="hljs-keyword">var</span> postalConfig = config.quickzoom.postalCode,
@@ -605,7 +650,7 @@ from service</p>
                         query.where = UtilMisc.getWhereClause(postalConfig.id, postalCode);
                         changeExtent(postalConfig.url, query);
                     } <span class="hljs-keyword">else</span> {
-                        console.log(<span class="hljs-string">"invalid postal code!"</span>);
+                        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"invalid postal code!"</span>);
                         that._setError(<span class="hljs-string">"invalid postal code"</span>);
                     }
                 }));

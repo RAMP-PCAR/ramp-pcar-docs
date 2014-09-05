@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -221,7 +266,7 @@ define([
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(
         dojoArray, dojoLang,
-        UtilMisc)</span> {</span><span class="hljs-pi">
+        UtilMisc)</span> </span>{<span class="hljs-pi">
         "use strict"</span>;
 
         <span class="hljs-keyword">return</span> {
@@ -241,7 +286,7 @@ define([
             * @param {Function} [sortFcn] true if the dictionary keys are to be sorted before iterating
             * @param {Object} [scope] The scope to be hitched to the given fcn
             */</span>
-            forEachEntry: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dict, fcn, sortFcn, scope)</span> {</span>
+            forEachEntry: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dict, fcn, sortFcn, scope)</span> </span>{
                 <span class="hljs-keyword">if</span> (!UtilMisc.isUndefined(scope)) {
                     fcn = dojoLang.hitch(scope, fcn);
                 }
@@ -258,7 +303,7 @@ define([
                     keys.sort(sortFcn);
                 }
 
-                dojoArray.forEach(keys, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> {</span>
+                dojoArray.forEach(keys, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> </span>{
                     fcn(key, dict[key]);
                 });
             },
@@ -277,7 +322,7 @@ define([
             * and returns true if the given key or value satisfy some condition
             * @param {Function} [compareFcn] a comparator function (takes two arguments and returns an integer) used to sort the keys
             */</span>
-            find: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dict, fcn, compareFcn)</span> {</span>
+            find: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dict, fcn, compareFcn)</span> </span>{
                 <span class="hljs-keyword">var</span> keys = [];
 
                 <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> dict) {
@@ -291,7 +336,7 @@ define([
                 }
 
                 <span class="hljs-keyword">var</span> index = -<span class="hljs-number">1</span>;
-                dojoArray.some(keys, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, i)</span> {</span>
+                dojoArray.some(keys, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, i)</span> </span>{
                     <span class="hljs-keyword">if</span> (fcn(key, dict[key])) {
                         index = i;
                         <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
@@ -299,6 +344,16 @@ define([
                 });
 
                 <span class="hljs-keyword">return</span> index;
+            },
+
+            filter: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dict, predicate)</span> </span>{
+                <span class="hljs-keyword">var</span> filteredDict = {};
+                <span class="hljs-keyword">this</span>.forEachEntry(dict, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> </span>{
+                    <span class="hljs-keyword">if</span> (predicate(key, value)) {
+                        filteredDict[key] = value;
+                    }
+                });
+                <span class="hljs-keyword">return</span> filteredDict;
             },
 
             <span class="hljs-comment">/**
@@ -309,7 +364,7 @@ define([
             * @return {Integer} the number of keys in the dictionary
             * @static
             */</span>
-            length: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dict)</span> {</span>
+            length: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dict)</span> </span>{
                 <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.keys(dict).length;
             },
 
@@ -321,7 +376,7 @@ define([
             * @param {Object} dict a dictionary
             * @return {Boolean} true if the dictionary is empty, false otherwise
             */</span>
-            isEmpty: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dict)</span> {</span>
+            isEmpty: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dict)</span> </span>{
                 <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.length(dict) === <span class="hljs-number">0</span>;
             },
 
@@ -333,12 +388,53 @@ define([
            * @param {Object} dict a dictionary
            * @return {Object} a shallow copy of the given dictionary
            */</span>
-            clone: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dict)</span> {</span>
+            clone: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(dict)</span> </span>{
                 <span class="hljs-keyword">var</span> copy = {};
-                <span class="hljs-keyword">this</span>.forEachEntry(dict, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> {</span>
+                <span class="hljs-keyword">this</span>.forEachEntry(dict, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, value)</span> </span>{
                     copy[key] = value;
                 });
                 <span class="hljs-keyword">return</span> copy;
+            },
+
+            <span class="hljs-comment">/**
+            * Converts the given array into a dictionary, where the values of the dictionary are values in
+            * the array, and the keys are the return value of the given function.
+            *
+            * @static
+            * @method arrayToMap
+            * @param {Object} arr an array
+            * @param {Function} fcn a function that takes one argument and returns a key for the given argument
+            * @return {Object} a dictionary
+            */</span>
+            arrayToMap: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(arr, fcn)</span> </span>{
+                <span class="hljs-keyword">var</span> dict = {};
+                dojoArray.forEach(arr, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(element)</span> </span>{
+                    dict[fcn(arr)] = element;
+                });
+                <span class="hljs-keyword">return</span> dict;
+            },
+
+            <span class="hljs-comment">/**
+            * Convert the given array into a dictionary, where the keys of the dictionary are the elements in the
+            * first array and the values of the dictionary are elements in the second array. The size of the two arrays
+            * must match.
+            *
+            * @static
+            * @method zip
+            * @param {Object} arr1 the key array
+            * @param {Object} arr2 the value array
+            * @return {Object} a dictionary
+            */</span>
+            zip: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(arr1, arr2)</span> </span>{
+                <span class="hljs-keyword">if</span> (arr1.length !== arr2.length) {
+                    <span class="hljs-keyword">throw</span> <span class="hljs-string">"Array lengths differ"</span>;
+                }
+
+                <span class="hljs-keyword">var</span> dict = {};
+                dojoArray.forEach(arr1, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(element, i)</span> </span>{
+                    dict[element] = arr2[i];
+                });
+                <span class="hljs-keyword">return</span> dict;
             }
         };
     });</pre></div></div>

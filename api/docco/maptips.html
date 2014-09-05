@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -246,7 +291,7 @@ define([
 
     <span class="hljs-comment">/*tmplHelper */</span>
         TmplHelper, hovertips_template, anchortips_template
-    )</span> {</span><span class="hljs-pi">
+    )</span> </span>{<span class="hljs-pi">
         "use strict"</span>;
 
         <span class="hljs-keyword">var</span> hovertips_template_json = <span class="hljs-built_in">JSON</span>.parse(TmplHelper.stringifyTemplate(hovertips_template)),
@@ -271,8 +316,8 @@ define([
         * @private
         * @return {Number} position of hte sub-panel relative to the leftmost edge of the screen
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getSubPanelLeftOffset</span><span class="hljs-params">()</span> {</span>
-            <span class="hljs-keyword">return</span> $(window).width() - subPanelOffset;
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getSubPanelLeftOffset</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">return</span> $(<span class="hljs-built_in">window</span>).width() - subPanelOffset;
         }
 
         <span class="hljs-comment">/**
@@ -282,7 +327,7 @@ define([
         * @private
         * @return {Number} the position of the maptip relative to the leftmost edge of the screen
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getToolTipOffset</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getToolTipOffset</span><span class="hljs-params">()</span> </span>{
             <span class="hljs-keyword">var</span> offset = <span class="hljs-number">0</span>;
 
             <span class="hljs-keyword">if</span> (highTooltip.handle !== <span class="hljs-literal">null</span> &amp;&amp; highTooltip.node !== <span class="hljs-literal">null</span>) {
@@ -300,7 +345,7 @@ define([
         * @param  {jObject} target a node to which the tooltip will be attached
         * @param  {Object} graphic [description]
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkMaptipPosition</span><span class="hljs-params">(target, graphic)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkMaptipPosition</span><span class="hljs-params">(target, graphic)</span> </span>{
             graphic = graphic || highTooltip.graphic || <span class="hljs-literal">null</span>;
             target = target || highTooltip.handle || <span class="hljs-literal">null</span>;
 
@@ -342,7 +387,7 @@ define([
         * @param  {Object} graphic map graphic the tip is describing
         * @param  {String} interactive indicates whether the maptip should have a close button
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getMaptipContent</span><span class="hljs-params">(graphic, interactive)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getMaptipContent</span><span class="hljs-params">(graphic, interactive)</span> </span>{
             <span class="hljs-keyword">var</span> layerUrl = graphic.getLayer().url,
                 templateKey = <span class="hljs-string">""</span>,
                 datawrapper,
@@ -373,7 +418,7 @@ define([
         * @param  {Object} graphic     the graphic belonging to the target
         * @param  {Boolean} interactive indicates whether the maptip should have a close button
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">showMapTip</span><span class="hljs-params">(target, graphic, interactive)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">showMapTip</span><span class="hljs-params">(target, graphic, interactive)</span> </span>{
             <span class="hljs-keyword">var</span> maptipContent = getMaptipContent(graphic, interactive);
 
             <span class="hljs-keyword">if</span> (maptipContent == <span class="hljs-literal">null</span>) {
@@ -430,7 +475,7 @@ define([
             
             <div class="content"><div class='highlight'><pre>                $(target.tooltipster(<span class="hljs-string">"elementTooltip"</span>))
                         .find(<span class="hljs-string">".button-close"</span>)
-                        .on(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        .on(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             topic.publish(EventManager.GUI.SUBPANEL_CLOSE, { origin: <span class="hljs-string">"all"</span> });
                         });</pre></div></div>
             
@@ -460,8 +505,8 @@ define([
         * @private
         *
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initListeners</span><span class="hljs-params">()</span> {</span>
-            topic.subscribe(EventManager.Maptips.SHOW, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> {</span></pre></div></div>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initListeners</span><span class="hljs-params">()</span> </span>{
+            topic.subscribe(EventManager.Maptips.SHOW, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -479,7 +524,7 @@ define([
             <div class="content"><div class='highlight'><pre>                showMapTip($(event.target), event.graphic);
             });
 
-            topic.subscribe(EventManager.Maptips.SHOW_INTERACTIVE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj)</span> {</span></pre></div></div>
+            topic.subscribe(EventManager.Maptips.SHOW_INTERACTIVE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -498,7 +543,7 @@ define([
                 showMapTip(obj.target, obj.graphic, <span class="hljs-literal">true</span>);
             });
 
-            topic.subscribe(EventManager.Maptips.REPOSITION_INTERACTIVE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj)</span> {</span></pre></div></div>
+            topic.subscribe(EventManager.Maptips.REPOSITION_INTERACTIVE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -534,7 +579,7 @@ define([
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    window.setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-built_in">window</span>.setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         <span class="hljs-keyword">if</span> (getToolTipOffset() &gt; getSubPanelLeftOffset()) {
                             highTooltip.node.hide();
                         } <span class="hljs-keyword">else</span> {
@@ -544,7 +589,7 @@ define([
                 }
             });
 
-            topic.subscribe(EventManager.GUI.SUBPANEL_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj)</span> {</span></pre></div></div>
+            topic.subscribe(EventManager.GUI.SUBPANEL_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -577,7 +622,7 @@ define([
             * @constructor
             *
             */</span>
-            init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 initListeners();
             }
         };

@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -196,7 +241,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>﻿<span class="hljs-comment">/*global define, tmpl, TimelineLite, TweenLite, window */</span>
+            <div class="content"><div class='highlight'><pre>﻿<span class="hljs-comment">/*global define, tmpl, TimelineLite, TweenLite, window, i18n */</span>
 <span class="hljs-comment">/*jslint white: true */</span>
 
 <span class="hljs-comment">/**
@@ -372,16 +417,33 @@ define([
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        utilMisc, utilArray, utilDict, popupManager, tmplHelper) {
+            <div class="content"><div class='highlight'><pre>        utilMisc, UtilArray, utilDict, popupManager, tmplHelper) {
         <span class="hljs-string">"use strict"</span>;
 
         <span class="hljs-keyword">var</span> GRID_MODE_SUMMARY = <span class="hljs-string">"summary"</span>,
             GRID_MODE_FULL = <span class="hljs-string">"full"</span>,
+
+            <span class="hljs-comment">/**
+            * Name of the attribute used to store the oid
+            * in the details and zoomTo buttons
+            *
+            * @private
+            * @property featureOidField
+            */</span>
+            featureOidField = <span class="hljs-string">"feature-oid"</span>,
+
+            <span class="hljs-comment">/**
+            * Name of the attribute used to store the feature url
+            * in the details and zoomTo buttons
+            *
+            * @private
+            * @property featureUrlField
+            */</span>
+            featureUrlField = <span class="hljs-string">"feature-url"</span>,
+
             data_grid_template_json = <span class="hljs-built_in">JSON</span>.parse(tmplHelper.stringifyTemplate(data_grid_template)),
             extended_datagrid_template_json = <span class="hljs-built_in">JSON</span>.parse(tmplHelper.stringifyTemplate(extended_datagrid_template)),
-            config,
-            layerConfig,
-            gridConfig,</pre></div></div>
+            config,</pre></div></div>
             
         </li>
         
@@ -392,11 +454,19 @@ define([
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
-              <p>The jquery table</p>
+              <p>layerConfig,</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            oTable,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            gridConfig,
+
+            <span class="hljs-comment">/**
+            * The jquery table
+            *
+            * @private
+            * @property oTable
+            */</span>
+            oTable,</pre></div></div>
             
         </li>
         
@@ -430,45 +500,21 @@ extent filter when the datagrid gets selected</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        extentFilterExpired = <span class="hljs-literal">true</span>,
+            <div class="content"><div class='highlight'><pre>            extentFilterExpired = <span class="hljs-literal">true</span>,
 
             zoomToGraphic,
 
-            lastExtent,</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-13">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
-              </div>
-              <p>Name of the attribute used to store the oid
-in the details and zoomTo buttons</p>
+            lastExtent,
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            featureOidField = <span class="hljs-string">"feature-oid"</span>,</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-14">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
-              </div>
-              <p>Name of the attribute used to store the feature url
-in the details and zoomTo buttons</p>
+            <span class="hljs-comment">/**
+            * Total number of features in all the visible layers on the map
+            *
+            * @private
+            * @property totalRecords
+            */</span>
+            totalRecords = <span class="hljs-number">0</span>,
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            featureUrlField = <span class="hljs-string">"feature-url"</span>,
-
-            ui = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            ui = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 <span class="hljs-comment">/**
                 * creates a datagrid row that has the following features:
                 * highlight for a give graphic
@@ -480,18 +526,18 @@ in the details and zoomTo buttons</p>
                 * @param {String} cssClass the style that highlights the row.
                 * @return {Object} an object containing features of a datagrid row
                 */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createRowPrototype</span><span class="hljs-params">(cssClass)</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createRowPrototype</span><span class="hljs-params">(cssClass)</span> </span>{
                     <span class="hljs-keyword">var</span> index = -<span class="hljs-number">1</span>,
                         graphic = <span class="hljs-literal">null</span>;
 
                     <span class="hljs-keyword">return</span> {
                         focusedButton: <span class="hljs-literal">null</span>,
 
-                        isActive: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        isActive: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             <span class="hljs-keyword">return</span> graphic !== <span class="hljs-literal">null</span>;
                         },
 
-                        isEqual: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url, oid)</span> {</span>
+                        isEqual: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url, oid)</span> </span>{
                             <span class="hljs-keyword">var</span> thisUrl = graphic.getLayer().url,
                                 thisOid = GraphicExtension.getOid(graphic);
 
@@ -507,17 +553,17 @@ in the details and zoomTo buttons</p>
                         * @private
                         * @method navigateToRow
                         */</span>
-                        navigateToRow: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        navigateToRow: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             <span class="hljs-keyword">if</span> (index !== -<span class="hljs-number">1</span>) {</pre></div></div>
             
         </li>
         
         
-        <li id="section-15">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p>Figure out which page the entry is in and navigate to that page</p>
 
@@ -529,11 +575,11 @@ in the details and zoomTo buttons</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p>False tells draw not to navigate to the first page</p>
 
@@ -555,7 +601,7 @@ in the details and zoomTo buttons</p>
                             <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
                         },
 
-                        setGraphic: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(newGraphic)</span> {</span>
+                        setGraphic: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(newGraphic)</span> </span>{
                             graphic = newGraphic;
 
                             <span class="hljs-keyword">this</span>.refresh();
@@ -568,7 +614,7 @@ in the details and zoomTo buttons</p>
                         * @private
                         * @return {{node: jObject, page: number}} A row node that displays graphic information. If none found, returns an object with empty jNode.
                         */</span>
-                        refresh: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        refresh: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             <span class="hljs-keyword">if</span> (graphic) {
                                 <span class="hljs-keyword">var</span> url = graphic.getLayer().url,
                                     id = GraphicExtension.getOid(graphic);
@@ -589,7 +635,7 @@ in the details and zoomTo buttons</p>
                         * @private
                         * @return {{node: jObject, page: number}} A row node that displays graphic information. If none found, returns an object with empty jNode.
                         */</span>
-                        getNode: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        getNode: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             <span class="hljs-keyword">return</span> $(<span class="hljs-built_in">String</span>.format(<span class="hljs-string">"#jqgrid tbody tr:nth-child({0})"</span>, index % gridConfig.rowsPerPage + <span class="hljs-number">1</span>));
                         },
 
@@ -599,7 +645,7 @@ in the details and zoomTo buttons</p>
                         * @method activate
                         * @private
                         */</span>
-                        activate: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        activate: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             <span class="hljs-keyword">if</span> (graphic) {
                                 <span class="hljs-keyword">this</span>.getNode().addClass(cssClass);
 
@@ -616,7 +662,7 @@ in the details and zoomTo buttons</p>
                         * @method deactivate
                         * @private
                         */</span>
-                        deactivate: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        deactivate: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             <span class="hljs-keyword">if</span> (graphic) {
                                 <span class="hljs-keyword">this</span>.getNode().removeClass(cssClass);
                                 graphic = <span class="hljs-literal">null</span>;
@@ -655,16 +701,16 @@ in the details and zoomTo buttons</p>
                 * @private
                 * @return {String} the generated row data object.
                 */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">generateToggleButtonDataForTemplate</span><span class="hljs-params">()</span> {</span></pre></div></div>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">generateToggleButtonDataForTemplate</span><span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-17">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p>TODO: if no more modification is needed, this can be omitted and merged in the higher level.
 create object for template
@@ -678,7 +724,7 @@ used by ECDMP, therefore, leave the empty value in the template</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">var</span> toggleButtonData = {
-                        buttonLabel: config.stringResources.txtSort,
+                        buttonLabel: i18n.t(<span class="hljs-string">"datagrid.sort"</span>),
                         classAddition: <span class="hljs-string">"font-medium global-button"</span>,
                         someAttribute: <span class="hljs-string">""</span>
                     };
@@ -686,16 +732,16 @@ used by ECDMP, therefore, leave the empty value in the template</p>
                     <span class="hljs-keyword">return</span> toggleButtonData;
                 }
 
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">rowRenderer</span><span class="hljs-params">(data, type, row, meta)</span> {</span></pre></div></div>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">rowRenderer</span><span class="hljs-params">(data, type, row, meta)</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-18">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>attribute = feature.attributes;
 Remember, case sensitivity MATTERS in the attribute name.</p>
@@ -719,11 +765,11 @@ Remember, case sensitivity MATTERS in the attribute name.</p>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>bundle feature into the template data object</p>
 
@@ -742,11 +788,11 @@ Remember, case sensitivity MATTERS in the attribute name.</p>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>make array containing values for each column in the full grid
 retrieve extendedGrid config object</p>
@@ -761,11 +807,11 @@ retrieve extendedGrid config object</p>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>bundle feature into the template data object</p>
 
@@ -773,16 +819,16 @@ retrieve extendedGrid config object</p>
             
             <div class="content"><div class='highlight'><pre>                            tmplData = tmplHelper.dataBuilder(obj.feature, obj.featureUrl);
 
-                            dojoArray.forEach(extendedGrid, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(col, i)</span> {</span></pre></div></div>
+                            dojoArray.forEach(extendedGrid, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(col, i)</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-22">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>add columnIdx property, and set initial value</p>
 
@@ -794,11 +840,11 @@ retrieve extendedGrid config object</p>
         </li>
         
         
-        <li id="section-23">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>Need to check if it’s a number, since the template converts
 everything into strings</p>
@@ -822,7 +868,7 @@ everything into strings</p>
                 * @method createDatatable
                 * @private
                 */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createDatatable</span><span class="hljs-params">()</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createDatatable</span><span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">var</span> forcedWidth,
                         tableOptions = {
                             info: <span class="hljs-literal">false</span>,
@@ -833,9 +879,11 @@ everything into strings</p>
                             pagingType: <span class="hljs-string">"ramp"</span>, <span class="hljs-comment">//"full_numbers",</span>
                             scrollX: <span class="hljs-literal">true</span>,
                             destroy: <span class="hljs-literal">true</span>,
-                            searching: <span class="hljs-literal">false</span>, <span class="hljs-comment">// disable filtering, otherwise there will be a performance hit</span>
                             pageLength: gridConfig.rowsPerPage,
-                            language: config.gridstrings
+                            language: i18n.t(<span class="hljs-string">"datagrid.gridstrings"</span>, { returnObjectTrees: <span class="hljs-literal">true</span> }),
+                            getTotalRecords: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                                <span class="hljs-keyword">return</span> totalRecords;
+                            }
                         };
 
                     <span class="hljs-keyword">if</span> (datagridMode === GRID_MODE_SUMMARY) {
@@ -849,7 +897,8 @@ everything into strings</p>
                                     render: rowRenderer,
                                     orderable: <span class="hljs-literal">true</span>
                                 }],
-                                dom: <span class="hljs-string">'&lt;"jqgrid_table_wrapper summary-table"t&gt;&lt;"status-line"p&gt;'</span>
+                                dom: <span class="hljs-string">'&lt;"jqgrid_table_wrapper summary-table"t&gt;&lt;"status-line"p&gt;'</span>,
+                                searching: <span class="hljs-literal">true</span>
                             }
                         );
                     } <span class="hljs-keyword">else</span> {</pre></div></div>
@@ -857,11 +906,11 @@ everything into strings</p>
         </li>
         
         
-        <li id="section-24">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>layout for variable column (extended grid)</p>
 
@@ -869,7 +918,7 @@ everything into strings</p>
             
             <div class="content"><div class='highlight'><pre>                        tableOptions = lang.mixin(tableOptions,
                             {
-                                columns: dojoArray.map(getGridConfig(ui.getSelectedDatasetUrl()).gridColumns, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(column)</span> {</span>
+                                columns: ui.getSelectedDatasetUrl() === <span class="hljs-literal">null</span> ? [{ title: <span class="hljs-string">""</span> }] : dojoArray.map(getGridConfig(ui.getSelectedDatasetUrl()).gridColumns, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(column)</span> </span>{
                                     <span class="hljs-keyword">return</span> {
                                         title: column.title,
                                         width: column.width ? column.width : <span class="hljs-string">"100px"</span>,
@@ -879,7 +928,8 @@ everything into strings</p>
                                     };
                                 }),
                                 dom: <span class="hljs-string">'&lt;"jqgrid_table_wrapper full-table"t&gt;&lt;"status-line"p&gt;'</span>,
-                                scrollY: <span class="hljs-string">"500px"</span> <span class="hljs-comment">// just a placeholder; it will be dynamically updated later</span>
+                                scrollY: <span class="hljs-string">"500px"</span>, <span class="hljs-comment">// just a placeholder; it will be dynamically updated later</span>
+                                searching: config.datagrid.extendedExtentFilterEnabled
                             }
                         );
                     }
@@ -889,11 +939,11 @@ everything into strings</p>
         </li>
         
         
-        <li id="section-25">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>True if a page change just occurred
 False otherwise</p>
@@ -903,29 +953,29 @@ False otherwise</p>
             <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">var</span> pageChange = <span class="hljs-literal">false</span>;
 
                     oTable = jqgrid.DataTable(tableOptions)
-                        .on(<span class="hljs-string">"page.dt"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        .on(<span class="hljs-string">"page.dt"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             topic.publish(EventManager.GUI.SUBPANEL_DOCK, { origin: <span class="hljs-string">"datagrid,ex-datagrid"</span> });
 
-                            console.log(<span class="hljs-string">"subPanleDock"</span>);
+                            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"subPanleDock"</span>);
 
                             pageChange = <span class="hljs-literal">true</span>;
                         })
-                        .on(<span class="hljs-string">"order.dt"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        .on(<span class="hljs-string">"order.dt"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             topic.publish(EventManager.GUI.SUBPANEL_DOCK, { origin: <span class="hljs-string">"datagrid,ex-datagrid"</span> });
 
-                            console.log(<span class="hljs-string">"subPanleDock"</span>);
+                            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"subPanleDock"</span>);
                         })
-                        .on(<span class="hljs-string">"draw.dt"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        .on(<span class="hljs-string">"draw.dt"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             cacheSortedData();</pre></div></div>
             
         </li>
         
         
-        <li id="section-26">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>Do not activateRows if we’re doing a page change</p>
 
@@ -953,11 +1003,11 @@ False otherwise</p>
         </li>
         
         
-        <li id="section-27">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>DO:Clean;</p>
 
@@ -968,11 +1018,11 @@ False otherwise</p>
         </li>
         
         
-        <li id="section-28">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>explicitly set height of the scrollbody so the horizontal scrollbar is visible</p>
 
@@ -983,11 +1033,11 @@ False otherwise</p>
         </li>
         
         
-        <li id="section-29">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>explicitly force-set width of the jqgrid so it wouldn’t compress when a sub-panel is opened
 also check if the width is no greater than that of the container, hide the horizontal scrollbar</p>
@@ -1013,16 +1063,16 @@ also check if the width is no greater than that of the container, hide the horiz
                 * @method initTooltips
                 * @private
                 */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initTooltips</span><span class="hljs-params">()</span> {</span></pre></div></div>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initTooltips</span><span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-30">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>/ <summary>
 / initialize tooltips for the datagrid
@@ -1031,7 +1081,7 @@ also check if the width is no greater than that of the container, hide the horiz
             </div>
             
             <div class="content"><div class='highlight'><pre>                    popupManager.registerPopup(sectionNode, <span class="hljs-string">"hoverIntent"</span>,
-                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.target.attr(<span class="hljs-string">"title"</span>)) {
                                 <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.target.isOverflowed()) {
                                     <span class="hljs-keyword">this</span>.target.tooltipster({ theme: <span class="hljs-string">'.tooltipster-dark'</span> }).tooltipster(<span class="hljs-string">"show"</span>);
@@ -1054,8 +1104,8 @@ also check if the width is no greater than that of the container, hide the horiz
                 * @method setButtonEvents
                 * @private
                 */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setButtonEvents</span><span class="hljs-params">()</span> {</span>
-                    sectionNode.on(<span class="hljs-string">"click"</span>, <span class="hljs-string">"button.details"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setButtonEvents</span><span class="hljs-params">()</span> </span>{
+                    sectionNode.on(<span class="hljs-string">"click"</span>, <span class="hljs-string">"button.details"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         <span class="hljs-keyword">var</span> buttonNode = $(<span class="hljs-keyword">this</span>),
                             url = buttonNode.data(featureUrlField),
                             oid = buttonNode.data(featureOidField);  <span class="hljs-comment">//TODO: replace with better selector</span>
@@ -1074,17 +1124,17 @@ also check if the width is no greater than that of the container, hide the horiz
         </li>
         
         
-        <li id="section-31">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>Event handling for “Zoom To” button</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    sectionNode.on(<span class="hljs-string">"click"</span>, <span class="hljs-string">"button.zoomto"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
+            <div class="content"><div class='highlight'><pre>                    sectionNode.on(<span class="hljs-string">"click"</span>, <span class="hljs-string">"button.zoomto"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> </span>{
                         <span class="hljs-keyword">var</span> zoomNode = $(<span class="hljs-keyword">this</span>);
 
                         zoomlightRow.focusedButton = <span class="hljs-string">"button.zoomto"</span>;</pre></div></div>
@@ -1092,28 +1142,28 @@ also check if the width is no greater than that of the container, hide the horiz
         </li>
         
         
-        <li id="section-32">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>Zoom To</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                        <span class="hljs-keyword">if</span> (zoomNode.text() === config.stringResources.txtGrid_zoomTo) {
-                            handleGridEvent(evt, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>                        <span class="hljs-keyword">if</span> (zoomNode.text() === i18n.t(<span class="hljs-string">"datagrid.zoomTo"</span>)) {
+                            handleGridEvent(evt, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                                 zoomToGraphic = getGraphicFromButton(zoomNode);</pre></div></div>
             
         </li>
         
         
-        <li id="section-33">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <p>store the current extent, then zoom to point.</p>
 
@@ -1126,11 +1176,11 @@ also check if the width is no greater than that of the container, hide the horiz
         </li>
         
         
-        <li id="section-34">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <p>Update “zoom back” text after the extent change, if we update it
 before the extent change, it won’t work since the datagrid gets
@@ -1138,16 +1188,16 @@ repopulated after an extent change</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                                utilMisc.subscribeOnce(EventManager.Datagrid.EXTENT_FILTER_END, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>                                utilMisc.subscribeOnce(EventManager.Datagrid.EXTENT_FILTER_END, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-35">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <p>Find the first node with the same oid, featureUrl</p>
 
@@ -1156,16 +1206,36 @@ repopulated after an extent change</p>
             <div class="content"><div class='highlight'><pre>                                    <span class="hljs-keyword">var</span> newNode = $(<span class="hljs-built_in">String</span>.format(<span class="hljs-string">"button.zoomto[data-{0}='{1}'][data-{2}='{3}']:eq(0)"</span>,
                                                     featureOidField, GraphicExtension.getOid(zoomToGraphic),
                                                     featureUrlField, zoomToGraphic.getLayer().url));
-                                    newNode.text(config.stringResources.txtGrid_zoomBack);
+                                    newNode.text(i18n.t(<span class="hljs-string">"datagrid.zoomBack"</span>));
                                 });
                             });
                         } <span class="hljs-keyword">else</span> { <span class="hljs-comment">// Zoom back</span>
                             DatagridClickHandler.onZoomBack(zoomToGraphic);
-                            zoomNode.text(config.stringResources.txtGrid_zoomTo);
+                            zoomNode.text(i18n.t(<span class="hljs-string">"datagrid.zoomTo"</span>));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>Reset focus back to “Zoom To” link after map extent change</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                            utilMisc.subscribeOnce(EventManager.Datagrid.EXTENT_FILTER_END, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                                <span class="hljs-keyword">var</span> newNode = $(<span class="hljs-built_in">String</span>.format(<span class="hljs-string">"button.zoomto[data-{0}='{1}'][data-{2}='{3}']:eq(0)"</span>,
+                                        featureOidField, GraphicExtension.getOid(zoomToGraphic),
+                                        featureUrlField, zoomToGraphic.getLayer().url));
+                                newNode.focus();
+                            });
                         }
                     });
 
-                    sectionNode.on(<span class="hljs-string">"click"</span>, <span class="hljs-string">"button.global-button"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                    sectionNode.on(<span class="hljs-string">"click"</span>, <span class="hljs-string">"button.global-button"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         <span class="hljs-keyword">var</span> buttonNode = $(<span class="hljs-keyword">this</span>);
 
                         <span class="hljs-keyword">if</span> (currentSortingMode === <span class="hljs-string">"asc"</span>) {
@@ -1182,32 +1252,32 @@ repopulated after an extent change</p>
         </li>
         
         
-        <li id="section-36">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <p>Adds an event trigger for the expansion of the datagrid control</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    sectionNode.on(<span class="hljs-string">"click"</span>, <span class="hljs-string">"button.expand"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>                    sectionNode.on(<span class="hljs-string">"click"</span>, <span class="hljs-string">"button.expand"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         <span class="hljs-keyword">var</span> d = <span class="hljs-keyword">new</span> Deferred();
-                        console.log(<span class="hljs-string">"grid expanded!"</span>);
+                        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"grid expanded!"</span>);
 
                         datagridMode = datagridMode === GRID_MODE_SUMMARY ? GRID_MODE_FULL : GRID_MODE_SUMMARY;
 
-                        d.then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        d.then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             initScrollListeners();
                         });
 
                         refreshPanel(d);
 
-                        topic.publish(<span class="hljs-string">"gui/grid/expand"</span>);
+                        topic.publish(EventManager.GUI.DATAGRID_EXPAND);
                     });
 
-                    sectionNode.on(<span class="hljs-string">"change"</span>, <span class="hljs-string">"#datasetSelector"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                    sectionNode.on(<span class="hljs-string">"change"</span>, <span class="hljs-string">"#datasetSelector"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         <span class="hljs-keyword">var</span> controlNode = $(<span class="hljs-keyword">this</span>),
                             optionSelected = controlNode.find(<span class="hljs-string">"option:selected"</span>),
                             state = (optionSelected[<span class="hljs-number">0</span>].value === selectedDatasetUrl);
@@ -1215,7 +1285,7 @@ repopulated after an extent change</p>
                         updateDatasetSelectorState(state);
                     });
 
-                    sectionNode.on(<span class="hljs-string">"click"</span>, <span class="hljs-string">"#datasetSelectorSubmitButton"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                    sectionNode.on(<span class="hljs-string">"click"</span>, <span class="hljs-string">"#datasetSelectorSubmitButton"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         <span class="hljs-keyword">var</span> optionSelected = datasetSelector.find(<span class="hljs-string">"option:selected"</span>);
 
                         <span class="hljs-keyword">if</span> (optionSelected.length &gt; <span class="hljs-number">0</span>) {
@@ -1228,7 +1298,7 @@ repopulated after an extent change</p>
                     });
 
                     popupManager.registerPopup(sectionNode, <span class="hljs-string">"hover, focus"</span>,
-                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> {</span>
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> </span>{
                             <span class="hljs-keyword">this</span>.target.removeClass(<span class="hljs-string">"wb-invisible"</span>);
                             d.resolve();
                         },
@@ -1237,8 +1307,9 @@ repopulated after an extent change</p>
 
                             targetSelector: <span class="hljs-string">".record-controls"</span>,
 
-                            closeHandler: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> {</span>
+                            closeHandler: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> </span>{
                                 <span class="hljs-keyword">this</span>.target.addClass(<span class="hljs-string">"wb-invisible"</span>);
+
                                 d.resolve();
                             },
 
@@ -1248,7 +1319,7 @@ repopulated after an extent change</p>
                     );
 
                     popupManager.registerPopup(sectionNode, <span class="hljs-string">"hover, focus"</span>,
-                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> {</span>
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> </span>{
                             d.resolve();
                         },
                         {
@@ -1259,7 +1330,7 @@ repopulated after an extent change</p>
                     );
 
                     popupManager.registerPopup(sectionNode, <span class="hljs-string">"dblclick"</span>,
-                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> {</span>
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> </span>{
                             <span class="hljs-keyword">var</span> <span class="hljs-comment">//oldHandles = jqgrid.find(".expand-cell"),</span>
                                 extraPadding = (<span class="hljs-keyword">this</span>.handle.outerHeight() - <span class="hljs-keyword">this</span>.target.height()) / <span class="hljs-number">2</span>;
 
@@ -1268,11 +1339,11 @@ repopulated after an extent change</p>
         </li>
         
         
-        <li id="section-37">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>TweenLite.set(“.expand-cell”, { className: “-=expand-cell” });</p>
 
@@ -1280,7 +1351,7 @@ repopulated after an extent change</p>
             
             <div class="content"><div class='highlight'><pre>                            TweenLite.set(<span class="hljs-keyword">this</span>.handle, { padding: extraPadding });
 
-                            window.getSelection().removeAllRanges();
+                            <span class="hljs-built_in">window</span>.getSelection().removeAllRanges();
 
                             d.resolve();
                         },
@@ -1289,7 +1360,7 @@ repopulated after an extent change</p>
 
                             targetSelector: <span class="hljs-string">".title-span"</span>,
 
-                            closeHandler: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> {</span>
+                            closeHandler: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> </span>{
                                 TweenLite.set(<span class="hljs-keyword">this</span>.handle, { clearProps: <span class="hljs-string">"padding"</span> });
                                 TweenLite.set(<span class="hljs-keyword">this</span>.handle, { className: <span class="hljs-string">"-=expand-cell"</span> });
 
@@ -1308,12 +1379,12 @@ repopulated after an extent change</p>
                 * @method initScrollListeners
                 * @private
                 */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initScrollListeners</span><span class="hljs-params">()</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initScrollListeners</span><span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">var</span> currentTopScroll,
                         currentBottomScroll;
 
                     <span class="hljs-keyword">if</span> (datagridMode === GRID_MODE_SUMMARY) {
-                        jqgridTableWrapper.scroll(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        jqgridTableWrapper.scroll(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             currentTopScroll = jqgridTableWrapper.scrollTop();
                             currentBottomScroll = dataTablesScroll.height() - jqgridTableWrapper.scrollTop() - jqgridTableWrapper.height();
 
@@ -1330,7 +1401,7 @@ repopulated after an extent change</p>
                             }
                         });
                     } <span class="hljs-keyword">else</span> {
-                        dataTablesScrollBody.scroll(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        dataTablesScrollBody.scroll(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             currentTopScroll = dataTablesScrollBody.scrollTop();
 
                             <span class="hljs-keyword">if</span> (currentTopScroll === <span class="hljs-number">0</span>) {
@@ -1349,7 +1420,7 @@ repopulated after an extent change</p>
                 * @private
                 * @param {Object} event A thrown event that contains a graphic object inside the grid
                 */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">highlightrowShow</span><span class="hljs-params">(event)</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">highlightrowShow</span><span class="hljs-params">(event)</span> </span>{
                     highlightrowHide();
 
                     highlightRow.setGraphic(event.graphic);
@@ -1360,11 +1431,11 @@ repopulated after an extent change</p>
         </li>
         
         
-        <li id="section-38">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <p>applyExtentFilter();</p>
 
@@ -1379,7 +1450,7 @@ repopulated after an extent change</p>
                 * @method highlightrowHide
                 * @private
                 */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">highlightrowHide</span><span class="hljs-params">()</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">highlightrowHide</span><span class="hljs-params">()</span> </span>{
                     highlightRow.deactivate();
 
                     DatagridClickHandler.onZoomCancel();
@@ -1392,7 +1463,7 @@ repopulated after an extent change</p>
                 * @private
                 * @param {Object} event A thrown event that contains a graphic object inside the grid
                 */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">zoomlightrowShow</span><span class="hljs-params">(event)</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">zoomlightrowShow</span><span class="hljs-params">(event)</span> </span>{
                     zoomlightRow.setGraphic(event.graphic);
                 }
 
@@ -1402,7 +1473,7 @@ repopulated after an extent change</p>
                 * @method zoomlightrowHide
                 * @private
                 */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">zoomlightrowHide</span><span class="hljs-params">()</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">zoomlightrowHide</span><span class="hljs-params">()</span> </span>{
                     zoomlightRow.deactivate();
                 }
 
@@ -1414,7 +1485,7 @@ repopulated after an extent change</p>
                 * @method initUIListeners
                 * @private
                 */</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initUIListeners</span><span class="hljs-params">()</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initUIListeners</span><span class="hljs-params">()</span> </span>{
                     topic.subscribe(EventManager.Datagrid.HIGHLIGHTROW_SHOW, highlightrowShow);
 
                     topic.subscribe(EventManager.Datagrid.HIGHLIGHTROW_HIDE, highlightrowHide);
@@ -1424,17 +1495,17 @@ repopulated after an extent change</p>
                     topic.subscribe(EventManager.Datagrid.ZOOMLIGHTROW_HIDE, zoomlightrowHide);
                 }
 
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateDatasetSelectorState</span><span class="hljs-params">(state)</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateDatasetSelectorState</span><span class="hljs-params">(state)</span> </span>{
                     <span class="hljs-keyword">var</span> layer;
 
                     datasetSelectorSubmitButton
                         .attr(<span class="hljs-string">"disabled"</span>, state)
                         .text(state ?
-                            GlobalStorage.config.stringResources.txtDatasetSelectorButtonLoaded
-                            : GlobalStorage.config.stringResources.txtDatasetSelectorButtonLoad);
+                            i18n.t(<span class="hljs-string">"datagrid.ex.datasetSelectorButtonLoaded"</span>)
+                            : i18n.t(<span class="hljs-string">"datagrid.ex.datasetSelectorButtonLoad"</span>));
 
                     layer = dojoArray.filter(GlobalStorage.config.featureLayers,
-                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layer)</span> {</span>
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layer)</span> </span>{
                             <span class="hljs-keyword">return</span> layer.url === selectedDatasetUrl;
                         });
 
@@ -1443,7 +1514,7 @@ repopulated after an extent change</p>
                     }
                 }
 
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">refreshTable</span><span class="hljs-params">()</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">refreshTable</span><span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">var</span> duration = <span class="hljs-number">0.2</span>,
                         tl = <span class="hljs-keyword">new</span> TimelineLite({ paused: <span class="hljs-literal">true</span> }),
                         newWrapper,
@@ -1467,7 +1538,7 @@ repopulated after an extent change</p>
                     tl.set(jqgridWrapper, { className: <span class="hljs-string">"+=animated fadeOut"</span> });
 
                     <span class="hljs-comment">/*jshint validthis: true */</span>
-                    tl.call(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                    tl.call(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         tl.pause();
 
                         jqgridWrapper.replaceWith(newWrapper);
@@ -1478,17 +1549,17 @@ repopulated after an extent change</p>
         </li>
         
         
-        <li id="section-39">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>continue with transition when apply filter finished</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                        deffered.then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>                        deffered.then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             tl.set(jqgrid, { className: <span class="hljs-string">"-=animated fadeIn"</span> }, <span class="hljs-string">"+="</span> + duration);
                             tl.resume();
                         });
@@ -1502,16 +1573,16 @@ repopulated after an extent change</p>
                     tl.play();
                 }
 
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">refreshPanel</span><span class="hljs-params">(d)</span> {</span></pre></div></div>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">refreshPanel</span><span class="hljs-params">(d)</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-40">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>using template to generate global checkboxes</p>
 
@@ -1534,19 +1605,37 @@ repopulated after an extent change</p>
 
                     <span class="hljs-keyword">if</span> (datagridMode === GRID_MODE_SUMMARY) {
                         templateKey = <span class="hljs-string">"datagrid_manager_Template"</span>;
-                        templateData.buttons.toggleTitle = GlobalStorage.config.stringResources.txtFullData;
+                        templateData.buttons.toggleTitle = i18n.t(<span class="hljs-string">"datagrid.fullData"</span>);
 
                         <span class="hljs-keyword">if</span> (extendedTabTitle) {
                             extendedTabTitle.remove();
                         }
                     } <span class="hljs-keyword">else</span> {
-                        templateKey = <span class="hljs-string">"datagrid_full_manager_Template"</span>;
+                        templateKey = <span class="hljs-string">"datagrid_full_manager_Template"</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>filter out static layers</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                        <span class="hljs-keyword">var</span> nonStaticFeatureLayers = dojoArray.filter(GlobalStorage.config.featureLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerConfig)</span> </span>{
+                            <span class="hljs-keyword">var</span> layer = GlobalStorage.map.getLayer(layerConfig.id);
+                            <span class="hljs-keyword">return</span> layer.ramp.type !== GlobalStorage.layerType.Static &amp;&amp; layer.visible;
+                        });
 
                         templateData.buttons = lang.mixin(templateData.buttons,
                             {
-                                datasets: GlobalStorage.config.featureLayers,
-                                toggleTitle: GlobalStorage.config.stringResources.txtDataSummary,
-                                txtDataset: GlobalStorage.config.stringResources.txtDataset
+                                datasets: nonStaticFeatureLayers,
+                                toggleTitle: i18n.t(<span class="hljs-string">"datagrid.ex.dataSummary"</span>),
+                                txtDataset: i18n.t(<span class="hljs-string">"datagrid.ex.dataset"</span>)
                             }
                         );
 
@@ -1576,7 +1665,7 @@ repopulated after an extent change</p>
                     }
 
                     <span class="hljs-comment">/*jshint validthis: true */</span>
-                    tl.call(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                    tl.call(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         tl.pause();
 
                         sectionNode.empty().append(section);
@@ -1603,7 +1692,7 @@ repopulated after an extent change</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                        deffered.then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>                        deffered.then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1632,7 +1721,7 @@ repopulated after an extent change</p>
                     tl.play();
                 }
 
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">activateRows</span><span class="hljs-params">()</span> {</span></pre></div></div>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">activateRows</span><span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1691,7 +1780,7 @@ jqgrid.dataTable().find(“button:first”).focus();</p>
                     capturePanel();
                 }
 
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">capturePanel</span><span class="hljs-params">()</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">capturePanel</span><span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">var</span> origin = <span class="hljs-string">"datagrid"</span>,
                         target = highlightRow.getNode().find(<span class="hljs-string">".record-controls"</span>);
 
@@ -1709,7 +1798,7 @@ jqgrid.dataTable().find(“button:first”).focus();</p>
                     }
                 }
 
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">adjustPanelWidth</span><span class="hljs-params">()</span> {</span>
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">adjustPanelWidth</span><span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">if</span> (datagridMode === GRID_MODE_SUMMARY) {
                         utilMisc.adjustWidthForSrollbar(jqgridTableWrapper, [datagridGlobalToggles, datagridStatusLine]);
                     } <span class="hljs-keyword">else</span> {
@@ -1730,10 +1819,10 @@ jqgrid.dataTable().find(“button:first”).focus();</p>
                     *
                     */</span>
                     init: utilMisc.once(
-                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             <span class="hljs-keyword">var</span> d = <span class="hljs-keyword">new</span> Deferred();
                             d.then(
-                                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                                     _isReady = <span class="hljs-literal">true</span>;
 
                                     initTooltips();
@@ -1748,16 +1837,20 @@ jqgrid.dataTable().find(“button:first”).focus();</p>
                         }
                 ),
 
-                    getDatagridMode: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                    getDatagridMode: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         <span class="hljs-keyword">return</span> datagridMode;
                     },
 
-                    getSelectedDatasetUrl: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                    getSelectedDatasetUrl: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         <span class="hljs-keyword">if</span> (!selectedDatasetUrl) {
                             <span class="hljs-keyword">if</span> (datasetSelector.find(<span class="hljs-string">"option:selected"</span>).length &gt; <span class="hljs-number">0</span>) {
                                 selectedDatasetUrl = datasetSelector.find(<span class="hljs-string">"option:selected"</span>)[<span class="hljs-number">0</span>].value;
                             } <span class="hljs-keyword">else</span> {
-                                selectedDatasetUrl = GlobalStorage.config.featureLayers[<span class="hljs-number">0</span>].url;
+                                <span class="hljs-keyword">var</span> firstVisibleLayer = UtilArray.find(GlobalStorage.config.featureLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerConfig)</span> </span>{
+                                    <span class="hljs-keyword">var</span> layer = GlobalStorage.map.getLayer(layerConfig.id);
+                                    <span class="hljs-keyword">return</span> layer.visible &amp;&amp; layer.ramp.type !== GlobalStorage.layerType.Static;
+                                });
+                                selectedDatasetUrl = firstVisibleLayer === <span class="hljs-literal">null</span> ? <span class="hljs-literal">null</span> : firstVisibleLayer.url;
                             }
                         } <span class="hljs-keyword">else</span> {
                             datasetSelector.find(<span class="hljs-string">"option[value='"</span> + selectedDatasetUrl + <span class="hljs-string">"']"</span>).prop(<span class="hljs-string">'selected'</span>, <span class="hljs-literal">true</span>);
@@ -1771,7 +1864,7 @@ jqgrid.dataTable().find(“button:first”).focus();</p>
                     * @method isReady
                     * @returns {Boolean} _isReady flag indicating the render status of the data grid
                     */</span>
-                    isReady: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                    isReady: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         <span class="hljs-keyword">return</span> _isReady;
                     },
 
@@ -1799,11 +1892,11 @@ jqgrid.dataTable().find(“button:first”).focus();</p>
         * @method cacheSortedData
         * @private
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">cacheSortedData</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">cacheSortedData</span><span class="hljs-params">()</span> </span>{
             <span class="hljs-keyword">var</span> elements = oTable.rows().data();
             featureToPage = {
             };
-            $.each(elements, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(idx, val)</span> {</span>
+            $.each(elements, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(idx, val)</span> </span>{
                 <span class="hljs-keyword">var</span> layer = val.last().featureUrl,
                     fid = GraphicExtension.getOid(val.last().feature);
 
@@ -1822,7 +1915,7 @@ jqgrid.dataTable().find(“button:first”).focus();</p>
         * @param {String} url
         * @return {Object} grid config
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getGridConfig</span><span class="hljs-params">(url)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getGridConfig</span><span class="hljs-params">(url)</span> </span>{
             <span class="hljs-keyword">return</span> Ramp.getLayerConfig(url).datagrid;
         }
 
@@ -1834,9 +1927,9 @@ jqgrid.dataTable().find(“button:first”).focus();</p>
         * @method handleGridEvent
         * @private
         * @param {Event} e the event object
-        * @param {Function} callback fcn the callback function
+        * @param {Function} callback the callback function
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handleGridEvent</span><span class="hljs-params">(e, callback)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handleGridEvent</span><span class="hljs-params">(e, callback)</span> </span>{
             <span class="hljs-keyword">if</span> ((e.type === <span class="hljs-string">"keypress"</span> &amp;&amp; e.keyCode === <span class="hljs-number">13</span>) || e.type === <span class="hljs-string">"click"</span>) {
                 callback();</pre></div></div>
             
@@ -1857,37 +1950,16 @@ jqgrid.dataTable().find(“button:first”).focus();</p>
         }
         <span class="hljs-comment">/**
         * Gets all layer data in the current map extent that are visible, and put the data into the data grid.
+        *
         * @method applyExtentFilter
+        * @param {A Deferred object} d
+        *
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">applyExtentFilter</span><span class="hljs-params">(d)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">applyExtentFilter</span><span class="hljs-params">(d)</span> </span>{
             <span class="hljs-keyword">var</span> visibleFeatures = {},
                 visibleGridLayers = RampMap.getVisibleFeatureLayers(),
                 dataGridMode = ui.getDatagridMode(),
-                q = <span class="hljs-keyword">new</span> EsriQuery();
-
-            <span class="hljs-keyword">if</span> (dataGridMode === GRID_MODE_FULL) {
-                visibleGridLayers = dojoArray.filter(visibleGridLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layer)</span> {</span>
-                    <span class="hljs-keyword">return</span> layer.url === ui.getSelectedDatasetUrl();
-                });
-            }
-
-            q.geometry = RampMap.getMap().extent;
-            q.outFields = [<span class="hljs-string">"*"</span>];
-
-            <span class="hljs-keyword">var</span> deferredList = dojoArray.map(visibleGridLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(gridLayer)</span> {</span>
-                <span class="hljs-keyword">return</span> gridLayer.queryFeatures(q).then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(features)</span> {</span>
-                    <span class="hljs-keyword">if</span> (features.features.length &gt; <span class="hljs-number">0</span>) {
-                        <span class="hljs-keyword">var</span> layer = features.features[<span class="hljs-number">0</span>].getLayer(),
-                            layerUrl = layer.url;
-
-                        <span class="hljs-keyword">if</span> (!layer.visible &amp;&amp; dataGridMode === GRID_MODE_SUMMARY) {
-                            <span class="hljs-keyword">delete</span> visibleFeatures[layerUrl];
-                        } <span class="hljs-keyword">else</span> {
-                            visibleFeatures[layerUrl] = features.features;
-                        }
-                    }
-                });
-            });</pre></div></div>
+                q = <span class="hljs-keyword">new</span> EsriQuery();</pre></div></div>
             
         </li>
         
@@ -1898,11 +1970,85 @@ jqgrid.dataTable().find(“button:first”).focus();</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
+              <p>filter out static layers</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            visibleGridLayers = dojoArray.filter(visibleGridLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layer)</span> </span>{
+                <span class="hljs-keyword">return</span> layer.ramp.type !== GlobalStorage.layerType.Static;
+            });
+
+            <span class="hljs-keyword">if</span> (dataGridMode === GRID_MODE_FULL) {
+                visibleGridLayers = dojoArray.filter(visibleGridLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layer)</span> </span>{
+                    <span class="hljs-keyword">return</span> layer.url === ui.getSelectedDatasetUrl();
+                });
+
+                <span class="hljs-keyword">if</span> (config.datagrid.extendedExtentFilterEnabled) {
+                    q.geometry = RampMap.getMap().extent;
+                } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-49">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-49">&#182;</a>
+              </div>
+              <p>Grab everything!</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    q.where = <span class="hljs-string">"1 = 1"</span>;
+                }
+            } <span class="hljs-keyword">else</span> { <span class="hljs-comment">// Summary Mode</span>
+                q.geometry = RampMap.getMap().extent;
+            }
+
+            q.outFields = [<span class="hljs-string">"*"</span>];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-50">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-50">&#182;</a>
+              </div>
+              <p>Update total records</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            totalRecords = <span class="hljs-number">0</span>;
+            dojoArray.forEach(visibleGridLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layer)</span> </span>{
+                totalRecords += layer.graphics.length;
+            });
+
+            <span class="hljs-keyword">var</span> deferredList = dojoArray.map(visibleGridLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(gridLayer)</span> </span>{
+                <span class="hljs-keyword">return</span> gridLayer.queryFeatures(q).then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(features)</span> </span>{
+                    <span class="hljs-keyword">if</span> (features.features.length &gt; <span class="hljs-number">0</span>) {
+                        <span class="hljs-keyword">var</span> layer = features.features[<span class="hljs-number">0</span>].getLayer();
+                        visibleFeatures[layer.url] = features.features;
+                    }
+                });
+            });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-51">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-51">&#182;</a>
+              </div>
               <p>Execute this only after all the deferred objects has resolved</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            utilMisc.afterAll(deferredList, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>            utilMisc.afterAll(deferredList, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 fetchRecords(visibleFeatures);
 
                 <span class="hljs-keyword">if</span> (d) {
@@ -1919,18 +2065,18 @@ jqgrid.dataTable().find(“button:first”).focus();</p>
         * @param {Object} feature the feature needs to be represented in the datagrid
         * return {Array} an array representing the data the given feature contains.
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getDataObject</span><span class="hljs-params">(feature)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getDataObject</span><span class="hljs-params">(feature)</span> </span>{
             <span class="hljs-keyword">var</span> url = feature.getLayer().url,
                 innerArray;</pre></div></div>
             
         </li>
         
         
-        <li id="section-49">
+        <li id="section-52">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-49">&#182;</a>
+                <a class="pilcrow" href="#section-52">&#182;</a>
               </div>
               <p>attribute = feature.attributes;</p>
 
@@ -1939,11 +2085,11 @@ jqgrid.dataTable().find(“button:first”).focus();</p>
         </li>
         
         
-        <li id="section-50">
+        <li id="section-53">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-50">&#182;</a>
+                <a class="pilcrow" href="#section-53">&#182;</a>
               </div>
               <p>Remember, case sensitivity MATTERS in the attribute name.</p>
 
@@ -1957,11 +2103,11 @@ jqgrid.dataTable().find(“button:first”).focus();</p>
         </li>
         
         
-        <li id="section-51">
+        <li id="section-54">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-51">&#182;</a>
+                <a class="pilcrow" href="#section-54">&#182;</a>
               </div>
               <p>make array containing values for each column in the full grid</p>
 
@@ -1972,11 +2118,11 @@ jqgrid.dataTable().find(“button:first”).focus();</p>
         </li>
         
         
-        <li id="section-52">
+        <li id="section-55">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-52">&#182;</a>
+                <a class="pilcrow" href="#section-55">&#182;</a>
               </div>
               <p>retrieve extendedGrid config object</p>
 
@@ -1987,17 +2133,17 @@ jqgrid.dataTable().find(“button:first”).focus();</p>
         </li>
         
         
-        <li id="section-53">
+        <li id="section-56">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-53">&#182;</a>
+                <a class="pilcrow" href="#section-56">&#182;</a>
               </div>
               <p>process each column and add to row</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                dojoArray.forEach(extendedGrid, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(column)</span> {</span>
+            <div class="content"><div class='highlight'><pre>                dojoArray.forEach(extendedGrid, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(column)</span> </span>{
                     innerArray.push(feature.attributes[column.fieldName] || <span class="hljs-string">""</span>);
                 });
             }</pre></div></div>
@@ -2005,11 +2151,11 @@ jqgrid.dataTable().find(“button:first”).focus();</p>
         </li>
         
         
-        <li id="section-54">
+        <li id="section-57">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-54">&#182;</a>
+                <a class="pilcrow" href="#section-57">&#182;</a>
               </div>
               <p>TODO may want to move the generation of this custom object to a separate area, as this data will be useful in
     both the summary and full grid state.  Will need some thinking.</p>
@@ -2019,11 +2165,11 @@ jqgrid.dataTable().find(“button:first”).focus();</p>
         </li>
         
         
-        <li id="section-55">
+        <li id="section-58">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-55">&#182;</a>
+                <a class="pilcrow" href="#section-58">&#182;</a>
               </div>
               <p>Includes fields that are useful which are not derived from the config.featureSources
 this should not draw, as there will be no column defined for it</p>
@@ -2039,6 +2185,10 @@ this should not draw, as there will be no column defined for it</p>
             <span class="hljs-keyword">return</span> innerArray;
         }
 
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateRecordsCount</span><span class="hljs-params">(visibleRecords)</span> </span>{
+            $(<span class="hljs-string">".pagination-record-number"</span>).text(<span class="hljs-built_in">String</span>.format(<span class="hljs-string">"{0}/{1} {2}"</span>, visibleRecords, totalRecords, i18n.t(<span class="hljs-string">"datagrid.gridstrings.oPaginate.sRecords"</span>)));
+        }
+
         <span class="hljs-comment">/**
         * Populate the datagrid with data in visibleFeatures
         *
@@ -2047,58 +2197,8 @@ this should not draw, as there will be no column defined for it</p>
         * service url to an array of feature objects
         * @private
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fetchRecords</span><span class="hljs-params">(visibleFeatures)</span> {</span>
-            jqgrid.DataTable().clear(); <span class="hljs-comment">// Do NOT redraw the datatable at this point</span>
-
-            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Object</span>.keys(visibleFeatures).isEmpty()) {
-                jqgrid.DataTable().draw();
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">var</span> data = [];</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-56">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-56">&#182;</a>
-              </div>
-              <p>for each feature layer</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            utilDict.forEachEntry(visibleFeatures, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, features)</span> {</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-57">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-57">&#182;</a>
-              </div>
-              <p>for each feature in a specific layer</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                data = data.concat(dojoArray.map(features, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(feature)</span> {</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-58">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-58">&#182;</a>
-              </div>
-              <p>return the appropriate data object for the feature (.map puts them in array form)</p>
-
-            </div>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fetchRecords</span><span class="hljs-params">(visibleFeatures)</span> </span>{
+            <span class="hljs-keyword">if</span> (jqgrid === <span class="hljs-literal">undefined</span>) {</pre></div></div>
             
         </li>
         
@@ -2109,17 +2209,22 @@ this should not draw, as there will be no column defined for it</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-59">&#182;</a>
               </div>
-              <p>“cache” the data object so we don’t have to generate it again</p>
+              <p>fetchRecords call made prior ty jqgrid creation
+TODO: consider adding a log.warning(‘fetchRecords called prior to grid initialization’)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">return</span> feature[ui.getDatagridMode()] ? feature[ui.getDatagridMode()] : feature[ui.getDatagridMode()] = getDataObject(feature);
-                }));
-            });
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">return</span>;
+            }
+            jqgrid.DataTable().clear(); <span class="hljs-comment">// Do NOT redraw the datatable at this point</span>
 
-            oTable.one(<span class="hljs-string">"draw.dt"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                topic.publish(EventManager.Datagrid.EXTENT_FILTER_END);
-            });</pre></div></div>
+            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Object</span>.keys(visibleFeatures).isEmpty()) {
+                updateRecordsCount(<span class="hljs-number">0</span>);
+                jqgrid.DataTable().draw();
+                <span class="hljs-keyword">return</span>;
+            }
+
+            <span class="hljs-keyword">var</span> data = [];</pre></div></div>
             
         </li>
         
@@ -2130,11 +2235,11 @@ this should not draw, as there will be no column defined for it</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-60">&#182;</a>
               </div>
-              <p>add the data to the grid</p>
+              <p>for each feature layer</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            jqgrid.dataTable().fnAddData(data);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            utilDict.forEachEntry(visibleFeatures, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, features)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -2144,6 +2249,72 @@ this should not draw, as there will be no column defined for it</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-61">&#182;</a>
+              </div>
+              <p>for each feature in a specific layer</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                data = data.concat(dojoArray.map(features, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(feature)</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-62">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-62">&#182;</a>
+              </div>
+              <p>return the appropriate data object for the feature (.map puts them in array form)</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-63">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-63">&#182;</a>
+              </div>
+              <p>“cache” the data object so we don’t have to generate it again</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">return</span> feature[ui.getDatagridMode()] ? feature[ui.getDatagridMode()] : feature[ui.getDatagridMode()] = getDataObject(feature);
+                }));
+            });
+
+            updateRecordsCount(data.length);
+
+            oTable.one(<span class="hljs-string">"draw.dt"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                topic.publish(EventManager.Datagrid.EXTENT_FILTER_END);
+            });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-64">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-64">&#182;</a>
+              </div>
+              <p>add the data to the grid</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            jqgrid.dataTable().fnAddData(data);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-65">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-65">&#182;</a>
               </div>
               <p>NOTE: fnAddData should be the last thing that happens in this function
 if you want to add something after this point, use the fnDrawCallback
@@ -2161,17 +2332,17 @@ function in the jqgrid initialization</p>
         * @param {JObject} buttonNode   the node containing the feature layer
         * @return {Object}   the graphic object of the feature layer.
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getGraphicFromButton</span><span class="hljs-params">(buttonNode)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getGraphicFromButton</span><span class="hljs-params">(buttonNode)</span> </span>{
             <span class="hljs-keyword">var</span> featureUrl = buttonNode.data(featureUrlField),</pre></div></div>
             
         </li>
         
         
-        <li id="section-62">
+        <li id="section-66">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-62">&#182;</a>
+                <a class="pilcrow" href="#section-66">&#182;</a>
               </div>
               <p>Need to parse the index into an integer since it
 comes as a String</p>
@@ -2181,8 +2352,8 @@ comes as a String</p>
             <div class="content"><div class='highlight'><pre>                oid = <span class="hljs-built_in">parseInt</span>(buttonNode.data(featureOidField)),
                 featureLayer = RampMap.getFeatureLayer(featureUrl),
 
-                graphic = utilArray.binaryFind(featureLayer.graphics,
-                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a_graphic)</span> {</span>
+                graphic = UtilArray.binaryFind(featureLayer.graphics,
+                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a_graphic)</span> </span>{
                         <span class="hljs-keyword">return</span> GraphicExtension.getOid(a_graphic) - oid;
                     });
 
@@ -2192,23 +2363,18 @@ comes as a String</p>
         <span class="hljs-comment">/**
         * Binding event handling for events:
         * filterManager/layer-visibility-toggled
-        * filterManager/global-layer-visibility-toggled
         * datagrid/applyExtentFilter
         *
         * @method initListeners
         * @private
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initListeners</span><span class="hljs-params">()</span> {</span>
-            topic.subscribe(EventManager.FilterManager.LAYER_VISIBILITY_TOGGLED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                extentFilterExpired = <span class="hljs-literal">true</span>;
-            });
-
-            topic.subscribe(EventManager.FilterManager.GLOBAL_LAYER_VISIBILITY_TOGGLED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initListeners</span><span class="hljs-params">()</span> </span>{
+            topic.subscribe(EventManager.FilterManager.LAYER_VISIBILITY_TOGGLED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 extentFilterExpired = <span class="hljs-literal">true</span>;
             });
 
             <span class="hljs-comment">/* UI EVENTS */</span>
-            topic.subscribe(EventManager.GUI.TAB_SELECTED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(arg)</span> {</span>
+            topic.subscribe(EventManager.GUI.TAB_SELECTED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(arg)</span> </span>{
                 <span class="hljs-keyword">if</span> (arg.tabName === <span class="hljs-string">"datagrid"</span>) {
                     <span class="hljs-keyword">if</span> (extentFilterExpired) {
                         extentFilterExpired = <span class="hljs-literal">false</span>;
@@ -2221,54 +2387,80 @@ comes as a String</p>
                 }
             });
 
-            topic.subscribe(EventManager.GUI.TAB_DESELECTED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(arg)</span> {</span>
+            topic.subscribe(EventManager.GUI.TAB_DESELECTED, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(arg)</span> </span>{
                 <span class="hljs-keyword">if</span> (arg.tabName === <span class="hljs-string">"datagrid"</span>) {
                     topic.publish(EventManager.GUI.SUBPANEL_DOCK, {
                         origin: <span class="hljs-string">"datagrid"</span>
                     });
-                    console.log(<span class="hljs-string">"subPanleDock"</span>);
+                    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"subPanleDock"</span>);
                 }
             });
 
-            topic.subscribe(EventManager.Datagrid.APPLY_EXTENT_FILTER, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                <span class="hljs-keyword">if</span> (!ui.isReady()) {
-                    ui.init();
-                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ui.getDatagridMode() !== GRID_MODE_FULL) {
+            topic.subscribe(EventManager.Datagrid.APPLY_EXTENT_FILTER, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                <span class="hljs-keyword">if</span> (ui.getDatagridMode() !== GRID_MODE_FULL) {
                     applyExtentFilter();
                 }
-            });
+            });            
 
-            topic.subscribe(EventManager.GUI.SUBPANEL_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
+            topic.subscribe(EventManager.GUI.SUBPANEL_CHANGE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> </span>{
                 <span class="hljs-keyword">if</span> (evt.origin === <span class="hljs-string">"ex-datagrid"</span> &amp;&amp;
                     evt.isComplete) {
                     ui.adjustPanelWidth();
                 }
-            });
+            });            
         }
 
         <span class="hljs-keyword">return</span> {
-            init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+            <span class="hljs-comment">/**
+            * Initialize the datagrid. must be called before any properties can be accessed.
+            *
+            * @method init
+            */</span>
+            init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                config = GlobalStorage.config;</pre></div></div>
             
         </li>
         
         
-        <li id="section-63">
+        <li id="section-67">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-63">&#182;</a>
+                <a class="pilcrow" href="#section-67">&#182;</a>
               </div>
-              <p>/ <summary>
-/ initialize the datagrid. must be called before any properties can be accessed.
-/ </summary></p>
+              <p>Added to make sure the layer is not static</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                config = GlobalStorage.config;
-                layerConfig = config.featureLayers;
-                gridConfig = layerConfig[<span class="hljs-number">0</span>].datagrid;  <span class="hljs-comment">//this is just to configure the structure of the grid.  since all layers have same structure, just pick first one</span>
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> layerConfigs = dojoArray.filter(config.featureLayers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(layerConfig)</span> </span>{
+                    <span class="hljs-keyword">return</span> !layerConfig.isStatic;
+                });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-68">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-68">&#182;</a>
+              </div>
+              <p>layerConfig = config.featureLayers;</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                gridConfig = layerConfigs[<span class="hljs-number">0</span>].datagrid;  <span class="hljs-comment">//this is just to configure the structure of the grid.  since all layers have same structure, just pick first one</span>
+
+                <span class="hljs-comment">/*
+                $.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                        return data[0].indexOf("Water Regions") &gt; -1;
+                    }
+                );*/</span>
 
                 initListeners();
+
+                ui.init();
             } <span class="hljs-comment">//InitDataGrid</span>
         };
     });</pre></div></div>

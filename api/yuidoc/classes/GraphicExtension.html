@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="..\..\..\assets\images\arctic_fox_logo_200x100.png" title="ramp-gis-viewer">ramp-gis-viewer</h1>
+                <h1><img src="..\..\..\src\assets\images\bobcat_logo_sharp_smaller_s.png" title="ramp-gis-viewer">Reusable Accessible Mapping Platform</h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.42-5</em>
+            <em>API Docs for: 2.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -41,15 +41,23 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/AdvancedToolbar.html">AdvancedToolbar</a></li>
+            
                 <li><a href="../classes/Array.html">Array</a></li>
             
                 <li><a href="../classes/BaseMapSelector.html">BaseMapSelector</a></li>
+            
+                <li><a href="../classes/BaseTool.html">BaseTool</a></li>
             
                 <li><a href="../classes/BookmarkLink.html">BookmarkLink</a></li>
             
                 <li><a href="../classes/Bootstrapper.html">Bootstrapper</a></li>
             
-                <li><a href="../classes/CheckboxWrapper.html">CheckboxWrapper</a></li>
+                <li><a href="../classes/BufferTool.html">BufferTool</a></li>
+            
+                <li><a href="../classes/Checkbox.html">Checkbox</a></li>
+            
+                <li><a href="../classes/CheckboxGroup.html">CheckboxGroup</a></li>
             
                 <li><a href="../classes/Datagrid.html">Datagrid</a></li>
             
@@ -81,9 +89,15 @@
             
                 <li><a href="../classes/Map.html">Map</a></li>
             
+                <li><a href="../classes/MapClickHandler.html">MapClickHandler</a></li>
+            
                 <li><a href="../classes/Maptips.html">Maptips</a></li>
             
+                <li><a href="../classes/MeasureTool.html">MeasureTool</a></li>
+            
                 <li><a href="../classes/Navigation.html">Navigation</a></li>
+            
+                <li><a href="../classes/PopulationTool.html">PopulationTool</a></li>
             
                 <li><a href="../classes/Popup.html">Popup</a></li>
             
@@ -129,9 +143,13 @@
             
                 <li><a href="../modules/FilterManager.html">FilterManager</a></li>
             
+                <li><a href="../modules/GlobalStorage.html">GlobalStorage</a></li>
+            
                 <li><a href="../modules/Map.html">Map</a></li>
             
                 <li><a href="../modules/Maptips.html">Maptips</a></li>
+            
+                <li><a href="../modules/MeasureTool.html">MeasureTool</a></li>
             
                 <li><a href="../modules/Navigation.html">Navigation</a></li>
             
@@ -142,6 +160,8 @@
                 <li><a href="../modules/Theme.html">Theme</a></li>
             
                 <li><a href="../modules/TmplUtil.html">TmplUtil</a></li>
+            
+                <li><a href="../modules/Tools.html">Tools</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
             
@@ -255,7 +275,7 @@ Note this class requires the config object.</p>
 
                     <ul class="index-list methods">
                         
-                            <li class="index-item method inherited inherited">
+                            <li class="index-item method inherited">
                                 <a href="#method__getSymbolConfig">_getSymbolConfig</a>
 
                                 
@@ -285,6 +305,13 @@ Note this class requires the config object.</p>
                         
                             <li class="index-item method inherited">
                                 <a href="#method_getSymbolForFeature">getSymbolForFeature</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_getSymbolForLayer">getSymbolForLayer</a>
 
                                 
                                 
@@ -333,6 +360,12 @@ Note this class requires the config object.</p>
                     
                 </li>
             
+                <li class="arg">
+                    
+                        <code>wmsName</code>
+                    
+                </li>
+            
             </ul><span class="paren">)</span>
         </div>
     
@@ -357,16 +390,13 @@ Note this class requires the config object.</p>
 
     <div class="meta">
         
-            <p>Inherited from
-            <a href="../classes/RAMP.html#method__getSymbolConfig">
-                RAMP
-            </a>
             
-            but overwritten in
+                <p>Inherited from
+                <a href="../classes/RAMP.html#method__getSymbolConfig">RAMP</a>:
             
         
         
-        <a href="../files/src_js_RAMP_Modules_ramp.js.html#l96"><code>src\js\RAMP\Modules\ramp.js:96</code></a>
+        <a href="../files/src_js_RAMP_Modules_ramp.js.html#l103"><code>src\js\RAMP\Modules\ramp.js:103</code></a>
         
         </p>
 
@@ -397,6 +427,22 @@ Note this class requires the config object.</p>
 
                     <div class="param-description">
                         <p>A URL to the feature layer service</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">wmsName</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>WMS Layer name.  Optional.  Should only be provided if attempting to get a WMS layer.</p>
 
                     </div>
 
@@ -766,7 +812,7 @@ Note this class requires the config object.</p>
             
         
         
-        <a href="../files/src_js_RAMP_Modules_ramp.js.html#l116"><code>src\js\RAMP\Modules\ramp.js:116</code></a>
+        <a href="../files/src_js_RAMP_Modules_ramp.js.html#l126"><code>src\js\RAMP\Modules\ramp.js:126</code></a>
         
         </p>
 
@@ -818,6 +864,132 @@ feature/graphic object.</p>
                         <span class="type">Icon</span>:
                     
                     <p>The default icon used to represent the feature layer</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_getSymbolForLayer" class="method item inherited">
+    <h3 class="name"><code>getSymbolForLayer</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>layer</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>wmsName</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Icon</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/RAMP.html#method_getSymbolForLayer">RAMP</a>:
+            
+        
+        
+        <a href="../files/src_js_RAMP_Modules_ramp.js.html#l114"><code>src\js\RAMP\Modules\ramp.js:114</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Gets the default symbology icon from a layer&#39;s web service</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">layer</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>A feature layer</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">wmsName</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>WMS Layer name.  Optional.  Should only be provided if attempting to get a WMS layer.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Icon</span>:
+                    
+                    <p>The default icon from the layer&#39;s symbology</p>
 
                 
             </div>

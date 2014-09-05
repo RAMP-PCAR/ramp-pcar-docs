@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -210,7 +255,7 @@
  * @static
  */</span>
 define([],
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span><span class="hljs-pi">
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{<span class="hljs-pi">
         "use strict"</span>;
         <span class="hljs-keyword">return</span> {
             <span class="hljs-comment">/**
@@ -229,8 +274,8 @@ define([],
              * @param {Object} target
              * @return {Function} that takes one object compares it to the given target using the given compareFcn and returns the result of the compareFcn
              */</span>
-            getFindFcn: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(compareFcn, target)</span> {</span>
-                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">findFcn</span><span class="hljs-params">(obj)</span> {</span>
+            getFindFcn: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(compareFcn, target)</span> </span>{
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">findFcn</span><span class="hljs-params">(obj)</span> </span>{
                     <span class="hljs-keyword">return</span> compareFcn(target, obj);
                 }
 

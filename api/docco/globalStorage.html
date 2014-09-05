@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -216,6 +261,7 @@
 *
 *
 * @module RAMP
+* @submodule GlobalStorage
 *
 */</span>
 
@@ -226,17 +272,28 @@
 */</span>
 
 define([],
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span><span class="hljs-pi">
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{<span class="hljs-pi">
         "use strict"</span>;
         <span class="hljs-keyword">return</span> {
             <span class="hljs-comment">/**
              * Returns a URL that points to the application configuration (JSON format) if it's hosted on a web service.
              * This is not required if the application has a JSON config file in the website's folder
-             * @attribute getConfigUrl
-             * @readOnly
+             * @property getConfigUrl
+             * @type Object
              */</span>
-            getConfigUrl: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            getConfigUrl: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 <span class="hljs-keyword">return</span> <span class="hljs-string">"http://sncr01wbingsdv1.ncr.int.ec.gc.ca/ECDMP_Service/"</span>;
+            },
+
+            layerType: {
+                Basemap: <span class="hljs-string">"Basemap"</span>,
+                WMS: <span class="hljs-string">"WMS"</span>,
+                BoundingBox: <span class="hljs-string">"Bounding Box"</span>,
+                Feature: <span class="hljs-string">"Feature Layer"</span>,
+                Static: <span class="hljs-string">"Static"</span>,
+                Highlight: <span class="hljs-string">"Highlight"</span>,
+                Hoverlight: <span class="hljs-string">"Hoverlight"</span>,
+                Zoomlight: <span class="hljs-string">"Zoomlight"</span>
             }
         };
     });</pre></div></div>

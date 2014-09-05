@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="advancedToolbar.html">
+                advancedToolbar.js
+              </a>
+            
+              
               <a class="source" href="basemapSelector.html">
                 basemapSelector.js
               </a>
@@ -79,6 +84,11 @@
               </a>
             
               
+              <a class="source" href="mapClickHandler.html">
+                mapClickHandler.js
+              </a>
+            
+              
               <a class="source" href="maptips.html">
                 maptips.js
               </a>
@@ -119,8 +129,43 @@
               </a>
             
               
+              <a class="source" href="areaTool.html">
+                areaTool.js
+              </a>
+            
+              
+              <a class="source" href="baseTool.html">
+                baseTool.js
+              </a>
+            
+              
+              <a class="source" href="bufferTool.html">
+                bufferTool.js
+              </a>
+            
+              
+              <a class="source" href="distanceTool.html">
+                distanceTool.js
+              </a>
+            
+              
+              <a class="source" href="populationTool.html">
+                populationTool.js
+              </a>
+            
+              
               <a class="source" href="array.html">
                 array.js
+              </a>
+            
+              
+              <a class="source" href="checkbox.html">
+                checkbox.js
+              </a>
+            
+              
+              <a class="source" href="checkboxGroup.html">
+                checkboxGroup.js
               </a>
             
               
@@ -196,7 +241,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>﻿<span class="hljs-comment">/*global define, $, window, TweenLite, TimelineLite, tmpl */</span>
+            <div class="content"><div class='highlight'><pre>﻿<span class="hljs-comment">/*global define, $, window, TweenLite, TimelineLite, tmpl, i18n */</span>
 <span class="hljs-comment">/*jslint white: true */</span>
 
 <span class="hljs-comment">/**
@@ -379,7 +424,7 @@ define([</pre></div></div>
             <div class="content"><div class='highlight'><pre>        UtilMisc, utilDict, popupManager, tmplHelper) {
         <span class="hljs-string">"use strict"</span>;
 
-        <span class="hljs-keyword">var</span> jWindow = $(window),
+        <span class="hljs-keyword">var</span> jWindow = $(<span class="hljs-built_in">window</span>),
 
             panelTabs = $(<span class="hljs-string">"ul#tabs"</span>),
 
@@ -667,11 +712,11 @@ define([</pre></div></div>
                 *
                 * @property _animatePanelDuration
                 * @private
-                * @default 400
+                * @default 0.5
                 * @type {Number}
                 */</span>
 
-                _animatePanelDuration: <span class="hljs-number">500</span>, <span class="hljs-comment">//400,</span>
+                _animatePanelDuration: <span class="hljs-number">0.5</span>, <span class="hljs-comment">//0.4,</span>
 
                 timeLine: <span class="hljs-literal">null</span>,
 
@@ -682,7 +727,7 @@ define([</pre></div></div>
                 * @param  {jObject} data Content to be shortened
                 * @return {jObject} Content with after shortening long text nodes
                 */</span>
-                parseContent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span></pre></div></div>
+                parseContent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -709,7 +754,7 @@ define([</pre></div></div>
                 * @method getAttributes
                 * @return {SubPanelSettings} This SubPanel's settings
                 */</span>
-                getAttributes: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                getAttributes: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._attr;
                 },
                 <span class="hljs-comment">/**
@@ -718,7 +763,7 @@ define([</pre></div></div>
                 * @method getContainer
                 * @return {jobject} This SubPanel's `div`
                 */</span>
-                getContainer: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                getContainer: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.container;
                 },
                 <span class="hljs-comment">/**
@@ -727,7 +772,7 @@ define([</pre></div></div>
                 * @method getPanel
                 * @return {jObject} The inner `div` of the SubPanel
                 */</span>
-                getPanel: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                getPanel: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.panel;
                 },
                 <span class="hljs-comment">/**
@@ -736,7 +781,7 @@ define([</pre></div></div>
                 * @method getOrigin
                 * @return {String} The `origin` of this SubPanel
                 */</span>
-                getOrigin: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                getOrigin: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._attr.origin;
                 },
                 <span class="hljs-comment">/**
@@ -745,7 +790,7 @@ define([</pre></div></div>
                 * @method getOrigin
                 * @return {String} The `guid` of this SubPanel
                 */</span>
-                getGuid: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                getGuid: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._attr.guid;
                 },
                 <span class="hljs-comment">/**
@@ -755,7 +800,7 @@ define([</pre></div></div>
                 * @param  {Number} speed    The duration of the animation in milliseconds
                 * @param  {Deferred} deferred The deferred to be resolved after the SubPanel is destroyed
                 */</span>
-                destroy: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(speed, deferred)</span> {</span>
+                destroy: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(speed, deferred)</span> </span>{
                     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._attr.doOnHide) {
                         <span class="hljs-keyword">this</span>._attr.doOnHide();
                     }
@@ -810,7 +855,7 @@ define([</pre></div></div>
                     layoutController.subPanelChange(<span class="hljs-literal">false</span>, <span class="hljs-keyword">this</span>._attr.origin, <span class="hljs-keyword">this</span>.container, <span class="hljs-literal">false</span>);
 
                     <span class="hljs-keyword">this</span>.timeLine.eventCallback(<span class="hljs-string">"onReverseComplete"</span>,
-                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._attr.doAfterHide) {
                                 <span class="hljs-keyword">this</span>._attr.doAfterHide();
                             }
@@ -835,7 +880,7 @@ define([</pre></div></div>
                 *
                 * @method reopen
                 */</span>
-                reopen: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+                reopen: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -865,7 +910,7 @@ define([</pre></div></div>
                 *
                 * @method open
                 */</span>
-                open: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                open: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._attr.doOnOpen) {
                         <span class="hljs-keyword">this</span>._attr.doOnOpen();
                     }
@@ -881,7 +926,7 @@ define([</pre></div></div>
                 * @method changeOrigin
                 * @param  {String} newOrigin The new origin of the SubPanel.
                 */</span>
-                changeOrigin: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(newOrigin)</span> {</span>
+                changeOrigin: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(newOrigin)</span> </span>{
                     <span class="hljs-keyword">this</span>._attr.origin = newOrigin;
                 },
 
@@ -891,7 +936,7 @@ define([</pre></div></div>
                 * @method shiftTarget
                 * @param  {jObject} newTarget A node in the DOM to shift the SubPanel to
                 */</span>
-                shiftTarget: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(newTarget)</span> {</span>
+                shiftTarget: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(newTarget)</span> </span>{
                     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._attr.target !== newTarget) {</pre></div></div>
             
         </li>
@@ -919,12 +964,12 @@ define([</pre></div></div>
                 * @method create
                 * @param  {SubPanelSettings} a Settings for the SubPanel
                 */</span>
-                create: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a)</span> {</span>
+                create: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a)</span> </span>{
                     <span class="hljs-keyword">var</span> <span class="hljs-comment">//subPanelContent,</span>
                         subPanelString,
                         parsedContent;
 
-                    console.log(<span class="hljs-string">"create panel, "</span>, a.origin);
+                    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"create panel, "</span>, a.origin);
 
                     a.guid = a.guid || UtilMisc.guid();
 
@@ -937,7 +982,7 @@ define([</pre></div></div>
                         dojoLang.mixin(
                             <span class="hljs-keyword">this</span>._attr,
                             {
-                                closeTitle: GlobalStorage.config.stringResources.txtClose
+                                closeTitle: i18n.t(<span class="hljs-string">'gui.actions.close'</span>)
                             }
                         )
                     );</pre></div></div>
@@ -957,7 +1002,7 @@ subPanelString = String.format(subPanelTemplate2, this._attr.containerClass, sub
             </div>
             
             <div class="content"><div class='highlight'><pre>
-                    <span class="hljs-keyword">this</span>.container = <span class="hljs-keyword">this</span>._attr.target.after(subPanelString).parent().find(<span class="hljs-string">".sub-panel-container"</span>);
+                    <span class="hljs-keyword">this</span>.container = $(subPanelString).insertAfter(<span class="hljs-keyword">this</span>._attr.target);
                     <span class="hljs-keyword">this</span>.panel = <span class="hljs-keyword">this</span>.container.find(<span class="hljs-string">".sub-panel"</span>);
 
                     <span class="hljs-keyword">this</span>._subPanelContentDiv = <span class="hljs-keyword">this</span>.panel.find(<span class="hljs-string">".sub-panel-content"</span>);
@@ -983,7 +1028,7 @@ subPanelString = String.format(subPanelTemplate2, this._attr.containerClass, sub
                     <span class="hljs-keyword">this</span>.timeLine = <span class="hljs-keyword">new</span> TimelineLite(
                         {
                             paused: <span class="hljs-literal">true</span>,
-                            onComplete: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                            onComplete: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                                 <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._attr.doAfterOpen) {
                                     <span class="hljs-keyword">this</span>._attr.doAfterOpen();
                                 }
@@ -992,7 +1037,7 @@ subPanelString = String.format(subPanelTemplate2, this._attr.containerClass, sub
                             },
                             onCompleteScope: <span class="hljs-keyword">this</span>
                         })
-                        .to(<span class="hljs-keyword">this</span>.panel, <span class="hljs-keyword">this</span>._animatePanelDuration / <span class="hljs-number">1000</span>,
+                        .to(<span class="hljs-keyword">this</span>.panel, <span class="hljs-keyword">this</span>._animatePanelDuration,
                             {
                                 left: <span class="hljs-number">0</span>,
                                 ease: <span class="hljs-string">"easeOutCirc"</span>
@@ -1009,7 +1054,7 @@ subPanelString = String.format(subPanelTemplate2, this._attr.containerClass, sub
                 * @method update
                 * @param  {SubPanelSettings} a New settings for the SubPanel
                 */</span>
-                update: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a)</span> {</span></pre></div></div>
+                update: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1029,11 +1074,11 @@ subPanelString = String.format(subPanelTemplate2, this._attr.containerClass, sub
 
                         updateDefered = [<span class="hljs-keyword">new</span> Deferred(), <span class="hljs-keyword">new</span> Deferred()],
 
-                        animateContent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(node, newData, d)</span> {</span>
+                        animateContent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(node, newData, d)</span> </span>{
                             <span class="hljs-keyword">if</span> (newData) {
                                 node.addClass(<span class="hljs-string">'animated fadeOutDown'</span>);
-                                window.setTimeout(dojoLang.hitch(<span class="hljs-keyword">this</span>,
-                                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                                <span class="hljs-built_in">window</span>.setTimeout(dojoLang.hitch(<span class="hljs-keyword">this</span>,
+                                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                                             node</pre></div></div>
             
         </li>
@@ -1059,7 +1104,7 @@ subPanelString = String.format(subPanelTemplate2, this._attr.containerClass, sub
                             }
                         },
 
-                        setContent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(node, oldData, newData, parsedData, visible, d)</span> {</span>
+                        setContent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(node, oldData, newData, parsedData, visible, d)</span> </span>{
                             newData = (newData === <span class="hljs-literal">null</span>) ? parsedData = sOut : newData;
                             <span class="hljs-keyword">if</span> (newData) {
                                 <span class="hljs-keyword">if</span> (newData !== oldData) {
@@ -1092,7 +1137,7 @@ subPanelString = String.format(subPanelTemplate2, this._attr.containerClass, sub
                         },
 
                         updateContent = dojoLang.hitch(<span class="hljs-keyword">this</span>,
-                            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a)</span> {</span>
+                            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a)</span> </span>{
                                 <span class="hljs-keyword">this</span>._subPanelContentDiv.animate({
                                     scrollTop: <span class="hljs-number">0</span>
                                 }, animateContentDuration, <span class="hljs-string">"easeOutCirc"</span>);
@@ -1117,7 +1162,7 @@ subPanelString = String.format(subPanelTemplate2, this._attr.containerClass, sub
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    UtilMisc.afterAll(updateDefered, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>                    UtilMisc.afterAll(updateDefered, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         <span class="hljs-keyword">if</span> (a.doAfterUpdate) {
                             a.doAfterUpdate();
                         }
@@ -1302,11 +1347,12 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
 
             layoutController;
 
-        layoutController = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        layoutController = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
             <span class="hljs-keyword">var</span> viewport = $(<span class="hljs-string">".viewport"</span>),
                 mapDiv = $(<span class="hljs-string">"#map-div"</span>),
                 mapContent = $(<span class="hljs-string">"#mapContent"</span>),
                 fullScreenToggle = $(<span class="hljs-string">"#fullScreenToggle"</span>),
+                fullScreenPopup,
 
                 mapToolbar = $(<span class="hljs-string">"#map-toolbar"</span>),
                 basemapControls = $(<span class="hljs-string">"#basemapControls"</span>),
@@ -1316,19 +1362,19 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
                 panelPopup,
                 panelWidthDefault,
 
+                windowWidth,
+
                 duration = <span class="hljs-number">0.5</span>,
 
                 layoutChange,
 
-                _isFullScreen = <span class="hljs-literal">false</span>,
-
                 _isFullData = <span class="hljs-literal">false</span>,
                 fullDataTimeLine = <span class="hljs-keyword">new</span> TimelineLite({
                     paused: <span class="hljs-literal">true</span>,
-                    onComplete: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                    onComplete: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         adjustHeight();
                         layoutChange();
-                        console.log(<span class="hljs-string">"finished"</span>, EventManager.Datagrid.APPLY_EXTENT_FILTER);</pre></div></div>
+                        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"finished"</span>, EventManager.Datagrid.APPLY_EXTENT_FILTER);</pre></div></div>
             
         </li>
         
@@ -1344,10 +1390,10 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>                    },
-                    onReverseComplete: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                    onReverseComplete: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                         adjustHeight();
                         layoutChange();
-                        console.log(<span class="hljs-string">"reverse finished"</span>, EventManager.Datagrid.APPLY_EXTENT_FILTER);</pre></div></div>
+                        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"reverse finished"</span>, EventManager.Datagrid.APPLY_EXTENT_FILTER);</pre></div></div>
             
         </li>
         
@@ -1374,22 +1420,26 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
             * @method layoutChange
             * @private
             */</span>
-            layoutChange = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            layoutChange = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 <span class="hljs-keyword">if</span> (!_isFullData) {
-                    console.log(<span class="hljs-string">"GUI --&gt; EventManager.GUI.LAYOUT_CHANGE"</span>);
+                    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"GUI --&gt; EventManager.GUI.LAYOUT_CHANGE"</span>);
                     topic.publish(EventManager.GUI.LAYOUT_CHANGE);
                 }
             };
 
-            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">adjustHeight</span><span class="hljs-params">()</span> {</span>
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">adjustHeight</span><span class="hljs-params">()</span> </span>{
                 helpSection.css({
                     <span class="hljs-string">"max-height"</span>: jWindow.height() - (_isFullData ? jWindow.height() * <span class="hljs-number">0.2</span> : mapToolbar.offset().top) - <span class="hljs-number">90</span> <span class="hljs-comment">// 56 is an arbitrary-wide gap between the help panel and the upper toolbar</span>
                 });
             }
 
-            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onFullScreenComplete</span><span class="hljs-params">()</span> {</span>
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onFullScreenComplete</span><span class="hljs-params">()</span> </span>{
                 adjustHeight();
                 layoutChange();
+                
+                topic.publish(EventManager.GUI.FULLSCREEN_CHANGE, {
+                    visible: Theme.isFullScreen()
+                });
             }
 
             <span class="hljs-comment">/**
@@ -1399,13 +1449,15 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
             * @private
             * @return {Number} The default width of the SidePanel
             */</span>
-            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getPanelWidthDefault</span><span class="hljs-params">()</span> {</span>
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getPanelWidthDefault</span><span class="hljs-params">()</span> </span>{
                 <span class="hljs-keyword">if</span> (!panelWidthDefault) {
                     panelWidthDefault = panelDiv.width();
                 }
 
                 <span class="hljs-keyword">return</span> panelWidthDefault;
-            }</pre></div></div>
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createTimelines</span><span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1420,27 +1472,27 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            fullDataTimeLine
-                .set(viewport, { className: <span class="hljs-string">"+=full-data-mode"</span> })
-                .fromTo(mapDiv, transitionDuration, { width: <span class="hljs-string">"auto"</span> }, { right: <span class="hljs-string">"auto"</span>, width: <span class="hljs-number">35</span>, ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>)
+            <div class="content"><div class='highlight'><pre>                fullDataTimeLine
+                    .set(viewport, { className: <span class="hljs-string">"+=full-data-mode"</span> })
+                    .fromTo(mapDiv, transitionDuration, { width: <span class="hljs-string">"auto"</span> }, { right: <span class="hljs-string">"auto"</span>, width: <span class="hljs-number">35</span>, ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>)
 
-                .fromTo(mapContent, transitionDuration, { opacity: <span class="hljs-number">1</span> }, { opacity: <span class="hljs-number">0</span>, ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>)
-                .set(mapContent, { top: <span class="hljs-string">"500px"</span> })
+                    .fromTo(mapContent, transitionDuration, { opacity: <span class="hljs-number">1</span> }, { opacity: <span class="hljs-number">0</span>, ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>)
+                    .set(mapContent, { top: <span class="hljs-string">"500px"</span> })
 
-                .to(panelToggle, transitionDuration, { right: -<span class="hljs-number">13</span>, ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>)
-                .set(panelToggle, { display: <span class="hljs-string">"none"</span> })
+                    .to(panelToggle, transitionDuration, { right: -<span class="hljs-number">13</span>, ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>)
+                    .set(panelToggle, { display: <span class="hljs-string">"none"</span> })
 
-                .to(basemapControls, transitionDuration / <span class="hljs-number">2</span>, { opacity: <span class="hljs-number">0</span>, ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>)
-                .to(basemapControls, <span class="hljs-number">0</span>, { display: <span class="hljs-string">"none"</span> }, transitionDuration / <span class="hljs-number">2</span>)
-                .fromTo(mapToolbar, transitionDuration / <span class="hljs-number">2</span>,
-                    { width: <span class="hljs-string">"100%"</span>, height: <span class="hljs-string">"31px"</span> },
-                    { width: <span class="hljs-number">31</span>, height: $(<span class="hljs-string">"#map-div"</span>).height(), ease: <span class="hljs-string">"easeOutCirc"</span> }, duration / <span class="hljs-number">2</span>)
+                    .to(basemapControls, transitionDuration / <span class="hljs-number">2</span>, { opacity: <span class="hljs-number">0</span>, ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>)
+                    .to(basemapControls, <span class="hljs-number">0</span>, { display: <span class="hljs-string">"none"</span> }, transitionDuration / <span class="hljs-number">2</span>)
+                    .fromTo(mapToolbar, transitionDuration / <span class="hljs-number">2</span>,
+                        { width: <span class="hljs-string">"100%"</span>, height: <span class="hljs-string">"31px"</span> },
+                        { width: <span class="hljs-string">"32px"</span>, height: $(<span class="hljs-string">"#map-div"</span>).height(), ease: <span class="hljs-string">"easeOutCirc"</span> }, duration / <span class="hljs-number">2</span>)
 
-                .to(mapToolbar.find(<span class="hljs-string">".map-toolbar-item-button span"</span>), transitionDuration / <span class="hljs-number">2</span>, { width: <span class="hljs-number">0</span>, ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>)
-                .set(mapToolbar.find(<span class="hljs-string">".map-toolbar-item-button span"</span>), { display: <span class="hljs-string">"none"</span> }, transitionDuration / <span class="hljs-number">2</span>)
+                    .to(mapToolbar.find(<span class="hljs-string">".map-toolbar-item-button span"</span>), transitionDuration / <span class="hljs-number">2</span>, { width: <span class="hljs-number">0</span>, ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>)
+                    .set(mapToolbar.find(<span class="hljs-string">".map-toolbar-item-button span"</span>), { display: <span class="hljs-string">"none"</span> }, transitionDuration / <span class="hljs-number">2</span>)
 
-                .fromTo(panelDiv.find(<span class="hljs-string">".tabs li:first"</span>), transitionDuration, { width: <span class="hljs-string">"50%"</span> }, { width: <span class="hljs-string">"0%"</span>, ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>)
-                .fromTo(panelDiv.find(<span class="hljs-string">".tabs li:last"</span>), transitionDuration, { width: <span class="hljs-string">"50%"</span> }, { width: <span class="hljs-string">"100%"</span>, className: <span class="hljs-string">"+=font-large"</span>, ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>);</pre></div></div>
+                    .fromTo(panelDiv.find(<span class="hljs-string">".tabs li:first"</span>), transitionDuration, { width: <span class="hljs-string">"50%"</span> }, { width: <span class="hljs-string">"0%"</span>, ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>)
+                    .fromTo(panelDiv.find(<span class="hljs-string">".tabs li:last"</span>), transitionDuration, { width: <span class="hljs-string">"50%"</span> }, { width: <span class="hljs-string">"100%"</span>, className: <span class="hljs-string">"+=font-large"</span>, ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>);</pre></div></div>
             
         </li>
         
@@ -1455,34 +1507,133 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            panelToggleTimeLine
-                .fromTo(panelDiv, transitionDuration, { right: <span class="hljs-number">0</span> }, { right: -getPanelWidthDefault(), ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>)
-                .set(panelDiv, { display: <span class="hljs-string">"none"</span> }, transitionDuration)
-                .fromTo(mapDiv, transitionDuration, { right: getPanelWidthDefault() }, { right: <span class="hljs-number">0</span>, ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>);
+            <div class="content"><div class='highlight'><pre>                panelToggleTimeLine
+                    .fromTo(panelDiv, transitionDuration, { right: <span class="hljs-number">0</span> }, { right: -getPanelWidthDefault(), ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>)
+                    .set(panelDiv, { display: <span class="hljs-string">"none"</span> }, transitionDuration)
+                    .fromTo(mapDiv, transitionDuration, { right: getPanelWidthDefault() }, { right: <span class="hljs-number">0</span>, ease: <span class="hljs-string">"easeOutCirc"</span> }, <span class="hljs-number">0</span>);
 
-            fullDataSubpanelChangeTimeLine.fromTo(panelDiv, transitionDuration, { right: <span class="hljs-string">"0px"</span>, left: <span class="hljs-string">"35px"</span> }, { left: <span class="hljs-string">"35px"</span>, right: <span class="hljs-string">"430px"</span>, ease: <span class="hljs-string">"easeOutCirc"</span> });
+                fullDataSubpanelChangeTimeLine
+                    .fromTo(panelDiv, transitionDuration, { right: <span class="hljs-string">"0px"</span>, left: <span class="hljs-string">"35px"</span> }, { left: <span class="hljs-string">"35px"</span>, right: getPanelWidthDefault(), ease: <span class="hljs-string">"easeOutCirc"</span> });
+            }
 
-            <span class="hljs-comment">/*function _toggleFullScreenMode_(fullscreen) {
-            megaMenu.css({
-            position: "static"
-            });
-            subTitleText.css({
-            position: "static"
-            });
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">killTimelines</span><span class="hljs-params">()</span> </span>{
+                fullDataSubpanelChangeTimeLine.kill();
+                panelToggleTimeLine.kill();
+                fullDataTimeLine.kill();
+            }
 
-            toggleSubPanelContainer();
-            toggleFooter();
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">recreateTimelines</span><span class="hljs-params">()</span> </span>{
+                panelWidthDefault = <span class="hljs-literal">null</span>;
+                killTimelines();
+                createTimelines();
+            }
+            
+            <span class="hljs-comment">/**
+            * Publishes `PANEL_CHANGE` event when the visibility of the SidePanel changes.
+            *
+            * @method panelChange
+            * @param  {Boolean} visible Indicates whether the SidePanel is visible or not
+            * @for SidePanel
+            * @private
+            */</span>
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">panelChange</span><span class="hljs-params">(visible)</span> </span>{
+                topic.publish(EventManager.GUI.PANEL_CHANGE, {
+                    visible: visible
+                });
+            }
 
-            wbCore.animate({
-            height: viewPortHeight + fullScreenDelta2
-            }, "slow");
+            <span class="hljs-comment">/**
+            * Slides the SidePanel open.
+            *
+            * @method openPanel
+            * @private
+            * @param  {Deferred} d A deferred to be resolved upon completion of the animation
+            */</span>
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">openPanel</span><span class="hljs-params">(d)</span> </span>{
+                <span class="hljs-comment">/*jshint validthis: true */</span>
+                panelToggleTimeLine.eventCallback(<span class="hljs-string">"onReverseComplete"</span>,
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                            layoutChange();
+                            panelChange(<span class="hljs-literal">true</span>);
 
-            titleBanner.animate({
-            height: titleBanner.height() - titleBannerHalfHeight
-            }, "slow");
+                            panelToggle
+                                .tooltipster(<span class="hljs-string">"content"</span>, i18n.t(<span class="hljs-string">"gui.actions.close"</span>))
+                                .find(<span class="hljs-string">"span.wb-invisible"</span>).text(i18n.t(<span class="hljs-string">"gui.actions.close"</span>));
 
-            if (UtilMisc.isUndefined(fullscreen)) {
-</span></pre></div></div>
+                            d.resolve();
+                        }, [], <span class="hljs-keyword">this</span>);
+
+                panelToggleTimeLine.reverse();
+            }
+
+            <span class="hljs-comment">/**
+            * Slide the SidePanel close
+            *
+            * @method closePanel
+            * @private
+            * @param  {Deferred} d A deferred to be resolved upon completion of the animation
+            */</span>
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">closePanel</span><span class="hljs-params">(d)</span> </span>{
+                <span class="hljs-comment">/*jshint validthis: true */</span>
+                panelToggleTimeLine.eventCallback(<span class="hljs-string">"onComplete"</span>,
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"GUI &lt;-- map/update-end from gui"</span>);
+                            layoutChange();
+                            panelChange(<span class="hljs-literal">false</span>);
+
+                            panelToggle
+                                .tooltipster(<span class="hljs-string">"content"</span>, i18n.t(<span class="hljs-string">"gui.actions.open"</span>))
+                                .find(<span class="hljs-string">"span.wb-invisible"</span>).text(i18n.t(<span class="hljs-string">"gui.actions.open"</span>));
+
+                            d.resolve();
+                        }, [], <span class="hljs-keyword">this</span>);
+
+                panelToggleTimeLine.play();
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_toggleFullDataMode</span><span class="hljs-params">(fullData)</span> </span>{
+                _isFullData = UtilMisc.isUndefined(fullData) ? !_isFullData : fullData;
+
+                <span class="hljs-keyword">if</span> (_isFullData) {
+                    TweenLite.fromTo(panelDiv, transitionDuration,
+                        { width: getPanelWidthDefault(), right: <span class="hljs-number">0</span>, left: <span class="hljs-string">"auto"</span> },
+                        { left: <span class="hljs-number">35</span>, right: <span class="hljs-number">0</span>, width: <span class="hljs-string">"auto"</span>, ease: <span class="hljs-string">"easeOutCirc"</span> });
+
+                    fullDataTimeLine.play();
+                } <span class="hljs-keyword">else</span> {
+                    TweenLite.fromTo(panelDiv, transitionDuration,
+                        { left: <span class="hljs-number">35</span>, width: <span class="hljs-string">"auto"</span>, right: panelDiv.css(<span class="hljs-string">"right"</span>) },
+                        { right: <span class="hljs-number">0</span>, width: getPanelWidthDefault(), ease: <span class="hljs-string">"easeInCirc"</span> });
+
+                    fullDataTimeLine.reverse();
+                }
+
+                utilDict.forEachEntry(subPanels, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> </span>{
+                    hideSubPanel({
+                        origin: key
+                    });
+                });
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">optimizeLayout</span><span class="hljs-params">()</span> </span>{
+                <span class="hljs-keyword">if</span> ((windowWidth &lt; <span class="hljs-number">1200</span> &amp;&amp; jWindow.width() &gt; <span class="hljs-number">1200</span>) || 
+                    (windowWidth &gt; <span class="hljs-number">1200</span> &amp;&amp; jWindow.width() &lt; <span class="hljs-number">1200</span>)) {                  
+                    recreateTimelines();
+
+                    windowWidth = jWindow.width();
+                }                
+            }
+
+            <span class="hljs-keyword">return</span> {
+                init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                    createTimelines();
+
+                    windowWidth = jWindow.width();
+                    jWindow.on(<span class="hljs-string">"resize"</span>, optimizeLayout);
+
+                    Theme
+                        .fullScreenCallback(<span class="hljs-string">"onComplete"</span>, onFullScreenComplete)
+                        .fullScreenCallback(<span class="hljs-string">"onReverseComplete"</span>, onFullScreenComplete);</pre></div></div>
             
         </li>
         
@@ -1492,178 +1643,6 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-38">&#182;</a>
-              </div>
-              <p>If expand is undefined, we toggle</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            titleBannerHalfHeight *= -<span class="hljs-number">1</span>;
-            fullScreenDelta2 *= -<span class="hljs-number">1</span>;
-            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (fullscreen) {
-            titleBannerHalfHeight = -<span class="hljs-number">1</span>;
-            fullScreenDelta2 = -<span class="hljs-built_in">Math</span>.abs(fullScreenDelta2);
-            } <span class="hljs-keyword">else</span> {
-            titleBannerHalfHeight = <span class="hljs-number">1</span>;
-            fullScreenDelta2 = <span class="hljs-built_in">Math</span>.abs(fullScreenDelta2);
-            }
-
-            <span class="hljs-keyword">var</span> strings = GlobalStorage.config.stringResources;
-            fullScreenToggle.text(fullScreenDelta2 &lt; <span class="hljs-number">0</span> ? strings.txtShowHeaders : strings.txtFullScreen);
-
-            navigation.slideToggle(<span class="hljs-string">"slow"</span>);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-39">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
-              </div>
-              <p>subTitleText.slideToggle(“fast”);</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            megaMenuDiv.slideToggle(<span class="hljs-string">"slow"</span>,
-            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-            megaMenu.removeAttr(<span class="hljs-string">'style'</span>);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-40">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
-              </div>
-              <p>needed to prevent “disappearing toolbar” effect</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            megamenuBar.css({
-            "min-height": "32px"
-            });
-
-            adjustHeight();
-            adjutSubPanelDimensions();
-            });
-            }*/
-
-            /**
-            * Publishes `PANEL_CHANGE` event when the visibility of the SidePanel changes.
-            *
-            * @method panelChange
-            * @param  {Boolean} visible Indicates whether the SidePanel is visible or not
-            * @for SidePanel
-            * @private
-            */
-            function panelChange(visible) {
-                topic.publish(EventManager.GUI.PANEL_CHANGE, {
-                    visible: visible
-                });
-            }
-
-            /**
-            * Slides the SidePanel open.
-            *
-            * @method openPanel
-            * @private
-            * @param  {Deferred} d A deferred to be resolved upon completion of the animation
-            */
-            function openPanel(d) {
-                /*jshint validthis: true */
-                panelToggleTimeLine.eventCallback("onReverseComplete",
-                        function () {
-                            layoutChange();
-                            panelChange(true);
-
-                            panelToggle
-                                .tooltipster("content", GlobalStorage.config.stringResources.txtClose)
-                                .find("span.wb-invisible").text(GlobalStorage.config.stringResources.txtClose);
-
-                            d.resolve();
-                        }, [], this);
-
-                panelToggleTimeLine.reverse();
-            }
-
-            /**
-            * Slide the SidePanel close
-            *
-            * @method closePanel
-            * @private
-            * @param  {Deferred} d A deferred to be resolved upon completion of the animation
-            */
-            function closePanel(d) {
-                /*jshint validthis: true */
-                panelToggleTimeLine.eventCallback("onComplete",
-                        function () {
-                            UtilMisc.subscribeOnce("map/update-end", function () {
-                                console.log("GUI &lt;-- map/update-end from gui");
-                                panelChange(false);
-                            });
-                            layoutChange();
-
-                            panelToggle
-                                .tooltipster("content", GlobalStorage.config.stringResources.txtOpen)
-                                .find("span.wb-invisible").text(GlobalStorage.config.stringResources.txtOpen);
-
-                            d.resolve();
-                        }, [], this);
-
-                panelToggleTimeLine.play();
-            }
-
-            function _toggleFullDataMode(fullData) {
-                _isFullData = UtilMisc.isUndefined(fullData) ? !_isFullData : _isFullData;
-
-                if (_isFullData) {
-                    TweenLite.fromTo(panelDiv, transitionDuration,
-                        { width: 430, right: 0, left: "auto" },
-                        { left: 35, right: 0, width: "auto", ease: "easeOutCirc" });
-
-                    fullDataTimeLine.play();
-                } else {
-                    TweenLite.fromTo(panelDiv, transitionDuration,
-                        { left: 35, width: "auto", right: panelDiv.css("right") },
-                        { right: 0, width: 430, ease: "easeInCirc" });
-
-                    fullDataTimeLine.reverse();
-                }
-
-                utilDict.forEachEntry(subPanels, function (key) {
-                    hideSubPanel({
-                        origin: key
-                    });
-                });
-            }
-
-            return {
-                init: function () {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-41">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-41">&#182;</a>
-              </div>
-              <p>jWindow.on(“resize”, adjustWidth);</p>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-42">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
               <p>initialize the panel popup</p>
 
@@ -1679,63 +1658,61 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
         </li>
         
         
-        <li id="section-43">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-43">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>set listener to the panel toggle</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    topic.subscribe(EventManager.GUI.PANEL_TOGGLE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                        panelPopup.toggle();
-                    });
-
-                    Theme
-                        .fullScreenCallback(<span class="hljs-string">"onComplete"</span>, onFullScreenComplete)
-                        .fullScreenCallback(<span class="hljs-string">"onReverseComplete"</span>, onFullScreenComplete);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                    topic.subscribe(EventManager.GUI.PANEL_TOGGLE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
+                        panelPopup.toggle(<span class="hljs-literal">null</span>, event.visible);
+                    });</pre></div></div>
             
         </li>
         
         
-        <li id="section-44">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-44">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>set listener to the full-screen toggle</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    fullScreenPopup = popupManager.registerPopup(fullScreenToggle, <span class="hljs-string">"click"</span>,
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> </span>{
+                            Theme.toggleFullScreenMode();
+                            d.resolve();
+                        }, {
+                            activeClass: <span class="hljs-string">"button-pressed"</span>,
+                            setClassBefore: <span class="hljs-literal">true</span>
+                        }
+                    );</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p>if the vertical space is too small, trigger the full-screen</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (mapContent.height() &lt; jWindow.height() * <span class="hljs-number">0.6</span>) {
-                        Theme.toggleFullScreenMode(<span class="hljs-literal">true</span>);
-                    }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-45">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-45">&#182;</a>
-              </div>
-              <p>set listener to the full-screen toggle</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                    fullScreenToggle.click(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                        Theme.toggleFullScreenMode();
-                    });
+                        fullScreenPopup.open();
+                    }
 
                     adjustHeight();
-                },
-
-                isFullScreen: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                    <span class="hljs-keyword">return</span> _isFullScreen;
                 },
 
                 <span class="hljs-comment">/**
@@ -1745,15 +1722,15 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
                 * @private
                 * @param  {boolean} fullscreen true - expand; false - collapse; undefined - toggle;
                 */</span>
-                toggleFullScreenMode: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(fullscreen)</span> {</span>
-                    Theme.toggleFullScreenMode(fullscreen);
+                toggleFullScreenMode: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(fullscreen)</span> </span>{
+                    fullScreenPopup.toggle(<span class="hljs-literal">null</span>, fullscreen);
                 },
 
-                isFullData: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                isFullData: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">return</span> _isFullData;
                 },
 
-                toggleFullDataMode: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(fullData)</span> {</span>
+                toggleFullDataMode: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(fullData)</span> </span>{
                     _toggleFullDataMode(fullData);
                 },
 
@@ -1767,16 +1744,16 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
                 * @param {JObject} container subpanel container
                 * @param {Boolean} isComplete indicates if subPanel transition has completed or just started
                 */</span>
-                subPanelChange: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(visible, origin, container, isComplete)</span> {</span></pre></div></div>
+                subPanelChange: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(visible, origin, container, isComplete)</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-46">
+        <li id="section-42">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-46">&#182;</a>
+                <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
               <p>check if the fullData transition is already underway</p>
 
@@ -1787,11 +1764,11 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
         </li>
         
         
-        <li id="section-47">
+        <li id="section-43">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-47">&#182;</a>
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               <p>adjust the sidePanel position shifting the right edge to the left, making space for the subpanel to open at</p>
 
@@ -1807,11 +1784,11 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
         </li>
         
         
-        <li id="section-48">
+        <li id="section-44">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-48">&#182;</a>
+                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <p>hide the sidepanel toggle when a subpanel is opened to prevent the user from closing sidepanel with subpanel still opened</p>
 
@@ -1840,7 +1817,7 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
                 * @method getContainer
                 * @return {jObject} The outer most `div` of this SidePanel
                 */</span>
-                getPanelContainer: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                getPanelContainer: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">return</span> panelDiv;
                 },
 
@@ -1850,7 +1827,7 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
                 * @method width
                 * @return {Number} The width of this SidePanel
                 */</span>
-                getPanelWidth: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                getPanelWidth: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     <span class="hljs-keyword">return</span> panelDiv.filter(<span class="hljs-string">":visible"</span>).width();
                 }
             };
@@ -1865,7 +1842,7 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
         * @return {SubPanel}      A newly created SubPanel
         * @for GUI
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">newSubPanel</span><span class="hljs-params">(attr)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">newSubPanel</span><span class="hljs-params">(attr)</span> </span>{
             <span class="hljs-keyword">var</span> subPanel = <span class="hljs-built_in">Object</span>.create(subPanelPrototype);
             subPanel._attr = <span class="hljs-built_in">Object</span>.create(subPanelAttr);
             subPanel.create(attr);</pre></div></div>
@@ -1873,11 +1850,11 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
         </li>
         
         
-        <li id="section-49">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-49">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <p>adjutSubPanelDimensions(subPanel);</p>
 
@@ -1917,11 +1894,11 @@ if (a.update &amp;&amp; attr.guid === a.guid) {</p>
         </li>
         
         
-        <li id="section-50">
+        <li id="section-46">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-50">&#182;</a>
+                <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
               <p>.position({
 my: “right top”,
@@ -1963,22 +1940,39 @@ of: “#map-div” // mapContent
                 subPanel.open();
                 subPanel.getPanel().find(".sub-panel-toggle")
                     .on("click", dojoLang.hitch(this, function () {
-                        hideSubPanel(attr);
+                        hideSubPanel(attr);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-47">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-47">&#182;</a>
+              </div>
+              <p>reset focus back to link where the subpanel was created from</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                        <span class="hljs-keyword">if</span> (attr.target.selector !== <span class="hljs-string">"#map-div"</span>) {
+                            $(attr.target).find(<span class="hljs-string">":tabbable"</span>).first().focus();
+                        }
                     }));
 
                 loadIndicator.animate({
-                    right: subPanel.getPanel().width() + 6
-                }, "easeOutCirc");
+                    right: subPanel.getPanel().width() + <span class="hljs-number">6</span>
+                }, <span class="hljs-string">"easeOutCirc"</span>);
             });</pre></div></div>
             
         </li>
         
         
-        <li id="section-51">
+        <li id="section-48">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-51">&#182;</a>
+                <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
               <p>take over the panel spawned by other components</p>
 
@@ -1998,11 +1992,11 @@ of: “#map-div” // mapContent
         </li>
         
         
-        <li id="section-52">
+        <li id="section-49">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-52">&#182;</a>
+                <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
               <p>if the panel exists, just update it</p>
 
@@ -2014,11 +2008,11 @@ of: “#map-div” // mapContent
         </li>
         
         
-        <li id="section-53">
+        <li id="section-50">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-53">&#182;</a>
+                <a class="pilcrow" href="#section-50">&#182;</a>
               </div>
               <p>create if doesn’t</p>
 
@@ -2030,18 +2024,18 @@ of: “#map-div” // mapContent
         </li>
         
         
-        <li id="section-54">
+        <li id="section-51">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-54">&#182;</a>
+                <a class="pilcrow" href="#section-51">&#182;</a>
               </div>
               <p>close all other panels; and open the newly created one after all others are closed</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>                UtilMisc.executeOnDone(subPanels,
-                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(p, d)</span> {</span>
+                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(p, d)</span> </span>{
                         <span class="hljs-keyword">if</span> (p &amp;&amp; p.getOrigin() !== attr.origin) {
                             hideSubPanel({
                                 origin: p.getOrigin()
@@ -2063,23 +2057,23 @@ of: “#map-div” // mapContent
         * @param  {Number} speed Duration of the closing animation
         * @param  {Deferred} d     The deferred object to be resolved upon successful closing of the panel
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hideSubPanel</span><span class="hljs-params">(attr, speed, d)</span> {</span>
-            <span class="hljs-keyword">var</span> deferred = <span class="hljs-keyword">new</span> Deferred(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hideSubPanel</span><span class="hljs-params">(attr, speed, d)</span> </span>{
+            <span class="hljs-keyword">var</span> deferred = <span class="hljs-keyword">new</span> Deferred(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                 <span class="hljs-keyword">if</span> (d) {
                     d.cancel();
                 }
             });
 
-            deferred.then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></pre></div></div>
+            deferred.then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-55">
+        <li id="section-52">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-55">&#182;</a>
+                <a class="pilcrow" href="#section-52">&#182;</a>
               </div>
               <p>remove the panel from the object after it closes</p>
 
@@ -2107,7 +2101,7 @@ of: “#map-div” // mapContent
         * @private
         * @param  {SubPanelSettings} attr Settings for the SubPanel; only `target` and `origin` are required here
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">dockSubPanel</span><span class="hljs-params">(attr)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">dockSubPanel</span><span class="hljs-params">(attr)</span> </span>{
             <span class="hljs-keyword">var</span> target = attr.target || layoutController.getPanelContainer(),
                 subPanel = subPanels[attr.origin];
 
@@ -2116,11 +2110,11 @@ of: “#map-div” // mapContent
         </li>
         
         
-        <li id="section-56">
+        <li id="section-53">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-56">&#182;</a>
+                <a class="pilcrow" href="#section-53">&#182;</a>
               </div>
               <p>console.log(“docking subpanel”);</p>
 
@@ -2139,7 +2133,7 @@ of: “#map-div” // mapContent
         * @private
         * @param  {SubPanelSettings} attr Settings for the SubPanel; only `origin`, `consumeOrigin` and `target` are required here
         */</span>
-        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">captureSubPanel</span><span class="hljs-params">(attr)</span> {</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">captureSubPanel</span><span class="hljs-params">(attr)</span> </span>{
             <span class="hljs-keyword">var</span> subPanel;
 
             <span class="hljs-keyword">if</span> (attr.consumeOrigin === attr.origin &amp;&amp; subPanels[attr.consumeOrigin]) {
@@ -2164,16 +2158,16 @@ of: “#map-div” // mapContent
             * @param  {?} req  ???
             * @param  {Function} load The callback function
             */</span>
-            load: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(id, req, load)</span> {</span></pre></div></div>
+            load: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(id, req, load)</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-57">
+        <li id="section-54">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-57">&#182;</a>
+                <a class="pilcrow" href="#section-54">&#182;</a>
               </div>
               <p>measure available space on every page resize</p>
 
@@ -2187,21 +2181,126 @@ of: “#map-div” // mapContent
         </li>
         
         
-        <li id="section-58">
+        <li id="section-55">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-58">&#182;</a>
+                <a class="pilcrow" href="#section-55">&#182;</a>
               </div>
               <p>registering help popup</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>                helpPanelPopup = popupManager.registerPopup(helpToggle, <span class="hljs-string">"click"</span>,
-                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> {</span>
+                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> </span>{
                         topic.publish(EventManager.GUI.HELP_PANEL_CHANGE, { visible: <span class="hljs-literal">true</span> });
                         topic.publish(EventManager.GUI.TOOLBAR_SECTION_OPEN, { id: <span class="hljs-string">"help-section"</span> });
-                        console.log(EventManager.GUI.HELP_PANEL_CHANGE + <span class="hljs-string">"; visible:"</span>, <span class="hljs-literal">true</span>);</pre></div></div>
+                        <span class="hljs-built_in">console</span>.log(EventManager.GUI.HELP_PANEL_CHANGE + <span class="hljs-string">"; visible:"</span>, <span class="hljs-literal">true</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-56">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-56">&#182;</a>
+              </div>
+              <p>close this panel if any other panel is opened</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                        UtilMisc.subscribeOnce(EventManager.GUI.TOOLBAR_SECTION_OPEN, dojoLang.hitch(<span class="hljs-keyword">this</span>,
+                            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isOpen()) {
+                                    <span class="hljs-keyword">this</span>.close();
+                                }
+                            })
+                        );
+
+                        helpSectionContainer.slideToggle(<span class="hljs-string">"fast"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                            d.resolve();
+                        });
+                    }, {
+                        activeClass: cssButtonPressedClass,
+                        target: helpSectionContainer,
+                        closeHandler: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> </span>{
+                            topic.publish(EventManager.GUI.HELP_PANEL_CHANGE, { visible: <span class="hljs-literal">false</span> });
+                            topic.publish(EventManager.GUI.TOOLBAR_SECTION_CLOSE, { id: <span class="hljs-string">"help-section"</span> });
+                            <span class="hljs-built_in">console</span>.log(EventManager.GUI.HELP_PANEL_CHANGE + <span class="hljs-string">"; visible:"</span>, <span class="hljs-literal">false</span>);
+
+                            helpSectionContainer.slideToggle(<span class="hljs-string">"fast"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                                d.resolve();
+                            });
+                        },
+                        resetFocusOnClose: <span class="hljs-literal">true</span>
+                    }
+                );</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-57">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-57">&#182;</a>
+              </div>
+              <p>Start AddLayer popup controller</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                addLayerPanelPopup = popupManager.registerPopup(addLayerToggle, <span class="hljs-string">"click"</span>,
+                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> </span>{
+                        topic.publish(EventManager.GUI.ADD_LAYER_PANEL_CHANGE, { visible: <span class="hljs-literal">true</span> });
+                        topic.publish(EventManager.GUI.TOOLBAR_SECTION_OPEN, { id: <span class="hljs-string">"add-layer-section"</span> });
+                        <span class="hljs-built_in">console</span>.log(EventManager.GUI.ADD_LAYER_PANEL_CHANGE + <span class="hljs-string">" visible:"</span>, <span class="hljs-literal">true</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-58">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-58">&#182;</a>
+              </div>
+              <p>close this panel if any other panel is opened</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                        UtilMisc.subscribeOnce(EventManager.GUI.TOOLBAR_SECTION_OPEN, dojoLang.hitch(<span class="hljs-keyword">this</span>,
+                            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isOpen()) {
+                                    <span class="hljs-keyword">this</span>.close();
+                                }
+                            })
+                        );
+
+                        addLayerSectionContainer.slideToggle(<span class="hljs-string">"fast"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                            d.resolve();
+                        });
+                    }, {
+                        activeClass: cssButtonPressedClass,
+                        target: addLayerSectionContainer,
+                        closeHandler: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> </span>{
+                            topic.publish(EventManager.GUI.ADD_LAYER_PANEL_CHANGE, { visible: <span class="hljs-literal">false</span> });
+                            topic.publish(EventManager.GUI.TOOLBAR_SECTION_CLOSE, { id: <span class="hljs-string">"add-layer-section"</span> });
+                            <span class="hljs-built_in">console</span>.log(EventManager.GUI.ADD_LAYER_PANEL_CHANGE + <span class="hljs-string">" visible:"</span>, <span class="hljs-literal">false</span>);
+
+                            addLayerSectionContainer.slideToggle(<span class="hljs-string">"fast"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                                d.resolve();
+                            });
+                        },
+                        resetFocusOnClose: <span class="hljs-literal">true</span>
+                    }
+                );
+
+                $(<span class="hljs-string">"#addLayer-add"</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                    topic.publish(EventManager.Map.ADD_LAYER, <span class="hljs-literal">null</span>);
+
+                    addLayerPanelPopup.close();
+                });</pre></div></div>
             
         </li>
         
@@ -2212,35 +2311,9 @@ of: “#map-div” // mapContent
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-59">&#182;</a>
               </div>
-              <p>close this panel if any other panel is opened</p>
+              <p>End Add Layer</p>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre>                        UtilMisc.subscribeOnce(EventManager.GUI.TOOLBAR_SECTION_OPEN, dojoLang.hitch(<span class="hljs-keyword">this</span>,
-                            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isOpen()) {
-                                    <span class="hljs-keyword">this</span>.close();
-                                }
-                            })
-                        );
-
-                        helpSectionContainer.slideToggle(<span class="hljs-string">"fast"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                            d.resolve();
-                        });
-                    }, {
-                        activeClass: cssButtonPressedClass,
-                        target: helpSectionContainer,
-                        closeHandler: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> {</span>
-                            topic.publish(EventManager.GUI.HELP_PANEL_CHANGE, { visible: <span class="hljs-literal">false</span> });
-                            topic.publish(EventManager.GUI.TOOLBAR_SECTION_CLOSE, { id: <span class="hljs-string">"help-section"</span> });
-                            console.log(EventManager.GUI.HELP_PANEL_CHANGE + <span class="hljs-string">"; visible:"</span>, <span class="hljs-literal">false</span>);
-
-                            helpSectionContainer.slideToggle(<span class="hljs-string">"fast"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                                d.resolve();
-                            });
-                        }
-                    }
-                );</pre></div></div>
             
         </li>
         
@@ -2251,15 +2324,13 @@ of: “#map-div” // mapContent
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-60">&#182;</a>
               </div>
-              <p>Start AddLayer popup controller</p>
+              <p>start extended grid</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                addLayerPanelPopup = popupManager.registerPopup(addLayerToggle, <span class="hljs-string">"click"</span>,
-                    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> {</span>
-                        topic.publish(EventManager.GUI.ADD_LAYER_PANEL_CHANGE, { visible: <span class="hljs-literal">true</span> });
-                        topic.publish(EventManager.GUI.TOOLBAR_SECTION_OPEN, { id: <span class="hljs-string">"add-layer-section"</span> });
-                        console.log(EventManager.GUI.ADD_LAYER_PANEL_CHANGE + <span class="hljs-string">" visible:"</span>, <span class="hljs-literal">true</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                topic.subscribe(EventManager.GUI.DATAGRID_EXPAND, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                    layoutController.toggleFullDataMode();
+                });</pre></div></div>
             
         </li>
         
@@ -2270,41 +2341,22 @@ of: “#map-div” // mapContent
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-61">&#182;</a>
               </div>
-              <p>close this panel if any other panel is opened</p>
+              <p>end extended grid</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                        UtilMisc.subscribeOnce(EventManager.GUI.TOOLBAR_SECTION_OPEN, dojoLang.hitch(<span class="hljs-keyword">this</span>,
-                            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isOpen()) {
-                                    <span class="hljs-keyword">this</span>.close();
-                                }
-                            })
-                        );
+            <div class="content"><div class='highlight'><pre>
+                topic.subscribe(EventManager.GUI.TOGGLE_FULLSCREEN, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> </span>{
+                    layoutController.toggleFullScreenMode(evt.expand);
+                });
 
-                        addLayerSectionContainer.slideToggle(<span class="hljs-string">"fast"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                            d.resolve();
-                        });
-                    }, {
-                        activeClass: cssButtonPressedClass,
-                        target: addLayerSectionContainer,
-                        closeHandler: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(d)</span> {</span>
-                            topic.publish(EventManager.GUI.ADD_LAYER_PANEL_CHANGE, { visible: <span class="hljs-literal">false</span> });
-                            topic.publish(EventManager.GUI.TOOLBAR_SECTION_CLOSE, { id: <span class="hljs-string">"add-layer-section"</span> });
-                            console.log(EventManager.GUI.ADD_LAYER_PANEL_CHANGE + <span class="hljs-string">" visible:"</span>, <span class="hljs-literal">false</span>);
+                topic.subscribe(EventManager.GUI.SUBPANEL_OPEN, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(attr)</span> </span>{
+                    showSubPanel(attr);
+                });
 
-                            addLayerSectionContainer.slideToggle(<span class="hljs-string">"fast"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                                d.resolve();
-                            });
-                        }
-                    }
-                );
-
-                $(<span class="hljs-string">"#addLayer-add"</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                    topic.publish(EventManager.Map.ADD_LAYER, <span class="hljs-literal">null</span>);
-
-                    addLayerSectionContainer.slideToggle(<span class="hljs-string">"fast"</span>);
-                });</pre></div></div>
+                topic.subscribe(EventManager.GUI.SUBPANEL_CLOSE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(attr)</span> </span>{
+                    <span class="hljs-keyword">if</span> (attr.origin === <span class="hljs-string">"all"</span>) {
+                        utilDict.forEachEntry(subPanels, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -2315,62 +2367,6 @@ of: “#map-div” // mapContent
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-62">&#182;</a>
               </div>
-              <p>End Add Layer</p>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-63">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-63">&#182;</a>
-              </div>
-              <p>start extended grid</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                topic.subscribe(<span class="hljs-string">"gui/grid/expand"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                    layoutController.toggleFullDataMode();
-                });</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-64">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-64">&#182;</a>
-              </div>
-              <p>end extended grid</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-                topic.subscribe(EventManager.GUI.TOGGLE_FULLSCREEN, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> {</span>
-                    layoutController.toggleFullScreenMode(evt.expand);
-                });
-
-                topic.subscribe(EventManager.GUI.SUBPANEL_OPEN, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(attr)</span> {</span>
-                    showSubPanel(attr);
-                });
-
-                topic.subscribe(EventManager.GUI.SUBPANEL_CLOSE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(attr)</span> {</span>
-                    <span class="hljs-keyword">if</span> (attr.origin === <span class="hljs-string">"all"</span>) {
-                        utilDict.forEachEntry(subPanels, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> {</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-65">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-65">&#182;</a>
-              </div>
               <p>attr.origin = key;</p>
 
             </div>
@@ -2380,16 +2376,16 @@ of: “#map-div” // mapContent
                             });
                         });
                     } <span class="hljs-keyword">else</span> {
-                        dojoArray.forEach(attr.origin.split(<span class="hljs-string">","</span>), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(element)</span> {</span></pre></div></div>
+                        dojoArray.forEach(attr.origin.split(<span class="hljs-string">","</span>), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(element)</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-66">
+        <li id="section-63">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-66">&#182;</a>
+                <a class="pilcrow" href="#section-63">&#182;</a>
               </div>
               <p>attr.origin = element;</p>
 
@@ -2402,56 +2398,124 @@ of: “#map-div” // mapContent
                     }
                 });
 
-                topic.subscribe(EventManager.GUI.SUBPANEL_DOCK, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(attr)</span> {</span>
+                topic.subscribe(EventManager.GUI.SUBPANEL_DOCK, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(attr)</span> </span>{
                     <span class="hljs-keyword">var</span> na;
                     <span class="hljs-keyword">if</span> (attr.origin === <span class="hljs-string">"all"</span>) {
-                        utilDict.forEachEntry(subPanels, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> {</span>
+                        utilDict.forEachEntry(subPanels, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> </span>{
                             na = <span class="hljs-built_in">Object</span>.create(attr);
                             na.origin = key;
                             dockSubPanel(na);
                         });
                     } <span class="hljs-keyword">else</span> {
-                        dojoArray.forEach(attr.origin.split(<span class="hljs-string">","</span>), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(element)</span> {</span>
+                        dojoArray.forEach(attr.origin.split(<span class="hljs-string">","</span>), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(element)</span> </span>{
                             na = <span class="hljs-built_in">Object</span>.create(attr);
                             na.origin = element;
                             dockSubPanel(na);
                         });
                     }
-                    console.log(EventManager.GUI.SUBPANEL_DOCK);
+                    <span class="hljs-built_in">console</span>.log(EventManager.GUI.SUBPANEL_DOCK);
                 });
 
-                topic.subscribe(EventManager.GUI.SUBPANEL_CAPTURE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(attr)</span> {</span>
+                topic.subscribe(EventManager.GUI.SUBPANEL_CAPTURE, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(attr)</span> </span>{
                     <span class="hljs-keyword">var</span> na;
                     <span class="hljs-keyword">if</span> (attr.consumeOrigin === <span class="hljs-string">"all"</span>) {
-                        utilDict.forEachEntry(subPanels, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> {</span>
+                        utilDict.forEachEntry(subPanels, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> </span>{
                             na = <span class="hljs-built_in">Object</span>.create(attr);
                             na.consumeOrigin = key;
                             captureSubPanel(na);
                         });
                     } <span class="hljs-keyword">else</span> {
-                        dojoArray.forEach(attr.consumeOrigin.split(<span class="hljs-string">","</span>), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(element)</span> {</span>
+                        dojoArray.forEach(attr.consumeOrigin.split(<span class="hljs-string">","</span>), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(element)</span> </span>{
                             na = <span class="hljs-built_in">Object</span>.create(attr);
                             na.consumeOrigin = element;
                             captureSubPanel(na);
                         });
                     }
-                    console.log(EventManager.GUI.SUBPANEL_CAPTURE);
+                    <span class="hljs-built_in">console</span>.log(EventManager.GUI.SUBPANEL_CAPTURE);
                 });
 
-                panelTabs.find(<span class="hljs-string">"li a"</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                panelTabs.find(<span class="hljs-string">"li a"</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                     topic.publish(EventManager.GUI.TAB_SELECTED, {
                         id: <span class="hljs-keyword">this</span>.id,
                         tabName: <span class="hljs-keyword">this</span>.attributes[<span class="hljs-string">"data-panel-name"</span>].value
                     });
 
                     panelTabs.find(<span class="hljs-string">"li:not(.active) a"</span>).each(
-                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
                             topic.publish(EventManager.GUI.TAB_DESELECTED, {
                                 id: <span class="hljs-keyword">this</span>.id,
                                 tabName: <span class="hljs-keyword">this</span>.attributes[<span class="hljs-string">"data-panel-name"</span>].value
                             });
                         });
                 });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-64">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-64">&#182;</a>
+              </div>
+              <p>List of objects containing an event name and an event argument. The events should
+be anything to wait for before publishing a map extent change, it should include
+anything that will change the size of the map (e.g. fullscreen, closing the panel).
+If the map extent change occurs BEFORE something that changes the size of the map (e.g. fullscreen)
+then the map extent will change again.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> waitList = [];
+
+                <span class="hljs-keyword">if</span> (!GlobalStorage.config.ui.sidePanelOpened) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-65">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-65">&#182;</a>
+              </div>
+              <p>NOTE: panel change not triggered here (see map extent change below)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    waitList.push({
+                        publishName: EventManager.GUI.PANEL_TOGGLE,
+                        eventArg: {
+                            origin: <span class="hljs-string">"bootstrapper"</span>,
+                            visible: GlobalStorage.config.ui.sidePanelOpened
+                        },
+                        subscribeName: EventManager.GUI.PANEL_CHANGE
+                    });
+                }
+
+                <span class="hljs-keyword">if</span> (GlobalStorage.config.ui.fullscreen) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-66">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-66">&#182;</a>
+              </div>
+              <p>NOTE: fullscreen not triggered here (see map extent change below)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    waitList.push({
+                        publishName: EventManager.GUI.TOGGLE_FULLSCREEN,
+                        eventArg: {
+                            expand: <span class="hljs-literal">true</span>
+                        },
+                        subscribeName: EventManager.GUI.FULLSCREEN_CHANGE
+                    });
+                }</pre></div></div>
             
         </li>
         
@@ -2466,7 +2530,68 @@ of: “#map-div” // mapContent
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                load();
+            <div class="content"><div class='highlight'><pre>                load();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-68">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-68">&#182;</a>
+              </div>
+              <p>This should be the last thing that happens</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (waitList.isEmpty()) {
+                    topic.publish(EventManager.GUI.UPDATE_COMPLETE);
+                } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-69">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-69">&#182;</a>
+              </div>
+              <p>Wait for things such as fullscreen or panel collapse
+to finish before publishing the UPDATE_COMPLETE.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-70">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-70">&#182;</a>
+              </div>
+              <p>Note it’s important to subscribe to the events, then
+publish them, that’s why it was done in such an obscure way
+using the waitList (otherwise if we just publish the
+event like above, then subscribe to it here, the event
+might have completed before reaching this point)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">var</span> eventNames = dojoArray.map(waitList, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj)</span> </span>{
+                        <span class="hljs-keyword">return</span> obj.subscribeName;
+                    });
+
+                    UtilMisc.subscribeAll(eventNames, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                        topic.publish(EventManager.GUI.UPDATE_COMPLETE);
+                    });
+
+                    dojoArray.forEach(waitList, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj)</span> </span>{
+                        topic.publish(obj.publishName, obj.eventArg);
+                    });
+                }
             }
         };
     }

@@ -1,11 +1,15 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
+        "AdvancedToolbar",
         "Array",
         "BaseMapSelector",
+        "BaseTool",
         "BookmarkLink",
         "Bootstrapper",
-        "CheckboxWrapper",
+        "BufferTool",
+        "Checkbox",
+        "CheckboxGroup",
         "Datagrid",
         "DatagridClickHandler",
         "Decorator",
@@ -21,8 +25,11 @@ YUI.add("yuidoc-meta", function(Y) {
         "GraphicExtension",
         "Intranet-Theme",
         "Map",
+        "MapClickHandler",
         "Maptips",
+        "MeasureTool",
         "Navigation",
+        "PopulationTool",
         "Popup",
         "PopupBase",
         "PopupBaseSettings",
@@ -45,12 +52,15 @@ YUI.add("yuidoc-meta", function(Y) {
         "BookmarkLink",
         "Datagrid",
         "FilterManager",
+        "GlobalStorage",
         "Map",
+        "MeasureTool",
         "Navigation",
         "QuickZoom",
         "RAMP",
         "Theme",
         "TmplUtil",
+        "Tools",
         "UI",
         "Utils"
     ],
@@ -71,6 +81,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "description": "FilterManager submodule"
         },
         {
+            "displayName": "GlobalStorage",
+            "name": "GlobalStorage",
+            "description": "GlobalStorage class is used to store variables and exchange them between different modules. Each module has the ability to add variables to the global storage and retrieve them as needed."
+        },
+        {
             "displayName": "Map",
             "name": "Map",
             "description": "A RAMP Map module with ESRI and Dojo AMD Modules\n This module provides function to create an ESRI web map control. A global config object is\n required to initialize the map."
@@ -79,6 +94,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "Maptips",
             "name": "Maptips",
             "description": "Maptips class.\n\nThe map tip module provides functions to create a small popup window as the mouse hovers over a feature on the map (point, polygon, line, etc.).\nNOTE: This module uses global config object. featureLayers->mapTipSettings"
+        },
+        {
+            "displayName": "MeasureTool",
+            "name": "MeasureTool",
+            "description": "MeasureTool submodule.\n\nComputes the area and perimeter length of a selected area. When the user draws a polygon, the area\nand length will be displayed in the bottom right corner."
         },
         {
             "displayName": "Navigation",
@@ -104,6 +124,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "TmplUtil",
             "name": "TmplUtil",
             "description": "Utility module containing useful static classes."
+        },
+        {
+            "displayName": "Tools",
+            "name": "Tools",
+            "description": "Tools module. Contains tools accessible through Advanced Toolbar.\n\nContains the advanced tools as a popup."
         },
         {
             "displayName": "UI",
