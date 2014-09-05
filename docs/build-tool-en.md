@@ -74,13 +74,20 @@ Unless you specify a task to run, __grunt__ command runs _cleanAll_, _css_, _js_
 2. convert LESS files from __RAMP\src\css__ to CSS, add browser-specific prefixes to CSS files in __RAMP\src\css__, minimize CSS, and copy them to __RAMP\buildcss\__; concatenate CSS libraries located in __RAMP\src\css\lib__, and copy the resulting __lib.min.css__ to __RAMP\build\css\lib__;
 3. run JSHint on all JS source files – the default build task _will_ fail if there are any errors present; [uglify](http://lisperator.net/uglifyjs/compress) JS files from __RAMP\src\js\RAMP__ and move them to __RAMP\build\js\RAMP__; uglifiy modified/pretty JS libraries from __RAMP\src\js\lib__, concatenate them with other, already uglified JS libraries and copy the resulting __lib.min.js__ file to __RAMP\build\js\lib__; copy templates from __RAMP\src\js\RAMP\Modules\templates__ to __RAMP\build\js\RAMP\Modules\templates__;
 4. output English and French versions of the content template file (__src/ramp-src.html__) by replacing placeholders with provided locale strings and applying templates from theme foldes in __src\pages\ramp-gcwu-intranet__ and __src\pages\ramp-gcwu-fegc__; save them as in the __build__ folder;
-5. generate API documentation using [YUIDoc](http://yui.github.io/yuidoc/) and annotated source code documents using [Docco](http://jashkenas.github.io/docco/) and save them in "__docs/docco__" and "__docs/yuidoc__" folder
+5. generate API documentation using [YUIDoc](http://yui.github.io/yuidoc/) and annotated source code documents using [Docco](http://jashkenas.github.io/docco/) and save them in "__docs/docco__" and "__docs/yuidoc__" folder;
 
 #### --source
-To generate source mappings for the core JS files, use source option as follows:
+To generate source mappings for the core JS files, use __source__ option as follows:
 
 {% highlight sh %}
 $ grunt --source
+{% endhighlight %}
+
+#### --pretty
+To build RAMP without compressing or mangling JS code, use __pretty__ option as follows:
+
+{% highlight sh %}
+$ grunt --pretty
 {% endhighlight %}
 
 ### Other Tasks
@@ -219,7 +226,7 @@ is replaced by the CSS reference to __build/css/lib/lib.min.css__.
 
 is replaced by the CSS reference to __build/css/[theme]/theme.less.min.css__.
 
-#####  body.wetHeader
+##### body.wetHeader
 
 {% highlight html %}
 <!-- build:section body.wetHeader -->
