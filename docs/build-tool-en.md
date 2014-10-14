@@ -22,7 +22,7 @@ To install Grunt on Windows, you first need to install [Node.js](http://nodejs.o
 * Node.js [installer](http://nodejs.org/#download)
 * msysGit [installer](http://code.google.com/p/msysgit/downloads/list?q=full+installer+official+git)
 * msysGit [mirror](https://github.com/msysgit/msysgit/releases)
-* Java [installer](https://java.com/en/download/index.jsp)
+* Java SDK [installer](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
 After installing the dependencies, run the following in your command shell as Administrator
 
