@@ -198,15 +198,6 @@ To add a CSS library, do the following:
 4.	include the reference to the library’s source file(s) if you modified them and to main minified file(s) if you didn’t in __ramp-src.html__ between the <!-- CSS LIB --> comment tags:
 5.	run the tool;
 
-#### Making Cake
-To have the build tool make you a cake, do the following:
-
-1.	save a picture of the cake you want in __RAMP/assets/images/cake.png__;
-2.	save the cake’s recipe in __RAMP/assets/recipe.txt__;
-3.	spin three times on your chair clapping your hands and shouting "Cake";
-4.	use the command __grunt cake__
-5.	enjoy your cake;
-
 ### Troubleshooting
 
 #### Task Not Found
