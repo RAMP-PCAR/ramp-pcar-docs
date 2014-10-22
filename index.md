@@ -15,7 +15,7 @@ tagline: Reusable Accessible Mapping Platform
 ## Key Resources
 
 * [Documentation]({{ BASE_PATH }}/docs/index-en.html)
-* [Downloads]({{ BASE_PATH }}/docs/versions/downloads-en.html)
+* [Downloads]({{ BASE_PATH }}/versions/index-en.html)
 * [Examples]({{ BASE_PATH }}/demos/index-en.html)
 * [Terms and conditions]({{ BASE_PATH }}/license-en.html) (MIT license)
 * [Source code repository](https://github.com/Environment-Canada/RAMP-AF)

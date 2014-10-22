@@ -13,5 +13,6 @@ title: Feature Roadmap
 | 2014-06-20| Initial Release
 | |Setup GitHub Site
 | |Publish Documentation
+{: .table}
 
 ## Past milestones
