@@ -22,17 +22,17 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 | Repo | Source Code | Release Notes |
 |---|---|---|
 | RAMP Core | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/archive/v3.0.0.zip) | [Release Notes]({{ BASE_PATH }}/versions/v3.0.0-en.html) |
-| RAMP WET Usability Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/archive/v3.0.0.zip) |  |
-| RAMP WET Intranet Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/archive/v3.0.0.zip) |  |
+| RAMP Usability Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/archive/v3.0.0.zip) |  |
+| RAMP Intranet Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/archive/v3.0.0.zip) |  |
 {: .table}
 
 ### Development Releases
 
-| Repo | Source Code | Release Notes |
+| Repo | Source Code |
 |---|---|---|
-| RAMP Core | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/archive/develop.zip) | [Release Notes]({{ BASE_PATH }}/versions/v3.0.0-en.html) |
-| RAMP WET Usability Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/archive/develop.zip) |  |
-| RAMP WET Intranet Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/archive/develop.zip) |  |
+| RAMP Core | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/archive/develop.zip) |
+| RAMP Usability Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/archive/develop.zip) |
+| RAMP Intranet Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/archive/develop.zip) |
 {: .table}
 
 ## Version 2.0 - Bobcat (no longer supported) {#v200}
