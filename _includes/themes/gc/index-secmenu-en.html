@@ -26,7 +26,7 @@
     <link href="{{ BASE_PATH }}{{ site.JB.atom_path }}" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
     <link href="{{ BASE_PATH }}{{ site.JB.rss_path }}" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 </head>
 
 <body vocab="http://schema.org/" typeof="WebPage">
@@ -181,12 +181,14 @@
     <script src="{{ ASSET_PATH }}/js/toc.js"> </script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.toc').toc({
-                title: '<h2 class="mrgn-tp-sm">Table of Content</h2>',
-                listType: 'ul',
-                selector: 'h2, h3, h4, h5, h6, .include_toc',
-                showSpeed: 0
-            });
+            $('.toc')
+                .addClass("mrgn-bttm-lg")
+                .toc({
+                    title: '<h2 class="mrgn-tp-sm">Table of Content</h2>',
+                    listType: 'ul',
+                    selector: 'h2, h3, h4, h5, h6, .include_toc',
+                    showSpeed: 0
+                });
         });
     </script>
 </body>

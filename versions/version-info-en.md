@@ -9,6 +9,7 @@ categories:
 
 # Versioning {#wb-cont}
 
+<div class="toc"></div>
 
 ## Major version (e.g, v3.1.x to v4.0.0)
 

@@ -6,6 +6,8 @@ title: Feature Roadmap
 
 # Roadmap {#wb-cont}
 
+<div class="toc"></div>
+
 ## Future milestones
 
 | Date (estimated) | Milestones
