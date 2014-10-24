@@ -8,5 +8,7 @@ title: Working Examples
 
 | Name | Link | Description
 |----+----|
-| NRSTC| [link]({{BASE_PATH}}/demos/NRSTC/ramp-gcwu-fegc-map.html)| A Simple Implementation of the built-in RAMP templates
-
+| NRSTC - RAMP Core Theme | [Link]({{BASE_PATH}}/demos/NRSTC/core/ramp-en.html)| A Simple Implementation of RAMP using Core Theme |
+| NRSTC - RAMP Usability Theme | [Link]({{BASE_PATH}}/demos/NRSTC/usability/ramp-en.html)| A Simple Implementation of RAMP using Usability Theme |
+| NRSTC - RAMP Intranet Theme | [Link]({{BASE_PATH}}/demos/NRSTC/intranet/ramp-en.html)| A Simple Implementation of RAMP using Intranet Theme |
+{: .table}
