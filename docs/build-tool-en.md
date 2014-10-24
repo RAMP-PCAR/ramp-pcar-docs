@@ -48,7 +48,7 @@ $ grunt
 if you get an error that something is not found, try running __npm install__ again.
 
 ### Default Task
-Unless you specify a task to run, __grunt__ command creates an unminified development, minified and tarballed distribution packages. They are locates in __build__, __dist__, and __tarball__ folders respectivelly.
+Unless you specify a task to run, __grunt__ command creates an unminified development, minified and tarballed distribution packages. They are located in __build__, __dist__, and __tarball__ folders respectivelly.
 
 ### Other Tasks
 
