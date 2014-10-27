@@ -19,11 +19,11 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 
 #### v3.0.0 {#v300}
 
-| Repo | Source Code | Release Notes |
-|---|---|---|
-| RAMP Core | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/archive/v3.0.0.zip) | [Release Notes]({{ BASE_PATH }}/versions/v3.0.0-en.html) |
-| RAMP Usability Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/archive/v3.0.0.zip) |  |
-| RAMP Intranet Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/archive/v3.0.0.zip) |  |
+| Repo | Source Code | Production Files | Release Notes |
+|---|---|---|---|
+| RAMP Core | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/archive/v3.0.0.zip) | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/releases/download/v3.0.0/ramp-pcar-dist-3.0.0.zip) | [Release Notes]({{ BASE_PATH }}/versions/v3.0.0-en.html) |
+| RAMP Usability Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/archive/v3.0.0.zip) |  |  |
+| RAMP Intranet Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/archive/v3.0.0.zip) |  |  |
 {: .table}
 
 ### Development Releases
