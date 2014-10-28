@@ -14,7 +14,7 @@ categories: [documentation]
 <a name="datatables" />
 
 ## Datatables
-v 1.10
+v 1.10.1
 
 <http://www.datatables.net>
 
@@ -53,7 +53,7 @@ Used throughout the application.
 
 
 ## GSAP - GreenSock Animation Platform
-v 1.11.8
+v 1.13.2
 
 <http://www.greensock.com/gsap-js/>
 
@@ -72,6 +72,16 @@ v 1.7.4
 i18next is a full-featured i18n javascript library for translating your webapplication.
 
 Used for translation of the webmap.
+
+[Back To Top](#top)
+{: .text-right}
+
+## jQuery
+v 2.1.1
+
+<http://jquery.com>
+
+jQuery makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
 
 [Back To Top](#top)
 {: .text-right}
@@ -96,18 +106,6 @@ v 1.0.5
 Fully customizable with CSS, Single/Double handles, Touch-enabled, IE 7+ Compatibility, Custom Digit Rounding, Non linear step increments!
 
 Power the opacity slider control for the Filter Manager module.
-
-[Back To Top](#top)
-{: .text-right}
-
-## Modernizr
-v 2.7.1
-
-<http://modernizr.com />
-
-A library that detects if browsers have HTML5 or CSS3 capabilities
-
-Used to allow the tooltipster library to work in browsers that do not support CSS animation.
 
 [Back To Top](#top)
 {: .text-right}
@@ -149,7 +147,7 @@ Used for managing graphics layers and repositioning anchor maptips in the featur
 {: .text-right}
 
 ## tmplEx
-v 2.4.1
+v 2.5.5
 
 <https://github.com/blueimp/JavaScript-Templates>
 
@@ -161,7 +159,7 @@ Used throughout the application to generate content.  E.g. maptip content, detai
 {: .text-right}
 
 ## Tooltipster
-v 3.0.1
+v 3.0.1-r
 
 <http://iamceege.github.io/tooltipster />
 
