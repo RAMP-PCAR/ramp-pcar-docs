@@ -8,10 +8,12 @@ categories: [documentation]
 
 # Proxy Configuration and Resources {#wb-content}
 
+<div class="toc"></div>
+
 ## What is Proxy
 
-RAMP uses proxy to access resources on a different domain where Corss Origin Resource Sharing (CORS) support is not available.
-For more information on proxy, please refere to ESRI ArcGIS API for JavaScript [Using the proxy](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html). 
+RAMP uses proxy to access resources on a different domain where Cross Origin Resource Sharing (CORS) support is not available.
+For more information on proxy, please refer to ESRI ArcGIS API for JavaScript [Using the proxy](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html). 
 
 ## RAMP Proxy Configuration 
 
@@ -37,6 +39,6 @@ They are available through [GitHub](https://github.com/Esri/resource-proxy).
 Detailed instructions and requirements are available in each folder of specific platform.
 
 
-Note: for anyone configuring a proxy server, please ensure that is is restricted in some form; either by limiting the 
+Note: for anyone configuring a proxy server, please ensure that it is restricted in some form; either by limiting the 
 websites reachable or by requiring some form of authentication.
 

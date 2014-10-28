@@ -18,6 +18,8 @@ RAMP operates on the principle of progressive enhancement, and implements well-e
 * [Templating Guide](/docs/template-guide-en.html)
 * [Template Example](/docs/template-example-en.html)
 * [Template Summary](/docs/template-summary-en.html)
+* [Proxy Configuration](/docs/proxy.html)
+* [Add New Module](/docs/add-new-module.html)
 
 ## [Architecture Overview](/docs/architecture-overview-en.html)
 * [Initialization](/docs/dojo-setup-en.html)

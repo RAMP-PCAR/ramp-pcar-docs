@@ -8,6 +8,8 @@ categories: [documentation]
 
 #Add New Module in RAMP
 
+<div class="toc"></div>
+
 RAMP modules is written in Asynchronous Module Definition (AMD) format. The AMD format is supported by Dojo module loader.
 
 To create a module you use Dojo global function define; it allows you to register a module with the loader.
