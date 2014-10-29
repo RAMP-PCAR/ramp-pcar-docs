@@ -1,8 +1,10 @@
 ---
-layout: index-en
-title: RAMP-RACP
+layout: "index-en"
+title: "Home"
 tagline: Reusable Accessible Mapping Platform
+published: true
 ---
+
 {% include JB/setup %}
 
 # Reusable, Accessible, Mapping Platform (RAMP) {#wb-cont}
@@ -15,7 +17,8 @@ tagline: Reusable Accessible Mapping Platform
 ## Key Resources
 
 * [Documentation]({{ BASE_PATH }}/docs/index-en.html)
-* [Downloads]({{ BASE_PATH }}/versions/index-en.html)
+* [Downloads]({{ BASE_PATH }}/versions/download-en.html)
+* [Version history]({{ BASE_PATH }}/versions/index-en.html) and [roadmap]({{ BASE_PATH }}/versions/roadmap-en.html)
 * [Examples]({{ BASE_PATH }}/demos/index-en.html)
 * [Terms and conditions]({{ BASE_PATH }}/license-en.html) (MIT license)
 * [Source code repository](https://github.com/Environment-Canada/RAMP-AF)
