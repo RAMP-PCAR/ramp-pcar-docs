@@ -14,12 +14,7 @@ This page will walk you through the layout of the application configuration obje
 
 ##Object Outline
 
-* stringResources
-* gridstrings
-    * oPaginate
-    * oAria
 * lang
-* helpContent
 * geometryService
 * proxyUrl
 * spatialReference
@@ -37,18 +32,13 @@ This page will walk you through the layout of the application configuration obje
     * skin
 * advancedToolbar
     * enabled
-    * tools
-        * toolname (1 per tool)
-            * name
-            * selector
-            * enabled
+    * tools (collection)        
+        * name
+        * selector
+        * enabled
 * levelOfDetails
     * minLevel
     * maxLevel
-    * levels (collection)
-        * level
-        * resolution
-        * scale
 * basemaps (collection)
     * id
     * url
@@ -59,79 +49,79 @@ This page will walk you through the layout of the application configuration obje
     * name
     * altText
     * description
-* featureLayers (collection)
-    * id
-    * displayName
-    * url
-    * datagrid
-        * rowsPerPage
-        * gridColumns (collection)
-            * id
-            * fieldName
-            * width
-            * isSortable
-            * sortType
-            * alignment
-            * title
-            * columnTemplate
-        * summaryRowTemplate
-    * layerAttributes
-    * filter
-    * mapTipSettings
-        * hoverTemplate
-        * anchorTemplate
-    * symbology
-        * renderer
-            * type
-            * key1
-            * key2
-            * Key3
-        * icons
-            * default
-                * imageUrl
-                * legendText
-    * uuid
-    * detailTemplate
-    * nameField
-    * settings
-        * enabled
-        * opacity
-            * enabled
-            * default
-    * isStatic (static layer only)
-    * layerType (static layer only)
-* wmsLayers (collection)
-    * id
-    * displayName
-    * url
-    * uuid
-    * extent
-    * format
-    * settings
-        * enabled
-        * opacity
-    * layerInfo
-        * name
-        * title
-        * allExtents (collection)
-        * spatialReferences (collection)
-        * subLayers (collection)
-    * legend
-        * enable
-        * legendURL
-    * symbology
-        * renderer
-            * type
-            * key1
-            * key2
-            * Key3
-        * icons
-            * default
-                * imageUrl
-                * legendText
-	* featureInfo (optional)
-		* mimeType
-		* parser
+* layers
+	* featureLayers (collection)
+		* id
+		* displayName
+		* url
+		* datagrid
+			* rowsPerPage
+			* gridColumns (collection)
+				* id
+				* fieldName
+				* width
+				* isSortable
+				* sortType
+				* alignment
+				* title
+				* columnTemplate
+		* layerAttributes
+		* templates
+			* hover
+			* anchor
+			* summary
+			* detail
+		* symbology
+			* renderer
+				* type
+				* key1
+				* key2
+				* Key3
+			* icons
+				* default
+					* imageUrl
+					* legendText
+		* uuid
+		* nameField
+		* settings
+			* enabled
+			* opacity
+				* enabled
+				* default
+		* isStatic (static layer only)
+		* layerType (static layer only)
+	* wmsLayers (collection)
+		* id
+		* displayName
+		* url
+		* uuid
+		* extent
+		* format
+		* settings
+			* enabled
+			* opacity
+		* layerInfo
+			* name
+			* title
+			* allExtents (collection)
+			* spatialReferences (collection)
+			* subLayers (collection)
+		* legend
+			* enable
+			* legendURL
+		* symbology
+			* renderer
+				* type
+				* key1
+				* key2
+				* Key3
+			* icons
+				* default
+					* imageUrl
+					* legendText
+		* featureInfo (optional)
+			* mimeType
+			* parser
 * datagrid
     * globalGridRowsPerPage
     * defaultState
@@ -166,89 +156,82 @@ This page will walk you through the layout of the application configuration obje
 
 | JSON Object Field	| Data Type	| Description
 |----+----|----+----|----+----
-| <a name="stringresources" />stringResources	| key value dictionary	| holds all application strings and language specific values for a SINGLE LANGUAGE.  Switching languages will trigger the load of a new config object with separate dictionary
-| <a name="gridstrings" />gridstrings	| Key value dictionary	| holds all datagrid strings and language specific value for a SINGLE LANGUAGE. Switching languages will trigger the load of a new config object with separate dictionary
-| <a name="lang_field" /> lang	| string	| language of current object; en or fr
-| helpContent	| string	| blob content the of help section for current language
-| geometryService	| string	| URL to geometry service
-| proxyUrl	| string	| Path to proxy service (relative path)
-| <a name="spatialreference" />spatialReference	| numeric	| the WKID of the spatial reference for the map.  WILL BREAK IF YOU STORE IT AS A STRING!
-| <a name="extents" />extents.defaultExtent	| envelope	| extent the app should initialize to
-| extents.fullExtent	| envelope	| extent the app should go to when full extent button is pushed
-| extents.maximumExtent	| envelope	| extent the app not allow user to pan past
+| <a name="lang_field" /> lang	| string	| Language of this config object; en or fr
+| geometryService	| string	| URL to an ArcGIS geometry service REST endpoint.  Used for advanced drawing tools.
+| proxyUrl	| string	| Path to a proxy service (relative path).  Used for sending large requests to services.
+| <a name="spatialreference" />spatialReference	| object	| A valid ESRI spatial reference object.  See https://developers.arcgis.com/javascript/jsapi/spatialreference-amd.html#spatialreference1
+| <a name="extents" />extents	| 	| 
+| extents.defaultExtent	| envelope	| Map extent to display when the app initializes
+| extents.fullExtent	| envelope	| Map extent to display when the full extent button is pushed
+| extents.maximumExtent	| envelope	| Map extent that defines the valid viewing area.  the app should not allow a user to pan outside of this extent
 | <a name="navwidget" />navWidget	| 	|
-| navWidget.sliderMinVal	| numeric	| Navigation widget slider minimum value
-| navWidget.sliderMaxVal	| numeric	| Navigation widget slider maximum value
-| navWidget.debug	| numeric	| Debug flag, generate console log when set
-| navWidget.animate	| string	|
-| navWidget.locale	| string	| Navigation widget locale
-| navWidget.cssPath	| string	| Path to CSS
-| navWidget.skin	| string	| Skin style
+| navWidget.sliderMinVal	| numeric	| Navigation widget slider minimum scale level value
+| navWidget.sliderMaxVal	| numeric	| Navigation widget slider maximum scale level value
+| navWidget.debug	| numeric	| Debug flag, will generate console log when set to a non-zero value
+| navWidget.animate	| string	| Slider animation setting. Can be "fast", "slow", or a number in milliseconds
+| navWidget.locale	| string	| Navigation widget locale.  en or fr
+| navWidget.cssPath	| string	| Path to folder containing the CSS skins
+| navWidget.skin	| string	| Name of the skin style to apply.  Style must be in the above folder
 | <a name="advancedToolbar" />advancedToolbar	| 	|
-| advancedToolbar.enabled	| boolean	| determines if the advanced toolbar is available in the app
-| advancedToolbar.tools	| object	| holds a child object for each available tool
-| advancedToolbar.tools.toolname	| object	| object defining an individual tool.  object name will be specific to the tool (i.e. it is not called "toolname")
-| advancedToolbar.tools.toolname.name	| string	| name of the tool.  should match the name property of the tool's javascript module
-| advancedToolbar.tools.toolname.selector	| string	| name of the selector tag to use in the html layout.  should be unique amongst tools
-| advancedToolbar.tools.toolname.enabled	| boolean	| determines if the tool should be made available in the toolbar
+| advancedToolbar.enabled	| boolean	| Determines if the advanced toolbar is available in the app
+| advancedToolbar.tools	| collection of tool objects	| Holds a child object for each available tool
+| advancedToolbar.tools[].name	| string	| Name of the tool.  Should match the name property of the tool's javascript module
+| advancedToolbar.tools[].selector	| string	| Name of the selector tag to use in the html layout.  Should be unique amongst tools
+| advancedToolbar.tools[].enabled	| boolean	| Determines if the tool should be made available in the toolbar
 | levelOfDetails	| 	|
 | <a name="levelofdetails_minlevel" />levelOfDetails.minLevel	| numeric	| Minimum level of detail
 | <a name="levelofdetails_maxlevel" />levelOfDetails.maxLevel	| numeric	| Maximum level of detail
-| levelOfDetails.levels[]	| 	|
-| levelOfDetails.levels[].level	| numeric	| ID for each level
-| levelOfDetails.levels[].resolution	| numeric	| Resolution in map units of each pixel in a tile for each level
-| levelOfDetails.levels[].scale	| numeric	| Scale for each level
-| <a name="basemaps" /> basemaps	| collection of map items	| order of collection will determine order they are added to the map.  can be empty.  if more than one entry, basemap selector widget could/(should?) initialize.
-| basemaps[].id	| string	| to identify layer.  unique across all map items.  no spaces!  use this to derive language based strings from stringResources (e.g. text to go in basemap selector would have a key like "basemapName<id>")
+| <a name="basemaps" /> basemaps	| collection of basemap items	| Order of collection will determine order they are added to the basemap selector list.  Can be empty.
+| basemaps[].id	| string	| To identify basemap.  Unique across all map items.  No spaces!
 | <a name="basemaps_url" /> basemaps[].url	| string	| REST url of the basemap
-| <a name="basemaps_thumbnail" />basemaps[].thumbnail	| string	| path to image file for use in basemap selector (optional)
-| <a name="basemaps_showoninit" />basemaps[].showOnInit	| boolean	| indicates if map should be active on load.  Only one TRUE per collection
-| basemaps[].scaleCssClass	| string	| Map scale style
-| <a name="basemaps_type" />basemaps[].type	| string	| Base map type
-| <a name="basemaps_name" />basemaps[].name	| string	| Basemap name
+| <a name="basemaps_thumbnail" />basemaps[].thumbnail	| string	| Path to image file to display in the basemap selector (optional)
+| <a name="basemaps_showoninit" />basemaps[].showOnInit	| boolean	| Indicates if basemap should be the active basemap when the site loads.  Only one TRUE per collection
+| basemaps[].scaleCssClass	| string	| Map scale style.  Use 'map-scale-dark' for light basemaps, 'map-scale-light' for dark basemaps.
+| <a name="basemaps_type" />basemaps[].type	| string	| Base map type.  This is descriptive only, and will be shown in the basemap selector.
+| <a name="basemaps_name" />basemaps[].name	| string	| Basemap name to be displayed in the selector.
 | basemaps[].altText	| string	| Alt text for the basemap thumbnail image
-| <a name="basemaps_description" />basemaps[].description	| string	| Description of the basemap
-| featureLayers	| collection of map items	| order of collection will determine order they are added to the map.  can be empty. if more than one entry, layer selector widget could/(should?) initialize.
-| <a name="featurelayers_id" />featureLayers[].id	| string	| to identify layer.  unique across all map items.  no spaces!
-| <a name="featurelayers_displayname" />featureLayers[].displayName	| 	| Display name of the feature layer
-| <a name="featurelayers_url" /> featureLayers[].url	| string	| REST URL of the layer
-| <a name="featurelayers_datagrid" />featureLayers[].datagrid	| 	|
-| featureLayers[].datagrid.rowsPerPage	| numeric	| number of rows to show in the grid (i.e. one page of results)
-| featureLayers[].datagrid.gridColumns [].id	| string	| to identify column.  unique across all columns for all layers in the app.  no spaces!
-| featureLayers[].datagrid.gridColumns [].fieldName	| string	| attribute field that populates this column.  really just used as a reference now.
-| featureLayers[].datagrid.gridColumns [].width	| numeric	| width of the field (pixels?  em's?)
-| featureLayers[].datagrid.gridColumns [].isSortable	| boolean	| tells if we can sort on this column
-| featureLayers[].datagrid.gridColumns [].sortType	| string	| not sure what goes here.  text/number/date sort?
-| featureLayers[].datagrid.gridColumns [].alignment	| string	| alignment type.  use values from current services
-| featureLayers[].datagrid.gridColumns [].title	| Int	| Title of the grid column.  This will show in the grid header
-| <a name="featurelayers_datagrid_gridcolumns_columntemplate" />featureLayers[].datagrid.gridColumns [].columnTemplate	| 	| Template name to be used to generate the content of the given column
-| <a name="featurelayers_datagrid_summaryrowtemplate" />featureLayers[].datagrid.summaryRowTemplate	| 	| Summary row template name to be used to generate content
-| <a name="featurelayers_layerattributes" />featureLayers[].layerAttributes	| string	| An array of strings which correspond to fields to include in the FeatureLayer. If not specified, the feature layer will return the OBJECTID field and if applicable the start time field, end time field and type id field. You can specify ["*"] to fetch the values for all fields in the layer, this is useful when editing features. Associated with outfield options in ESRI FeatureLayer.
-| featureLayers[].filter	| 	|
-| <a name="featurelayers_maptipsettings" /> featureLayers[].mapTipSettings	| 	|
-| <a name="featurelayers_maptipsettings_hovertemplate" /> featureLayers[].mapTipSettings.hoverTemplating	| string	| has template of what to show in hover tip.  if blank, hover tips are not initialized.  template processor should be able to generate text, as well as derive image names from feature attributes
-| <a name="featurelayers_maptipsettings_anchortemplate" />featureLayers[].mapTipSettings.anchorTemplate	| string	| Template name used to generate anchored map tip
-| <a name="featurelayers_symbology" />featureLayers[].symbology	| 	|
-| featureLayers[].symbology.renderer	| 	|
-| featureLayers[].symbology.renderer.type	| string	| The type of renderer being used on the layer.  Current supported values are "simple" and "unique"
-| featureLayers[].symbology.renderer.key1	| string	| First attribute used in unique value renderer
-| featureLayers[].symbology.renderer.key2	| string	| Second attribute used in unique value renderer
-| featureLayers[].symbology.renderer.key3	| string	| Third attribute used in unique value renderer
-| featureLayers[].symbology.icons[]	| 	|
-| featureLayers[].symbology.icons[].default.imageUrl	| string	| Url to symbology image
-| featureLayers[].symbology.icons[].default.legendText	| string	| Legend text for the given symbology
-| featureLayers[].uuid	| string	| Feature layer UUID
-| <a name="featurelayers_detailtemplate" /> featureLayers[].detailTemplate	| string	| Template used to generate detail content of a selected feature
-| featureLayers[].nameField	| string	| Field to be used to describe a feature.  Utilized in summary grid, detail content, map tip, and anchored maptip
-| <a name="featurelayers_settings" />featureLayers[].settings	| object	| Object to store layer settings and their presets.
-| featureLayers[].settings.enabled	| boolean	| Indicates whether the settings panel should be accessible to the user.
-| featureLayers[].settings.opacity	| object	| Object to store opacity information.
-| featureLayers[].settings.opacity.enabled	| boolean	| Indicates whether opacity of the layer can be changed by the user. If settings are disabled, the opacity preset value will still be applied to the opacity level.
-| featureLayers[].settings.opacity.default	| numeric	| Specifies the preset opacity level to be applied to the layer on load.
-| featureLayers[].isStatic	| boolean	| Specifies the current layer as static layer.
-| featureLayers[].layerType	| string	| Specifies the map service layer type (feature, tile, or dynamic.) 
-| featureLayers[].layerVisible | boolean  | The initial visibility of the layer
-| featureLayers[].boundingBoxVisible | boolean | The initial visibility of the bounding box for this layer (optional for static layers)
+| <a name="basemaps_description" />basemaps[].description	| string	| Description of the basemap.  Will be visible when basemap selector is expanded.
+| layers	| 	| Where layer collections reside
+| layers.feature	| collection of feature layer objects	| Order of collection will determine order they are added to the map.  Can be empty.
+| <a name="featurelayers_id" />layers.feature[].id	| string	| To identify a layer.  Unique across all map items.  no spaces!
+| <a name="featurelayers_displayname" />layers.feature[].displayName	| string	| Name of the feature layer.  Will be displayed in the layer selector
+| <a name="featurelayers_url" /> layers.feature[].url	| string	| REST URL of the layer.  Should be an ESRI feature service.
+| <a name="featurelayers_datagrid" />layers.feature[].datagrid	| 	|
+| layers.feature[].datagrid.rowsPerPage	| numeric	| Optional.  Number of rows to display in the grid (i.e. one page of results).  Default value is 50.
+| layers.feature[].datagrid.gridColumns[].id	| string	| To identify a column.  Unique across all columns.  No spaces!
+| layers.feature[].datagrid.gridColumns[].fieldName	| string	| Feature attribute field that defines this column.  Used by the default grid templates to populate values.
+| layers.feature[].datagrid.gridColumns[].width	| string	| Width of the field in pixels.  E.g. '500px'
+| layers.feature[].datagrid.gridColumns[].isSortable	| boolean	| Determines if we can sort on this column
+| layers.feature[].datagrid.gridColumns[].sortType	| string	| The type of sort to apply.  Can use 'numeric', 'string', 'date', or 'html'
+| layers.feature[].datagrid.gridColumns[].alignment	| numeric	| If 1, the column will be centered.  If 0, the column will be left-aligned.
+| layers.feature[].datagrid.gridColumns[].title	| string	| Title of the grid column.  This will show in the column header
+| <a name="featurelayers_datagrid_gridcolumns_columntemplate" />layers.feature[].datagrid.gridColumns[].columnTemplate	| 	| Template name to be used to generate the content of the given column.  A plain value template is 'unformatted_grid_value'
+| <a name="featurelayers_layerattributes" />layers.feature[].layerAttributes	| string	| An array of strings which correspond to fields to include in the FeatureLayer.  If not specified, the feature layer will return the OBJECTID field and if applicable the start time field, end time field and type id field. You can specify ["*"] to fetch the values for all fields in the layer, this is useful when editing features. Associated with outfield options in ESRI FeatureLayer.
+| <a name="featurelayers_templates" /> layers.feature[].templates	| 	| 
+| <a name="featurelayers_templates_hover" /> layers.feature[].templates.hover	| string	| Optional.  Template name defining the contents of a hover tip.  Default value is 'feature_hover_maptip_template'
+| <a name="featurelayers_templates_anchor" />layers.feature[].templates.anchor	| string	| Optional.  Template name defining the contents of an anchored map tip.  Default value is 'anchored_map_tip'
+| <a name="featurelayers_templates_summary" />layers.feature[].templates.summary	| string	| Optional.  Template name defining the contents of a row for features of this layer in the summary grid.  Default value is 'default_grid_summary_row'
+| <a name="featurelayers_templates_detail" /> layers.feature[].templates.detail	| string	| Optional.  Template name defining the contents of the details pane for a feature of this layer.  Default value is 'default_feature_details'
+| <a name="featurelayers_symbology" />layers.feature[].symbology	| 	|
+| layers.feature[].symbology.renderer	| 	|
+| layers.feature[].symbology.renderer.type	| string	| The type of renderer being used on the layer.  Current supported values are "simple" and "unique"
+| layers.feature[].symbology.renderer.key1	| string	| First attribute used in unique value renderer
+| layers.feature[].symbology.renderer.key2	| string	| Second attribute used in unique value renderer
+| layers.feature[].symbology.renderer.key3	| string	| Third attribute used in unique value renderer
+| layers.feature[].symbology.icons[]	| 	|
+| layers.feature[].symbology.icons[].default.imageUrl	| string	| Url to symbology image
+| layers.feature[].symbology.icons[].default.legendText	| string	| Legend text for the given symbology
+| layers.feature[].uuid	| string	| Feature layer UUID
+| layers.feature[].nameField	| string	| Field to be used to describe a feature.  Utilized in summary grid, detail content, map tip, and anchored maptip
+| <a name="featurelayers_settings" />layers.feature[].settings	| object	| Object to store layer settings and their presets.
+| layers.feature[].settings.enabled	| boolean	| Indicates whether the settings panel should be accessible to the user.
+| layers.feature[].settings.opacity	| object	| Object to store opacity information.
+| layers.feature[].settings.opacity.enabled	| boolean	| Indicates whether opacity of the layer can be changed by the user. If settings are disabled, the opacity preset value will still be applied to the opacity level.
+| layers.feature[].settings.opacity.default	| numeric	| Specifies the preset opacity level to be applied to the layer on load.
+| layers.feature[].isStatic	| boolean	| Specifies the current layer as static layer.
+| layers.feature[].layerType	| string	| Specifies the map service layer type (feature, tile, or dynamic.) 
+| layers.feature[].layerVisible | boolean  | The initial visibility of the layer
+| layers.feature[].boundingBoxVisible | boolean | The initial visibility of the bounding box for this layer (optional for static layers)
 | <a name="wmsLayers" /> wmsLayers	| collection	| WMS layers to be added to the map.  Order dictates initial order on the map.
 | wmsLayers[].id	| string	| to identify a layer.  unique across all WMS layers
 | wmsLayers[].url	| string	| the url of the WMS service.  does not specify name of individual layer to show
