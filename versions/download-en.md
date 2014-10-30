@@ -9,6 +9,13 @@ categories:
 
 # Downloads {#wb-cont}
 
+
+<section class="alert alert-warning">
+    <h2 class="h3">Access to RAMP</h2>
+    <p>To download RAMP source and production files, you need access to RAMP-PCAR private GitHub repo.</p>
+    <p>Contact <a href="mailto:Mike.Weech@ec.gc.ca?Subject=RAMP%20Repo%20private%20access">Mike Weech</a> to get access.</p>
+</section>
+
 <div class="toc"></div>
 
 See [Versioning](version-info-en.html) for the meaning of each version number.
