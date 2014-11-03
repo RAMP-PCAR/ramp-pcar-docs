@@ -72,54 +72,46 @@ This page will walk you through the layout of the application configuration obje
 			* summary
 			* detail
 		* symbology
-			* renderer
-				* type
-				* key1
-				* key2
-				* Key3
-			* icons
-				* default
-					* imageUrl
-					* legendText
-		* uuid
+			* type
+			* label
+			* imageUrl
+			* defaultImageUrl
+			* field1
+			* field2
+			* field3
+			* valueMaps (collection)
+				* label
+				* value
+				* imageUrl
+			* field
+			* minValue
+			* rangeMaps (collection)
+				* label
+				* maxValue
+				* imageUrl
 		* nameField
 		* settings
-			* enabled
+			* panelEnabled
 			* opacity
 				* enabled
 				* default
-		* isStatic (static layer only)
-		* layerType (static layer only)
+			* visible
+			* boundingBoxVisible 
+		* isStatic
 	* wmsLayers (collection)
 		* id
 		* displayName
-		* url
-		* uuid
-		* extent
+		* url		
 		* format
+		* layerName
 		* settings
-			* enabled
+			* panelEnabled
 			* opacity
-		* layerInfo
-			* name
-			* title
-			* allExtents (collection)
-			* spatialReferences (collection)
-			* subLayers (collection)
-		* legend
-			* enable
-			* legendURL
-		* symbology
-			* renderer
-				* type
-				* key1
-				* key2
-				* Key3
-			* icons
+				* enabled
 				* default
-					* imageUrl
-					* legendText
-		* featureInfo (optional)
+			* visible
+		* legendType
+		* featureInfo
 			* mimeType
 			* parser
 * datagrid
@@ -213,48 +205,47 @@ This page will walk you through the layout of the application configuration obje
 | <a name="featurelayers_templates_summary" />layers.feature[].templates.summary	| string	| Optional.  Template name defining the contents of a row for features of this layer in the summary grid.  Default value is 'default_grid_summary_row'
 | <a name="featurelayers_templates_detail" /> layers.feature[].templates.detail	| string	| Optional.  Template name defining the contents of the details pane for a feature of this layer.  Default value is 'default_feature_details'
 | <a name="featurelayers_symbology" />layers.feature[].symbology	| 	|
-| layers.feature[].symbology.renderer	| 	|
-| layers.feature[].symbology.renderer.type	| string	| The type of renderer being used on the layer.  Current supported values are "simple" and "unique"
-| layers.feature[].symbology.renderer.key1	| string	| First attribute used in unique value renderer
-| layers.feature[].symbology.renderer.key2	| string	| Second attribute used in unique value renderer
-| layers.feature[].symbology.renderer.key3	| string	| Third attribute used in unique value renderer
-| layers.feature[].symbology.icons[]	| 	|
-| layers.feature[].symbology.icons[].default.imageUrl	| string	| Url to symbology image
-| layers.feature[].symbology.icons[].default.legendText	| string	| Legend text for the given symbology
-| layers.feature[].uuid	| string	| Feature layer UUID
-| layers.feature[].nameField	| string	| Field to be used to describe a feature.  Utilized in summary grid, detail content, map tip, and anchored maptip
-| <a name="featurelayers_settings" />layers.feature[].settings	| object	| Object to store layer settings and their presets.
-| layers.feature[].settings.enabled	| boolean	| Indicates whether the settings panel should be accessible to the user.
-| layers.feature[].settings.opacity	| object	| Object to store opacity information.
-| layers.feature[].settings.opacity.enabled	| boolean	| Indicates whether opacity of the layer can be changed by the user. If settings are disabled, the opacity preset value will still be applied to the opacity level.
-| layers.feature[].settings.opacity.default	| numeric	| Specifies the preset opacity level to be applied to the layer on load.
-| layers.feature[].isStatic	| boolean	| Specifies the current layer as static layer.
-| layers.feature[].layerType	| string	| Specifies the map service layer type (feature, tile, or dynamic.) 
-| layers.feature[].layerVisible | boolean  | The initial visibility of the layer
-| layers.feature[].boundingBoxVisible | boolean | The initial visibility of the bounding box for this layer (optional for static layers)
-| <a name="wmsLayers" /> wmsLayers	| collection	| WMS layers to be added to the map.  Order dictates initial order on the map.
-| wmsLayers[].id	| string	| to identify a layer.  unique across all WMS layers
-| wmsLayers[].url	| string	| the url of the WMS service.  does not specify name of individual layer to show
-| wmsLayers[].uuid	| string	| UUID of the layer
-| wmsLayers[].format	| string	| format of the return image (e.g. png)
-| wmsLayers[].settings	| 	|
-| wmsLayers[].settings.enabled	| boolean	| determines if a layer can be interacted with in the layer selector
-| wmsLayers[].settings.opacity	| numeric	| opacity of layer (decimal). 1 being fully opaque, 0 being fully transparent
-| wmsLayers[].extent	| [ESRI Extent](https://developers.arcgis.com/javascript/jsapi/extent-amd.html)	| A valid extent object, including spatial reference.  Extent should define a valid extent for the WMS
-| wmsLayers[].layerInfo	|	|
-| wmsLayers[].layerInfo.name	| string	| name of the layer in the WMS we want to display.  must match exactly from the WMS definition
-| wmsLayers[].layerInfo.title	| string	| title of the layer in the WMS we want to display.  must match exactly from the WMS definition
-| wmsLayers[].layerInfo.allExtents	| collection	| empty for now.  possible to utilize this in later versions
-| wmsLayers[].layerInfo.spatialReferences	| collection	| empty for now.  possible to utilize this in later versions
-| wmsLayers[].layerInfo.subLayers	| collection	| empty for now.  possible to utilize this in later versions
-| wmsLayers[].legend	|	|
-| wmsLayers[].legend.enable	| boolean	| true to enable WMS legends, false to disable it
-| wmsLayers[].legend.legendURL	| string	| url to legend image for the layer.  optional
-| wmsLayers[].symbology	| object	| identical structure to the featureLayers[].symbology node
-| wmsLayers[].layerVisible | boolean  | The initial visibility of the WMS layer
-| wmsLayers[].featureInfo | object  | an optional object section, if defined implies that getFeatureInfo should be enabled for this layer
-| wmsLayers[].featureInfo.mimeType | string  | the mime type to be requested from the server (used in the FORMAT argument of the request)
-| wmsLayers[].featureInfo.parser | string  | the name of the plugin used to parse the response
+| layers.feature[].symbology.type	| string	| The type of renderer being used on the layer.  Current supported values are 'simple', 'uniqueValue', and 'classBreaks'
+| layers.feature[].symbology.imageUrl	| string	| Optional.  For use in 'simple' renderers.  Url path to the symbology image.
+| layers.feature[].symbology.label	| string	| Optional.  For use in 'simple' renderers.  Label describing the layer's symbol.
+| layers.feature[].symbology.defaultImageUrl	| string	| Optional.  For use in 'uniqueValue' and 'classBreaks' renderers.  Url path to the symbology image for features that do not have a mapping in the renderer.
+| layers.feature[].symbology.field1	| string	| Optional.  For use in 'unqiueValue' renderers.  Name of the first attribute used in defining the symbology.
+| layers.feature[].symbology.field2	| string	| Optional.  For use in 'unqiueValue' renderers.  Name of the second attribute used in defining the symbology.
+| layers.feature[].symbology.field3	| string	| Optional.  For use in 'unqiueValue' renderers.  Name of the third attribute used in defining the symbology.
+| layers.feature[].symbology.valueMaps[]	| collection of unique value objects	| Optional.  For use in 'unqiueValue' renderers.
+| layers.feature[].symbology.valueMaps[].label	| string	| Optional.  Label describing the symbol of this mapping.
+| layers.feature[].symbology.valueMaps[].value	| string	| Value of the attributes defining this mapping.  For mappings spanning multiple fields, values are delimited by a comma and a space.  E.g. 'Val1, Val2, Val3'
+| layers.feature[].symbology.valueMaps[].imageUrl	| string	| Url path to the symbology image for this mapping
+| layers.feature[].symbology.field	| string	| Optional.  For use in 'classBreaks' renderers.  Name of the attribute used in defining the symbology.
+| layers.feature[].symbology.minValue	| numeric	| Optional.  For use in 'classBreaks' renderers.  Lower bound of the value in the first range of the symbology.
+| layers.feature[].symbology.rangeMaps[]	| collection of ranged value objects	| Optional.  For use in 'classBreaks' renderers.  Order of elements matters, as lower bounds for ranges are derived from the upper bound of the previous range.
+| layers.feature[].symbology.rangeMaps[].label	| string	| Optional.  Label describing the symbol of this mapping.
+| layers.feature[].symbology.rangeMaps[].maxValue	| numeric	| Upper bound of he value for this range of the symbology.
+| layers.feature[].symbology.rangeMaps[].imageUrl	| string	| Url path to the symbology image for this mapping
+| layers.feature[].nameField	| string	| Field to be used to identify a feature to a user.  Utilized in summary grid, detail content, map tip, and anchored maptip.  Ideal choice would be the name of a feature.
+| <a name="featurelayers_settings" />layers.feature[].settings	| object	| Optional. Object to store layer settings.  If missing, default values will be used.
+| layers.feature[].settings.panelEnabled	| boolean	| Optional. Indicates whether the settings panel should be accessible to the user.  Default value is True
+| layers.feature[].settings.opacity	| object	| Optional.  Object to store opacity information.
+| layers.feature[].settings.opacity.enabled	| boolean	| Optional.  Indicates whether opacity of the layer can be changed by the user. If settings are disabled, the opacity preset value will still be applied to the opacity level.  Default value is True
+| layers.feature[].settings.opacity.default	| numeric	| Optional.  Specifies the preset opacity level to be applied to the layer on load.  Value must be between 0 and 1 inclusively.  Default value is 1.
+| layers.feature[].settings.visible | boolean  | Optional.  The initial visibility of the layer.  Default value is True.
+| layers.feature[].settings.boundingBoxVisible | boolean  | Optional.  The initial visibility of the layer's bounding box.  Default value is True.
+| layers.feature[].isStatic	| boolean	| Optional.  Specifies the current layer is a static layer.  Default value is False.
+| <a name="wmsLayers" /> layers.wmsLayers	| collection	| WMS layers to be added to the map.  Order dictates initial order on the map.
+| layers.wmsLayers[].id	| string	| To identify a layer.  Unique across all WMS layers
+| layers.wmsLayers[].url	| string	| The url of the WMS service.  Does not specify name of individual layer to show
+| layers.wmsLayers[].format	| string	| Format of the return image (e.g. png)
+| layers.wmsLayers[].settings	| object	| Optional. Object to store layer settings.  If missing, default values will be used.
+| layers.wmsLayers[].settings.panelEnabled	| boolean	| Optional. Indicates whether the settings panel should be accessible to the user.  Default value is True
+| layers.wmsLayers[].settings.opacity	| object	| Optional.  Object to store opacity information.
+| layers.wmsLayers[].settings.opacity.enabled	| boolean	| Optional.  Indicates whether opacity of the layer can be changed by the user. If settings are disabled, the opacity preset value will still be applied to the opacity level.  Default value is True
+| layers.wmsLayers[].settings.opacity.default	| numeric	| Optional.  Specifies the preset opacity level to be applied to the layer on load.  Value must be between 0 and 1 inclusively.  Default value is 1.
+| layers.wmsLayers[].settings.visible | boolean  | Optional.  The initial visibility of the layer.  Default value is True.
+| layers.wmsLayers[].layerName	| string	| Name of the layer in the WMS we want to display.  Must match exactly from the WMS definition
+| layers.wmsLayers[].legendType	| string	| Optional.  If absent, indicates no legend support.  If present it should be a mime type.
+| layers.wmsLayers[].featureInfo | object  | Optional.  If defined implies that getFeatureInfo functionality should be enabled for this layer.
+| layers.wmsLayers[].featureInfo.mimeType | string  | The mime type to be requested from the server (used in the FORMAT argument of the request)
+| layers.wmsLayers[].featureInfo.parser | string  | The name of the plugin used to parse the response.  Plugins reside in the js\plugins directory.
 | <a name="datagrid" />datagrid	| 	|
 | datagrid.globalGridRowsPerPage	| numeric	| Number of rows per page to be displayed in datagrid in summary view
 | datagrid.defaultState	| string	| Default state of the datagrid: summary or extended
@@ -283,7 +274,7 @@ This page will walk you through the layout of the application configuration obje
 | ui | | Stores initial state of the user interface
 | ui.fullscreen | boolean | true if the interface should start in fullscreen mode. False otherwise.
 | ui.sidePanelOpened | boolean | true if the interface should start with the side panel opened. False otherwise.
-| plugins | collection of strings | a set of plugins to be loaded with RAMP
+| plugins | collection of strings | A set of plugins to be loaded with RAMP.  The value of the strings should match a javascript file in the js\plugins folder.
 
 [Back To Top](#top)
 {: .text-right}
