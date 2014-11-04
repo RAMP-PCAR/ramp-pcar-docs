@@ -21,7 +21,7 @@ published: true
 * [Version history]({{ BASE_PATH }}/versions/index-en.html) and [roadmap]({{ BASE_PATH }}/versions/roadmap-en.html)
 * [Examples]({{ BASE_PATH }}/demos/index-en.html)
 * [Terms and conditions]({{ BASE_PATH }}/license-en.html) (MIT license)
-* [Source code repository](https://github.com/Environment-Canada/RAMP-AF)
+* [Source code repository](https://github.com/RAMP-PCAR/RAMP-PCAR)
 
 ## Benefits
 
