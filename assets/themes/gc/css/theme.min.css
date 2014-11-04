@@ -9,3 +9,14 @@
     height: auto !important;
     width: auto !important;    
 }
+
+.table td {
+    border-right: 0 !important;
+    border-left: 0 !important;
+    border-bottom: 0 !important;
+}
+
+.table th {
+    border-right: 0 !important;
+    border-left: 0 !important;
+}
