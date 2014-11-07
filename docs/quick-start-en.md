@@ -8,7 +8,7 @@ categories: [documentation]
 
 # RAMP Quick Start Guide {#wb-cont}
 
-Welcome to RAMP Quick Start Guide. In this guide, we will be showing you how to setup your own web map using RAMP.
+Welcome to RAMP Quick Start Guide. In this guide, we will be showing you how to setup your own web map using RAMP by adjusting the configuration file.  No programming required!
 [View live sample]({{BASE_PATH}}/demos/NRSTC/ramp-gcwu-fegc-map.html)
 
 <div class="toc"></div>
@@ -19,15 +19,7 @@ This guide assumes you have downloaded the RAMP source from Github, and have run
 
 ### Map resources
 
-We will be using the Natural Resources Canada’s basemap in our example. As for the map layers, we will be using a snapshot of the dataset from Science.gc.ca's Research Centres map layer.
-
-URL to Natural Resources Canada basemap
-
-[http://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT3978/MapServer](http://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT3978/MapServer?f=jsapi)
-
-URL to sample research centre map layers
-
-[http://maps-cartes.ec.gc.ca/ArcGIS/rest/services/RAMP_NRSTC/MapServer/](http://maps-cartes.ec.gc.ca/ArcGIS/rest/services/RAMP_NRSTC/MapServer/)
+In this guide, examples will be provided using existing web services.  We will be using the [Natural Resources Canada](http://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT3978/MapServer)’s basemap in our example. As for the feature layers, we will be using a snapshot of the dataset from Science.gc.ca's [Research Centres map layer](http://maps-cartes.ec.gc.ca/ArcGIS/rest/services/RAMP_NRSTC/MapServer/).
 
 Layer 0 - Environment Canada Research Centres
 
@@ -44,82 +36,88 @@ Layer 5 - Other Centres
 [Back To Top](#top)
 {: .text-right}
 
-##Setting up your map layers
+### JSON Editor
 
-### Add a basemap layer
+RAMP is designed so that data layers and common settings can be set via a configuration file or service.  Of course, more complex customizations can be made to the RAMP code, but a standard "here is my data on a map" website can be set up simply by adjusting the configuration file.  The configuration files are located in the root of build folder, there is one for both languages.  The file can be updated using a text editor or a [json editor](http://www.jsoneditoronline.org).
 
-To configure a basemap for your RAMP based web mapping application, open the config.json file via any text editor or [json editor](http://www.jsoneditoronline.org). Search for \"basemaps\" to locate
-the basemaps configuration section. By default, RAMP has 5 basemap layers configured. You can delete all and add your own, or use any existing one. For our example, we will keep
-basemap baseNrCan and delete the remaining basemap configurations.
+A full layout of the configuration file can be found [here](json-config-en.html).
+
+##Adding a Basemap Layer
+
+The basemaps configuration section defines what basemaps are available in the app.  You can delete all and add your own, or use any existing one.  Keep in mind that all basemaps must be in the same projection and have the same scale levels defined, otherwise a differing basemap will not draw.  Details on the basemap configuration objects can be found [here](json-config-en.html#basemaps).
 
 ![Partial configuration file](../assets/images/qs_basemap_config.png)
 
-Basemap configuration
 
-* id:
-* url: http://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT3978/MapServer
-* thumbnail
-* showOnInit: true
-* scaleCssClass
-* type: \"Topographic\"
-* name: \"Canada Atlas"
-* altText: \"Topotraphic Map\"
-* description: \"NRCan CBMT3978\"
+## Adding an ESRI Feature Layer
 
-This will setup your RAMP basemap. When you start your web map application, the NRCan basemap will be displayed.
+ESRI feature layers allow the display of feature data on the map, along with attribute data shown in grids and interactive elements such as hovertips and feature highlighting.
 
-### Add a feature layer
+Feature layers to be included in the map are defined in the “layers.feature” section of the configuration file.  The feature configuration objects are the most complex in the app, and are fully defined [here](json-config-en.html#featurelayers_id).  Note that many of the configuration items are optional, allowing for smaller nodes if the default values are acceptable.
 
-In the Research Centre map layers, we have six layers available. We will be populating featureLayers section with those six layers.
-With the config.json opened, Look for “featureLayers” section.  This section is where we will be adding Research Centre layers.
 
 The main attributes to be modified will be the following:
 
-* id: “layer_ec”
-* displayName: “Environment Canada”
-* url: http://maps-cartes.ec.gc.ca/ArcGIS/rest/services/RAMP_NRSTC/MapServer/0/
-* These attribute will be used in the filter manager \(Datasets Tab\) to display information for each layer.
+* id: Should be unique to the application.
+* displayName: An appropriate name for the layer.  It will be displayed in the layer selector.
+* url: A rest endpoint to the ESRI feature service for this layer.
+* nameField: The attribute field that best describes each feature.  This will be displayed in maptips and the summary data grid
 
-To display the legend image properly in the filter manager \(Datasets Tab\), you will need to provide the feature image url and
-alt text for the image in the following fields.
+![Image of configuration file for main feature attributes](../assets/images/qs_json_feature_main.png)
 
-symbology->icon->default->
-	* imageUrl:
-	* legendText:
-
-![Image of datasets section of the web map application](../assets/images/qs_filter.png)
-
-To display the individual feature data (in our case, the Research Centre name) in the Data tab; you will need to populate
-the nameField with the field name you wish to display. In our case it will be the “Research_Centre_en” field that will contain the research centre name.
-
-nameField: "Research_Centre_en"
-
-![Image of Data tab section of the web map application](../assets/images/qs_data_tab.png)
 
 [Back To Top](#top)
 {: .text-right}
 
-##Map Tip Configuration
-By default, hover map tip and anchor map tip use generic RAMP templates called __feature_hover_maptip_template.json__ and __anchored_map_tip.json__ template.
-These templates are located in __src\\js\\RAMP\\Modules\\templates__ folder.
+###Symbology Configuration
 
-If you open the template file, you will see it’s using the nameField attribute of a featureLayer config object. Therefore, by default, if you have
-configure the nameField attribute, the hover maptip and anchor map tip will use the same field vale to be displayed in the map tip. In our Research
-Centres Map, we set the nameField attribute to “Research_Centre_en”; which is the name of the research centre. So when we move our cursor close to a
-feature, the hover map tip displays the name of the research centre.
+Feature layers also need to have a legend / symbology structure to inform the app how to create a legend, and how to derive appropriate icons for each feature.  RAMP currently supports the three most common renderer types from an ESRI feature service: [Simple renderers, Unique Value renderers, and Class Breaks renderers](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Renderer_objects/02r30000019t000000/).  This information is used to display icons in maptips, datagrids, the layer selector, and the view legend function.
+
+![Image of symbology displayed on the site](../assets/images/qs_symbology.png)
+
+The symbology details are defined in the symbology node of the feature layer's config object.  The content of the symbology node can differ based on the renderer type.  A simple renderer defines one symbol for the entire layer.
+
+![Image of configuration file for simple symbology attributes](../assets/images/qs_json_feature_simplerend.png)
+
+Unique Value symbology definitions contain a mapping of values to icon images.
+
+![Image of configuration file for unique value symbology attributes](../assets/images/qs_json_feature_uvrend.png)
+
+Class Breaks symbology definitions contain a mapping of ranges of values to icon images.
+
+![Image of configuration file for class breaks symbology attributes](../assets/images/qs_json_feature_cbrend.png)
+	
+Detailed renderer structures can be found in the [config page](json-config-en.html#featurelayers_symbology)	
+	
+![Image of datasets section of the web map application](../assets/images/qs_filter.png)
+
+
+[Back To Top](#top)
+{: .text-right}
+
+###Map Tip Configuration
+
+Maptips can quickly display information about a feature.  RAMP implements two types of maptips.  Hover Maptips show when the user mouses over a feature, and disappears when the mouse goes elsewhere.  Anchor Maptips show when the user is viewing the details of a feature, giving a visual cue to what item on the map the details panel is referring to.  Anchor Maptips remain on the map until the detail panel is closed.
+
+The contents of the maptips are driven by templates.  By default, hover map tip and anchor map tip use generic RAMP templates called __feature_hover_maptip_template.json__ and __anchored_map_tip.json__ template.
+These templates are located in __src\\js\\RAMP\\Modules\\templates__ folder.  These templates display a basic "icon and name" for a feature.  The name data is derived from the "nameField" in the layer's configuration.  If a custom template is desired, new templates can be added to the above JSON files.  To instruct the layer to use a different template, update the values in the templates.hover or templates.anchor configuration nodes to reflect the name of the custom template.  As the template names are optional, you may need to add the nodes in your JSON editor.
+
+![Image of configuration file for maptip templates](../assets/images/qs_json_tip_template.png)
 
 ![Hover maptip on a map feature](../assets/images/qs_hover_map_tip.png)
 
-To customize the content of map tips, please refer to the [template guide](template-guide-en.html) on how to customize the template.
+To create custom templates, please refer to the [template guide](template-guide-en.html).
 
 [Back To Top](#top)
 {: .text-right}
 
-##Setting up the Datagrid
+###Setting up the Datagrid
 
-In RAMP, datagrid comes in two states\: extended datagrid and summary datagrid. By default, summary datagrid is displayed.
+RAMP displays tabular data in two different ways.  The Summary datagrid shows contains basic, feature identifying information, and provides links to get more details on an individual item.  The grid collates all features currently visible on the map across all feature layers.  It's small size allows the grid and map to both be visible at the same time.
 
 ![Summary datagrid in data tab section of the web map application](../assets/images/qs_summary_datagrid.png)
+
+The Extended datagrid shows a more traditional attribute table
 
 When you click on the “Full data” link button, extended datagrid is displayed.
 
@@ -159,10 +157,10 @@ For detailed information on the column configuration, please refer to [DataTable
 #### Column Template
 Column Template is used in RAMP to generate the content for each column. There are four default templates available with RAMP these are:
 
-* unformatted_grid_value\: generate content based on the column index and field name
-* title_span\: tooltiped grid value
-* graphic_icon\: icon template that generate icon from current layer image
-* details_button\: generate a button that will open the detail panel for a given feature.
+* unformatted_grid_value\: Generate content based on the column index and field name.  Will display the raw value
+* title_span\: Same as unformatted_grid_value, but if the value is large, it will be shortened and the full value will be displayed on mouse-hover via a tooltip.
+* graphic_icon\: Will generate an icon based on the current feature and the layer's symbology.
+* details_button\: Will generate a button that will open the detail panel for a given feature.
 
 You can add and customize templates by adding or modifying the templates in this file. For more information on customizing template, please refer to the [Template Guide](template-guide-en.html)
 

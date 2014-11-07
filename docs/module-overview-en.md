@@ -253,7 +253,7 @@ The module defines global items to make things easier to share across modules.  
 The module contains helper functions for [graphic](https://developers.arcgis.com/javascript/jsapi/graphic-amd.html) objects.  E.g. get objectId, get layer, get detail text
 
 | **API Page** | [GraphicExtension](../api/yuidoc/classes/GraphicExtension.html)
-| **Relevant Configuration Nodes** | [featureLayers[].detailTemplate](json-config-en.html#featurelayers_detailtemplate)
+| **Relevant Configuration Nodes** | [featureLayers[].templates.detail](json-config-en.html#featurelayers_templates_detail)
 
 [Back To Top](#top)
 {: .text-right}
@@ -316,7 +316,7 @@ Fills the tips with contents from the template.
 </section>
 
 | **API Page** | [Maptips](../api/yuidoc/classes/Maptips.html)
-| **Relevant Configuration Nodes** | [featureLayers[].mapTipSettings](json-config-en.html#featurelayers_maptipsettings)
+| **Relevant Configuration Nodes** | [featureLayers[].mapTipSettings](json-config-en.html#featurelayers_templates)
 | **Template Summary** | [Feature Hover Tip](template-summary-en.html#feature_hover_tip) <br /> Feature Anchor Tip](template-summary-en.html#feature_anchor_tip)
 
 [Back To Top](#top)
