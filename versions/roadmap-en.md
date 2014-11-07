@@ -6,6 +6,8 @@ title: Feature Roadmap
 
 # Roadmap {#wb-cont}
 
+{% markdown JB/work_in_progress %}
+
 <div class="toc"></div>
 
 ## Future milestones

@@ -9,6 +9,8 @@ categories: [documentation]
 
 #Template Overview {#wb-cont}
 
+{% markdown JB/work_in_progress %}
+
 Below is all the modules that are customizable through templating. This summarizes all the information the developers need in order to customize each module through templating. For details on how templating works, refer to this [guide](template-guide-en.html). For an example of modifying a module through templating, refer to this [guide](template-example-en.html).
 
 <div class="toc"></div>

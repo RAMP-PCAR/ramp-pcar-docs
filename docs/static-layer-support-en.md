@@ -9,6 +9,8 @@ categories: [documentation]
 
 # Static Layer Support {#wb-cont}
 
+{% markdown JB/work_in_progress %}
+
 <div class="toc"></div>
 
 ## Supported static layer in RAMP

@@ -8,6 +8,8 @@ published: true
 
 # Documentation {#wb-cont}
 
+{% markdown JB/work_in_progress %}
+
 RAMP operates on the principle of progressive enhancement, and implements well-established techniques increasing the accessibility and usability of web content. If you are new to RAMP, please begin with our Getting Started section, which contains information on how to download, use or contribute.
 
 ## [Getting Started](/docs/started-en.html)

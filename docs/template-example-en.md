@@ -9,6 +9,8 @@ categories: [documentation]
 
 # Templating Example {#wb-cont}
 
+{% markdown JB/work_in_progress %}
+
 This section will show describe how the templating engine works and the steps to customizing a module using templates. The basemap selector module with be used as an example throughout the article.
 
 <img src="../assets/images/basemap_selector_screenshot.png" alt="Basemap Selector Screenshot" title="A sample screenshot of the basemap selector menu" width="285" height="278" />

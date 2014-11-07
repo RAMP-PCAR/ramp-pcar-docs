@@ -8,6 +8,8 @@ categories: [documentation]
 
 #Add New Module in RAMP
 
+{% markdown JB/work_in_progress %}
+
 <div class="toc"></div>
 
 RAMP modules is written in Asynchronous Module Definition (AMD) format. The AMD format is supported by Dojo module loader.
