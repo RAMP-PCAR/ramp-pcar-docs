@@ -13,6 +13,14 @@ categories:
 
 See [Versioning](version-info-en.html) for the meaning of each version number.
 
+## Version 4.0 - Dragonfly
+
+| Version | Release Date | Release Notes | Download |
+|---|---|---|---|
+| v4.0.0 | 2014-??-?? | [Release Notes]({{ BASE_PATH }}/versions/v4.0.0-en.html) | [Download]({{ BASE_PATH }}/versions/download-en.html#v400) |
+{: .table}
+
+
 ## Version 3.0 - Canada Goose
 
 | Version | Release Date | Release Notes | Download |
