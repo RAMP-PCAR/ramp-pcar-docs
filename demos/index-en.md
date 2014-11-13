@@ -11,5 +11,5 @@ title: Working Examples
 | NRSTC - RAMP Core Theme | [Link]({{BASE_PATH}}/demos/NRSTC/core/ramp-en.html)| A Simple Implementation of RAMP using Core Theme |
 | NRSTC - RAMP Usability Theme | [Link]({{BASE_PATH}}/demos/NRSTC/usability/ramp-en.html)| A Simple Implementation of RAMP using Usability Theme |
 | NRSTC - RAMP Intranet Theme | [Link]({{BASE_PATH}}/demos/NRSTC/intranet/ramp-en.html)| A Simple Implementation of RAMP using Intranet Theme |
-| NRSTC - RAMP Canada.ca Theme | [Link]({{BASE_PATH}}/demos/NRSTC/canada/ramp-en.html)| A Simple Implementation of RAMP using Intranet Theme |
+| NRSTC - RAMP Canada.ca Theme | [Link]({{BASE_PATH}}/demos/NRSTC/canada/ramp-en.html)| A Simple Implementation of RAMP using Canada.ca Theme |
 {: .table}
