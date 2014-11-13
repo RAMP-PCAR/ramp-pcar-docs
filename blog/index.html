@@ -27,28 +27,35 @@ published: true
 
 
 {% if paginator.total_pages > 1 %}
-<div class="pagination">
-    {% if paginator.previous_page %}
-    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&laquo; Prev</a>
-    {% else %}
-    <span>&laquo; Prev</span>
-    {% endif %}
+<ul class="pagination">
+    
+        {% if paginator.previous_page %}
+        
+    <li><a rel="prev" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">Prev</a></li>
+        {% else %}
+    <li class="disabled"><a href="#">Prev</a></li>
+        {% endif %}
+    
+        {% for page in (1..paginator.total_pages) %}
+        {% if page == paginator.page %}
+        <li class="active"><a href="#">{{ page }}</a></li>
+        {% elsif page == 1 %}
 
-    {% for page in (1..paginator.total_pages) %}
-    {% if page == paginator.page %}
-    <em>{{ page }}</em>
-    {% elsif page == 1 %}
-    <a href="{{ '/blog/index.html' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
-    {% else %}
+        <li><a href="{{ '/blog/index.html' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a></li>
+    
+        {% else %}
 
-    <a href="{{ | site.paginate_path | prepend: site.baseurl | prepend: '/' | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
-    {% endif %}
-    {% endfor %}
+    <li><a href="{{ | site.paginate_path | prepend: site.baseurl | prepend: '/' | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a></li>
+        {% endif %}
+        {% endfor %}
+    
+        {% if paginator.next_page %}
 
-    {% if paginator.next_page %}
-    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Next &raquo;</a>
-    {% else %}
-    <span>Next &raquo;</span>
-    {% endif %}
-</div>
+    <li><a rel="next" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Next</a></li>
+        {% else %}
+    <li class="disabled"><a href="#">Next</a></li>
+        {% endif %}    
+</ul>
 {% endif %}
+
+
