@@ -38,5 +38,5 @@ RAMP operates on the principle of progressive enhancement, and implements well-e
 
 
 ## Reference
-* [API Reference](/api/3.0/yuidoc/index.html)
+* [API Reference](/api/index-en.html)
 * [Known Issues](known-issues-en.html)
