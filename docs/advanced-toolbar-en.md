@@ -9,6 +9,8 @@ categories: [documentation]
 
 # Advanced Toolbar {#wb-cont}
 
+{% markdown JB/work_in_progress %}
+
 <div class="toc"></div>
 
 ##Using the Advanced Toolbar

@@ -9,6 +9,8 @@ categories: [documentation]
 
 # WMS Support {#wb-cont}
 
+{% markdown JB/work_in_progress %}
+
 <div class="toc"></div>
 
 ##Supported Features in RAMP
