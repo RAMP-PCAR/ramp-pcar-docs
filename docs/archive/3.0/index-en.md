@@ -1,6 +1,6 @@
 ---
 layout: "index-en"
-title: "v3.0"
+title: "v3.0 - Canada Goose"
 published: true
 ---
 

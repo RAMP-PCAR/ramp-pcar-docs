@@ -54,7 +54,7 @@ To configure a basemap for your RAMP based web mapping application, open the con
 the basemaps configuration section. By default, RAMP has 5 basemap layers configured. You can delete all and add your own, or use any existing one. For our example, we will keep
 basemap baseNrCan and delete the remaining basemap configurations.
 
-![Partial configuration file](../assets/images/qs_basemap_config.png)
+![Partial configuration file](assets/images/qs_basemap_config.png)
 
 Basemap configuration
 
@@ -89,14 +89,14 @@ symbology->icon->default->
 	* imageUrl:
 	* legendText:
 
-![Image of datasets section of the web map application](../assets/images/qs_filter.png)
+![Image of datasets section of the web map application](assets/images/qs_filter.png)
 
 To display the individual feature data (in our case, the Research Centre name) in the Data tab; you will need to populate
 the nameField with the field name you wish to display. In our case it will be the “Research_Centre_en” field that will contain the research centre name.
 
 nameField: "Research_Centre_en"
 
-![Image of Data tab section of the web map application](../assets/images/qs_data_tab.png)
+![Image of Data tab section of the web map application](assets/images/qs_data_tab.png)
 
 [Back To Top](#top)
 {: .text-right}
@@ -110,7 +110,7 @@ configure the nameField attribute, the hover maptip and anchor map tip will use 
 Centres Map, we set the nameField attribute to “Research_Centre_en”; which is the name of the research centre. So when we move our cursor close to a
 feature, the hover map tip displays the name of the research centre.
 
-![Hover maptip on a map feature](../assets/images/qs_hover_map_tip.png)
+![Hover maptip on a map feature](assets/images/qs_hover_map_tip.png)
 
 To customize the content of map tips, please refer to the [template guide](template-guide-en.html) on how to customize the template.
 
@@ -121,11 +121,11 @@ To customize the content of map tips, please refer to the [template guide](templ
 
 In RAMP, datagrid comes in two states\: extended datagrid and summary datagrid. By default, summary datagrid is displayed.
 
-![Summary datagrid in data tab section of the web map application](../assets/images/qs_summary_datagrid.png)
+![Summary datagrid in data tab section of the web map application](assets/images/qs_summary_datagrid.png)
 
 When you click on the “Full data” link button, extended datagrid is displayed.
 
-![Sample extended datagrid view](../assets/images/qs_full_gridview.png)
+![Sample extended datagrid view](assets/images/qs_full_gridview.png)
 
 In this section, we will show you how to configure the exteneded datagrid.
 
@@ -141,7 +141,7 @@ In RAMP, multiple layers can be configured to be displayed on the map; therefore
  A drop down is provided in the extended datagrid to separate the data from the layer source. The configuration associated with each map layer is located
 in the gridColumns collection of the datagrid object, found in the featureLayers section of the configuration file.
 
-![sample featureLayers configuration section of config.json file](../assets/images/qs_config_featureLayers_datagrid.png)
+![sample featureLayers configuration section of config.json file](assets/images/qs_config_featureLayers_datagrid.png)
 
 You can display any number of columns in the extended datagrid by adding grid column configuration to the gridColumns array.
 
@@ -174,7 +174,7 @@ You can add and customize templates by adding or modifying the templates in this
 To configure a WMS layer for your RAMP based web mapping application, open the config.json file via any text editor or [json editor](http://www.jsoneditoronline.org). Search for \"wmsLayers\" to locate
 the [WMS configuration section](json-config-en.html#wmsLayers).  Add an object to the collection for each WMS layer you wish to add.  
 
-![Partial configuration file](../assets/images/qs_wms_config.png)
+![Partial configuration file](assets/images/qs_wms_config.png)
 
 WMS Layer configuration
 
