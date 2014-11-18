@@ -56,7 +56,7 @@ Please note the above mentioned config settings are the required attributes for 
 * isStatic The isStatic attribute is used by RAMP to identify the layer as static; which in turn unsubscribe to the event handlers for maptip display and datagrid generation.
 * layerType The layerType is used to generate appropriate static layer. They can be feature, tile or dynamic.
 
-Please refer to [JSON Config Definition](/docs/json-config-en.html) for more information on RAMP config settings.
+Please refer to [JSON Config Definition](json-config-en.html) for more information on RAMP config settings.
 
 [Back To Top](#top)
 {: .text-right}
