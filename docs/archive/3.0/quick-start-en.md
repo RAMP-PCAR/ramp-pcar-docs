@@ -17,7 +17,7 @@ Welcome to RAMP Quick Start Guide. In this guide, we will be showing you how to 
 
 ##Requirements
 
-This guide assumes you have downloaded the RAMP source from Github, and have run the Grunt build script. If not, please visit the [Getting Started]({{ BASE_PATH }}/docs/started-en.html) page to get your environment setup.
+This guide assumes you have downloaded the RAMP source from Github, and have run the Grunt build script. If not, please visit the [Getting Started](started-en.html) page to get your environment setup.
 
 ### Map resources
 
