@@ -8,7 +8,7 @@ categories: [documentation]
 
 # JSON Config Definition {#wb-cont}
 
-{% markdown JB/work_in_progress %}
+
 
 This page will walk you through the layout of the application configuration object and all of its properties.
 

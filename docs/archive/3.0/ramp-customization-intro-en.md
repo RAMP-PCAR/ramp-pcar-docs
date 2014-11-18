@@ -9,7 +9,7 @@ categories: [documentation]
 
 # RAMP Customization Introduction {#wb-cont}
 
-{% markdown JB/work_in_progress %}
+
 
 Each visible module in RAMP can be customized either through the JSON configuration file or through templating.
 

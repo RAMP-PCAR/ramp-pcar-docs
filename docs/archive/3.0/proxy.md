@@ -8,7 +8,7 @@ categories: [documentation]
 
 # Proxy Configuration and Resources {#wb-content}
 
-{% markdown JB/work_in_progress %}
+
 
 <div class="toc"></div>
 
