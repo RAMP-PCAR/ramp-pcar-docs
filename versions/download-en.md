@@ -31,6 +31,7 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 | RAMP Core | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/archive/v4.0.0.zip) | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/releases/download/v3.0.0/ramp-pcar-dist-4.0.0.zip) | [Release Notes]({{ BASE_PATH }}/versions/v4.0.0-en.html) |
 | RAMP Usability Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/archive/v4.0.0.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/releases/download/v4.0.0/ramp-theme-usability-dist-4.0.0.zip) |  |
 | RAMP Intranet Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/archive/v4.0.0.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/releases/download/v4.0.0/ramp-theme-intranet-dist-4.0.0.zip) |  |
+| RAMP Canada.ca Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/archive/v4.0.0.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/releases/download/v4.0.0/ramp-theme-canada-dist-4.0.0.zip) |  |
 {: .table}
 
 ### Development Releases
@@ -40,6 +41,7 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 | RAMP Core | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/archive/develop.zip) |
 | RAMP Usability Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/archive/develop.zip) |
 | RAMP Intranet Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/archive/develop.zip) |
+| RAMP Canada.ca Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/archive/develop.zip) |
 {: .table}
 
 ## Version 3.0 - Canada Goose
@@ -53,6 +55,7 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 | RAMP Core | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/archive/v3.0.2.zip) | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/releases/download/v3.0.2/ramp-pcar-dist-3.0.2.zip) | [Release Notes]({{ BASE_PATH }}/versions/v3.0.2-en.html) |
 | RAMP Usability Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/archive/v3.0.2.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/releases/download/v3.0.2/ramp-theme-usability-dist-3.0.2.zip) |  |
 | RAMP Intranet Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/archive/v3.0.2.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/releases/download/v3.0.2/ramp-theme-intranet-dist-3.0.2.zip) |  |
+| RAMP Canada.ca Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/archive/v3.0.2.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/releases/download/v3.0.2/ramp-theme-canada-dist-3.0.2.zip) |  |
 {: .table}
 
 #### v3.0.1 {#v301}
