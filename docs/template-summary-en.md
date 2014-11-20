@@ -5,17 +5,6 @@ categories: [documentation]
 ---
 {% include JB/setup %}
 
-<script src="../scripts/toc.js"> </script>
-<script type="text/javascript">
-$(document).ready(function() {
-    $('.toc').toc({
-        title: 'Table of Content',
-        listType: 'ul',
-        selector: 'h2, h3, h4, h5, h6, .include_toc'
-    });
-});
-</script>
-
 <a name="top" />
 
 #Template Overview {#wb-cont}
@@ -77,7 +66,7 @@ In the default datagrid summary mode, each row contains an image representing th
 
 The image URL is retrieved using the [getGraphicIcon](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html#method_getGraphicIcon) function in [templateUtils](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html), which is available to the template via [o.fn](template-guide-en.html#o_fn). The feature name is retrieved using the [getFeatureName](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html#method_getFeatureName) function. The layer name is populated using the [featureLayers[].displayName](json-config-en.html#featurelayers_displayname), which can be accessed via [o.lyr](template-guide-en.html#o_lyr).
 
-| **Template Name** | [featureLayers[].datagrid.summaryRowTemplate](json-config-en.html#featurelayers_datagrid_summaryrowtemplate) |
+| **Template Name** | [featureLayers[].templates.summary](json-config-en.html#featurelayers_templates_summary) |
 | **Template File** | datagrid_template.json |
 | **Data Object** | The ESRI <a href="https://developers.arcgis.com/javascript/jsapi/graphic-amd.html"> Graphic object</a> associated with that point |
 
@@ -119,7 +108,7 @@ The popup that appears when a feature on the map is clicked.
 
 The anchor tip contains the icon representing the feature, the name of the feature, and a close button. The icon is retrieved using [getGraphicIcon](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html#method_getGraphicIcon) function in [templateUtils](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html), which is available to the template via [o.fn](template-guide-en.html#o_fn). The feature name is retrieved using the [getFeatureName](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html#method_getFeatureName) function.
 
-| **Template Name** | <a href="json-config-en.html#featurelayers_maptipsettings_anchortemplate"> featureLayers[].mapTipSettings.anchorTemplate</a> |
+| **Template Name** | <a href="json-config-en.html#featurelayers_templates_anchor"> featureLayers[].templates.anchor</a> |
 | **Template File** | feature_anchortip_template.json |
 | **Data Object** | The ESRI <a href="https://developers.arcgis.com/javascript/jsapi/graphic-amd.html"> Graphic object</a> associated with that point |
 
@@ -140,7 +129,7 @@ The popup that appears when the mouse hovers over a feature on the map.
 
 The hover tip contains the icon representing the feature and the name of the feature. The icon is retrieved using [getGraphicIcon](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html#method_getGraphicIcon) function in [templateUtils](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html), which is available to the template via [o.fn](template-guide-en.html#o_fn). The feature name is retrieved using the [getFeatureName](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html#method_getFeatureName) function.
 
-| **Template Name** | <a href="json-config-en.html#featurelayers_maptipsettings_hovertemplate">featureLayers[].mapTipSettings.hoverTemplate</a> |
+| **Template Name** | <a href="json-config-en.html#featurelayers_templates_hover">layers.feature[].templates.hover</a> |
 | **Template File** | feature_hovertip_template.json |
 | **Data Object** | The ESRI <a href="https://developers.arcgis.com/javascript/jsapi/graphic-amd.html"> Graphic object</a> associated with that point |
 
@@ -161,7 +150,7 @@ The content of the detail panel that slides out whenever a user clicks on a feat
 
 The default detail panel contains each field of the feature on a separate row with an alternating "zebra-pattern". The default template iterates through each field in the feature and generates a list item for each field. The "zebra-pattern" is achieved by adding the class "wet-boew-zebra alterwg" to the list. The Wet Template would look for lists labelled with such class and style it accordingly.
 
-| **Template Name** | <a href="json-config-en.html#featurelayers_detailtemplate">featureLayers[].detailTemplate</a> |
+| **Template Name** | <a href="json-config-en.html#featurelayers_templates_detail">featureLayers[].templates.detail</a> |
 | **Template File** | feature_details_template.json |
 | **Data Object** | The ESRI <a href="https://developers.arcgis.com/javascript/jsapi/graphic-amd.html"> Graphic object</a> associated with that point |
 
@@ -197,14 +186,29 @@ Each row in the filter manager
 
 <section class="wb-lbx lbx-gal">
 <a href="../assets/images/filter_row_screenshot.png">
-<img src="../assets/images/filter_row_screenshot.png" style="width:344px; height:133px; max-width:80%; float:right; padding-left:20px" />
+<img src="../assets/images/filter_row_screenshot.png" class="col-md-5" style="float:right; padding-left:20px" />
 </a>
 </section>
 
-The default filter row contain a handle that enables the user to rearrange the order of the layers on the map, an icon representing the layer, the name of the layer, a metadata button that allows the user open a subpanel to view the metadata in that layer, and an "eye" and "box" toggle box that enables the user to toggle the layer visibility and layer [bounding box](architecture-overview-en.html#bounding_box) visibility respectively.
+The default filter row contain a handle that enables the user to rearrange the order of the layers on the map, an icon representing the layer, the name of the layer, a metadata button that allows the user open a subpanel to view the metadata in that layer, a settings button that allows the user to adjust layer's opacity if enabled in the config, and an "eye" and "box" toggle box that enables the user to toggle the layer visibility and layer [bounding box](architecture-overview-en.html#bounding_box) visibility respectively.
 
 | **Template Name** | <a href="json-config-en.html#sitetemplate_filterrowtemplate">siteTemplate.filterRowTemplate</a> |
 | **Template File** | filter_manager_template.json |
+| **Data Object** | Custom |
+
+[Back To Top](#top)
+{: .text-right}
+
+##Advanced Tools {#advanced_tools}
+
+Describes the input/output box for advanced tools.
+
+**Default Behaviour**
+
+Each tool has its own template.  Templates are simplistic, showing output, or if required, an input box for tool parameters.
+
+| **Template Name** | in custom tool, function displayOutput will call baseclass function displayTemplateOutput, passing in a template name. |
+| **Template File** | Tools\\templates\\tools_template.json |
 | **Data Object** | Custom |
 
 [Back To Top](#top)

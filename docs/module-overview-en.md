@@ -5,22 +5,24 @@ categories: [documentation]
 ---
 {% include JB/setup %}
 
-<script src="../scripts/toc.js"> </script>
-<script type="text/javascript">
-$(document).ready(function() {
-    $('.toc').toc({
-        title: 'Table of Content',
-        listType: 'ul',
-        selector: 'h2, h3, h4, h5, h6, .include_toc'
-    });
-});
-</script>
-
 <a name="top" />
 
 # RAMP Module Overview {#wb-cont}
 
 <div class="toc"></div>
+
+## ramp/advancedToolbar {#advancedToolbar}
+
+Provides a toolbar with tools that violate accessibility rules.  Will load and display tools from config definitions and [customized tool modules](advanced-toolbar-en.html).
+
+
+| **API Page** | [AdvancedToolbar](../api/yuidoc/classes/AdvancedToolbar.html)
+| **Relevant Configuration Nodes** | [advancedToolbar](json-config-en.html#advancedToolbar)
+| **Template Summary** | [Advanced Tools](template-summary-en.html#advanced_tools)
+
+[Back To Top](#top)
+{: .text-right}
+
 
 ## ramp/basemapSelector {#basemapselector}
 
@@ -56,7 +58,7 @@ Manages the widget that allows the maps current state to be displayed as a URL. 
 The module handles the construction and population of the data grid.
 
 #### Table Creation
-The table structure is generated using the [datatables](external-libraries-en.html#datatables) library. The content and styling of the data grid can be configured using the JSON configuration file. 
+The table structure is generated using the [datatables](external-libraries-en.html#datatables) library. The content and styling of the data grid can be configured using the JSON configuration file.
 Population of grid rows consists of determining visible features, generating column data (this includes applying templates), and filling the grid with the result set.
 
 #### Datagrid Modes
@@ -74,7 +76,7 @@ changes, the data grid is cleared, a query is sent to fetch a list of features v
 Pagination is a custom plugin into the datatables library
 
 #### Sorting
-Sorting is provided out-of-the-box by the datatables library. 
+Sorting is provided out-of-the-box by the datatables library.
 
 #### Feature Selection
 Whenever the user clicks on a feature on the map, the corresponding row in the summary grid is highlighted. This is done by caching the object IDs of all the features and mapping them to the index of the feature in the datagrid.
@@ -86,7 +88,6 @@ The grid contains a "details" button that is used to show detailed information a
 contains a "zoom to" button that is used to zoom to the feature on the map. Once zoomed in, the "zoom to" button will change to a "zoom back" button which will bring the user back to the original extent prior to the zoom to
 operation. The dataGridClickHandler module (see below) is responsible for the behaviour of the datagrid when the "details" or "zoom to" button is clicked. In future releases, we plan to have this extensible to allow easy overriding 
 of the default behaviour.
-
 
 **Relevant Sequence Diagrams**
 
@@ -208,6 +209,12 @@ The following actions are performed by the module
 * Generate the filter interface (including using templates)
 * Handle the toggling of layers
 * Handle the toggling of bounding boxes for layers
+* Handle the changing of layer's opacity through the Settings panel
+    * When opacity is set to 0.0, the layer is toggled invisible
+    * When opacity is set to 0.1 - 0.99, the layer is toggled visible (if it was invisible before)
+    * When a layer is toggled invisible, the opacity slider control is "greyed out"
+    * WHen a layer is toggled visible, the opacity slider control is restored to normal appearance
+    * When a layer is toggled visible, the opacity slider control is set to 1.0 (only if it was set to 0.0)
 * Changing the draw order of layers on the map
 
 **Relevant Sequence Diagrams**
@@ -231,7 +238,7 @@ The following actions are performed by the module
 </section>
 
 | **API Page** | [FilterManager](../api/yuidoc/classes/FilterManager.html)
-| **Relevant Configuration Nodes** |  [featureLayers[].id](json-config-en.html#featurelayers_id) <br /> [featureLayers[].displayName](json-config-en.html#featurelayers_displayname) <br /> [featureLayers[].symbology](json-config-en.html#featurelayers_symbology)
+| **Relevant Configuration Nodes** |  [featureLayers[].id](json-config-en.html#featurelayers_id) <br /> [featureLayers[].displayName](json-config-en.html#featurelayers_displayname) <br /> [featureLayers[].symbology](json-config-en.html#featurelayers_symbology)  <br /> [featureLayers[].settings](json-config-en.html#featurelayers_settings)
 | **Template Summary** | [Filter Global Row](template-summary-en.html#filter_global_row) <br /> [Filter Row](template-summary-en.html#filter_row)
 
 [Back To Top](#top)
@@ -251,7 +258,7 @@ The module defines global items to make things easier to share across modules.  
 The module contains helper functions for [graphic](https://developers.arcgis.com/javascript/jsapi/graphic-amd.html) objects.  E.g. get objectId, get layer, get detail text
 
 | **API Page** | [GraphicExtension](../api/yuidoc/classes/GraphicExtension.html)
-| **Relevant Configuration Nodes** | [featureLayers[].detailTemplate](json-config-en.html#featurelayers_detailtemplate)
+| **Relevant Configuration Nodes** | [featureLayers[].templates.detail](json-config-en.html#featurelayers_templates_detail)
 
 [Back To Top](#top)
 {: .text-right}
@@ -314,7 +321,7 @@ Fills the tips with contents from the template.
 </section>
 
 | **API Page** | [Maptips](../api/yuidoc/classes/Maptips.html)
-| **Relevant Configuration Nodes** | [featureLayers[].mapTipSettings](json-config-en.html#featurelayers_maptipsettings)
+| **Relevant Configuration Nodes** | [featureLayers[].mapTipSettings](json-config-en.html#featurelayers_templates)
 | **Template Summary** | [Feature Hover Tip](template-summary-en.html#feature_hover_tip) <br /> Feature Anchor Tip](template-summary-en.html#feature_anchor_tip)
 
 [Back To Top](#top)

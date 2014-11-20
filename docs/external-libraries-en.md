@@ -5,17 +5,86 @@ categories: [documentation]
 ---
 {% include JB/setup %}
 
-#External Library Implementations {#wb-cont}
+<a name="top" />
+
+# External Library Implementations {#wb-cont}
+
+<div class="toc"></div>
 
 <a name="datatables" />
+
 ## Datatables
-v 1.9.4
+v 1.10.1
 
 <http://www.datatables.net>
 
 A grid control that allows for rich formatting but keeps the grid in an accessible form.  Features pagination, sorting. Unlike most grids, does not use DIVs for formatting / structure.
 
 Used for the main grid control in the app.
+
+[Back To Top](#top)
+{: .text-right}
+
+
+## Dojo Toolkit
+v 1.9.1
+
+<http://dojotoolkit.org/>
+
+Main framework used in RAMP.  Provides a module-based structure that helps javascript behave in a manner similar to object oriented languages.  This framework is also used by the ESRI javascript API, and is imported via that API.
+
+Used throughout the application.
+
+[Back To Top](#top)
+{: .text-right}
+
+
+## ESRI Javascript API
+v 3.8
+
+<https://developers.arcgis.com/javascript/>
+
+Main mapping API used in RAMP.  Handles all of the mapping and GIS related functions (e.g. drawing, querying spatial data).
+
+Used throughout the application.
+
+[Back To Top](#top)
+{: .text-right}
+
+
+## GSAP - GreenSock Animation Platform
+v 1.13.2
+
+<http://www.greensock.com/gsap-js/>
+
+GSAP is a suite of tools for scripted, high-performance HTML5 animations that work in all major browsers.  Specific tools include TweenLite, TimelineLite, EasePack, and CSSPlugin.
+
+Used for the power transitional animation of the layout.
+
+[Back To Top](#top)
+{: .text-right}
+
+## i18next - i18n for JavaScript
+v 1.7.4
+
+<http://i18next.com/>
+
+i18next is a full-featured i18n javascript library for translating your webapplication.
+
+Used for translation of the webmap.
+
+[Back To Top](#top)
+{: .text-right}
+
+## jQuery
+v 2.1.1
+
+<http://jquery.com>
+
+jQuery makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
+
+[Back To Top](#top)
+{: .text-right}
 
 ## jQuery UI
 v 1.10.4
@@ -24,16 +93,22 @@ v 1.10.4
 
 A jQuery library with effects, widgets, themes, and other UI-type items in it.
 
-It is used to generate the navigation widget.  The widget is found in file jquery.ui.navigation.js
+It is used to generate the navigation widget. The widget is found in file jquery.ui.navigation.js
 
-## Modernizr
-v 2.7.1
+[Back To Top](#top)
+{: .text-right}
 
-<http://modernizr.com />
+## Nestoria Sliders jQuery Plugin
+v 1.0.5
 
-A library that detects if browsers have HTML5 or CSS3 capabilities
+<https://github.com/lokku/jquery-nstslider>
 
-Used to allow the tooltipster library to work in browsers that do not support CSS animation.
+Fully customizable with CSS, Single/Double handles, Touch-enabled, IE 7+ Compatibility, Custom Digit Rounding, Non linear step increments!
+
+Power the opacity slider control for the Filter Manager module.
+
+[Back To Top](#top)
+{: .text-right}
 
 ## ScrollTo
 v 1.4.3.1
@@ -44,6 +119,9 @@ A library for implementing animated scrolling.
 
 Used to scroll the datagrid to the selected row (if row is not on the page).
 
+[Back To Top](#top)
+{: .text-right}
+
 ## Shorten
 v 1.0.0
 
@@ -52,6 +130,9 @@ v 1.0.0
 A library that allows long text to be truncated, and provides a "show more" option to expand it.
 
 Used in the detail panel to trim long text items
+
+[Back To Top](#top)
+{: .text-right}
 
 ## Snap
 v 0.1.0
@@ -62,8 +143,11 @@ A library for working with scalar vector graphics.
 
 Used for managing graphics layers and repositioning anchor maptips in the featureHighlighter module.
 
+[Back To Top](#top)
+{: .text-right}
+
 ## tmplEx
-v 2.4.1
+v 2.5.5
 
 <https://github.com/blueimp/JavaScript-Templates>
 
@@ -71,14 +155,20 @@ A templating engine; applies templates to data and produces HTML.
 
 Used throughout the application to generate content.  E.g. maptip content, detail pane content, grid cell content, filter row content.
 
+[Back To Top](#top)
+{: .text-right}
+
 ## Tooltipster
-v 3.0.1
+v 3.0.1-r
 
 <http://iamceege.github.io/tooltipster />
 
 A library that provides tooltips with CSS enhancements.
 
 Used for maptips, and also tooltips on the datagrid and filter manager rows
+
+[Back To Top](#top)
+{: .text-right}
 
 ## Urlshortener
 v 1.0.1
@@ -88,3 +178,6 @@ v 1.0.1
 A library for shortening URLs.
 
 Used in the Get Link widget to allow user to have a shortened link.
+
+[Back To Top](#top)
+{: .text-right}
