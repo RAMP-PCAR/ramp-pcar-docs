@@ -8,5 +8,7 @@ published: true
 
 # Archive {#wb-cont}
 
-
-## [RAMP 3.0 - Canada Goose - Documentation](3.0/index-en.html)
+| Version | Documentation | API | 
+|---|---|
+| v3.0.0 - Canada Goose | [Link](3.0/index-en.html) | [Link](/api/3.0/yuidoc/) |
+{: .table}
