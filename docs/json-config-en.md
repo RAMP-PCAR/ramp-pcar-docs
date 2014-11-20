@@ -34,7 +34,7 @@ This page will walk you through the layout of the application configuration obje
     * skin
 * advancedToolbar
     * enabled
-    * tools (collection)        
+    * tools (collection)
         * name
         * selector
         * enabled
@@ -98,12 +98,12 @@ This page will walk you through the layout of the application configuration obje
 				* enabled
 				* default
 			* visible
-			* boundingBoxVisible 
+			* boundingBoxVisible
 		* isStatic
 	* wmsLayers (collection)
 		* id
 		* displayName
-		* url		
+		* url
 		* format
 		* layerName
 		* settings
@@ -152,9 +152,9 @@ This page will walk you through the layout of the application configuration obje
 |----+----|----+----|----+----
 | <a name="lang_field" /> lang	| string	| Language of this config object; en or fr
 | geometryService	| string	| URL to an ArcGIS geometry service REST endpoint.  Used for advanced drawing tools.
-| proxyUrl	| string	| Path to a proxy service (relative path).  Used for sending large requests to services.
+| <a name="proxyUrl" />proxyUrl	| string	| Path to a proxy service (relative path).  Used for sending large requests to services.
 | <a name="spatialreference" />spatialReference	| object	| A valid ESRI spatial reference object.  See https://developers.arcgis.com/javascript/jsapi/spatialreference-amd.html#spatialreference1
-| <a name="extents" />extents	| 	| 
+| <a name="extents" />extents	| 	|
 | extents.defaultExtent	| envelope	| Map extent to display when the app initializes
 | extents.fullExtent	| envelope	| Map extent to display when the full extent button is pushed
 | extents.maximumExtent	| envelope	| Map extent that defines the valid viewing area.  the app should not allow a user to pan outside of this extent
@@ -201,7 +201,7 @@ This page will walk you through the layout of the application configuration obje
 | layers.feature[].datagrid.gridColumns[].title	| string	| Title of the grid column.  This will show in the column header
 | <a name="featurelayers_datagrid_gridcolumns_columntemplate" />layers.feature[].datagrid.gridColumns[].columnTemplate	| 	| Template name to be used to generate the content of the given column.  A plain value template is 'unformatted_grid_value'
 | <a name="featurelayers_layerattributes" />layers.feature[].layerAttributes	| string	| An array of strings which correspond to fields to include in the FeatureLayer.  If not specified, the feature layer will return the OBJECTID field and if applicable the start time field, end time field and type id field. You can specify ["*"] to fetch the values for all fields in the layer, this is useful when editing features. Associated with outfield options in ESRI FeatureLayer.
-| <a name="featurelayers_templates" /> layers.feature[].templates	| 	| 
+| <a name="featurelayers_templates" /> layers.feature[].templates	| 	|
 | <a name="featurelayers_templates_hover" /> layers.feature[].templates.hover	| string	| Optional.  Template name defining the contents of a hover tip.  Default value is 'feature_hover_maptip_template'
 | <a name="featurelayers_templates_anchor" />layers.feature[].templates.anchor	| string	| Optional.  Template name defining the contents of an anchored map tip.  Default value is 'anchored_map_tip'
 | <a name="featurelayers_templates_summary" />layers.feature[].templates.summary	| string	| Optional.  Template name defining the contents of a row for features of this layer in the summary grid.  Default value is 'default_grid_summary_row'
