@@ -68,7 +68,7 @@ In the default datagrid summary mode, each row contains an image representing th
 
 The image URL is retrieved using the [getGraphicIcon](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html#method_getGraphicIcon) function in [templateUtils](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html), which is available to the template via [o.fn](template-guide-en.html#o_fn). The feature name is retrieved using the [getFeatureName](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html#method_getFeatureName) function. The layer name is populated using the [featureLayers[].displayName](json-config-en.html#featurelayers_displayname), which can be accessed via [o.lyr](template-guide-en.html#o_lyr).
 
-| **Template Name** | [featureLayers[].datagrid.summaryRowTemplate](json-config-en.html#featurelayers_datagrid_summaryrowtemplate) |
+| **Template Name** | [featureLayers[].templates.summary](json-config-en.html#featurelayers_templates_summary) |
 | **Template File** | datagrid_template.json |
 | **Data Object** | The ESRI <a href="https://developers.arcgis.com/javascript/jsapi/graphic-amd.html"> Graphic object</a> associated with that point |
 
@@ -110,7 +110,7 @@ The popup that appears when a feature on the map is clicked.
 
 The anchor tip contains the icon representing the feature, the name of the feature, and a close button. The icon is retrieved using [getGraphicIcon](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html#method_getGraphicIcon) function in [templateUtils](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html), which is available to the template via [o.fn](template-guide-en.html#o_fn). The feature name is retrieved using the [getFeatureName](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html#method_getFeatureName) function.
 
-| **Template Name** | <a href="json-config-en.html#featurelayers_maptipsettings_anchortemplate"> featureLayers[].mapTipSettings.anchorTemplate</a> |
+| **Template Name** | <a href="json-config-en.html#featurelayers_templates_anchor"> featureLayers[].templates.anchor</a> |
 | **Template File** | feature_anchortip_template.json |
 | **Data Object** | The ESRI <a href="https://developers.arcgis.com/javascript/jsapi/graphic-amd.html"> Graphic object</a> associated with that point |
 
@@ -131,7 +131,7 @@ The popup that appears when the mouse hovers over a feature on the map.
 
 The hover tip contains the icon representing the feature and the name of the feature. The icon is retrieved using [getGraphicIcon](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html#method_getGraphicIcon) function in [templateUtils](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html), which is available to the template via [o.fn](template-guide-en.html#o_fn). The feature name is retrieved using the [getFeatureName](http://ramp-racp.github.io/api/yuidoc/classes/TmplUtil.html#method_getFeatureName) function.
 
-| **Template Name** | <a href="json-config-en.html#featurelayers_maptipsettings_hovertemplate">featureLayers[].mapTipSettings.hoverTemplate</a> |
+| **Template Name** | <a href="json-config-en.html#featurelayers_templates_hover">layers.feature[].templates.hover</a> |
 | **Template File** | feature_hovertip_template.json |
 | **Data Object** | The ESRI <a href="https://developers.arcgis.com/javascript/jsapi/graphic-amd.html"> Graphic object</a> associated with that point |
 
@@ -152,7 +152,7 @@ The content of the detail panel that slides out whenever a user clicks on a feat
 
 The default detail panel contains each field of the feature on a separate row with an alternating "zebra-pattern". The default template iterates through each field in the feature and generates a list item for each field. The "zebra-pattern" is achieved by adding the class "wet-boew-zebra alterwg" to the list. The Wet Template would look for lists labelled with such class and style it accordingly.
 
-| **Template Name** | <a href="json-config-en.html#featurelayers_detailtemplate">featureLayers[].detailTemplate</a> |
+| **Template Name** | <a href="json-config-en.html#featurelayers_templates_detail">featureLayers[].templates.detail</a> |
 | **Template File** | feature_details_template.json |
 | **Data Object** | The ESRI <a href="https://developers.arcgis.com/javascript/jsapi/graphic-amd.html"> Graphic object</a> associated with that point |
 

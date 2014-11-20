@@ -22,6 +22,7 @@ RAMP operates on the principle of progressive enhancement, and implements well-e
 * [Template Summary](/docs/template-summary-en.html)
 * [Proxy Configuration](/docs/proxy.html)
 * [Add New Module](/docs/add-new-module.html)
+* [Localization](/docs/locale-en.html)
 
 ## [Architecture Overview](/docs/architecture-overview-en.html)
 * [Initialization](/docs/dojo-setup-en.html)
@@ -29,6 +30,7 @@ RAMP operates on the principle of progressive enhancement, and implements well-e
 * [Module Overview](/docs/module-overview-en.html)
 * [External Library Implementations](/docs/external-libraries-en.html)
 * [Build Tool](/docs/build-tool-en.html)
+* [Configuration Workflow](/docs/configuration-flow-en.html)
 * [Basemap Support](/docs/basemap-support-en.html)
 * [WMS Support](/docs/wms-support-en.html)
 * [Advanced Toolbar](/docs/advanced-toolbar-en.html)

@@ -13,14 +13,14 @@ categories: [documentation]
 
 <div class="toc"></div>
 
-##I want to start using RAMP
+##I want to download source code and build the RAMP viewer
 1. [Setup Build Tool]({{ BASE_PATH }}/docs/build-tool-en.html) for your platform.
 2. [Create a GitHub account](https://help.github.com/articles/signing-up-for-a-new-github-account).
 3. Follow GitHub's guides on [setting up Git](https://help.github.com/articles/set-up-git).
-4. Fork the latest [RAMP repository](https://github.com/RAMP-PCAR/RAMP-PCAR) by following the GitHub forking guide.
-6. Run grunt to build the project. You may run `grunt --help` to see the build target descriptions.
-7. The latest files will now be compiled
-8. To contribute back, follow the instructions on how to create a pull request.
+4. Fork the latest [RAMP repository](https://github.com/RAMP-PCAR/RAMP-PCAR) by following the GitHub forking guide.  This is a private repo.  Contact <a href="mailto:Mike.Weech@ec.gc.ca?Subject=RAMP%20Repo%20private%20access">Mike Weech</a> to get access.
+5. Run grunt to build the project. You may run `grunt --help` to see the build target descriptions.
+6. The latest files will now be compiled in the build folder of the project.
+7. To contribute back, follow the instructions on how to create a pull request.
 
 [Back To Top](#top)
 {: .text-right}
@@ -33,7 +33,7 @@ categories: [documentation]
 [Back To Top](#top)
 {: .text-right}
 
-##I want to setup a RAMP based web mapping application
+##I want to configure the RAMP viewer to use data of my choice
 1. Follow [RAMP Quick Start Guide]({{ BASE_PATH }}/docs/quick-start-en.html) to setup your web mapping application.
 
 [Back To Top](#top)
