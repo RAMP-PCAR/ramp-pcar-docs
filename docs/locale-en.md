@@ -34,19 +34,61 @@ If the files don't exist, a copy may be found in folder __lib\gcweb\site\include
 
 ## Static Config File String
 
+To simplify maintenance of the app configuration, the RAMP source code has a single config file (config.json).  When the build process runs, two language-specific config files are generated and can be found in the build folder.  To allow these language-specific files to have the appropriate text, RAMP utilizes placeholders in the source config file that point to text elements in the locale translation files.
+
+Here is an example for defining the display name of a feature layer.
+
+In the feature object of __src\config.json__, we use the @@ notation followed by the JSON path of the element in the locale translation files.
+
+{% highlight js %}
+{
+    "displayName": "@@config.layers.feature.duckLayer.displayName"	    
+}
+{% endhighlight %}
+
+In the English locale file __src\locales\en-CA\translation.json__
+
+{% highlight js %}
+{
+    "config": {        
+        "layers": {
+            "feature": {
+                "duckLayer": {
+                    "displayName": "Ducks"
+                }
+			}
+		}
+	}
+}
+{% endhighlight %}
+
+In the French locale file __src\locales\fr-CA\translation.json__
+
+{% highlight js %}
+{
+    "config": {        
+        "layers": {
+            "feature": {
+                "duckLayer": {
+                    "displayName": "Canards"
+                }
+			}
+		}
+	}
+}
+{% endhighlight %}
+
+When the build process runs, the resultant files __config.en.json__ and __config.fr.json__ will have display name values "Ducks" and "Canards" respectively.
+
 
 [Back To Top](#top)
 {: .text-right}
 
 
-## Tools Strings
+## Advanced Tools Strings
 
-
-[Back To Top](#top)
-{: .text-right}
-
-### Other Things
-
+As the Advanced Toolbar tools act as plugins, any language displayed on tool interfaces and popups are stored in their own language file.  The convention for the file name and location is __src\locales\<localeName>\tools\<toolName>.json__.  In the tool javascript module, the language files are accessed using the [i18n library](external-libraries-en.html#i18n)
 
 [Back To Top](#top)
 {: .text-right}
+

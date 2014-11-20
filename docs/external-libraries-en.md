@@ -66,6 +66,8 @@ Used for the power transitional animation of the layout.
 [Back To Top](#top)
 {: .text-right}
 
+<a name="i18n" />
+
 ## i18next - i18n for JavaScript
 v 1.7.4
 
