@@ -24,7 +24,7 @@
     
     var level = get_level(headers[0]),
       this_level,
-      html = settings.title + " <"+settings.listType+">";
+      html = settings.title + "<div class='panel-body'>" + " <"+settings.listType+">";
     headers.on('click', function() {
       if (!settings.noBackToTopLinks) {
         window.location.hash = this.id;
@@ -44,7 +44,7 @@
         html += "<"+settings.listType+"><li><a href='#" + header.id + "'>" + header.innerHTML + "</a>";
       level = this_level; // update for the next one
     });
-    html += "</"+settings.listType+">";
+    html += "</"+settings.listType+">" + "</div>";
     if (!settings.noBackToTopLinks) {
       $(document).on('click', '.back-to-top', function() {
         $(window).scrollTop(0);
