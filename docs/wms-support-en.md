@@ -13,21 +13,25 @@ categories: [documentation]
 
 <div class="toc"></div>
 
-##Supported Features in RAMP
+## Supported Features in RAMP
 
-RAMP can display a layer from a WMS.  It will display as an image on the map, and will appear in the layer selector.  Layer visibility and opacity can be adjusted.  WMS layers can be re-ordered amongst themselves, but must always remain underneath any feature layers on the map.  The WMS must support a projection that is compatible with the basemap being used.  
+RAMP can display a layer from a WMS.  It will display as an image on the map and will appear in the layer selector.  Layer visibility and opacity can be adjusted.  WMS layers can be re-ordered amongst themselves, but must always remain underneath any feature layers on the map.  The WMS must support a projection that is compatible with the basemap being used.
 
-A legend can be displayed along with the WMS.  It will be displayed in the metadata panel.  If this feature is enabled, an image path can be specified.  This path can be the GetLegend request of the WMS.
+Legend support is available if configured in RAMP and provided that the WMS source implements the GetLegendGraphic request.  In the RAMP configuration an entry should be made in `legendMimeType`, if this entry is not present then no legend will be displayed.
 
 Clicking the WMS layer on the map is also supported.  Data returned from the getFeatureInfo function of the WMS is displayed in the subpanel.  To support feature info requests developers will have to provide their own parsers.
 
-###GetFeatureInfo Support
+### Proxy Considerations
+
+If the WMS does not allow [CORS](http://www.w3.org/TR/cors/#access-control-allow-origin-response-header) requests then a proxy is required.  The proxy should be located on the same server as RAMP so it does not violate the same origin policy.  ESRI distributes [proxy scripts](https://github.com/Esri/resource-proxy) for .Net, Java and PHP which can be used for this purpose (these are distributed under an Apache 2.0 license).  If a proxy is configured it should be set in the config file or by the config service (see [proxyUrl](json-config-en.html#proxyUrl)).
+
+### GetFeatureInfo Support
 
 WMS GetFeatureInfo requests are supported in RAMP and the following two sections describe the configuration and plugins required to enable support for this feature.
 
-####Config File
+#### Config File
 
-Within each wmsLayers[] entry add a featureInfo section, this section is optional and its presence enables the click support for getFeatureInfo queries.
+Within each wms[] entry add a featureInfo section, this section is optional and its presence enables the click support for getFeatureInfo queries.
 A featureInfo section should contain two keys: mimeType, a string containing the format that should be requested from the server; and parser, a string
 linking to the parser plugin which will convert the response from the server into something appropriate for display.
 
@@ -39,7 +43,7 @@ Sample config:
 	},
 {% endhighlight %}
 
-####Plugin
+#### Plugin
 
 In addition to the config update a plugin is required to parse the server response for the getFeatureInfo request.  This plugin is necessary due to the
 open ended specification of the response.  Plugins are listed in a top level element in the configuration file, ex:
@@ -63,7 +67,7 @@ RAMP.plugins.featureInfoParser.<plugin name> = function (data) {
 [Back To Top](#top)
 {: .text-right}
 
-##WMS Sources
+## WMS Sources
 
 Meteorological Service of Environment Canada
 : The MSC provides a [WMS service](http://geo.weather.gc.ca/geomet/?lang=E&SERVICE=WMS&REQUEST=getCapabilities) with a number of meteorological layers.  It will support projections that align with the NRCan and ESRI basemaps.

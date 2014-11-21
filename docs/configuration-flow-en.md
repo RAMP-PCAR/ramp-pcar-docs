@@ -8,7 +8,7 @@ categories: [documentation]
 
 # RAMP Configuration Workflow {#wb-cont}
 
-This document explains the different ways configuration information is fed into and managed by RAMP.  For information on what goes in a configuration file, see the [configuration schema page]({{ BASE_PATH }}/docs/json-config-en.html)
+This document explains the different ways configuration information is fed into and managed by RAMP.  For information on what goes in a configuration file, see the [configuration schema page](json-config-en.html)
 
 <div class="toc"></div>
 
@@ -20,16 +20,16 @@ At a high level, RAMP can get the configuration object from a static JSON file, 
 
 The static config file is found in src folder, and named __config.json__.  This is an ideal spot to put configuration information that you expect not to change in your site, such as the available basemaps or the navigation widget CSS skin.  If your site will always be showing the same dataset, the entire site can be configured in the static config file.
 
-The file is language independent.  Any values that are language dependent (such as a layer name, or field name that defines the name of a feature) should be referenced with an @@ key into the locale translation files.  See the [local page]({{ BASE_PATH }}/docs/locale-en.html) for details.
+The file is language independent.  Any values that are language dependent (such as a layer name, or field name that defines the name of a feature) should be referenced with an @@ key into the locale translation files.  See the [local page](locale-en.html) for details.
 
-When the application is [built]({{ BASE_PATH }}/docs/build-tool-en.html), it will create language specific configuration files.  The RAMP app will determine the appropriate one to load.
+When the application is [built](build-tool-en.html), it will create language specific configuration files.  The RAMP app will determine the appropriate one to load.
 
 [Back To Top](#top)
 {: .text-right}
 
 ### Configuration Service
 
-RAMP also supports getting configuration information from a web service.  A compatible web service will return a JSON response, the response being an array of configuration snippets relative to the root of the configuration object.  RAMP will take the snippits and inject them into the in-memory version of the static config file.  If any fields collide, the last item from the service will be the winning value.  For array collisions, items will be appended to the existing array.  Detailed specs for the service interface can be found [here]({{ BASE_PATH }}/docs/service-contract-en.html).  Of course, you can customize a copy of RAMP (by changing the codebase) to accept different types of services if needed.
+RAMP also supports getting configuration information from a web service.  A compatible web service will return a JSON response, the response being an array of configuration snippets relative to the root of the configuration object.  RAMP will take the snippits and inject them into the in-memory version of the static config file.  If any fields collide, the last item from the service will be the winning value.  For array collisions, items will be appended to the existing array.  Detailed specs for the service interface can be found [here](service-contract-en.html).  Of course, you can customize a copy of RAMP (by changing the codebase) to accept different types of services if needed.
 
 As a very simple example, a service return value to change the navigation widget skin would be
 
