@@ -105,7 +105,11 @@
             <div class="row">
                 <ol class="breadcrumb">
                     {% for p in page.ancestors %}
-                    <li><a href="{{ p.url }}">{{ p.title }}</a></li>
+
+                        {% if p.title | size > 0 %}
+                        <li><a href="{{ p.url }}">{{ p.title }}</a></li>
+                        {% endif %}
+
                     {% endfor %}
 
                     <li class="">{{ page.title }}</li>
@@ -158,7 +162,6 @@
                     </li>
                 </ul>
             </section>
-            </section>
         </nav>
     </footer>
     {% include JB/analytics %}
@@ -172,9 +175,9 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('.toc')
-                .addClass("mrgn-bttm-lg")
+                .addClass("mrgn-bttm-lg panel panel-default")
                 .toc({
-                    title: '<h2 class="mrgn-tp-sm">Table of Content</h2>',
+                    title: '<header class="panel-heading"><h2 class="panel-title">Table of contents</h2></header>',
                     listType: 'ul',
                     selector: 'h2, h3, h4, h5, h6, .include_toc',
                     showSpeed: 0
