@@ -87,7 +87,7 @@ When the build process runs, the resultant files __config.en.json__ and __config
 
 ## Advanced Tools Strings
 
-As the Advanced Toolbar tools act as plugins, any language displayed on tool interfaces and popups are stored in their own language file.  The convention for the file name and location is __src\locales\<localeName>\tools\<toolName>.json__.  In the tool javascript module, the language files are accessed using the [i18n library](external-libraries-en.html#i18n)
+As the Advanced Toolbar tools act as plugins, any language displayed on tool interfaces and popups are stored in their own language file.  The convention for the file name and location is __src\locales\<localeName>\tools\<toolName>.json__.  In the tool javascript module, the language files are accessed using the [i18n library](external-libraries-en.html#i18next---i18n-for-javascript)
 
 [Back To Top](#top)
 {: .text-right}
