@@ -12,22 +12,79 @@ This document explains how RAMP handles the localization of text in different sc
 
 <div class="toc"></div>
 
-## WET Theme Template Strings
+## Template Strings
 
-### Primary Site Strings
+### WET Strings
 
-Text displayed in the WET theme portion of the site are defined in the theme repositories.  Specifically, the text lookups can be found in directory __src\locales__.  In this directory, there is a directory for each specific locale (e.g. en-CA or fr-CA for Canadian English and French), and in the specific folder there is a file called translation.json containing the strings.
+Read about how locale strings are loaded during the build in [WET Customization](wet-customization-en.html#data).
 
-Strings can be defined in both the core RAMP repository, as well as in a specific theme repository (e.g. canada.ca theme).  Any entries in a theme repository will override an entry in the core RAMP repository.
+Language-specific strings used in WET templates are stored in __./lib/wet-boew/site/data/i18n__ - one flat file per language.
+
+To override, create a file name as the corresponding language and place in __./site/data/i18__. To augment, copy the original file from __./lib/wet-boew/site/data/i18n__ to __./site/data/i18__ and modify.
+
+To insert a string in the template, use assemble-contrib-i18n helper:
+
+{% highlight html %}
+<li class="wb-slc">
+    <a class="wb-sl" href="#wb-cont">{% raw %}{{{i18n "tmpl-skip-cont"}}}{% endraw %}</a>
+</li>
+{% endhighlight %}
+
+
+### RAMP Strings
+
+Text displayed on the site and related to the content of the site is defined separately from WET strings. Specifically, the text lookups can be found in directory __./src/locales__. In this directory, there is a directory for each specific locale (e.g. en-CA or fr-CA for Canadian English and French), and in the specific folder there is a file called __translation.json__ containing the strings. 
+
+These files are used as resources for [i18next](http://i18next.com/) localization library.
+
+To insert RAMP strings into Handlebars templates, use helper-i18n (deep lookup is possible):
+
+{% highlight html %}
+<li><a href="#implement" class="item">{{t "page.menu.link1Title"}}</a>
+	<ul class="sm list-unstyled" id="implement" role="menu">
+		<li><a href="...">{% raw %}{{t "page.menu.link1sub1Title"}}{% endraw %}</a></li>
+		<li><a href="...">{% raw %}{{t "page.menu.link1sub2Title"}}{% endraw %}</a></li>
+		<li><a href="...">{% raw %}{{t "page.menu.link1sub3Title"}}{% endraw %}</a></li>
+		<li><a href="...">{% raw %}{{t "page.menu.link1sub4Title"}}{% endraw %}</a></li>
+	</ul>
+</li>
+{% endhighlight %}
+
+To insert a string using JS, use a global call:
+
+{% highlight js %}
+    i18n.t('gui.actions.close');
+{% endhighlight %}
+
+#### RAMP Themes
+
+RAMP Themes have their own localization files located in __./src/locales__ same as RAMP Core. During build, both JSON files are merged (__./src/locales/[locale]/translation.json__ and __./lib/ramp-pcar/src/locales/[locale]/translation.json__) to allow easy augmentation of defaults strings without duplication. 
+
+Any entries in a theme repository will override an entry in the core RAMP repository.
 
 [Back To Top](#top)
 {: .text-right}
 
 ### Mega-menu String Settings
 
-To configure text in the megamenu of specific themes, edit the files __fullmenu-[lang].hbs__ in folder __site\includes__
+#### RAMP Core
 
-If the files don't exist, a copy may be found in folder __lib\gcweb\site\includes\__.  Copy the files to __site\includes__ and feel free to modify the copy
+To configure text in the megamenu, edit the file __fullmenu.hbs__ in folder __./site/includes__.
+
+If the file doesn't exist, a copy may be found in folder __./lib/wet-boew/site/includes/__. Copy the files to __./site/includes__ and feel free to modify the copy. Use use helper-i18n to insert strings as described above.
+
+#### RAMP Intranet and Usability Themes
+
+To configure text in the megamenu for RAMP Intranet and Usability these, edit the file __fullmenu.hbs__ in folder __./site/includes__.
+
+If the file doesn't exist, a copy may be found in folder __./lib/theme-gc-intranet/site/includes/__ or __./lib/theme-gcwu-fegc/site/includes/__.  Copy the file to __./site/includes__ and feel free to modify the copy.
+
+#### RAMP Canada.ca Theme
+
+To configure text in the megamenu for RAMP Intranet and Usability these, edit the files __fullmenu-[locale].hbs__ in folder __./site/includes__.
+
+If the files don't exist, a copy may be found in folder __./lib/gcweb/site/includes/__.  Copy the file to __./site/includes__ and feel free to modify the copy.
+
 
 [Back To Top](#top)
 {: .text-right}
@@ -87,7 +144,7 @@ When the build process runs, the resultant files __config.en.json__ and __config
 
 ## Advanced Tools Strings
 
-As the Advanced Toolbar tools act as plugins, any language displayed on tool interfaces and popups are stored in their own language file.  The convention for the file name and location is __src\locales\<localeName>\tools\<toolName>.json__.  In the tool javascript module, the language files are accessed using the [i18n library](external-libraries-en.html#i18next---i18n-for-javascript)
+As the Advanced Toolbar tools act as plugins, any language displayed on tool interfaces and popups are stored in their own language file.  The convention for the file name and location is __./src/locales/<localeName>/tools/<toolName>.json__.  In the tool javascript module, the language files are accessed using the [i18n library](external-libraries-en.html#i18next---i18n-for-javascript)
 
 [Back To Top](#top)
 {: .text-right}
