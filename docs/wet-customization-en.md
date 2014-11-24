@@ -20,6 +20,11 @@ RAMP pulls in [WET core repo](https://github.com/wet-boew/wet-boew) as a depende
 
 RAMP HTML pages, __ramp-en.html__ and __ramp-fr.html__ are generated from __./site/pages/ramp.hbs__ Handlebars template which uses __./site/layouts/default.hbs__ layout. Both the main template and the layout use a number of partials, helpers, and data files.
 
+<section class="alert alert-info">
+	<h3>Note</h3>
+	<p>Please, avoid modifying WET templates and partials inside <strong>./lib</strong> folder. Use instructions below to properly override templates.</p>
+</section>
+
 #### Partials
 
 The build tool looks up partial templates at the following paths where successive partials with the same names will override previous ones:

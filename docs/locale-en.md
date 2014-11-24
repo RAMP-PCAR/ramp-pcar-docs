@@ -67,6 +67,11 @@ Any entries in a theme repository will override an entry in the core RAMP reposi
 
 ### Mega-menu String Settings
 
+<section class="alert alert-info">
+	<h3>Note</h3>
+	<p>Please, avoid modifying megamenu templates inside <strong>./lib</strong> folder. Use instructions below to properly override templates.</p>
+</section>
+
 #### RAMP Core
 
 To configure text in the megamenu, edit the file __fullmenu.hbs__ in folder __./site/includes__.
