@@ -1,5 +1,5 @@
 ---
-layout: index-secmenu-en
+layout: index-secmenu-3.0-en
 title: Proxy Configuration and Resources
 categories: [documentation]
 ---
