@@ -22,6 +22,7 @@ RAMP operates on the principle of progressive enhancement, and implements well-e
 * [Template Summary](template-summary-en.html)
 * [Proxy Configuration](proxy.html)
 * [Add New Module](add-new-module.html)
+* [WET Template Customization](wet-customization-en.html)
 * [Localization](locale-en.html)
 
 ## [Architecture Overview](architecture-overview-en.html)
