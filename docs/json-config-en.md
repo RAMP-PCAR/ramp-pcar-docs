@@ -12,6 +12,8 @@ categories: [documentation]
 
 This page will walk you through the layout of the application configuration object and all of its properties.
 
+For details on migrating a config file from Canada Goose to Dragonfly, see the [Migration Guide](config-migration-en.html).
+
 <div class="toc"></div>
 
 ##Object Outline
