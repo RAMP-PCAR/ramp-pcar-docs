@@ -41,4 +41,5 @@ RAMP operates on the principle of progressive enhancement, and implements well-e
 
 ## Reference
 * [API Reference](/api/index-en.html)
+* [RCS Reference](/rcs/index-en.html)
 * [Known Issues](known-issues-en.html)
