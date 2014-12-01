@@ -27,7 +27,7 @@
     <link rel="top" title="RAMP Configuration Service 1.5.0 documentation" href="../index.html" />
     <link rel="up" title="Administrator’s Guide" href="index.html" />
     <link rel="next" title="RCS Configration Options" href="configuration.html" />
-    <link rel="prev" title="Deployment" href="deployment.html" /> 
+    <link rel="prev" title="RAMP Deployment with RCS" href="connecting-to-ramp.html" /> 
   </head>
   <body>
     <div class="related">
@@ -43,7 +43,7 @@
           <a href="configuration.html" title="RCS Configration Options"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="deployment.html" title="Deployment"
+          <a href="connecting-to-ramp.html" title="RAMP Deployment with RCS"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">RAMP Configuration Service 1.5.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Administrator&#8217;s Guide</a> &raquo;</li> 
@@ -69,24 +69,19 @@ seems to be a common convention of setting a remote as the source and local as t
 target.  CouchDB uses a special database named <tt class="docutils literal"><span class="pre">_replicator</span></tt> for keeping replications;
 setting up a replication involves sending a PUT request to <tt class="docutils literal"><span class="pre">/_replicator/&lt;replication_id&gt;</span></tt>.
 Replication IDs can be any short string and RCS will use the convention <tt class="docutils literal"><span class="pre">rep_serverX_rcs</span></tt>.</p>
-<p>The payload for the replication request is:
-.. code-block:: javascript</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>{</dt>
-<dd><p class="first">&#8220;source&#8221;:&#8221;<a class="reference external" href="http://rcs:rcs&#64;serverX:5984/rcs_cache">http://rcs:rcs&#64;serverX:5984/rcs_cache</a>&#8221;,
-&#8220;target&#8221;:&#8221;rcs_cache&#8221;,
-&#8220;continuous&#8221;:true,
-&#8220;create_target&#8221;:false,
-&#8220;user_ctx&#8221;:{</p>
-<blockquote>
-<div>&#8220;name&#8221;:&#8221;rcs&#8221;,
-&#8220;roles&#8221;:[&#8220;rcs&#8221;]</div></blockquote>
-<p class="last">}</p>
-</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
+<p>The payload for the replication request is:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s2">&quot;source&quot;</span><span class="o">:</span><span class="s2">&quot;http://rcs:rcs@serverX:5984/rcs_cache&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;target&quot;</span><span class="o">:</span><span class="s2">&quot;rcs_cache&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;continuous&quot;</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span>
+    <span class="s2">&quot;create_target&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+    <span class="s2">&quot;user_ctx&quot;</span><span class="o">:</span><span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;rcs&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;roles&quot;</span><span class="o">:</span><span class="p">[</span><span class="s2">&quot;rcs&quot;</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <p>Please make the necessary updates to the source URL (it is in the form
 <tt class="docutils literal"><span class="pre">&lt;user&gt;:&lt;password&gt;&#64;&lt;server</span> <span class="pre">ip</span> <span class="pre">or</span> <span class="pre">name&gt;:&lt;port&gt;/&lt;database</span> <span class="pre">name&gt;</span></tt>).</p>
 <p>If <a class="reference external" href="http://curl.haxx.se/download.html">curl</a> is available on your system you can copy
@@ -127,8 +122,8 @@ curl <span class="nv">$HOST</span> <span class="c">#just a test</span>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="deployment.html"
-                        title="previous chapter">Deployment</a></p>
+  <p class="topless"><a href="connecting-to-ramp.html"
+                        title="previous chapter">RAMP Deployment with RCS</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="configuration.html"
                         title="next chapter">RCS Configration Options</a></p>
@@ -167,7 +162,7 @@ curl <span class="nv">$HOST</span> <span class="c">#just a test</span>
           <a href="configuration.html" title="RCS Configration Options"
              >next</a> |</li>
         <li class="right" >
-          <a href="deployment.html" title="Deployment"
+          <a href="connecting-to-ramp.html" title="RAMP Deployment with RCS"
              >previous</a> |</li>
         <li><a href="../index.html">RAMP Configuration Service 1.5.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >Administrator&#8217;s Guide</a> &raquo;</li> 

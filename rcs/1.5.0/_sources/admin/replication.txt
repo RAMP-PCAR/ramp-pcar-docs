@@ -18,6 +18,7 @@ setting up a replication involves sending a PUT request to ``/_replicator/<repli
 Replication IDs can be any short string and RCS will use the convention ``rep_serverX_rcs``.
 
 The payload for the replication request is:
+
 .. code-block:: javascript
 
     {
