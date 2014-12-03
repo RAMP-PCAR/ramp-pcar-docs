@@ -11,4 +11,5 @@ published: true
 | Version | Link |
 |---|---|
 | v1.5.0 | [Link](1.5.0/) |
+| v1.5.1 | [Link](1.5.1/) |
 {: .table}
