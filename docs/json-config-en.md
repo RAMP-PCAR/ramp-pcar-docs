@@ -18,7 +18,6 @@ For details on migrating a config file from Canada Goose to Dragonfly, see the [
 
 ##Object Outline
 
-* lang
 * geometryService
 * proxyUrl
 * spatialReference
@@ -31,7 +30,6 @@ For details on migrating a config file from Canada Goose to Dragonfly, see the [
     * sliderMaxVal
     * debug
     * animate
-    * locale
     * cssPath
     * skin
 * advancedToolbar
@@ -94,6 +92,7 @@ For details on migrating a config file from Canada Goose to Dragonfly, see the [
 				* maxValue
 				* imageUrl
 		* nameField
+		* layerExtent
 		* settings
 			* panelEnabled
 			* opacity
@@ -127,10 +126,7 @@ For details on migrating a config file from Canada Goose to Dragonfly, see the [
         * column1
 * siteTemplate
     * basemapTemplate
-    * filterGlobalRowTemplate
-    * filterRowTemplate
 * globalFilter
-    * txtAllData
     * toggleLabels (collection)
         * id
         * dataAttribute
@@ -152,20 +148,18 @@ For details on migrating a config file from Canada Goose to Dragonfly, see the [
 
 | JSON Object Field	| Data Type	| Description
 |----+----|----+----|----+----
-| <a name="lang_field" /> lang	| string	| Language of this config object; en or fr
 | geometryService	| string	| URL to an ArcGIS geometry service REST endpoint.  Used for advanced drawing tools.
 | <a name="proxyUrl" />proxyUrl	| string	| Path to a proxy service (relative path).  Used for sending large requests to services.
-| <a name="spatialreference" />spatialReference	| object	| A valid ESRI spatial reference object.  See https://developers.arcgis.com/javascript/jsapi/spatialreference-amd.html#spatialreference1
-| <a name="extents" />extents	| 	|
+| <a name="spatialreference" />spatialReference	| object	| A valid [ESRI spatial reference object](https://developers.arcgis.com/javascript/jsapi/spatialreference-amd.html#spatialreference1).
+| <a name="extents" />extents	| 	| Note:  All extents should be in the same spatial reference as the basemap.
 | extents.defaultExtent	| envelope	| Map extent to display when the app initializes
 | extents.fullExtent	| envelope	| Map extent to display when the full extent button is pushed
-| extents.maximumExtent	| envelope	| Map extent that defines the valid viewing area.  the app should not allow a user to pan outside of this extent
+| extents.maximumExtent	| envelope	| Map extent that defines the valid viewing area.  The app should not allow a user to pan outside of this extent
 | <a name="navwidget" />navWidget	| 	|
 | navWidget.sliderMinVal	| numeric	| Navigation widget slider minimum scale level value
 | navWidget.sliderMaxVal	| numeric	| Navigation widget slider maximum scale level value
 | navWidget.debug	| numeric	| Debug flag, will generate console log when set to a non-zero value
 | navWidget.animate	| string	| Slider animation setting. Can be "fast", "slow", or a number in milliseconds
-| navWidget.locale	| string	| Navigation widget locale.  en or fr
 | navWidget.cssPath	| string	| Path to folder containing the CSS skins
 | navWidget.skin	| string	| Name of the skin style to apply.  Style must be in the above folder
 | <a name="advancedToolbar" />advancedToolbar	| 	|
@@ -227,6 +221,7 @@ For details on migrating a config file from Canada Goose to Dragonfly, see the [
 | layers.feature[].symbology.rangeMaps[].maxValue	| numeric	| Upper bound of he value for this range of the symbology.
 | layers.feature[].symbology.rangeMaps[].imageUrl	| string	| Url path to the symbology image for this mapping
 | layers.feature[].nameField	| string	| Field to be used to identify a feature to a user.  Utilized in summary grid, detail content, map tip, and anchored maptip.  Ideal choice would be the name of a feature.
+| layers.feature[].layerExtent	| extent	| Defines the boundary of the layers data (using a rectangle).  Should contain xmin, ymin, xmax, ymax values, and a valid [spatial reference](https://developers.arcgis.com/javascript/jsapi/spatialreference-amd.html#spatialreference1) for the co-ordinates.  Used to generate the bounding box in RAMP.
 | <a name="featurelayers_settings" />layers.feature[].settings	| object	| Optional. Object to store layer settings.  If missing, default values will be used.
 | layers.feature[].settings.panelEnabled	| boolean	| Optional. Indicates whether the settings panel should be accessible to the user.  Default value is True
 | layers.feature[].settings.opacity	| object	| Optional.  Object to store opacity information.
@@ -259,10 +254,7 @@ For details on migrating a config file from Canada Goose to Dragonfly, see the [
 | <a name="datagrid_extendedextentfilterenabled" /> datagrid.extendedExtentFilterEnabled   | boolean       | Flag to toggle the extent filter on or off for the extended grid
 | siteTemplate	| 	|
 | <a name="sitetemplate_basemaptemplate" /> siteTemplate.basemapTemplate 	| string	| The JSON template for each entry in the basemap selector (defaults to name of map and a thumbnail)
-| <a name="sitetemplate_filterglobalrowtemplate" />siteTemplate.filterGlobalRowTemplate	| string	| Template for
-| <a name="sitetemplate_filterrowtemplate" />siteTemplate.filterRowTemplate	| string	| Filter template used to generate filter content for map layers.
 | <a name="globalfilter" /> globalFilter	| 	|
-| <a name="globalfilter_txtalldata" />globalFilter.txtAllData	| string	| Global filter text for All Data
 | <a name="globalfilter_togglelabel" />globalFilter.toggleLabel	| collection | Attributes and settings for individual toggle in the global section of filter manager
 | globalFilter.toggleLabel[].id	| string	| Id of the toggle label
 | globalFilter.toggleLabel[].dataAttribute	| string	| Data attribute
