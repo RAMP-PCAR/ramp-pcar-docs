@@ -18,7 +18,7 @@ For details on migrating a config file from Canada Goose to Dragonfly, see the [
 
 ##Object Outline
 
-* geometryService
+* geometryServiceUrl
 * proxyUrl
 * spatialReference
 * extents
@@ -41,11 +41,11 @@ For details on migrating a config file from Canada Goose to Dragonfly, see the [
 * levelOfDetails
     * minLevel
     * maxLevel
+* initialSelectedBasemap
 * basemaps (collection)
     * id
     * url
     * thumbnail
-    * showOnInit
     * scaleCssClass
     * type
     * name
@@ -119,21 +119,11 @@ For details on migrating a config file from Canada Goose to Dragonfly, see the [
 			* parser
 * datagrid
     * globalGridRowsPerPage
-    * defaultState
     * summaryEnabled
     * extendedEnabled
-    * extendedColumns (collection)
-        * column1
-* siteTemplate
-    * basemapTemplate
-* globalFilter
-    * toggleLabels (collection)
-        * id
-        * dataAttribute
-        * value
-        * checked
-        * title
-        * classAddition
+* templates
+    * basemap
+	* layerGlobalToggles
 * divNames
     * map
     * navigation
@@ -148,20 +138,20 @@ For details on migrating a config file from Canada Goose to Dragonfly, see the [
 
 | JSON Object Field	| Data Type	| Description
 |----+----|----+----|----+----
-| geometryService	| string	| URL to an ArcGIS geometry service REST endpoint.  Used for advanced drawing tools.
-| <a name="proxyUrl" />proxyUrl	| string	| Path to a proxy service (relative path).  Used for sending large requests to services.
+| geometryServiceUrl	| string	| URL to an ArcGIS geometry service REST endpoint.  Used for advanced drawing tools.
+| <a name="proxyUrl" />proxyUrl	| string	| Path to a proxy service (relative path).  Used for sending large requests to services.  No URL indicates no proxy is available.
 | <a name="spatialreference" />spatialReference	| object	| A valid [ESRI spatial reference object](https://developers.arcgis.com/javascript/jsapi/spatialreference-amd.html#spatialreference1).
 | <a name="extents" />extents	| 	| Note:  All extents should be in the same spatial reference as the basemap.
 | extents.defaultExtent	| envelope	| Map extent to display when the app initializes
-| extents.fullExtent	| envelope	| Map extent to display when the full extent button is pushed
-| extents.maximumExtent	| envelope	| Map extent that defines the valid viewing area.  The app should not allow a user to pan outside of this extent
+| extents.fullExtent	| envelope	| Optional.  Map extent to display when the full extent button is pushed.  Default value is defaultExtent
+| extents.maximumExtent	| envelope	| Optional.  Map extent that defines the valid viewing area.  The app should not allow a user to pan outside of this extent.  Default value is defaultExtent
 | <a name="navwidget" />navWidget	| 	|
-| navWidget.sliderMinVal	| numeric	| Navigation widget slider minimum scale level value
-| navWidget.sliderMaxVal	| numeric	| Navigation widget slider maximum scale level value
-| navWidget.debug	| numeric	| Debug flag, will generate console log when set to a non-zero value
-| navWidget.animate	| string	| Slider animation setting. Can be "fast", "slow", or a number in milliseconds
-| navWidget.cssPath	| string	| Path to folder containing the CSS skins
-| navWidget.skin	| string	| Name of the skin style to apply.  Style must be in the above folder
+| navWidget.sliderMinVal	| numeric	| Optional.  Navigation widget slider minimum scale level value.  Default value is 3
+| navWidget.sliderMaxVal	| numeric	| Optional.  Navigation widget slider maximum scale level value.  Default value is 15
+| navWidget.debug	| numeric	| Optional.  Debug flag, will generate console log when set to a non-zero value.  Default value is 0
+| navWidget.animate	| string	| Optional.  Slider animation setting. Can be "fast", "slow", or a number in milliseconds.  Default value is "fast"
+| navWidget.cssPath	| string	| Optional.  Path to folder containing the CSS skins.  Default value is "ramp-theme/navigation"
+| navWidget.skin	| string	| Optional.  Name of the skin style to apply.  Style must be in the above folder.  Default value is "white"
 | <a name="advancedToolbar" />advancedToolbar	| 	|
 | advancedToolbar.enabled	| boolean	| Determines if the advanced toolbar is available in the app
 | advancedToolbar.tools	| collection of tool objects	| Holds a child object for each available tool
@@ -169,15 +159,15 @@ For details on migrating a config file from Canada Goose to Dragonfly, see the [
 | advancedToolbar.tools[].selector	| string	| Name of the selector tag to use in the html layout.  Should be unique amongst tools
 | advancedToolbar.tools[].enabled	| boolean	| Determines if the tool should be made available in the toolbar
 | levelOfDetails	| 	|
-| <a name="levelofdetails_minlevel" />levelOfDetails.minLevel	| numeric	| Minimum level of detail
-| <a name="levelofdetails_maxlevel" />levelOfDetails.maxLevel	| numeric	| Maximum level of detail
+| <a name="levelofdetails_minlevel" />levelOfDetails.minLevel	| numeric	| Optional.  Minimum level of detail.  Default value is 1
+| <a name="levelofdetails_maxlevel" />levelOfDetails.maxLevel	| numeric	| Optional.  Maximum level of detail.  Default value is 17
+| <a name="initialSelectedBasemap" />initialSelectedBasemap	| numeric	| Optional.  Index of the basemap to show at load time.  Index refers to the position in the basemaps collection.  Default value is 0 
 | <a name="basemaps" /> basemaps	| collection of basemap items	| Order of collection will determine order they are added to the basemap selector list.  Can be empty.
 | basemaps[].id	| string	| To identify basemap.  Unique across all map items.  No spaces!
 | <a name="basemaps_url" /> basemaps[].url	| string	| REST url of the basemap
-| <a name="basemaps_thumbnail" />basemaps[].thumbnail	| string	| Path to image file to display in the basemap selector (optional)
-| <a name="basemaps_showoninit" />basemaps[].showOnInit	| boolean	| Indicates if basemap should be the active basemap when the site loads.  Only one TRUE per collection
-| basemaps[].scaleCssClass	| string	| Map scale style.  Use 'map-scale-dark' for light basemaps, 'map-scale-light' for dark basemaps.
-| <a name="basemaps_type" />basemaps[].type	| string	| Base map type.  This is descriptive only, and will be shown in the basemap selector.
+| <a name="basemaps_thumbnail" />basemaps[].thumbnail	| string	| Path to image file to display in the basemap selector
+| basemaps[].scaleCssClass	| string	| Optional.  Map scale style.  Use 'map-scale-dark' for light basemaps, 'map-scale-light' for dark basemaps.  Default value is "map-scale-dark"
+| <a name="basemaps_type" />basemaps[].type	| string	| Optional.  Base map type.  This is descriptive only, and will be shown in the basemap selector.  Default value is "Topographic"
 | <a name="basemaps_name" />basemaps[].name	| string	| Basemap name to be displayed in the selector.
 | basemaps[].altText	| string	| Alt text for the basemap thumbnail image
 | <a name="basemaps_description" />basemaps[].description	| string	| Description of the basemap.  Will be visible when basemap selector is expanded.
@@ -246,27 +236,18 @@ For details on migrating a config file from Canada Goose to Dragonfly, see the [
 | layers.wmsLayers[].featureInfo.mimeType | string  | The mime type to be requested from the server (used in the FORMAT argument of the request)
 | layers.wmsLayers[].featureInfo.parser | string  | The name of the plugin used to parse the response.  Plugins reside in the js\plugins directory.
 | <a name="datagrid" />datagrid	| 	|
-| datagrid.globalGridRowsPerPage	| numeric	| Number of rows per page to be displayed in datagrid in summary view
-| datagrid.defaultState	| string	| Default state of the datagrid: summary or extended
+| datagrid.globalGridRowsPerPage	| numeric	| Optional.  Number of rows per page to be displayed in datagrid in summary view.  Default value is 50
 | datagrid.summaryEnabled	| boolean	| Flag indicate summary grid is enabled
 | datagrid.extendedEnabled	| boolean	| Flag indicate extended grid is enabled
-| datagrid.extendedColumns[]	| collections	| Column definition for extended datagrid
 | <a name="datagrid_extendedextentfilterenabled" /> datagrid.extendedExtentFilterEnabled   | boolean       | Flag to toggle the extent filter on or off for the extended grid
-| siteTemplate	| 	|
-| <a name="sitetemplate_basemaptemplate" /> siteTemplate.basemapTemplate 	| string	| The JSON template for each entry in the basemap selector (defaults to name of map and a thumbnail)
-| <a name="globalfilter" /> globalFilter	| 	|
-| <a name="globalfilter_togglelabel" />globalFilter.toggleLabel	| collection | Attributes and settings for individual toggle in the global section of filter manager
-| globalFilter.toggleLabel[].id	| string	| Id of the toggle label
-| globalFilter.toggleLabel[].dataAttribute	| string	| Data attribute
-| globalFilter.toggleLabel[].value	| string	|
-| globalFilter.toggleLabel[].checked	| string	| Value of the checked attribute
-| globalFilter.toggleLabel[].title	| string	| Value for the title attribute
-| globalFilter.toggleLabel[].classAddition	| string	| Additional CSS to be added to toggle label style
+| templates	| 	|
+| <a name="sitetemplate_basemaptemplate" /> templates.basemap 	| string	| Optional.  The JSON template name for each entry in the basemap selector.  Template should reside in file basemap_selector_template.json.  Default value is "default_basemap".  The default will display the name of map and a thumbnail image.
+| <a name="sitetemplate_basemaptemplate" /> templates.layerGlobalToggles 	| string	| Optional.  The JSON template global layer visibility and bounding box visibility controls.  Template should reside in file filter_manager_template.json.  Default value is "default_global_toggles".  The default will display the standard eye and shaded box icons.
 | divNames	| 	| RAMP div container names in code and in HTML
-| divNames.map	| string	| Map container name; default is mainMap
-| divNames.navigation	| string	| Navigation container name; default is map-navigation
-| divNames.filter	| string	| Filter container name; default is searchMapSectionBody
-| divNames.datagrid	| string	| Datagrid container name; default is searchMapSectionBody
+| divNames.map	| string	| Optional.  Map container name. Default value is "mainMap"
+| divNames.navigation	| string	| Optional.  Navigation container name. Default value is "map-navigation"
+| divNames.filter	| string	| Optional.  Filter container name. Default value is "searchMapSectionBody"
+| divNames.datagrid	| string	| Optional.  Datagrid container name. Default value is "searchMapSectionBody"
 | ui | | Stores initial state of the user interface
 | ui.fullscreen | boolean | true if the interface should start in fullscreen mode. False otherwise.
 | ui.sidePanelOpened | boolean | true if the interface should start with the side panel opened. False otherwise.
