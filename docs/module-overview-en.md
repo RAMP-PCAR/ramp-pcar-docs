@@ -28,7 +28,7 @@ Provides a toolbar with tools that violate accessibility rules.  Will load and d
 
 ## ramp/basemapSelector {#basemapselector}
 
-Manages the widget that allows the user to change the basemap. Utilizes the [esri.dijit.Basemap](https://developers.arcgis.com/javascript/jsapi/basemap-amd.html) dijit.  Populates the widget with basemaps from the config.  All basemaps must be in the same projection.
+Manages the widget that allows the user to change the basemap. Utilizes the [esri.dijit.Basemap](https://developers.arcgis.com/javascript/jsapi/basemap-amd.html) dijit.  Populates the widget with basemaps from the config.  If user changes to a basemap in a different projection or tile scheme, the site will reload to allow the map to re-initialize to the new scheme.
 
 **Relevant Sequence Diagrams**
 

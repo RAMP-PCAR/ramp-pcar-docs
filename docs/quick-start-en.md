@@ -46,7 +46,7 @@ A full layout of the configuration file can be found [here](json-config-en.html)
 
 ##Adding a Basemap Layer
 
-The basemaps configuration section defines what basemaps are available in the app.  You can delete all and add your own, or use any existing one.  Keep in mind that all basemaps must be in the same projection and have the same scale levels defined, otherwise a differing basemap will not draw.  Details on the basemap configuration objects can be found [here](json-config-en.html#basemaps).
+The basemaps configuration section defines what basemaps are available in the app.  You can delete all and add your own, or use any existing one.  Keep in mind that all basemaps with the same projection and same scale levels should have the same value defined in their tileSchema property.  Details on the basemap configuration objects can be found [here](json-config-en.html#basemaps).
 
 ![Partial configuration file](../assets/images/qs_basemap_config.png)
 
