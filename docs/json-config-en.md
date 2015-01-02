@@ -20,7 +20,6 @@ For details on migrating a config file from Canada Goose to Dragonfly, or Dragon
 
 * geometryServiceUrl
 * proxyUrl
-* spatialReference
 * extents
     * defaultExtent
     * fullExtent
@@ -38,19 +37,23 @@ For details on migrating a config file from Canada Goose to Dragonfly, or Dragon
         * name
         * selector
         * enabled
-* levelOfDetails
-    * minLevel
-    * maxLevel
+* zoomLevels
+    * min
+    * max
 * initialSelectedBasemap
 * basemaps (collection)
     * id
-    * url
+    * layers (collection)
+		* url
+		* visibleLayers
     * thumbnail
     * scaleCssClass
     * type
     * name
     * altText
     * description
+	* tileSchema
+	* spatialReference
 * layers
 	* featureLayers (collection)
 		* id
@@ -117,10 +120,8 @@ For details on migrating a config file from Canada Goose to Dragonfly, or Dragon
 		* featureInfo
 			* mimeType
 			* parser
-* datagrid
-    * globalGridRowsPerPage
-    * summaryEnabled
-    * extendedEnabled
+* rowsPerPage
+* extendedDatagridExtentFilterEnabled
 * templates
     * basemap
 	* layerGlobalToggles
@@ -140,8 +141,7 @@ For details on migrating a config file from Canada Goose to Dragonfly, or Dragon
 |----+----|----+----|----+----
 | geometryServiceUrl	| string	| URL to an ArcGIS geometry service REST endpoint.  Used for advanced drawing tools.
 | <a name="proxyUrl" />proxyUrl	| string	| Path to a proxy service (relative path).  Used for sending large requests to services.  No URL indicates no proxy is available.
-| <a name="spatialreference" />spatialReference	| object	| A valid [ESRI spatial reference object](https://developers.arcgis.com/javascript/jsapi/spatialreference-amd.html#spatialreference1).
-| <a name="extents" />extents	| 	| Note:  All extents should be in the same spatial reference as the basemap.
+| <a name="extents" />extents	| 	| Note:  All extents should contain xmin, ymin, xmax, ymax values, and a [spatial reference](https://developers.arcgis.com/javascript/jsapi/spatialreference-amd.html#spatialreference1) for the co-ordinates.
 | extents.defaultExtent	| envelope	| Map extent to display when the app initializes
 | extents.fullExtent	| envelope	| Optional.  Map extent to display when the full extent button is pushed.  Default value is defaultExtent
 | extents.maximumExtent	| envelope	| Optional.  Map extent that defines the valid viewing area.  The app should not allow a user to pan outside of this extent.  Default value is defaultExtent
@@ -158,19 +158,23 @@ For details on migrating a config file from Canada Goose to Dragonfly, or Dragon
 | advancedToolbar.tools[].name	| string	| Name of the tool.  Should match the name property of the tool's javascript module
 | advancedToolbar.tools[].selector	| string	| Name of the selector tag to use in the html layout.  Should be unique amongst tools
 | advancedToolbar.tools[].enabled	| boolean	| Determines if the tool should be made available in the toolbar
-| levelOfDetails	| 	|
-| <a name="levelofdetails_minlevel" />levelOfDetails.minLevel	| numeric	| Optional.  Minimum level of detail.  Default value is 1
-| <a name="levelofdetails_maxlevel" />levelOfDetails.maxLevel	| numeric	| Optional.  Maximum level of detail.  Default value is 17
-| <a name="initialSelectedBasemap" />initialSelectedBasemap	| numeric	| Optional.  Index of the basemap to show at load time.  Index refers to the position in the basemaps collection.  Default value is 0 
+| zoomLevels	| 	|
+| <a name="levelofdetails_minlevel" />zoomLevels.min	| numeric	| Optional.  Minimum zoom level.  Default value is 1
+| <a name="levelofdetails_maxlevel" />zoomLevels.max	| numeric	| Optional.  Maximum zoom level.  Default value is 17
+| <a name="initialSelectedBasemap" />initialSelectedBasemap	| numeric	| Optional.  Index of the basemap to show at load time.  Index refers to the position in the basemaps collection.  Default value is 0.
 | <a name="basemaps" /> basemaps	| collection of basemap items	| Order of collection will determine order they are added to the basemap selector list.  Can be empty.
 | basemaps[].id	| string	| To identify basemap.  Unique across all map items.  No spaces!
-| <a name="basemaps_url" /> basemaps[].url	| string	| REST url of the basemap
-| <a name="basemaps_thumbnail" />basemaps[].thumbnail	| string	| Path to image file to display in the basemap selector
-| basemaps[].scaleCssClass	| string	| Optional.  Map scale style.  Use 'map-scale-dark' for light basemaps, 'map-scale-light' for dark basemaps.  Default value is "map-scale-dark"
-| <a name="basemaps_type" />basemaps[].type	| string	| Optional.  Base map type.  This is descriptive only, and will be shown in the basemap selector.  Default value is "Topographic"
+| <a name="basemaps_layers" /> basemaps[].layers	| collection of layers	| The services that make up this basemap.  Facillitates having multiple tile sets act as one basemap.
+| <a name="basemaps_url" /> basemaps[].layers[].url	| string	| REST url of the basemap.
+| <a name="basemaps_url" /> basemaps[].layers[].visibleLayers	| array of integers	| Optional.  Allows you to specify specific layer ids from a map service.  If not provided, all layers are visible.
+| <a name="basemaps_thumbnail" />basemaps[].thumbnail	| string	| Path to image file to display in the basemap selector.
+| basemaps[].scaleCssClass	| string	| Optional.  Map scale style.  Use 'map-scale-dark' for light basemaps, 'map-scale-light' for dark basemaps.  Default value is "map-scale-dark".
+| <a name="basemaps_type" />basemaps[].type	| string	| Optional.  Base map type.  This is descriptive only, and will be shown in the basemap selector.  Default value is "Topographic".
 | <a name="basemaps_name" />basemaps[].name	| string	| Basemap name to be displayed in the selector.
-| basemaps[].altText	| string	| Alt text for the basemap thumbnail image
+| basemaps[].altText	| string	| Alt text for the basemap thumbnail image.
 | <a name="basemaps_description" />basemaps[].description	| string	| Description of the basemap.  Will be visible when basemap selector is expanded.
+| <a name="basemaps_tileschema" />basemaps[].tileSchema	| string	| A string that signifies what tile schema this basemap is in.  All basemaps in the same schema should have the same value in this field.
+| <a name="basemaps_sr" />basemaps[].spatialReference	| object	| The [spatial reference](https://developers.arcgis.com/javascript/jsapi/spatialreference-amd.html#spatialreference1) of the basemap.
 | layers	| 	| Where layer collections reside
 | layers.feature	| collection of feature layer objects	| Order of collection will determine order they are added to the map.  Can be empty.
 | <a name="featurelayers_id" />layers.feature[].id	| string	| To identify a layer.  Unique across all map items.  no spaces!
@@ -235,11 +239,8 @@ For details on migrating a config file from Canada Goose to Dragonfly, or Dragon
 | layers.wmsLayers[].featureInfo | object  | Optional.  If defined implies that getFeatureInfo functionality should be enabled for this layer.
 | layers.wmsLayers[].featureInfo.mimeType | string  | The mime type to be requested from the server (used in the FORMAT argument of the request)
 | layers.wmsLayers[].featureInfo.parser | string  | The name of the plugin used to parse the response.  Plugins reside in the js\plugins directory.
-| <a name="datagrid" />datagrid	| 	|
-| datagrid.globalGridRowsPerPage	| numeric	| Optional.  Number of rows per page to be displayed in datagrid in summary view.  Default value is 50
-| datagrid.summaryEnabled	| boolean	| Flag indicate summary grid is enabled
-| datagrid.extendedEnabled	| boolean	| Flag indicate extended grid is enabled
-| <a name="datagrid_extendedextentfilterenabled" /> datagrid.extendedExtentFilterEnabled   | boolean       | Flag to toggle the extent filter on or off for the extended grid
+| rowsPerPage	| numeric	| Optional.  Number of rows per page to be displayed in datagrid in summary view.  Default value is 50
+| <a name="datagrid_extendedextentfilterenabled" /> extendedDatagridExtentFilterEnabled   | boolean       | Flag to toggle the extent filter on or off for the extended grid
 | templates	| 	|
 | <a name="sitetemplate_basemaptemplate" /> templates.basemap 	| string	| Optional.  The JSON template name for each entry in the basemap selector.  Template should reside in file basemap_selector_template.json.  Default value is "default_basemap".  The default will display the name of map and a thumbnail image.
 | <a name="sitetemplate_basemaptemplate" /> templates.layerGlobalToggles 	| string	| Optional.  The JSON template global layer visibility and bounding box visibility controls.  Template should reside in file filter_manager_template.json.  Default value is "default_global_toggles".  The default will display the standard eye and shaded box icons.
