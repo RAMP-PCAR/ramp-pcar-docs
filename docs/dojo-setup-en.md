@@ -15,7 +15,7 @@ categories: [documentation]
 
 ##Loading Dojo and ESRI
 
-RAMP uses the [Dojo](http://dojotoolkit.org/) and [ESRI](https://developers.arcgis.com/javascript/) Javascript API, which can be loaded from your main html map page using:
+RAMP uses the [Dojo](http://dojotoolkit.org/) and [ESRI](https://developers.arcgis.com/javascript/) Javascript API, which are loaded from your main html map page using:
 
 {% highlight html %}
 	<script type="text/javascript" src="./javascript/src/RAMP/RAMP-starter.js"></script>
@@ -68,3 +68,68 @@ The bootstrapper module is responsible for loading the JSON configuration file u
 
 [Back To Top](#top)
 {: .text-right}
+
+## Application Startup Overview
+
+The following gives an overview of what code is executed when the application starts up.
+
+### Retrieve the Configuration Object
+
+The bootstrapper will retrieve a configuration object so that it knows how to initialize itself.  See the [configuration workflow](configuration-flow-en.html) page for details on this process.
+
+### Low Level Initializations
+
+Once the configuration object is ready, a number of things get initialized in the __configReady__ function of the bootstrapper.
+
+* The proxy is set
+* The advanced toolbar is removed if the config dictates it
+* Any [plugin modules](wms-support-en.html#plugin) are loaded
+* Additional defaulting of the configuration map extents is applied (it is too complex for the standard defaulting done above)
+* Reprojection of map extents if required.  It is possible the map extents in the config object are in a different projection than the initial basemap
+
+### Apply Bookmark Parameters
+
+The URL is checked for any custom initialization instructions.  Function __updateConfig__ in module __bookmarkLink.js__ will inspect the URL used to load the page, and apply any presets to the config file or the application state.
+
+### GUI Generation
+
+UI elements that are not dependant on the map are generated next.  These include:
+
+* Generation of website panels and panel controllers
+* Event handlers for UI actions are set
+* Change any state as dictated by the URL parameters
+
+See function __load__ in module __gui.js__, and function __createUI__ in __bookmarkLink.js__ for more details. 
+
+### Map Creation
+
+The map object is created, along with any initial map layers we want to show.  The map is initialized using the initial extent, and we load the first basemap immediately.  The following layers objects are created, an asterisk indicates it is loaded asynchronously.
+
+* interactive feature layers (*)
+* static feature layers (*)
+* WMS layers (*)
+* bounding box layers
+* highlighting layers
+
+Bounding boxes are generated along with the layers to hold them, and if required the box geometry is reprojected to match the basemap.  
+
+See function __init__ in module __map.js__
+
+### Map Dependent GUI Generation
+
+Now that the map exists, the remainder of UI tasks are executed.  This includes:
+
+* Construction and initialization of the Navigation widget
+* Event handlers for maptips and feature highlighting are wired up
+* The basemap selector is initialized
+* Construction and initialization of the Layer Selector
+* Initialization of the Advanced Toolbar, if required
+* Construction and initialization of the Datagrid
+* Event handlers to update the Bookmark tool are wired up
+
+See function __initializeMap__ in the bootstrapper
+
+[Back To Top](#top)
+{: .text-right}
+
+
