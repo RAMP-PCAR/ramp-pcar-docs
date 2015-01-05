@@ -17,7 +17,7 @@ categories: [documentation]
 
 RAMP currently supports tile basemaps served from an [ESRI ArcGIS REST service](http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#//02r3000000w2000000).
 
-The first basemap loaded will dictate the projection and zoom levels of the RAMP viewer.  All subsequent basemaps must match the schema of the first basemap or else they will not show on the map.
+The first basemap loaded will dictate the projection and zoom levels of the RAMP viewer.  Basemaps in different tile projections, zoom levels, and tile sizes are supported, but the site will need to do a breif reload when changing to a different tile schema.  This is because the ESRI map object locks its schema when the map is initialized; the reload allows the map to re-initialize in the new tile schema. 
 
 Future versions of RAMP may support other formats, such as tiles from Google Maps or OpenLayers.
 
