@@ -43,6 +43,9 @@ Anchor Tip
 Basemap
 : Background imagery on a map that provides context to features.  Is non-interactive.
 
+Bookmark Link
+: A URL that will restore some in-session map settings when loaded in a browser, such as where the map was zoomed to, what layers were visible, etc.
+
 Bounding Box
 : A box drawn on the map that indicates the area that a feature set covers.
 
