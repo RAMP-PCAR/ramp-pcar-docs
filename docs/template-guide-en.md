@@ -69,6 +69,8 @@ The template references a data object called __o__.  The value of __o__ is the d
 }{% endraw %}
 {% endhighlight %}
 
+Note that the {{ "{%= " }} %} operator will escape any HTML code, so if your value has HTML, it will be shown as text on your website.  To have HTML go through raw, use the {{ "{%# " }} %} operator.
+
 ### Global Javascript Function Calls
 
 The template can also call any globally defined javascript function for additional formatting. E.g. this template will return a div exclaiming that a given subject in school is fun.
