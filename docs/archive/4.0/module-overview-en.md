@@ -18,7 +18,7 @@ categories: [documentation]
 Provides a toolbar with tools that violate accessibility rules.  Will load and display tools from config definitions and [customized tool modules](advanced-toolbar-en.html).
 
 
-| **API Page** | [AdvancedToolbar](../api/yuidoc/classes/AdvancedToolbar.html)
+| **API Page** | [AdvancedToolbar](../../../api/4.0/yuidoc/classes/AdvancedToolbar.html)
 | **Relevant Configuration Nodes** | [advancedToolbar](json-config-en.html#advancedToolbar)
 | **Template Summary** | [Advanced Tools](template-summary-en.html#advanced_tools)
 
@@ -38,7 +38,7 @@ Manages the widget that allows the user to change the basemap. Utilizes the [esr
     </a>
 </section>
 
-| **API Page** | [BaseMapSelector](../api/yuidoc/classes/BaseMapSelector.html)
+| **API Page** | [BaseMapSelector](../../../api/4.0/yuidoc/classes/BaseMapSelector.html)
 | **Relevant Configuration Nodes** | [basemaps](json-config-en.html#basemaps)
 | **Template Summary** | [Basemap Selector](template-summary-en.html#basemap_selector)
 
@@ -49,7 +49,7 @@ Manages the widget that allows the user to change the basemap. Utilizes the [esr
 
 Manages the widget that allows the maps current state to be displayed as a URL.  Listens for specific site events and updates the link as they occur.  Allows emailing of link, url shortning of link.
 
-| **API Page** | [BookmarkLink](../api/yuidoc/classes/BookmarkLink.html)
+| **API Page** | [BookmarkLink](../../../api/4.0/yuidoc/classes/BookmarkLink.html)
 | **Relevant Configuration Nodes** | [lang](json-config-en.html#lang_field)
 
 [Back To Top](#top)
@@ -99,7 +99,7 @@ of the default behaviour.
     </a>
 </section>
 
-| **API Page** | [Datagrid](../api/yuidoc/classes/Datagrid.html) |
+| **API Page** | [Datagrid](../../../api/4.0/yuidoc/classes/Datagrid.html) |
 | **Relevant Configuration Nodes** | [datagrid](json-config-en.html#datagrid) <br /> [featureLayers[].datagrid](json-config-en.html#featurelayers_datagrid) <br /> [gridstrings](json-config-en.html#gridstrings) |
 | **Template Summary** | [Datagrid Summary Mode](template-summary-en.html#datagrid_summary_mode) <br /> [Datagrid Expanded Mode](template-summary-en.html#datagrid_expanded_mode) |
 
@@ -128,7 +128,7 @@ The view detail function involves generating a custom detail report (from a temp
     </a>
 </section>
 
-| **API Page** | [DatagridClickHandler](../api/yuidoc/classes/DatagridClickHandler.html)
+| **API Page** | [DatagridClickHandler](../../../api/4.0/yuidoc/classes/DatagridClickHandler.html)
 
 [Back To Top](#top)
 {: .text-right}
@@ -137,7 +137,7 @@ The view detail function involves generating a custom detail report (from a temp
 
 The module defines event names as constants to avoid typing errors.
 
-| **API Page** | [EventManager](../api/yuidoc/classes/EventManager.html)
+| **API Page** | [EventManager](../../../api/4.0/yuidoc/classes/EventManager.html)
 
 [Back To Top](#top)
 {: .text-right}
@@ -162,7 +162,7 @@ This primarily consists of clicking a feature, and hovering over a feature.  For
     </a>
 </section>
 
-| **API Page** | [FeatureClickHandler](../api/yuidoc/classes/FeatureClickHandler.html)
+| **API Page** | [FeatureClickHandler](../../../api/4.0/yuidoc/classes/FeatureClickHandler.html)
 
 [Back To Top](#top)
 {: .text-right}
@@ -195,7 +195,7 @@ The module also generates the graphic layers used to manage the highlight imager
     </a>
 </section>
 
-| **API Page** | [FeatureHighlighter](../api/yuidoc/classes/FeatureHighlighter.html)
+| **API Page** | [FeatureHighlighter](../../../api/4.0/yuidoc/classes/FeatureHighlighter.html)
 
 [Back To Top](#top)
 {: .text-right}
@@ -239,7 +239,7 @@ The following actions are performed by the module
     </a>
 </section>
 
-| **API Page** | [FilterManager](../api/yuidoc/classes/FilterManager.html)
+| **API Page** | [FilterManager](../../../api/4.0/yuidoc/classes/FilterManager.html)
 | **Relevant Configuration Nodes** |  [featureLayers[].id](json-config-en.html#featurelayers_id) <br /> [featureLayers[].displayName](json-config-en.html#featurelayers_displayname) <br /> [featureLayers[].symbology](json-config-en.html#featurelayers_symbology)  <br /> [featureLayers[].settings](json-config-en.html#featurelayers_settings)
 | **Template Summary** | [Filter Global Row](template-summary-en.html#filter_global_row) <br /> [Filter Row](template-summary-en.html#filter_row)
 
@@ -250,7 +250,7 @@ The following actions are performed by the module
 
 The module defines global items to make things easier to share across modules.  We place location specific string here (e.g. a configuration server URL), so this servers as the spot to tweak when moving the application to a different environment.  Implementers can also add items to this module on the fly.
 
-| **API Page** | [GlobalStorage](../api/yuidoc/classes/GlobalStorage.html)
+| **API Page** | [GlobalStorage](../../../api/4.0/yuidoc/classes/GlobalStorage.html)
 
 [Back To Top](#top)
 {: .text-right}
@@ -259,7 +259,7 @@ The module defines global items to make things easier to share across modules.  
 
 The module contains helper functions for [graphic](https://developers.arcgis.com/javascript/jsapi/graphic-amd.html) objects.  E.g. get objectId, get layer, get detail text
 
-| **API Page** | [GraphicExtension](../api/yuidoc/classes/GraphicExtension.html)
+| **API Page** | [GraphicExtension](../../../api/4.0/yuidoc/classes/GraphicExtension.html)
 | **Relevant Configuration Nodes** | [featureLayers[].templates.detail](json-config-en.html#featurelayers_templates_detail)
 
 [Back To Top](#top)
@@ -275,7 +275,7 @@ Implements the side panel, help popup, add layer popup and registers those panel
 
 Contains logic to go to full-screen mode.
 
-| **API Page** | [GUI](../api/yuidoc/classes/GUI.html)
+| **API Page** | [GUI](../../../api/4.0/yuidoc/classes/GUI.html)
 | **Relevant Configuration Nodes** |  [stringResources](json-config-en.html#stringresources)
 | **Template Summary** | [Feature Details Panel](template-summary-en.html#feature_details_panel)
 
@@ -296,7 +296,7 @@ It also generates and hosts the scale bar.
     </a>
 </section>
 
-| **API Page** | [Map](../api/yuidoc/classes/Map.html)
+| **API Page** | [Map](../../../api/4.0/yuidoc/classes/Map.html)
 | **Relevant Configuration Nodes** | [basemaps[].showOnInit](json-config-en.html#basemaps_showoninit) <br /> [basemaps[].url](json-config-en.html#basemaps_url) <br /> [extents](json-config-en.html#extents) <br /> [featureLayers[].url](json-config-en.html#featurelayers_url) <br /> [featureLayers[].layerAttributes](json-config-en.html#featurelayers_layerattributes) <br /> `featureLayers[].staticLayers` <br /> [levelOfDetails.minLevel](json-config-en.html#levelofdetails_minlevel) <br /> [levelOfDetails.maxLevel](json-config-en.html#levelofdetails_maxlevel) <br /> [spatialReference](json-config-en.html#spatialreference)
 
 [Back To Top](#top)
@@ -322,7 +322,7 @@ Fills the tips with contents from the template.
     </a>
 </section>
 
-| **API Page** | [Maptips](../api/yuidoc/classes/Maptips.html)
+| **API Page** | [Maptips](../../../api/4.0/yuidoc/classes/Maptips.html)
 | **Relevant Configuration Nodes** | [featureLayers[].mapTipSettings](json-config-en.html#featurelayers_templates)
 | **Template Summary** | [Feature Hover Tip](template-summary-en.html#feature_hover_tip) <br /> Feature Anchor Tip](template-summary-en.html#feature_anchor_tip)
 
@@ -335,7 +335,7 @@ The module handles the navigation widget.  It constructs it and applies a CSS sk
 
 Also handles the two-way synchronization between the map extent and the widget state.
 
-| **API Page** | [Navigation](../api/yuidoc/classes/Navigation.html)
+| **API Page** | [Navigation](../../../api/4.0/yuidoc/classes/Navigation.html)
 | **Relevant Configuration Nodes**  | [navWidget](json-config-en.html#navwidget)
 
 [Back To Top](#top)
@@ -351,7 +351,7 @@ NOTE: Depends on one of our quickzoom services.  These will be on public product
 
 NOTE: our current config file does not have the appropriate node.  We should add this to the sample
 
-| **API Page** | [QuickZoom](../api/yuidoc/classes/QuickZoom.html)
+| **API Page** | [QuickZoom](../../../api/4.0/yuidoc/classes/QuickZoom.html)
 | **Relevant Configuration Nodes** | `quickzoom`
 
 [Back To Top](#top)
@@ -361,7 +361,7 @@ NOTE: our current config file does not have the appropriate node.  We should add
 
 The map module contains shared functions used by RAMP.  In particular, it houses functions that depend on the configuration object.
 
-| **API Page** | [RAMP](../api/yuidoc/classes/RAMP.html)
+| **API Page** | [RAMP](../../../api/4.0/yuidoc/classes/RAMP.html)
 
 [Back To Top](#top)
 {: .text-right}
