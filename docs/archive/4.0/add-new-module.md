@@ -8,7 +8,7 @@ categories: [documentation]
 
 #Add New Module in RAMP
 
-{% markdown JB/work_in_progress %}
+
 
 <div class="toc"></div>
 

@@ -9,7 +9,7 @@ categories: [documentation]
 
 # Known Issues {#wb-cont}
 
-{% markdown JB/work_in_progress %}
+
 
 <div class="toc"></div>
 
