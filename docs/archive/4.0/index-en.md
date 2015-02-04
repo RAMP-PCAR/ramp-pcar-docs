@@ -1,6 +1,6 @@
 ---
 layout: "index-en"
-title: "Documentation"
+title: "v4.0 - Dragonfly"
 published: true
 ---
 

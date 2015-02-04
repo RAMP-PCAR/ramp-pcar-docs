@@ -1,5 +1,5 @@
 ---
-layout: index-secmenu-en
+layout: index-secmenu-4.0-en
 title: Known Issues
 categories: [documentation]
 ---
