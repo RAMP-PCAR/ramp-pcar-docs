@@ -11,4 +11,5 @@ published: true
 | Version | Documentation | API | 
 |---|---|
 | v3.0.0 - Canada Goose | [Link](3.0/index-en.html) | [Link](/api/3.0/yuidoc/) |
+| v4.0.0 - Dragonfly | [Link](4.0/index-en.html) | [Link](/api/4.0/yuidoc/) |
 {: .table}
