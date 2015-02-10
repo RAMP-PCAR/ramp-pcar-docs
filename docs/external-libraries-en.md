@@ -13,6 +13,31 @@ categories: [documentation]
 
 <div class="toc"></div>
 
+## Animate.css
+v 3.7.1
+
+<https://github.com/daneden/animate.css>
+
+A library supporting CSS animation.
+
+Used for various animation effects.
+
+[Back To Top](#top)
+{: .text-right}
+
+
+## CSV 2 GeoJSIB
+v 3.7.1
+
+<https://github.com/mapbox/csv2geojson>
+
+A library to convert CSV files to GeoJSON format.
+
+Used for the Add CSV File function.
+
+[Back To Top](#top)
+{: .text-right}
+
 <a name="datatables" />
 
 ## Datatables
@@ -53,15 +78,38 @@ Used throughout the application.
 [Back To Top](#top)
 {: .text-right}
 
+## Fontawesome
+v 4.2.0
+
+<http://fontawesome.io>
+
+Library providing vector based fonts and sybmols.
+
+Used for Toolbar Icons.
+
+[Back To Top](#top)
+{: .text-right}
 
 ## GSAP - GreenSock Animation Platform
-v 1.13.2
+v 1.14.2
 
 <http://www.greensock.com/gsap-js/>
 
 GSAP is a suite of tools for scripted, high-performance HTML5 animations that work in all major browsers.  Specific tools include TweenLite, TimelineLite, EasePack, and CSSPlugin.
 
 Used for the power transitional animation of the layout.
+
+[Back To Top](#top)
+{: .text-right}
+
+## Hover Intent
+v 1.8.1
+
+<http://cherne.net/brian/resources/jquery.hoverIntent.html>
+
+A tool for determining user intent based on mouse movement.
+
+Used to highlight interactive elements of the site.
 
 [Back To Top](#top)
 {: .text-right}
@@ -107,13 +155,25 @@ v 1.0.5
 
 Fully customizable with CSS, Single/Double handles, Touch-enabled, IE 7+ Compatibility, Custom Digit Rounding, Non linear step increments!
 
-Power the opacity slider control for the Filter Manager module.
+Powers the opacity slider control for the Filter Manager module.
+
+[Back To Top](#top)
+{: .text-right}
+
+## RandomColor
+v 1
+
+<https://github.com/sterlingwes/RandomColor>
+
+Library that picks random colours that look nice.
+
+Used in the symbology generator when adding user-hosted files.
 
 [Back To Top](#top)
 {: .text-right}
 
 ## ScrollTo
-v 1.4.3.1
+v 1.4.13
 
 <https://github.com/flesler/jquery.scrollTo>
 
@@ -123,6 +183,19 @@ Used to scroll the datagrid to the selected row (if row is not on the page).
 
 [Back To Top](#top)
 {: .text-right}
+
+## Shapefile JS
+v 3.1.5
+
+<https://github.com/calvinmetcalf/shapefile-js>
+
+A library to convert Shapefiles to GeoJSON format.
+
+Used for the Add Shapefile File function.
+
+[Back To Top](#top)
+{: .text-right}
+
 
 ## Shorten
 v 1.0.0
@@ -148,14 +221,41 @@ Used for managing graphics layers and repositioning anchor maptips in the featur
 [Back To Top](#top)
 {: .text-right}
 
-## tmplEx
-v 2.5.5
+## Terraformer
+v 1.0.4
 
+<http://terraformer.io/core/>
+<http://terraformer.io/arcgis-parser/>
+
+A library for working with GeoJSON, and converting it to ESRI Geometry JSON.
+
+Used to convert user-hosted files into ESRI Feature Layers.
+
+[Back To Top](#top)
+{: .text-right}
+
+## Terraformer-proj4js
+v 1
+
+<https://github.com/RAMP-PCAR/terraformer-proj4js>
+<http://trac.osgeo.org/proj/>
+
+An implementation of the proj.4 projection libary into the Terraformer library.
+
+Used to reproject user-hosted spatial data to the map's spatial projection.
+
+[Back To Top](#top)
+{: .text-right}
+
+## tmplEx
+v 2.5.6
+
+<https://github.com/RAMP-PCAR/JavaScript-Templates>
 <https://github.com/blueimp/JavaScript-Templates>
 
 A templating engine; applies templates to data and produces HTML.
 
-Used throughout the application to generate content.  E.g. maptip content, detail pane content, grid cell content, filter row content.
+Used throughout the application to generate content.  E.g. maptip content, detail pane content, grid cell content, filter row content.  We use a modified version of the engine, the forked repo is available on our github site.
 
 [Back To Top](#top)
 {: .text-right}
@@ -180,6 +280,18 @@ v 1.0.1
 A library for shortening URLs.
 
 Used in the Get Link widget to allow user to have a shortened link.
+
+[Back To Top](#top)
+{: .text-right}
+
+## Web Experience Toolkit
+v 4.0.5
+
+<https://github.com/wet-boew/wet-boew />
+
+A front-end framework that focuses on accessibility, usability, and interoperability.  A standard for most Government of Canada websites.
+
+Used to construct the page that contains the RAMP application.
 
 [Back To Top](#top)
 {: .text-right}
