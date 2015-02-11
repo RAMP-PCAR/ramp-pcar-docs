@@ -11,7 +11,7 @@ categories: [documentation]
 {% markdown JB/work_in_progress %}
 
 Welcome to RAMP Quick Start Guide. In this guide, we will be showing you how to setup your own web map using RAMP by adjusting the configuration file.  No programming required!
-[View live sample]({{BASE_PATH}}/demos/NRSTC/core/ramp-en.html)
+[View live samples]({{BASE_PATH}}/demos/index-en.html)
 
 <div class="toc"></div>
 
