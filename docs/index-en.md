@@ -38,6 +38,7 @@ RAMP operates on the principle of progressive enhancement, and implements well-e
 * [Static Layer Support](static-layer-support-en.html)
 * [Symbology Support](symbology-en.html)
 * [Layer Loading](layer-load-en.html)
+* [User Added Data](user-added-data.html)
 
 
 ## Reference
