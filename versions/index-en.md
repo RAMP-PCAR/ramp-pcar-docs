@@ -17,7 +17,7 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 
 | Version | Release Date | Release Notes | Download |
 |---|---|---|---|
-| v4.0.0 | 2015-02-11 | [Release Notes]({{ BASE_PATH }}/versions/v5.0.0-en.html) | [Download]({{ BASE_PATH }}/versions/download-en.html#v500) |
+| v5.0.0 | 2015-02-11 | [Release Notes]({{ BASE_PATH }}/versions/v5.0.0-en.html) | [Download]({{ BASE_PATH }}/versions/download-en.html#v500) |
 {: .table}
 
 ## Version 4.0 - Dragonfly
