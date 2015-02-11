@@ -8,6 +8,16 @@ title: Working Examples
 
 <div class="toc"></div>
 
+## Version 5.0 - Elk
+
+| Name | Link | Description
+|----+----|
+| RAMP Core Theme | [Link]({{BASE_PATH}}/demos/NRSTC/5.0/core/ramp-en.html)| A Simple Implementation of RAMP using Core Theme |
+| RAMP Usability Theme | [Link]({{BASE_PATH}}/demos/NRSTC/5.0/usability/ramp-en.html)| A Simple Implementation of RAMP using Usability Theme |
+| RAMP Intranet Theme | [Link]({{BASE_PATH}}/demos/NRSTC/5.0/intranet/ramp-en.html)| A Simple Implementation of RAMP using Intranet Theme |
+| RAMP Canada.ca Theme | [Link]({{BASE_PATH}}/demos/NRSTC/5.0/canada/ramp-en.html)| A Simple Implementation of RAMP using Canada.ca Theme |
+{: .table}
+
 ## Version 4.0 - Dragonfly
 
 | Name | Link | Description
