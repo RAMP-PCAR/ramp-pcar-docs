@@ -125,14 +125,6 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 | v2.0.0 | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/archive/v2.0.0.zip) | [Release Notes]({{ BASE_PATH }}/versions/v2.0.0-en.html) |
 {: .table}
 
-
-### Development Releases
-
-| Source Code |
-|---|---|---|
-| [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/archive/v2.0.zip) |
-{: .table}
-
 ## Version 1.0 - Arctic Fox (no longer supported) {#v100}
 
 ### Stable Releases
