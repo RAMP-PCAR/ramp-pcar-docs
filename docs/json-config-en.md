@@ -104,6 +104,7 @@ For details on migrating a config file from Canada Goose to Dragonfly, or Dragon
 			* visible
 			* boundingBoxVisible
 		* isStatic
+		* aliasMap
 	* wmsLayers (collection)
 		* id
 		* displayName
@@ -224,6 +225,7 @@ For details on migrating a config file from Canada Goose to Dragonfly, or Dragon
 | layers.feature[].settings.visible | boolean  | Optional.  The initial visibility of the layer.  Default value is True.
 | layers.feature[].settings.boundingBoxVisible | boolean  | Optional.  The initial visibility of the layer's bounding box.  Default value is True.
 | layers.feature[].isStatic	| boolean	| Optional.  Specifies the current layer is a static layer.  Default value is False.
+| layers.feature[].aliasMap	| object	| Optional.  Defines a mapping of field names to field aliases (strings).
 | <a name="wmsLayers" /> layers.wmsLayers	| collection	| WMS layers to be added to the map.  Order dictates initial order on the map.
 | layers.wmsLayers[].id	| string	| To identify a layer.  Unique across all WMS layers
 | layers.wmsLayers[].url	| string	| The url of the WMS service.  Does not specify name of individual layer to show
