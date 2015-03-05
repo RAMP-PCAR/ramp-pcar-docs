@@ -151,6 +151,11 @@ You can add additional templates to file __extended_datagrid_template.json__ and
 
 For further customization of grids, please refer to [DataTables](http://www.datatables.net/) documentation.
 
+###Aliases
+
+Field name aliases can be used to display user-friendly text instead of system field names in the details pane.  The aliasMap config object maps field names to alias names, and the alias will be used if the mapping is present.
+
+![Image of configuration file for aliases](../assets/images/qs_json_alias.png)
 
 ## Adding a WMS Layer
 
