@@ -1,0 +1,20 @@
+language: ruby
+
+rvm:
+  - "2.0.0"
+
+branches:
+  only:
+    - develop
+    - master
+    - /^test/.*$/
+    - /^v\d+\.\d+\.\d+(-.+)?$/
+
+before_install: 
+  - npm install -g grunt-cli
+
+script:
+  - jekyll build
+
+after_success: 
+  - grunt release

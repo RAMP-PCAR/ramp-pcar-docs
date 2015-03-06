@@ -61,6 +61,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-jekyll');
 
+    grunt.registerTask('release', function () {
+        console.log("release");
+    });
+
     // Default task.
     grunt.registerTask('default', ['jekyll']);
 };
