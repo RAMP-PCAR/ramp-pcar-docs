@@ -1,7 +1,7 @@
 language: ruby
 
 rvm:
-  - "2.0.0"
+  - 2.1
 
 branches:
   only:
@@ -14,7 +14,7 @@ before_install:
   - npm install -g grunt-cli
 
 script:
-  - jekyll build
+  - bundle exec jekyll build
 
 after_success: 
   - grunt release

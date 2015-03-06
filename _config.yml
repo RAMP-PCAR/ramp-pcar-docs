@@ -9,7 +9,7 @@ include:
     - _modules
     - _static
     - _sources
-exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
+exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md", vendor]
 highlighter: pygments
 
 categories_list: [documentation, editors, math, unix]
