@@ -16,7 +16,7 @@ jekyll build
 rm -rf ../ramp-docs-dist
 
 #clone `master' branch of the repository using encrypted GH_TOKEN for authentification
-git clone -b test/autoRelease https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs ../ramp-docs-dist
+git clone -b docsee https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs ../ramp-docs-dist
 
 # copy generated HTML site to `master' branch
 cp -R _site/* ../ramp-docs-dist
@@ -26,4 +26,4 @@ cp -R _site/* ../ramp-docs-dist
 cd ../ramp-docs-dist
 git add -A .
 git commit -a -m "Travis #$TRAVIS_BUILD_NUMBER"
-git push --quiet https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs doctest > /dev/null 2>&1 
+git push --quiet https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs docsee > /dev/null 2>&1 
