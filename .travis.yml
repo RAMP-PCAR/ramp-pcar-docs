@@ -10,11 +10,4 @@ branches:
     - /^test/.*$/
     - /^v\d+\.\d+\.\d+(-.+)?$/
 
-before_install: 
-  - npm install -g grunt-cli
-
-script:
-  - jekyll build
-
-after_success: 
-  - grunt release
+script: "./build.sh"
