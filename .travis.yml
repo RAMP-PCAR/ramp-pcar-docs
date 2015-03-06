@@ -10,4 +10,7 @@ branches:
     - /^test/.*$/
     - /^v\d+\.\d+\.\d+(-.+)?$/
 
+before_install:
+ - chmod +x ./build.sh
+
 script: "./build.sh"
