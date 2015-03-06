@@ -24,7 +24,6 @@ cp -R _site/* ../ramp-docs-dist
 # commit and push generated content to `master' branch
 # since repository was cloned in write mode with token auth - we can push there
 cd ../ramp-docs-dist
-git config user.name "ramp-pcar-bot"
 git add -A .
 git commit -a -m "Travis #$TRAVIS_BUILD_NUMBER"
-git push --quiet origin doctest > /dev/null 2>&1 
+git push --quiet origin doctest https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs > /dev/null 2>&1 
