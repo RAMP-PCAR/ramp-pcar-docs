@@ -26,4 +26,4 @@ cp -R _site/* ../ramp-docs-dist
 cd ../ramp-docs-dist
 git add -A .
 git commit -a -m "Travis #$TRAVIS_BUILD_NUMBER"
-git push --quiet origin doctest https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs > /dev/null 2>&1 
+git push --quiet https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs doctest > /dev/null 2>&1 
