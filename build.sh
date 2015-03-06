@@ -9,7 +9,7 @@ fi
 # enable error reporting to the console
 set -e
 
-# build site with jekyll, by default to `_site' folder
+# build site with jekyll, by default to `_site' folder_
 jekyll build
 
 # cleanup
