@@ -10,6 +10,9 @@ branches:
     - /^test/.*$/
     - /^v\d+\.\d+\.\d+(-.+)?$/
 
+install:
+ - bundle install
+
 before_install:
  - chmod +x ./build.sh
 
