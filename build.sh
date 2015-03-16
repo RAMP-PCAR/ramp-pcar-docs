@@ -15,7 +15,7 @@ jekyll build
 # cleanup
 rm -rf ../ramp-docs-dist
 
-#clone `master' branch of the repository using encrypted GH_TOKEN for authentification
+#clone `master' branch of the repository using encrypted GH_TOKEN for authentication
 git clone -b gh-pages https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs ../ramp-docs-dist
 
 # copy generated HTML site to `master' branch
