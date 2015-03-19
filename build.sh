@@ -13,18 +13,18 @@ set -e
 jekyll build
 
 # make a folder
-mkdir -p ../ramp-pcar-docs
+# mkdir -p ../ramp-docs-dist
 
 #clone `gh-pages` branch of the repository using encrypted GH_TOKEN for authentication
 # need to change to our main docs repo
-git clone -b gh-pages https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs ../ramp-pcar-docs
+git clone -b gh-pages https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs ../ramp-docs-dist
 
 # copy generated HTML site to `gh-pages` branch
-cp -R _site/* ../ramp-pcar-docs
+cp -R _site/* ../ramp-docs-dist
 
 # commit and push generated content to `gh-pages' branch
 # since repository was cloned in write mode with token auth - we can push there
-cd ../ramp-pcar-docs
+cd ../ramp-docs-dist
 git add -A .
 git commit -a -m "RAMP Docs Travis build #$TRAVIS_BUILD_NUMBER"
 
