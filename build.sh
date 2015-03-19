@@ -25,7 +25,7 @@ cp -R _site/* ../ramp-docs-dist
 # commit and push generated content to `gh-pages' branch
 # since repository was cloned in write mode with token auth - we can push there
 cd ../ramp-docs-dist
-git rm .
+git rm -r .
 git add -A .
 git commit -a -m "RAMP Docs Travis build #$TRAVIS_BUILD_NUMBER"
 
