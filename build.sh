@@ -28,7 +28,7 @@ cd ../ramp-docs-dist
 git add -A .
 git commit -a -m "RAMP Docs Travis build #$TRAVIS_BUILD_NUMBER"
 
-if [ $TRAVIS_TAG == "true" ]; then
+if [ ! -z ${TRAVIS_TAG+x} ]; then
     git tag -a $TRAVIS_TAG
 fi
 
