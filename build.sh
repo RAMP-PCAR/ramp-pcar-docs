@@ -22,6 +22,7 @@ git clone -b gh-pages https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs ..
 cwd=$(pwd)
 cd ../ramp-docs-dist
 git rm -r .
+git checkout gh-pages ./demos
 
 cd $cwd
 
