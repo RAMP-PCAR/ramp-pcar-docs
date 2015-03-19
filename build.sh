@@ -12,8 +12,8 @@ set -e
 # build site with jekyll, by default to `_site' folder_
 jekyll build
 
-# cleanup
-rm -rf ../ramp-pcar-docs
+# make a folder
+mkdir -p ../ramp-pcar-docs
 
 #clone `gh-pages` branch of the repository using encrypted GH_TOKEN for authentication
 # need to change to our main docs repo
