@@ -19,6 +19,12 @@ jekyll build
 # need to change to our main docs repo
 git clone -b gh-pages https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs ../ramp-docs-dist
 
+cwd=$(pwd)
+cd ../ramp-docs-dist
+git rm -r .
+
+cd $cwd
+
 # copy generated HTML site to `gh-pages` branch
 cp -R _site/* ../ramp-docs-dist
 
@@ -28,7 +34,7 @@ cd ../ramp-docs-dist
 git add -A .
 git commit -a -m "RAMP Docs Travis build #$TRAVIS_BUILD_NUMBER"
 
-if [ $TRAVIS_TAG == "true" ]; then
+if [ ! -z $TRAVIS_TAG ]; then
     git tag -a $TRAVIS_TAG
 fi
 
