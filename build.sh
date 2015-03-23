@@ -6,12 +6,12 @@ if [ $TRAVIS_PULL_REQUEST == "true" ]; then
     exit 0
 fi
 
-targetBranch = "gh-pages"
-targetRepo = "https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs"
+targetBranch="gh-pages"
+targetRepo="https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs"
 
 if [ $TRAVIS_BRANCH == "master" ]; then
-    targetBranch = "_master"
-    targetRepo = "https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs"
+    targetBranch="_master"
+    targetRepo="https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs"
 fi
 
 if [ ! -z $TRAVIS_TAG ]; then
