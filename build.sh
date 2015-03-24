@@ -6,20 +6,21 @@ if [ $TRAVIS_PULL_REQUEST == "true" ]; then
     exit 0
 fi
 
+# ignore tags
+if [ ! -z $TRAVIS_TAG ]; then
+    echo "this is a tag, exiting"
+    exit 0
+fi
+
 targetBranch="gh-pages"
 targetRepo="https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs"
 commitMessage="chore(update): RAMP Docs edge Travis build #$TRAVIS_BUILD_NUMBER"
 
-# push to live repo if master branch and there is a tag
-if [ $TRAVIS_BRANCH == "test/autoRelease" ]; then
-    targetBranch="tmaster"
-    targetRepo="https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs"
-    commitMessage="chore(release): RAMP Docs $TRAVIS_TAG release"
-
-    if [ -z $TRAVIS_TAG ]; then
-        echo "master but no tag, exiting"
-        exit 0
-    fi
+# push to live repo if master branch
+if [ $TRAVIS_BRANCH == "master" ]; then
+    targetBranch="master"
+    targetRepo="https://${GH_TOKEN}@github.com/RAMP-PCAR/RAMP-PCAR.github.io"
+    commitMessage="chore(release): RAMP Docs live Travis build #$TRAVIS_BUILD_NUMBER" 
 fi
 
 echo $TRAVIS_BRANCH $targetBranch $commitMessage
@@ -52,10 +53,5 @@ cp -R _site/* ../ramp-docs-dist
 cd ../ramp-docs-dist
 git add -A .
 git commit -a -m "$commitMessage"
-
-# add tag if pushing to live repo
-#if [ $TRAVIS_BRANCH == "master" ]; then
-#    git tag -a $TRAVIS_TAG
-#fi
 
 git push --quiet $targetRepo $targetBranch > /dev/null 2>&1 
