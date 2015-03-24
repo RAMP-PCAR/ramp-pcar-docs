@@ -8,11 +8,13 @@ fi
 
 targetBranch="gh-pages"
 targetRepo="https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs"
+commitMessage="chore(update): RAMP Docs edge Travis build #$TRAVIS_BUILD_NUMBER"
 
 # push to live repo if master branch and there is a tag
-if [ $TRAVIS_BRANCH == "master" ]; then
+if [ $TRAVIS_BRANCH == "test/autoRelease" ]; then
     targetBranch="_master"
     targetRepo="https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs"
+    commitMessage="chore(release): RAMP Docs $TRAVIS_TAG release"
 
     if [ -z $TRAVIS_TAG ]; then
         echo "master but no tag, exiting"
@@ -47,7 +49,7 @@ cp -R _site/* ../ramp-docs-dist
 # since repository was cloned in write mode with token auth - we can push there
 cd ../ramp-docs-dist
 git add -A .
-git commit -a -m "RAMP Docs Travis build #$TRAVIS_BUILD_NUMBER"
+git commit -a -m "$commitMessage"
 
 # add tag if pushing to live repo
 #if [ $TRAVIS_BRANCH == "master" ]; then
