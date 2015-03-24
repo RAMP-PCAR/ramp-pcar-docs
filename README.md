@@ -1,38 +1,46 @@
-# Jekyll-Bootstrap {#wb-cont}
+# Reusable, Accessible, Mapping Platform (RAMP) [![build status](https://travis-ci.org/RAMP-PCAR/ramp-pcar-docs.svg)](https://travis-ci.org/RAMP-PCAR/ramp-pcar-docs)
 
-The quickest way to start and publish your Jekyll powered blog. 100% compatible with GitHub pages
+## What is the RAMP?
 
-## Usage
+* A collaborative open source project led by [Environment Canada](http://ec.gc.ca/).
+* RAMP provides the ability to rapidly deploy a theme based Web Mapping application, or to support the implementation of a dynamic Web Mapping viewer.
+* Built off of the ESRI JavaScript API, but strives for platform neutrality.
 
-For all usage and documentation please see: <http://jekyllbootstrap.com>
 
-## Version
+## Key Resources
 
-0.3.0 - stable and versioned using [semantic versioning](http://semver.org/).
+* [Documentation](http://ramp-pcar.github.io/docs/index-en.html)
+* [Downloads](http://ramp-pcar.github.io/versions/download-en.html)
+* [Version history](http://ramp-pcar.github.io/versions/index-en.html) and [roadmap](http://ramp-pcar.github.io/versions/roadmap-en.html)
+* [Examples](http://ramp-pcar.github.io/demos/index-en.html)
+* [Terms and conditions](http://ramp-pcar.github.io/license-en.html) (MIT license)
+* [Source code repository](https://github.com/RAMP-PCAR/RAMP-PCAR)
 
-**NOTE:** 0.3.0 introduces a new theme which is not backwards compatible in the sense it won't _look_ like the old version.
-However, the actual API has not changed at all.
-You might want to run 0.3.0 in a branch to make sure you are ok with the theme design changes.
+## Benefits
 
-## Contributing
+### Accessibility, Usability, and Interoperability
 
-To contribute to the framework please make sure to checkout your branch based on `jb-development`!!
-This is very important as it allows me to accept your pull request without having to publish a public version release.
+* Prioritizes [WCAG 2.0](http://www.w3.org/TR/WCAG20/) level AA compliance
+* Leverages [WAI-ARIA](http://www.w3.org/TR/wai-aria/) to further enhance accessibility
+* Iterative approach to design, adapting to change all the time
+* Built on [HTML5](http://www.w3.org/TR/html5/)
+* Supports a wide variety of browsers (IE, Firefox, Chrome, Safari, Opera)
 
-Small, atomic Features, bugs, etc.
-Use the `jb-development` branch but note it will likely change fast as pull requests are accepted.
-Please rebase as often as possible when working.
-Work on small, atomic features/bugs to avoid upstream commits affecting/breaking your development work.
+### Themeable and Reusable
 
-For Big Features or major API extensions/edits:
-This is the one case where I'll accept pull-requests based off the master branch.
-This allows you to work in isolation but it means I'll have to manually merge your work into the next public release.
-Translation : it might take a bit longer so please be patient! (but sincerely thank you).
+* Flexible framework that supports custom templates and widgets
+* Allows teams to reuse their work across multiple projects
 
-**Jekyll-Bootstrap Documentation Website.**
+### Reduces Development Costs
 
-The documentation website at <http://jekyllbootstrap.com> is maintained at https://github.com/plusjade/jekyllbootstrap.com
+* Provides with an out-of-the-box solution to reduce development costs
+* Avoids duplication of effort, continuously building a core toolset of cross-cutting project requirements
+* Breeds better quality solutions by working with proven technology
 
-## License
+### Inspiring Collaboration
 
-[MIT](http://opensource.org/licenses/MIT)
+* Project managed on GitHub
+* External contributions welcome
+* Report issues and suggestions
+* Documentation
+* Testing
