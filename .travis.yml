@@ -1,0 +1,19 @@
+language: ruby
+
+rvm:
+  - 2.1
+
+branches:
+  only:
+    - develop
+    - master
+    - /^test/.*$/
+    - /^v\d+\.\d+\.\d+(-.+)?$/
+
+install:
+ - bundle install
+
+before_install:
+ - chmod +x ./build.sh
+
+script: "./build.sh"
