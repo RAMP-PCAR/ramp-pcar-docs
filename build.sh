@@ -2,8 +2,22 @@
 
 # only proceed script when started not by pull request (PR)
 if [ $TRAVIS_PULL_REQUEST == "true" ]; then
-  echo "this is PR, exiting"
-  exit 0
+    echo "this is PR, exiting"
+    exit 0
+fi
+
+targetBranch="gh-pages"
+targetRepo="https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs"
+
+# push to live repo if master branch and there is a tag
+if [ $TRAVIS_BRANCH == "master" ]; then
+    targetBranch="_master"
+    targetRepo="https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs"
+
+    if [ -z $TRAVIS_TAG ]; then
+        echo "master but no tag, exiting"
+        exit 0
+    fi
 fi
 
 # enable error reporting to the console, just in case
@@ -17,12 +31,12 @@ jekyll build
 
 #clone `gh-pages` branch of the repository using encrypted GH_TOKEN for authentication
 # need to change to our main docs repo
-git clone -b gh-pages https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs ../ramp-docs-dist
+git clone -b $targetBranch $targetRepo ../ramp-docs-dist
 
 cwd=$(pwd)
 cd ../ramp-docs-dist
 git rm -r .
-git checkout gh-pages ./demos
+git checkout $targetBranch ./demos
 
 cd $cwd
 
@@ -35,8 +49,9 @@ cd ../ramp-docs-dist
 git add -A .
 git commit -a -m "RAMP Docs Travis build #$TRAVIS_BUILD_NUMBER"
 
-if [ ! -z $TRAVIS_TAG ]; then
-    git tag -a $TRAVIS_TAG
-fi
+# add tag if pushing to live repo
+#if [ $TRAVIS_BRANCH == "master" ]; then
+#    git tag -a $TRAVIS_TAG
+#fi
 
-git push --quiet https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs gh-pages > /dev/null 2>&1 
+git push --quiet $targetRepo $targetBranch > /dev/null 2>&1 
