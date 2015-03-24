@@ -29,7 +29,7 @@ elif [ $TRAVIS_BRANCH == "test/autoRelease" ]; then
 
     # update BASE_PATH and ASSET_PATH
     ruby -pi.bak -e "gsub(/BASE_PATH : false/, 'BASE_PATH : \"/ramp-pcar-docs\"')" _config.yml
-    ruby -pi.bak -e "gsub(/ASSET_PATH : false/, 'ASSET_PATH : \"/ramp-pcar-docs/assets/themes/gc/\"')" _config.yml
+    ruby -pi.bak -e "gsub(/ASSET_PATH : false/, 'ASSET_PATH : \"/ramp-pcar-docs/assets/themes/gc\"')" _config.yml
 
     cat _config.yml
 else
