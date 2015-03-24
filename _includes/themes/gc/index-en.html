@@ -90,9 +90,9 @@
                 <h2>Site menu</h2>
                 <div class="row">
                     <ul class="list-inline menu">
-                        <li><a href="/index-en.html" class=" item">RAMP Project</a></li>
-                        <li><a href="/demos/index-en.html" class="item">Using RAMP</a></li>
-                        <li><a href="/docs/index-en.html" class="item">RAMP Documentation</a></li>
+                        <li><a href="{{ BASE_PATH }}/index-en.html" class=" item">RAMP Project</a></li>
+                        <li><a href="{{ BASE_PATH }}/demos/index-en.html" class="item">Using RAMP</a></li>
+                        <li><a href="{{ BASE_PATH }}/docs/index-en.html" class="item">RAMP Documentation</a></li>
                     </ul>
                 </div>
             </div>
@@ -107,7 +107,7 @@
                     {% for p in page.ancestors %}
 
                         {% if p.title | size > 0 %}
-                        <li><a href="{{ p.url }}">{{ p.title }}</a></li>
+                            <li><a href="{{ BASE_PATH }}{{ p.url }}">{{ p.title }}</a></li>
                         {% endif %}
 
                     {% endfor %}
