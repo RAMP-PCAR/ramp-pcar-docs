@@ -9,44 +9,49 @@ fi
 targetBranch="gh-pages"
 targetRepo="https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs"
 
+# push to live repo if master branch and there is a tag
 if [ $TRAVIS_BRANCH == "master" ]; then
     targetBranch="_master"
     targetRepo="https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs"
+
+    if [ -z $TRAVIS_TAG ]; then
+        echo "master but no tag, exiting"
+        exit 0
+    fi
 fi
 
-if [ ! -z $TRAVIS_TAG ]; then
+# enable error reporting to the console, just in case
+set -e
 
-    # enable error reporting to the console, just in case
-    set -e
+# build site with jekyll, by default to `_site' folder_
+jekyll build
 
-    # build site with jekyll, by default to `_site' folder_
-    jekyll build
+# make a folder
+# mkdir -p ../ramp-docs-dist
 
-    # make a folder
-    # mkdir -p ../ramp-docs-dist
+#clone `gh-pages` branch of the repository using encrypted GH_TOKEN for authentication
+# need to change to our main docs repo
+git clone -b $targetBranch $targetRepo ../ramp-docs-dist
 
-    #clone `gh-pages` branch of the repository using encrypted GH_TOKEN for authentication
-    # need to change to our main docs repo
-    git clone -b $targetBranch $targetRepo ../ramp-docs-dist
+cwd=$(pwd)
+cd ../ramp-docs-dist
+git rm -r .
+git checkout $targetBranch ./demos
 
-    cwd=$(pwd)
-    cd ../ramp-docs-dist
-    git rm -r .
-    git checkout $targetBranch ./demos
+cd $cwd
 
-    cd $cwd
+# copy generated HTML site to `gh-pages` branch
+cp -R _site/* ../ramp-docs-dist
 
-    # copy generated HTML site to `gh-pages` branch
-    cp -R _site/* ../ramp-docs-dist
+# commit and push generated content to `gh-pages' branch
+# since repository was cloned in write mode with token auth - we can push there
+cd ../ramp-docs-dist
+git add -A .
+git commit -a -m "RAMP Docs Travis build #$TRAVIS_BUILD_NUMBER"
 
-    # commit and push generated content to `gh-pages' branch
-    # since repository was cloned in write mode with token auth - we can push there
-    cd ../ramp-docs-dist
-    git add -A .
-    git commit -a -m "RAMP Docs Travis build #$TRAVIS_BUILD_NUMBER"
+# add tag if pushing to live repo
+#if [ $TRAVIS_BRANCH == "master" ]; then
+#    git tag -a $TRAVIS_TAG
+#fi
 
-    git tag -a $TRAVIS_TAG
-
-    git push --quiet $targetRepo $targetBranch > /dev/null 2>&1 
-
-fi
+git push --quiet $targetRepo $targetBranch > /dev/null 2>&1 
