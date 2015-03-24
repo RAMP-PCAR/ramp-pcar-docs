@@ -62,6 +62,10 @@ cp -R _site/* ../ramp-docs-dist
 # commit and push generated content to `gh-pages' branch
 # since repository was cloned in write mode with token auth - we can push there
 cd ../ramp-docs-dist
+
+# create a no jekyll file
+echo "" > .nojekyll
+
 git add -A .
 git commit -a -m "$commitMessage"
 
