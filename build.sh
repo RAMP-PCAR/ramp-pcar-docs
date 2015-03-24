@@ -12,7 +12,7 @@ commitMessage="chore(update): RAMP Docs edge Travis build #$TRAVIS_BUILD_NUMBER"
 
 # push to live repo if master branch and there is a tag
 if [ $TRAVIS_BRANCH == "test/autoRelease" ]; then
-    targetBranch="_master"
+    targetBranch="tmaster"
     targetRepo="https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs"
     commitMessage="chore(release): RAMP Docs $TRAVIS_TAG release"
 
