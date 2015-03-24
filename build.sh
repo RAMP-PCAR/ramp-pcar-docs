@@ -12,15 +12,18 @@ if [ ! -z $TRAVIS_TAG ]; then
     exit 0
 fi
 
-targetBranch="gh-pages"
-targetRepo="https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs"
-commitMessage="chore(update): RAMP Docs edge Travis build #$TRAVIS_BUILD_NUMBER"
-
 # push to live repo if master branch
 if [ $TRAVIS_BRANCH == "master" ]; then
     targetBranch="master"
     targetRepo="https://${GH_TOKEN}@github.com/RAMP-PCAR/RAMP-PCAR.github.io"
-    commitMessage="chore(release): RAMP Docs live Travis build #$TRAVIS_BUILD_NUMBER" 
+    commitMessage="chore(release): RAMP Docs live Travis build #$TRAVIS_BUILD_NUMBER"
+elif [ $TRAVIS_BRANCH == "develop" ]; then
+    targetBranch="gh-pages"
+    targetRepo="https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs"
+    commitMessage="chore(update): RAMP Docs edge Travis build #$TRAVIS_BUILD_NUMBER"
+else
+    echo "I don't know you, exiting"
+    exit 0
 fi
 
 echo $TRAVIS_BRANCH $targetBranch $commitMessage
