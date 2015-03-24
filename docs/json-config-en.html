@@ -266,6 +266,7 @@
           </li>
           <li>nameField</li>
           <li>layerExtent</li>
+          <li>maxAllowableOffset</li>
           <li>settings
             <ul>
               <li>panelEnabled</li>
@@ -729,6 +730,11 @@
       <td>layers.feature[].layerExtent</td>
       <td>extent</td>
       <td>Defines the boundary of the layers data (using a rectangle).  Should contain xmin, ymin, xmax, ymax values, and a valid <a href="https://developers.arcgis.com/javascript/jsapi/spatialreference-amd.html#spatialreference1">spatial reference</a> for the co-ordinates.  Used to generate the bounding box in RAMP.</td>
+    </tr>
+    <tr>
+      <td>layers.feature[].maxAllowableOffset</td>
+      <td>numeric</td>
+      <td>Simplification factor.  Two points closer than the factor will be converted to one.  A value of 0 turns off the simplification.</td>
     </tr>
     <tr>
       <td><a name="featurelayers_settings"></a>layers.feature[].settings</td>
