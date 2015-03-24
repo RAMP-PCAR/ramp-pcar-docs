@@ -49,7 +49,7 @@ cp -R _site/* ../ramp-docs-dist
 # since repository was cloned in write mode with token auth - we can push there
 cd ../ramp-docs-dist
 git add -A .
-git commit -a -m $commitMessage
+git commit -a -m "$commitMessage"
 
 # add tag if pushing to live repo
 #if [ $TRAVIS_BRANCH == "master" ]; then
