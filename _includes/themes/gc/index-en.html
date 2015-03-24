@@ -107,7 +107,7 @@
                     {% for p in page.ancestors %}
 
                         {% if p.title | size > 0 %}
-                        <li><a href="{{ p.url }}">{{ p.title }}</a></li>
+                            <li><a href="{{ BASE_PATH }}{{ p.url }}">{{ p.title }}</a></li>
                         {% endif %}
 
                     {% endfor %}
