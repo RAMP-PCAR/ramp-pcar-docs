@@ -17,10 +17,14 @@ if [ $TRAVIS_BRANCH == "master" ]; then
     targetBranch="master"
     targetRepo="https://${GH_TOKEN}@github.com/RAMP-PCAR/RAMP-PCAR.github.io"
     commitMessage="chore(release): RAMP Docs live Travis build #$TRAVIS_BUILD_NUMBER"
-elif [ $TRAVIS_BRANCH == "develop" ]; then
+elif [ $TRAVIS_BRANCH == "test/autoRelease" ]; then
     targetBranch="gh-pages"
     targetRepo="https://${GH_TOKEN}@github.com/RAMP-PCAR/ramp-pcar-docs"
     commitMessage="chore(update): RAMP Docs edge Travis build #$TRAVIS_BUILD_NUMBER"
+
+    # update BASE_PATH and ASSET_PATH
+    ruby -pi.bal -e "gsub(/BASE_PATH : false/, 'BASE_PATH : \"/ramp-pcar.github.io/ramp-pcar-docs\"')" _config.yml
+    ruby -pi.bal -e "gsub(/ASSET_PATH : false/, 'ASSET_PATH : \"/ramp-pcar.github.io/ramp-pcar-docs\"')" _config.yml
 else
     echo "I don't know you, exiting"
     exit 0
