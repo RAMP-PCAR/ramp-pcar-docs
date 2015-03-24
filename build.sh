@@ -23,8 +23,8 @@ elif [ $TRAVIS_BRANCH == "test/autoRelease" ]; then
     commitMessage="chore(update): RAMP Docs edge Travis build #$TRAVIS_BUILD_NUMBER"
 
     # update BASE_PATH and ASSET_PATH
-    ruby -pi.bal -e "gsub(/BASE_PATH : false/, 'BASE_PATH : \"/ramp-pcar.github.io/ramp-pcar-docs\"')" _config.yml
-    ruby -pi.bal -e "gsub(/ASSET_PATH : false/, 'ASSET_PATH : \"/ramp-pcar.github.io/ramp-pcar-docs\"')" _config.yml
+    ruby -pi.bal -e "gsub(/BASE_PATH : false/, 'BASE_PATH : \"/ramp-pcar-docs\"')" _config.yml
+    ruby -pi.bal -e "gsub(/ASSET_PATH : false/, 'ASSET_PATH : \"/ramp-pcar-docs\"')" _config.yml
 else
     echo "I don't know you, exiting"
     exit 0
