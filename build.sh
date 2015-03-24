@@ -22,6 +22,8 @@ if [ $TRAVIS_BRANCH == "test/autoRelease" ]; then
     fi
 fi
 
+echo $TRAVIS_BRANCH $targetBranch $commitMessage
+
 # enable error reporting to the console, just in case
 set -e
 
