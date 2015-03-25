@@ -53,6 +53,7 @@ cwd=$(pwd)
 cd ../ramp-docs-dist
 git rm -r .
 git checkout $targetBranch ./demos
+git checkout $targetBranch ./api
 
 cd $cwd
 
