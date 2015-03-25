@@ -175,10 +175,13 @@
     <!--<![endif]-->
     <!--[if lt IE 9]><script src="./js/ie8-wet-boew2.min.js"></script><![endif]-->
 
-    <script src="/ramp-pcar-docs/assets/themes/gc/js/ribbon.js"> </script>
     <script src="/ramp-pcar-docs/assets/themes/gc/js/toc.js"> </script>
     <script type="text/javascript">
         $(document).ready(function () {
+            if (location.pathname.indexOf("/ramp-pcar-docs/") !== -1) {
+                $("body").append('<img src="/ramp-pcar-docs/assets/themes/gc/assets/images/ramp_docs_edge.png" class="ribbon">');
+            }
+
             $('.toc')
                 .addClass("mrgn-bttm-lg panel panel-default")
                 .toc({
