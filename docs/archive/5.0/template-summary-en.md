@@ -36,8 +36,8 @@ Each row in the basemap selector dropdown.
 **Default Behaviour**
 
 <section class="wb-lbx lbx-gal">
-    <a href="../assets/images/basemap_selector_default.png">
-        <img src="../assets/images/basemap_selector_default.png" style="width:517px; height:155px; max-width:80%; float:right; padding-left:20px" />
+    <a href="assets/images/basemap_selector_default.png">
+        <img src="assets/images/basemap_selector_default.png" style="width:517px; height:155px; max-width:80%; float:right; padding-left:20px" />
     </a>
 </section>
 
@@ -59,8 +59,8 @@ Each row in the datagrid when the datagrid is in the summary mode.
 **Default Behaviour**
 
 <section class="wb-lbx lbx-gal">
-    <a href="../assets/images/datagrid_summary_default.png">
-        <img src="../assets/images/datagrid_summary_default.png" style="width:407px; height:92px; max-width:80%; float:right; padding-left:20px" />
+    <a href="assets/images/datagrid_summary_default.png">
+        <img src="assets/images/datagrid_summary_default.png" style="width:407px; height:92px; max-width:80%; float:right; padding-left:20px" />
     </a>
 </section>
 
@@ -82,8 +82,8 @@ Each row in the datagrid when the datagrid is the expanded mode
 **Default Behaviour**
 
 <section class="wb-lbx lbx-gal">
-<a href="../assets/images/extended_grid_screenshot.png">
-<img src="../assets/images/extended_grid_screenshot.png" style="width:387px; height:228px; max-width:80%; float:right; padding-left:20px" />
+<a href="assets/images/extended_grid_screenshot.png">
+<img src="assets/images/extended_grid_screenshot.png" style="width:387px; height:228px; max-width:80%; float:right; padding-left:20px" />
 </a>
 </section>
 
@@ -103,8 +103,8 @@ The popup that appears when a feature on the map is clicked.
 **Default Behaviour**
 
 <section class="wb-lbx lbx-gal">
-<a href="../assets/images/feature_anchor_tip_screenshot.png">
-<img src="../assets/images/feature_anchor_tip_screenshot.png" style="width:208px; height:118px; max-width:80%; float:right; padding-left:20px" />
+<a href="assets/images/feature_anchor_tip_screenshot.png">
+<img src="assets/images/feature_anchor_tip_screenshot.png" style="width:208px; height:118px; max-width:80%; float:right; padding-left:20px" />
 </a>
 </section>
 
@@ -124,8 +124,8 @@ The popup that appears when the mouse hovers over a feature on the map.
 **Default Behaviour**
 
 <section class="wb-lbx lbx-gal">
-<a href="../assets/images/feature_hover_tip_screenshot.png">
-<img src="../assets/images/feature_hover_tip_screenshot.png" style="width:154px; height:106px; max-width:80%; float:right; padding-left:20px" />
+<a href="assets/images/feature_hover_tip_screenshot.png">
+<img src="assets/images/feature_hover_tip_screenshot.png" style="width:154px; height:106px; max-width:80%; float:right; padding-left:20px" />
 </a>
 </section>
 
@@ -145,8 +145,8 @@ The content of the detail panel that slides out whenever a user clicks on a feat
 **Default Behaviour**
 
 <section class="wb-lbx lbx-gal">
-<a href="../assets/images/feature_detail_panel_screenshot.png">
-<img src="../assets/images/feature_detail_panel_screenshot.png" style="width:201px; height:291px; max-width:80%; float:right; padding-left:20px" />
+<a href="assets/images/feature_detail_panel_screenshot.png">
+<img src="assets/images/feature_detail_panel_screenshot.png" style="width:201px; height:291px; max-width:80%; float:right; padding-left:20px" />
 </a>
 </section>
 
@@ -166,8 +166,8 @@ The top row that contain the global layer and bounding box toggles
 **Default Behaviour**
 
 <section class="wb-lbx lbx-gal">
-<a href="../assets/images/filter_global_screenshot.png">
-<img src="../assets/images/filter_global_screenshot.png" style="width:368px; height:36px; max-width:80%; float:right; padding-left:20px" />
+<a href="assets/images/filter_global_screenshot.png">
+<img src="assets/images/filter_global_screenshot.png" style="width:368px; height:36px; max-width:80%; float:right; padding-left:20px" />
 </a>
 </section>
 
@@ -187,8 +187,8 @@ Each row in the filter manager
 **Default Behaviour**
 
 <section class="wb-lbx lbx-gal">
-<a href="../assets/images/filter_row_screenshot.png">
-<img src="../assets/images/filter_row_screenshot.png" class="col-md-5" style="float:right; padding-left:20px" />
+<a href="assets/images/filter_row_screenshot.png">
+<img src="assets/images/filter_row_screenshot.png" class="col-md-5" style="float:right; padding-left:20px" />
 </a>
 </section>
 

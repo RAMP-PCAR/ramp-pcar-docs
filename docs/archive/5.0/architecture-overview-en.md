@@ -79,8 +79,8 @@ WMS
 ##High Level Block Diagram
 
 <section class="wb-lbx lbx-gal">
-	<a href="../assets/images/block_diagram.png">
-		<img src="../assets/images/block_diagram.png" style="max-width:80%" />
+	<a href="assets/images/block_diagram.png">
+		<img src="assets/images/block_diagram.png" style="max-width:80%" />
 	</a>
 </section>
 
@@ -107,8 +107,8 @@ In RAMP Arctic Fox we do not have any attribute based filtering.  Filtering is d
 * Create a collection of objectId/layerId pairs, and have this be the source for the data grid
 
 <section class="wb-lbx lbx-gal">
-	<a href="../assets/images/filter_data_sequence.svg">
-		<img src="../assets/images/filter_data_sequence.svg" style="max-width:80%" />
+	<a href="assets/images/filter_data_sequence.svg">
+		<img src="assets/images/filter_data_sequence.svg" style="max-width:80%" />
 	</a>
 </section>
 

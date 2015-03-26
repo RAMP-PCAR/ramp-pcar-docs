@@ -48,7 +48,7 @@ A full layout of the configuration file can be found [here](json-config-en.html)
 
 The basemaps configuration section defines what basemaps are available in the app.  You can delete all and add your own, or use any existing one.  Keep in mind that all basemaps with the same projection and same scale levels should have the same value defined in their tileSchema property.  Details on the basemap configuration objects can be found [here](json-config-en.html#basemaps).
 
-![Partial configuration file](../assets/images/qs_basemap_config.png)
+![Partial configuration file](assets/images/qs_basemap_config.png)
 
 
 ## Adding an ESRI Feature Layer
@@ -65,7 +65,7 @@ The main attributes of a Feature layer config node are:
 * url: A rest endpoint to the ESRI feature service for this layer.
 * nameField: The attribute field that best describes each feature.  This will be displayed in maptips and the summary data grid
 
-![Image of configuration file for main feature attributes](../assets/images/qs_json_feature_main.png)
+![Image of configuration file for main feature attributes](assets/images/qs_json_feature_main.png)
 
 
 [Back To Top](#top)
@@ -75,23 +75,23 @@ The main attributes of a Feature layer config node are:
 
 Feature layers also need to have a legend / symbology structure to inform the app how to create a legend, and how to derive appropriate icons for each feature.  RAMP currently supports the three most common renderer types from an ESRI feature service: [Simple renderers, Unique Value renderers, and Class Breaks renderers](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Renderer_objects/02r30000019t000000/).  This information is used to display icons in maptips, datagrids, the layer selector, and the view legend function.
 
-![Image of symbology displayed on the site](../assets/images/qs_symbology.png)
+![Image of symbology displayed on the site](assets/images/qs_symbology.png)
 
 The symbology details are defined in the symbology node of the feature layer's config object.  The content of the symbology node can differ based on the renderer type.  A simple renderer defines one symbol for the entire layer.
 
-![Image of configuration file for simple symbology attributes](../assets/images/qs_json_feature_simplerend.png)
+![Image of configuration file for simple symbology attributes](assets/images/qs_json_feature_simplerend.png)
 
 Unique Value symbology definitions contain a mapping of values to icon images.
 
-![Image of configuration file for unique value symbology attributes](../assets/images/qs_json_feature_uvrend.png)
+![Image of configuration file for unique value symbology attributes](assets/images/qs_json_feature_uvrend.png)
 
 Class Breaks symbology definitions contain a mapping of ranges of values to icon images.
 
-![Image of configuration file for class breaks symbology attributes](../assets/images/qs_json_feature_cbrend.png)
+![Image of configuration file for class breaks symbology attributes](assets/images/qs_json_feature_cbrend.png)
 	
 Detailed renderer structures can be found in the [config page](json-config-en.html#featurelayers_symbology)	
 	
-![Image of datasets section of the web map application](../assets/images/qs_filter.png)
+![Image of datasets section of the web map application](assets/images/qs_filter.png)
 
 
 [Back To Top](#top)
@@ -104,9 +104,9 @@ Maptips can quickly display information about a feature.  RAMP implements two ty
 The contents of the maptips are driven by templates.  By default, hover map tip and anchor map tip use generic RAMP templates called __feature_hover_maptip_template.json__ and __anchored_map_tip.json__ template.
 These templates are located in __src\\js\\RAMP\\Modules\\templates__ folder.  These templates display a basic "icon and name" for a feature.  The name data is derived from the "nameField" in the layer's configuration.  If a custom template is desired, new templates can be added to the above JSON files.  To instruct the layer to use a different template, update the values in the templates.hover or templates.anchor configuration nodes to reflect the name of the custom template.  As the template names are optional, you may need to add the nodes in your JSON editor.
 
-![Image of configuration file for maptip templates](../assets/images/qs_json_tip_template.png)
+![Image of configuration file for maptip templates](assets/images/qs_json_tip_template.png)
 
-![Hover maptip on a map feature](../assets/images/qs_hover_map_tip.png)
+![Hover maptip on a map feature](assets/images/qs_hover_map_tip.png)
 
 To create custom templates, please refer to the [template guide](template-guide-en.html).
 
@@ -117,13 +117,13 @@ To create custom templates, please refer to the [template guide](template-guide-
 
 RAMP displays tabular data in two different ways.  The Summary datagrid shows contains basic, feature identifying information, and provides links to get more details on an individual item.  The grid collates all features currently visible on the map across all feature layers.  It's small size allows the grid and map to both be visible at the same time.
 
-![Summary datagrid in data tab section of the web map application](../assets/images/qs_summary_datagrid.png)
+![Summary datagrid in data tab section of the web map application](assets/images/qs_summary_datagrid.png)
 
 Summary datagrid uses templates in file __datagrid_template.json__ to define the content of each row.  The default template is "default_grid_summary_row", which will display the standard layout of icon, feature name, and layer name, along with Zoom To and Details links.  To instruct the grid to use a different template for a layer, update the values in the templates.summary configuration nodes to reflect the name of the custom template.  As the template names are optional, you may need to add the node in your JSON editor.  Keep in mind that rows from your layer will be mixed in the grid with other layers; from a presentation point of view, you may wish to ensure that all layers on a map use templates that harmonize visually.
 
 The Extended datagrid shows a more traditional attribute table.  Given the variability of columns between layers, only one layer's rows are displayed at one time.  A drop down is provided to all the user to change which layer is displayed.  The large size of the Extended grid results in the map not being visible when it is open.  The Extended grid is opened via the “Full data” link button on the Data tab.
 
-![Sample extended datagrid view](../assets/images/qs_full_gridview.png)
+![Sample extended datagrid view](assets/images/qs_full_gridview.png)
 
 
 The configuration associated with a layer's Extended grid is located in the datagrid node of the layer config object.  Each grid column is defined here, and the order in the gridColumns array will dictate the order they appear in.   The following attributes are available for each grid column:
@@ -147,7 +147,7 @@ The columnTemplate is used in RAMP to generate the in-cell content for each colu
 You can add additional templates to file __extended_datagrid_template.json__ and use them in the Extended datagrid. For more information on customizing template, please refer to the [Template Guide](template-guide-en.html)
 
 
-![Image of configuration file for extended datagrid](../assets/images/qs_json_feature_datagrid.png)
+![Image of configuration file for extended datagrid](assets/images/qs_json_feature_datagrid.png)
 
 For further customization of grids, please refer to [DataTables](http://www.datatables.net/) documentation.
 
@@ -155,7 +155,7 @@ For further customization of grids, please refer to [DataTables](http://www.data
 
 Field name aliases can be used to display user-friendly text instead of system field names in the details pane.  The aliasMap config object maps field names to alias names, and the alias will be used if the mapping is present.
 
-![Image of configuration file for aliases](../assets/images/qs_json_alias.png)
+![Image of configuration file for aliases](assets/images/qs_json_alias.png)
 
 ## Adding a WMS Layer
 
@@ -169,7 +169,7 @@ The main attributes of a Feature layer config node are:
 * layerName: The name of the layer in the WMS service to display.
 * format: The mime type of the image the WMS will return.
 
-![Image of configuration file for WMS layers](../assets/images/qs_json_wms.png)
+![Image of configuration file for WMS layers](assets/images/qs_json_wms.png)
 
 ### WMS Legend Configuration
 
@@ -179,7 +179,7 @@ If the WMS layer supports the GetLegendGraphic request, it can be enabled in RAM
 
 If the WMS layer supports the GetFeatureInfo request, it can be enabled in RAMP by defining the featureInfo property in the WMS configuration node.  The mime type should describe the values being returned from the request.  RAMP supports text, html, and json.  Any other formats will be displayed as text.  The parser value points to a plugin that will process and format the output.  Details on parser plugins can be found [here](wms-support-en.html).  In the application, clicking the map will trigger the request, and the result will be displayed in the Details pane.
 
-![Image of configuration file for WMS Get Feature request](../assets/images/qs_json_wms_gfi.png)
+![Image of configuration file for WMS Get Feature request](assets/images/qs_json_wms_gfi.png)
 
 [Back To Top](#top)
 {: .text-right}

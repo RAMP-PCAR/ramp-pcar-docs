@@ -33,8 +33,8 @@ Manages the widget that allows the user to change the basemap. Utilizes the [esr
 **Relevant Sequence Diagrams**
 
 <section class="wb-lbx lbx-gal">
-    <a href="../assets/images/select_basemap.svg">
-        <img src="../assets/images/select_basemap.svg" style="max-width:80%" />
+    <a href="assets/images/select_basemap.svg">
+        <img src="assets/images/select_basemap.svg" style="max-width:80%" />
     </a>
 </section>
 
@@ -94,8 +94,8 @@ of the default behaviour.
 **Relevant Sequence Diagrams**
 
 <section class="wb-lbx lbx-gal">
-    <a href="../assets/images/filter_data_sequence.svg">
-        <img src="../assets/images/filter_data_sequence.svg" style="max-width:80%" />
+    <a href="assets/images/filter_data_sequence.svg">
+        <img src="assets/images/filter_data_sequence.svg" style="max-width:80%" />
     </a>
 </section>
 
@@ -117,14 +117,14 @@ The view detail function involves generating a custom detail report (from a temp
 **Relevant Sequence Diagrams**
 
 <section class="wb-lbx lbx-gal">
-    <a href="../assets/images/zoom_to_feature.svg">
-        <img src="../assets/images/zoom_to_feature.svg" style="max-width:80%" />
+    <a href="assets/images/zoom_to_feature.svg">
+        <img src="assets/images/zoom_to_feature.svg" style="max-width:80%" />
     </a>
 </section>
 
 <section class="wb-lbx lbx-gal">
-    <a href="../assets/images/view_feature_details.svg">
-        <img src="../assets/images/view_feature_details.svg" style="max-width:80%" />
+    <a href="assets/images/view_feature_details.svg">
+        <img src="assets/images/view_feature_details.svg" style="max-width:80%" />
     </a>
 </section>
 
@@ -151,14 +151,14 @@ This primarily consists of clicking a feature, and hovering over a feature.  For
 **Relevant Sequence Diagrams**
 
 <section class="wb-lbx lbx-gal">
-    <a href="../assets/images/click_a_feature.svg">
-        <img src="../assets/images/click_a_feature.svg" style="max-width:80%" />
+    <a href="assets/images/click_a_feature.svg">
+        <img src="assets/images/click_a_feature.svg" style="max-width:80%" />
     </a>
 </section>
 
 <section class="wb-lbx lbx-gal">
-    <a href="../assets/images/hover_over_feature.svg">
-        <img src="../assets/images/hover_over_feature.svg" style="max-width:80%" />
+    <a href="assets/images/hover_over_feature.svg">
+        <img src="assets/images/hover_over_feature.svg" style="max-width:80%" />
     </a>
 </section>
 
@@ -178,20 +178,20 @@ The module also generates the graphic layers used to manage the highlight imager
 **Relevant Sequence Diagrams**
 
 <section class="wb-lbx lbx-gal">
-    <a href="../assets/images/click_a_feature.svg">
-        <img src="../assets/images/click_a_feature.svg" alt="Click a Feature" style="max-width:80%" />
+    <a href="assets/images/click_a_feature.svg">
+        <img src="assets/images/click_a_feature.svg" alt="Click a Feature" style="max-width:80%" />
     </a>
 </section>
 
 <section class="wb-lbx lbx-gal">
-    <a href="../assets/images/hover_over_feature.svg">
-        <img src="../assets/images/hover_over_feature.svg" alt="Hover Over a Feature" style="max-width:80%" />
+    <a href="assets/images/hover_over_feature.svg">
+        <img src="assets/images/hover_over_feature.svg" alt="Hover Over a Feature" style="max-width:80%" />
     </a>
 </section>
 
 <section class="wb-lbx lbx-gal">
-    <a href="../assets/images/zoom_to_feature.svg">
-        <img src="../assets/images/zoom_to_feature.svg" alt="Zoom to a Feature" style="max-width:80%" />
+    <a href="assets/images/zoom_to_feature.svg">
+        <img src="assets/images/zoom_to_feature.svg" alt="Zoom to a Feature" style="max-width:80%" />
     </a>
 </section>
 
@@ -222,20 +222,20 @@ The following actions are performed by the module
 **Relevant Sequence Diagrams**
 
 <section class="wb-lbx lbx-gal">
-    <a href="../assets/images/toggle_bounding_box.svg">
-        <img src="../assets/images/toggle_bounding_box.svg" alt="Toggle A Bounding Box" style="max-width:80%" />
+    <a href="assets/images/toggle_bounding_box.svg">
+        <img src="assets/images/toggle_bounding_box.svg" alt="Toggle A Bounding Box" style="max-width:80%" />
     </a>
 </section>
 
 <section class="wb-lbx lbx-gal">
-    <a href="../assets/images/filter_data_sequence.svg">
-        <img src="../assets/images/filter_data_sequence.svg" alt="Filter Data Sequence" style="max-width:80%" />
+    <a href="assets/images/filter_data_sequence.svg">
+        <img src="assets/images/filter_data_sequence.svg" alt="Filter Data Sequence" style="max-width:80%" />
     </a>
 </section>
 
 <section class="wb-lbx lbx-gal">
-    <a href="../assets/images/reorder_a_layer.svg">
-        <img src="../assets/images/reorder_a_layer.svg" alt="Change Map Drawing Order" style="max-width:80%" />
+    <a href="assets/images/reorder_a_layer.svg">
+        <img src="assets/images/reorder_a_layer.svg" alt="Change Map Drawing Order" style="max-width:80%" />
     </a>
 </section>
 
@@ -291,8 +291,8 @@ It also generates and hosts the scale bar.
 **Relevant Sequence Diagrams**
 
 <section class="wb-lbx lbx-gal">
-    <a href="../assets/images/filter_data_sequence.svg">
-        <img src="../assets/images/filter_data_sequence.svg" alt="Filter Data Sequence" style="max-width:80%" />
+    <a href="assets/images/filter_data_sequence.svg">
+        <img src="assets/images/filter_data_sequence.svg" alt="Filter Data Sequence" style="max-width:80%" />
     </a>
 </section>
 
@@ -311,14 +311,14 @@ Fills the tips with contents from the template.
 **Relevant Sequence Diagrams**
 
 <section class="wb-lbx lbx-gal">
-    <a href="../assets/images/close_anchor.svg">
-        <img src="../assets/images/close_anchor.svg" alt="Close an Anchor Tip" style="max-width:80%" />
+    <a href="assets/images/close_anchor.svg">
+        <img src="assets/images/close_anchor.svg" alt="Close an Anchor Tip" style="max-width:80%" />
     </a>
 </section>
 
 <section class="wb-lbx lbx-gal">
-    <a href="../assets/images/hover_over_feature.svg">
-        <img src="../assets/images/hover_over_feature.svg" alt="Hover Over a Feature" style="max-width:80%" />
+    <a href="assets/images/hover_over_feature.svg">
+        <img src="assets/images/hover_over_feature.svg" alt="Hover Over a Feature" style="max-width:80%" />
     </a>
 </section>
 
