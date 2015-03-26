@@ -1,5 +1,5 @@
 ---
-layout: index-secmenu-en
+layout: index-secmenu-5.0-en
 title: RAMP Configuration Workflow
 categories: [documentation]
 ---
