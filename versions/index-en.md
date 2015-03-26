@@ -17,6 +17,7 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 
 | Version | Release Date | Release Notes | Download |
 |---|---|---|---|
+| v5.2.0 | 2015-03-27 | [Release Notes]({{ BASE_PATH }}/versions/v5.2.0-en.html) | [Download]({{ BASE_PATH }}/versions/download-en.html#v520) |
 | v5.0.1 | 2015-02-13 | [Release Notes]({{ BASE_PATH }}/versions/v5.0.1-en.html) | [Download]({{ BASE_PATH }}/versions/download-en.html#v501) |
 | v5.0.0 | 2015-02-11 | [Release Notes]({{ BASE_PATH }}/versions/v5.0.0-en.html) | [Download]({{ BASE_PATH }}/versions/download-en.html#v500) |
 {: .table}
