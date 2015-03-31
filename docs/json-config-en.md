@@ -96,6 +96,7 @@ For details on migrating a config file from Canada Goose to Dragonfly, or Dragon
 				* imageUrl
 		* nameField
 		* layerExtent
+		* maxAllowableOffset
 		* settings
 			* panelEnabled
 			* opacity
@@ -104,6 +105,7 @@ For details on migrating a config file from Canada Goose to Dragonfly, or Dragon
 			* visible
 			* boundingBoxVisible
 		* isStatic
+		* aliasMap
 	* wmsLayers (collection)
 		* id
 		* displayName
@@ -216,6 +218,7 @@ For details on migrating a config file from Canada Goose to Dragonfly, or Dragon
 | layers.feature[].symbology.rangeMaps[].imageUrl	| string	| Url path to the symbology image for this mapping
 | layers.feature[].nameField	| string	| Field to be used to identify a feature to a user.  Utilized in summary grid, detail content, map tip, and anchored maptip.  Ideal choice would be the name of a feature.
 | layers.feature[].layerExtent	| extent	| Defines the boundary of the layers data (using a rectangle).  Should contain xmin, ymin, xmax, ymax values, and a valid [spatial reference](https://developers.arcgis.com/javascript/jsapi/spatialreference-amd.html#spatialreference1) for the co-ordinates.  Used to generate the bounding box in RAMP.
+| layers.feature[].maxAllowableOffset	| numeric	| Simplification factor.  Two points closer than the factor will be converted to one.  A value of 0 turns off the simplification.
 | <a name="featurelayers_settings" />layers.feature[].settings	| object	| Optional. Object to store layer settings.  If missing, default values will be used.
 | layers.feature[].settings.panelEnabled	| boolean	| Optional. Indicates whether the settings panel should be accessible to the user.  Default value is True
 | layers.feature[].settings.opacity	| object	| Optional.  Object to store opacity information.
@@ -224,6 +227,7 @@ For details on migrating a config file from Canada Goose to Dragonfly, or Dragon
 | layers.feature[].settings.visible | boolean  | Optional.  The initial visibility of the layer.  Default value is True.
 | layers.feature[].settings.boundingBoxVisible | boolean  | Optional.  The initial visibility of the layer's bounding box.  Default value is True.
 | layers.feature[].isStatic	| boolean	| Optional.  Specifies the current layer is a static layer.  Default value is False.
+| layers.feature[].aliasMap	| object	| Optional.  Defines a mapping of field names to field aliases (strings).
 | <a name="wmsLayers" /> layers.wmsLayers	| collection	| WMS layers to be added to the map.  Order dictates initial order on the map.
 | layers.wmsLayers[].id	| string	| To identify a layer.  Unique across all WMS layers
 | layers.wmsLayers[].url	| string	| The url of the WMS service.  Does not specify name of individual layer to show

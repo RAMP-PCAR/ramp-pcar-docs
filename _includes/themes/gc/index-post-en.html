@@ -90,9 +90,9 @@
                 <h2>Site menu</h2>
                 <div class="row">
                     <ul class="list-inline menu">
-                        <li><a href="/index-en.html" class=" item">RAMP Project</a></li>
-                        <li><a href="/demos/index-en.html" class="item">Using RAMP</a></li>
-                        <li><a href="/docs/index-en.html" class="item">RAMP Documentation</a></li>
+                        <li><a href="{{ BASE_PATH }}/index-en.html" class=" item">RAMP Project</a></li>
+                        <li><a href="{{ BASE_PATH }}/demos/index-en.html" class="item">Using RAMP</a></li>
+                        <li><a href="{{ BASE_PATH }}/docs/index-en.html" class="item">RAMP Documentation</a></li>
                     </ul>
                 </div>
             </div>
@@ -103,8 +103,8 @@
         <div class="container">
             <div class="row">
                 <ol class="breadcrumb">
-                    <li><a href="/index-en.html">Home</a></li>
-                    <li><a href="/blog/index.html">Blog</a></li>
+                    <li><a href="{{ BASE_PATH }}/index-en.html">Home</a></li>
+                    <li><a href="{{ BASE_PATH }}/blog/index.html">Blog</a></li>
                     <li class="">{{ page.title }}</li>
                 </ol>
             </div>
@@ -168,6 +168,10 @@
     <script src="{{ ASSET_PATH }}/js/toc.js"> </script>
     <script type="text/javascript">
         $(document).ready(function () {
+            if (location.pathname.indexOf("/ramp-pcar-docs/") !== -1) {
+                $("body").append('<img src="{{ BASE_PATH }}/assets/images/ramp_docs_edge.png" class="ribbon">');
+            }
+
             $('.toc')
                 .addClass("mrgn-bttm-lg panel panel-default")
                 .toc({
