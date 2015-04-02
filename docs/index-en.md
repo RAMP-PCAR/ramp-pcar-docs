@@ -33,6 +33,7 @@ RAMP operates on the principle of progressive enhancement, and implements well-e
 * [Build Tool](build-tool-en.html)
 * [Configuration Workflow](configuration-flow-en.html)
 * [Basemap Support](basemap-support-en.html)
+* [Feature Layer Support](feature-support-en.html)
 * [WMS Support](wms-support-en.html)
 * [Advanced Toolbar](advanced-toolbar-en.html)
 * [Static Layer Support](static-layer-support-en.html)
