@@ -13,16 +13,17 @@ categories:
 
 See [Versioning](version-info-en.html) for the meaning of each version number.
 
-## Version 5.0 - Elk
+## Version 5 - Elk
 
 | Version | Release Date | Release Notes | Download |
 |---|---|---|---|
+| v5.3.0 | 2015-04-28 | [Release Notes]({{ BASE_PATH }}/versions/v5.3.0-en.html) | [Download]({{ BASE_PATH }}/versions/download-en.html#v530) |
 | v5.2.0 | 2015-03-31 | [Release Notes]({{ BASE_PATH }}/versions/v5.2.0-en.html) | [Download]({{ BASE_PATH }}/versions/download-en.html#v520) |
 | v5.0.1 | 2015-02-13 | [Release Notes]({{ BASE_PATH }}/versions/v5.0.1-en.html) | [Download]({{ BASE_PATH }}/versions/download-en.html#v501) |
 | v5.0.0 | 2015-02-11 | [Release Notes]({{ BASE_PATH }}/versions/v5.0.0-en.html) | [Download]({{ BASE_PATH }}/versions/download-en.html#v500) |
 {: .table}
 
-## Version 4.0 - Dragonfly
+## Version 4 - Dragonfly
 
 | Version | Release Date | Release Notes | Download |
 |---|---|---|---|
@@ -31,7 +32,7 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 {: .table}
 
 
-## Version 3.0 - Canada Goose
+## Version 3 - Canada Goose
 
 | Version | Release Date | Release Notes | Download |
 |---|---|---|---|
@@ -40,7 +41,7 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 | v3.0.0 | 2014-10-28 | [Release Notes]({{ BASE_PATH }}/versions/v3.0.0-en.html) | [Download]({{ BASE_PATH }}/versions/download-en.html#v300) |
 {: .table}
 
-## Version 2.0 - Bobcat (no longer supported)
+## Version 2 - Bobcat (no longer supported)
 
 | Version | Release Date | Release Notes | Download |
 |---|---|---|---|
@@ -52,7 +53,7 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 | v2.0.0 | 2014-09-05 | [Release Notes]({{ BASE_PATH }}/versions/v2.0.0-en.html) | [Download]({{ BASE_PATH }}/versions/download-en.html#v200) |
 {: .table}
 
-## Version 1.0 - Arctic Fox (no longer supported)
+## Version 1 - Arctic Fox (no longer supported)
 
 | Version | Release Date | Release Notes | Download |
 |---|---|---|---|
