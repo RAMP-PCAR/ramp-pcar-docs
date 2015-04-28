@@ -19,9 +19,19 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
     <p>Contact <a href="mailto:Mike.Weech@ec.gc.ca?Subject=RAMP%20Repo%20private%20access">Mike Weech</a> to get access.</p>
 </section>
 
-## Version 5.0 - Elk
+## Version 5 - Elk
 
 ### Stable Releases
+
+#### v5.3.0 {#v530}
+
+| Repo | Source Code | Production Files | Release Notes |
+|---|---|---|---|
+| RAMP Core | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/archive/v5.3.0.zip) | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/releases/download/v5.3.0/ramp-pcar-dist-5.3.0.zip) | [Release Notes]({{ BASE_PATH }}/versions/v5.3.0-en.html) |
+| RAMP Usability Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/archive/v5.3.0.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/releases/download/v5.3.0/ramp-theme-usability-dist-5.3.0.zip) |  |
+| RAMP Intranet Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/archive/v5.3.0.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/releases/download/v5.3.0/ramp-theme-intranet-dist-5.3.0.zip) |  |
+| RAMP Canada.ca Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/archive/v5.3.0.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/releases/download/v5.3.0/ramp-theme-canada-dist-5.3.0.zip) |  |
+{: .table}
 
 #### v5.2.0 {#v520}
 
@@ -63,7 +73,7 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 | RAMP Canada.ca Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/archive/develop.zip) |
 {: .table}
 
-## Version 4.0 - Dragonfly
+## Version 4 - Dragonfly
 
 ### Stable Releases
 
@@ -87,7 +97,7 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 | RAMP Canada.ca Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/archive/v4.0.0.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/releases/download/v4.0.0/ramp-theme-canada-dist-4.0.0.zip) |  |
 {: .table}
 
-## Version 3.0 - Canada Goose
+## Version 3 - Canada Goose
 
 ### Stable Releases
 
@@ -121,7 +131,7 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 | RAMP Intranet Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/archive/v3.0.0.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/releases/download/v3.0.0/ramp-theme-intranet-dist-3.0.0.zip) |  |
 {: .table}
 
-## Version 2.0 - Bobcat (no longer supported) {#v200}
+## Version 2 - Bobcat (no longer supported) {#v200}
 
 ### Stable Releases
 
@@ -135,7 +145,7 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 | v2.0.0 | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/archive/v2.0.0.zip) | [Release Notes]({{ BASE_PATH }}/versions/v2.0.0-en.html) |
 {: .table}
 
-## Version 1.0 - Arctic Fox (no longer supported) {#v100}
+## Version 1 - Arctic Fox (no longer supported) {#v100}
 
 ### Stable Releases
 

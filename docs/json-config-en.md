@@ -20,6 +20,10 @@ For details on migrating a config file from Canada Goose to Dragonfly, or Dragon
 
 * geometryServiceUrl
 * proxyUrl
+* exportMapUrl
+* exportProxyUrl
+* geonameUrl
+* geolocationUrl
 * extents
     * defaultExtent
     * fullExtent
@@ -40,7 +44,7 @@ For details on migrating a config file from Canada Goose to Dragonfly, or Dragon
 * zoomLevels
     * min
     * max
-* initialSelectedBasemap
+* initialBasemapIndex
 * basemaps (collection)
     * id
     * layers (collection)
@@ -143,6 +147,10 @@ For details on migrating a config file from Canada Goose to Dragonfly, or Dragon
 |----+----|----+----|----+----
 | geometryServiceUrl	| string	| URL to an ArcGIS geometry service REST endpoint.  Used for advanced drawing tools.
 | <a name="proxyUrl" />proxyUrl	| string	| Path to a proxy service (relative path).  Used for sending large requests to services.  No URL indicates no proxy is available.
+| exportMapUrl	| string	| URL to a map export service. Should point directly to an endpoint that can be consumed by ESRI PrintTask.
+| exportProxyUrl	| string	| Path to a proxy service for map export requests. Required for IE9 to support map export.
+| geonameUrl	| string	| URL to geonames service root. Supplies detailed info on geonames. Service should conform to geogratis geoname request and return value schemas.
+| geolocationUrl	| string	| URL to geolocations service root. Supplies basic information but supports more location types. Service should conform to geogratis geolocation request and return value schemas.
 | <a name="extents" />extents	| 	| Note:  All extents should contain xmin, ymin, xmax, ymax values, and a [spatial reference](https://developers.arcgis.com/javascript/jsapi/spatialreference-amd.html#spatialreference1) for the co-ordinates.
 | extents.defaultExtent	| envelope	| Map extent to display when the app initializes
 | extents.fullExtent	| envelope	| Optional.  Map extent to display when the full extent button is pushed.  Default value is defaultExtent
@@ -163,7 +171,7 @@ For details on migrating a config file from Canada Goose to Dragonfly, or Dragon
 | zoomLevels	| 	|
 | <a name="levelofdetails_minlevel" />zoomLevels.min	| numeric	| Optional.  Minimum zoom level.  Default value is 1
 | <a name="levelofdetails_maxlevel" />zoomLevels.max	| numeric	| Optional.  Maximum zoom level.  Default value is 17
-| <a name="initialSelectedBasemap" />initialSelectedBasemap	| numeric	| Optional.  Index of the basemap to show at load time.  Index refers to the position in the basemaps collection.  Default value is 0.
+| <a name="initialSelectedBasemap" />initialBasemapIndex	| numeric	| Optional.  Index of the basemap to show at load time.  Index refers to the position in the basemaps collection.  Default value is 0.
 | <a name="basemaps" /> basemaps	| collection of basemap items	| Order of collection will determine order they are added to the basemap selector list.  Can be empty.
 | basemaps[].id	| string	| To identify basemap.  Unique across all map items.  No spaces!
 | <a name="basemaps_layers" /> basemaps[].layers	| collection of layers	| The services that make up this basemap.  Facillitates having multiple tile sets act as one basemap.

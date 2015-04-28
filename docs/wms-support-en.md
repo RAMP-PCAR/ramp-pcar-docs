@@ -15,7 +15,7 @@ categories: [documentation]
 
 ## Supported Features in RAMP
 
-RAMP can display a layer from a WMS.  It will display as an image on the map and will appear in the layer selector.  Layer visibility and opacity can be adjusted.  WMS layers can be re-ordered amongst themselves, but must always remain underneath any feature layers on the map.  The WMS must support a projection that is compatible with the basemap being used.
+WMS layers can be added to RAMP provided they support either 1.1.0, 1.1.1 or 1.3 of the WMS standard.  It will display as an image on the map and will appear in the layer selector.  Layer visibility and opacity can be adjusted.  WMS layers can be re-ordered amongst themselves, but must always remain underneath any feature layers on the map.  The WMS must support a projection that is compatible with the basemap being used.
 
 Legend support is available if configured in RAMP and provided that the WMS source implements the GetLegendGraphic request.  In the RAMP configuration an entry should be made in `legendMimeType`, if this entry is not present then no legend will be displayed.
 
