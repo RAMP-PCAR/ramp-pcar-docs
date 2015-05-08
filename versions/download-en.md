@@ -19,6 +19,8 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
     <p>Contact <a href="mailto:Mike.Weech@ec.gc.ca?Subject=RAMP%20Repo%20private%20access">Mike Weech</a> to get access.</p>
 </section>
 
+<a name="version-list"></a>
+
 ## Version 5 - Elk
 
 ### Stable Releases
