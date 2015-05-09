@@ -8,8 +8,7 @@ title: Working Examples
 
 <div class="toc"></div>
 
-
-## Version 5.0 - Elk
+## Version 5 - Elk
 
 ### v5.2.0
 
@@ -32,7 +31,7 @@ title: Working Examples
 | RAMP Canada.ca Theme | [Link]({{BASE_PATH}}/demos/NRSTC/5.0/canada/ramp-en.html)| A Simple Implementation of RAMP using Canada.ca Theme |
 {: .table}
 
-## Version 4.0 - Dragonfly
+## Version 4 - Dragonfly
 
 | Name | Link | Description
 |----+----|
@@ -43,7 +42,7 @@ title: Working Examples
 {: .table}
 
 
-## Version 3.0 - Canada Goose
+## Version 3 - Canada Goose
 
 | Name | Link | Description
 |----+----|
