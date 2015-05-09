@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge;" />
     <meta charset="utf-8" />
-    <title>Version History</title>
+    <title>v5.3.1 - Elk - Release Notes</title>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     
     <meta name="author" content="Environment Canada">
@@ -112,7 +112,13 @@
 
                     
 
-                    <li class="">Version History</li>
+                        
+                            <li><a href="/ramp-pcar-docs/versions/index-en.html">Version History</a></li>
+                        
+
+                    
+
+                    <li class="">v5.3.1 - Elk - Release Notes</li>
                 </ol>
             </div>
         </div>
@@ -121,194 +127,36 @@
     <main role="main" property="mainContentOfPage" class="container">
 
         
-<h1 id="wb-cont">Version History</h1>
+<h1 id="wb-cont">v5.3.1 - Elk - Release Notes</h1>
 
 <div class="toc"></div>
 
-<p>See <a href="version-info-en.html">Versioning</a> for the meaning of each version number.</p>
+<ul>
+  <li><strong>Release Date:</strong> 2015-05-08</li>
+</ul>
 
-<h2 id="version-5---elk">Version 5 - Elk</h2>
+<p>&lt;a name”5.3.1”&gt;&lt;/a&gt;
+### 5.3.1 (2015-05-09)</p>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Version</th>
-      <th>Release Date</th>
-      <th>Release Notes</th>
-      <th>Download</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>v5.3.1</td>
-      <td>2015-05-08</td>
-      <td><a href="/ramp-pcar-docs/versions/v5.3.1-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v5.3.1">Download</a></td>
-    </tr>
-    <tr>
-      <td>v5.3.0</td>
-      <td>2015-04-28</td>
-      <td><a href="/ramp-pcar-docs/versions/v5.3.0-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v530">Download</a></td>
-    </tr>
-    <tr>
-      <td>v5.2.0</td>
-      <td>2015-03-31</td>
-      <td><a href="/ramp-pcar-docs/versions/v5.2.0-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v520">Download</a></td>
-    </tr>
-    <tr>
-      <td>v5.0.1</td>
-      <td>2015-02-13</td>
-      <td><a href="/ramp-pcar-docs/versions/v5.0.1-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v501">Download</a></td>
-    </tr>
-    <tr>
-      <td>v5.0.0</td>
-      <td>2015-02-11</td>
-      <td><a href="/ramp-pcar-docs/versions/v5.0.0-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v500">Download</a></td>
-    </tr>
-  </tbody>
-</table>
+<h4 id="bug-fixes">Bug Fixes</h4>
 
-<h2 id="version-4---dragonfly">Version 4 - Dragonfly</h2>
+<ul>
+  <li><strong>add-dataset:</strong> accept urls with trailing spaces (<a href="https://github.com/RAMP-PCAR/RAMP-PCAR/commit/8ecaffcf">8ecaffcf</a>, closes <a href="http://tfs.int.ec.gc.ca:8080/tfs/DC/RAMP/_workitems/edit/9650">9650</a>)</li>
+  <li><strong>datagrid-ui:</strong> remove zoomlight on extended datagrid switch (<a href="https://github.com/RAMP-PCAR/RAMP-PCAR/commit/6ec2c07d">6ec2c07d</a>, closes <a href="http://tfs.int.ec.gc.ca:8080/tfs/DC/RAMP/_workitems/edit/8826">8826</a>)</li>
+  <li><strong>layer-loader:</strong> corrected bad falsy logic on reloads (<a href="https://github.com/RAMP-PCAR/RAMP-PCAR/commit/5ca1c266">5ca1c266</a>)</li>
+  <li><strong>layer-selector:</strong>
+    <ul>
+      <li>remove unused control (<a href="https://github.com/RAMP-PCAR/RAMP-PCAR/commit/1b150021">1b150021</a>)</li>
+      <li>error for permanent offscale (<a href="https://github.com/RAMP-PCAR/RAMP-PCAR/commit/4adc2f1c">4adc2f1c</a>, closes <a href="http://tfs.int.ec.gc.ca:8080/tfs/DC/RAMP/_workitems/edit/8634">8634</a>)</li>
+    </ul>
+  </li>
+  <li><strong>map-export-ui:</strong> fix map export title in full screen mode (<a href="https://github.com/RAMP-PCAR/RAMP-PCAR/commit/ec0a3e20">ec0a3e20</a>, closes <a href="http://tfs.int.ec.gc.ca:8080/tfs/DC/RAMP/_workitems/edit/9581">9581</a>)</li>
+  <li><strong>map-toolbar-ui:</strong> trying to make the button shrink at lower resolutions (<a href="https://github.com/RAMP-PCAR/RAMP-PCAR/commit/90e629d7">90e629d7</a>)</li>
+</ul>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Version</th>
-      <th>Release Date</th>
-      <th>Release Notes</th>
-      <th>Download</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>v4.0.1</td>
-      <td>2015-01-15</td>
-      <td><a href="/ramp-pcar-docs/versions/v4.0.1-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v401">Download</a></td>
-    </tr>
-    <tr>
-      <td>v4.0.0</td>
-      <td>2014-11-20</td>
-      <td><a href="/ramp-pcar-docs/versions/v4.0.0-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v400">Download</a></td>
-    </tr>
-  </tbody>
-</table>
+<h2 id="details">Details</h2>
 
-<h2 id="version-3---canada-goose">Version 3 - Canada Goose</h2>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>Version</th>
-      <th>Release Date</th>
-      <th>Release Notes</th>
-      <th>Download</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>v3.0.2</td>
-      <td>2014-11-18</td>
-      <td><a href="/ramp-pcar-docs/versions/v3.0.2-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v302">Download</a></td>
-    </tr>
-    <tr>
-      <td>v3.0.1</td>
-      <td>2014-10-31</td>
-      <td><a href="/ramp-pcar-docs/versions/v3.0.1-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v301">Download</a></td>
-    </tr>
-    <tr>
-      <td>v3.0.0</td>
-      <td>2014-10-28</td>
-      <td><a href="/ramp-pcar-docs/versions/v3.0.0-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v300">Download</a></td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="version-2---bobcat-no-longer-supported">Version 2 - Bobcat (no longer supported)</h2>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>Version</th>
-      <th>Release Date</th>
-      <th>Release Notes</th>
-      <th>Download</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>v2.0.5</td>
-      <td>2014-10-10</td>
-      <td><a href="/ramp-pcar-docs/versions/v2.0.5-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v200">Download</a></td>
-    </tr>
-    <tr>
-      <td>v2.0.4</td>
-      <td>2014-10-8</td>
-      <td><a href="/ramp-pcar-docs/versions/v2.0.4-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v200">Download</a></td>
-    </tr>
-    <tr>
-      <td>v2.0.3</td>
-      <td>2014-10-8</td>
-      <td><a href="/ramp-pcar-docs/versions/v2.0.3-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v200">Download</a></td>
-    </tr>
-    <tr>
-      <td>v2.0.2</td>
-      <td>2014-09-30</td>
-      <td><a href="/ramp-pcar-docs/versions/v2.0.2-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v200">Download</a></td>
-    </tr>
-    <tr>
-      <td>v2.0.1</td>
-      <td>2014-09-25</td>
-      <td><a href="/ramp-pcar-docs/versions/v2.0.1-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v200">Download</a></td>
-    </tr>
-    <tr>
-      <td>v2.0.0</td>
-      <td>2014-09-05</td>
-      <td><a href="/ramp-pcar-docs/versions/v2.0.0-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v200">Download</a></td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="version-1---arctic-fox-no-longer-supported">Version 1 - Arctic Fox (no longer supported)</h2>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>Version</th>
-      <th>Release Date</th>
-      <th>Release Notes</th>
-      <th>Download</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>v1.0.1</td>
-      <td>2014-08-25</td>
-      <td><a href="/ramp-pcar-docs/versions/v1.0.1-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v100">Download</a></td>
-    </tr>
-    <tr>
-      <td>v1.0.0</td>
-      <td>2014-06-20</td>
-      <td><a href="/ramp-pcar-docs/versions/v1.0.0-en.html">Release Notes</a></td>
-      <td><a href="/ramp-pcar-docs/versions/download-en.html#v100">Download</a></td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Number of Commits:</strong> 18</p>
 
         <dl id="wb-dtmd" property="dateModified">
             <dt>Date modified:&#32;</dt>
