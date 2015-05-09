@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge;" />
     <meta charset="utf-8" />
-    <title>Archive</title>
+    <title>v5.3.0 - Elk - Release Notes</title>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     
     <meta name="author" content="Environment Canada">
@@ -113,12 +113,12 @@
                     
 
                         
-                            <li><a href="/ramp-pcar-docs/docs/index-en.html">Documentation</a></li>
+                            <li><a href="/ramp-pcar-docs/versions/index-en.html">Version History</a></li>
                         
 
                     
 
-                    <li class="">Archive</li>
+                    <li class="">v5.3.0 - Elk - Release Notes</li>
                 </ol>
             </div>
         </div>
@@ -127,34 +127,7 @@
     <main role="main" property="mainContentOfPage" class="container">
 
         
-<h1 id="wb-cont">Archive</h1>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Version</th>
-      <th>Documentation</th>
-      <th>API</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>v3.0.0 - Canada Goose</td>
-      <td><a href="3.0/index-en.html">Link</a></td>
-      <td><a href="/api/3.0/yuidoc/">Link</a></td>
-    </tr>
-    <tr>
-      <td>v4.0.0 - Dragonfly</td>
-      <td><a href="4.0/index-en.html">Link</a></td>
-      <td><a href="/api/4.0/yuidoc/">Link</a></td>
-    </tr>
-    <tr>
-      <td>v5.0.0 - Elk</td>
-      <td><a href="5.0/index-en.html">Link</a></td>
-      <td><a href="/api/5.0/yuidoc/">Link</a></td>
-    </tr>
-  </tbody>
-</table>
 
         <dl id="wb-dtmd" property="dateModified">
             <dt>Date modified:&#32;</dt>
