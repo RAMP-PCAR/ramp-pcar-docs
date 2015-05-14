@@ -15,11 +15,11 @@ categories: [documentation]
 
 ## Supported static layer in RAMP
 
-RAMP can display a layer as static (non interactive) layer.  It will display as an non-interactive layer on the map, and will appear in the layer selector.  Layer visibility and opacity can be adjusted.  Static layers can be re-ordered amongst themselves.  The static layer must support a projection that is compatible with the basemap being used.  
+RAMP can display a feature layer as a static (non interactive) layer.  It will display as an non-interactive layer on the map, and will appear in the layer selector.  Layer visibility and opacity can be adjusted.  Static layers can be re-ordered amongst any other feature layer.  The static layer must support a projection that is compatible with the basemap being used.  
 
-A legend can be displayed along with the static layer.  It will be displayed in the metadata panel.  If this feature is enabled, an image path can be specified.  This path can be the GetLegend request of the static layer.
+Clicking the static layer will not return any information, no maptip or anchored maptip will be displayed.  Features of a static layer do not appear in the data grid.
 
-Clicking the static layer will not return any information, no maptip or anchored maptip will be displayed.  MORE INFORMATION TO COME.
+Think of a static layer as an enhancement to the basemap tile.  It provides extra contextual information to the map, but is not considered to provide feature data.
 
 [Back To Top](#top)
 {: .text-right}
@@ -43,8 +43,7 @@ The following is an example of static layer config setting:
 			}
 		}
 	},
-	"isStatic":true,
-	"layerType":"feature"
+	"isStatic":true
 }
 	
 {% endhighlight %}
@@ -54,7 +53,6 @@ Please note the above mentioned config settings are the required attributes for 
 
 * symbology This information is used to generate legend information with the imageUrl and legendText.
 * isStatic The isStatic attribute is used by RAMP to identify the layer as static; which in turn unsubscribe to the event handlers for maptip display and datagrid generation.
-* layerType The layerType is used to generate appropriate static layer. They can be feature, tile or dynamic.
 
 Please refer to [JSON Config Definition](json-config-en.html) for more information on RAMP config settings.
 
