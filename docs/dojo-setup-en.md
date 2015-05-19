@@ -118,7 +118,6 @@ See function __init__ in module __map.js__
 Now that the map exists, the remainder of UI tasks are executed.  This includes:
 
 * Construction and initialization of the Navigation widget
-* Event handlers for maptips and feature highlighting are wired up
 * The basemap selector is initialized
 * Construction and initialization of the Layer Selector
 * Initialization of the Advanced Toolbar, if required
