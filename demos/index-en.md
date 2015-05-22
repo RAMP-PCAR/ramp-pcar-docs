@@ -20,6 +20,16 @@ title: Working Examples
 | RAMP Canada.ca Theme | [Link]({{BASE_PATH}}/demos/NRSTC/v5.3.1/ramp-theme-canada/ramp-en.html)| A Simple Implementation of RAMP using Canada.ca Theme |
 {: .table}
 
+### v5.3.0
+
+| Name | Link | Description
+|----+----|
+| RAMP Core Theme | [Link]({{BASE_PATH}}/demos/NRSTC/v5.3.0/ramp-pcar/ramp-en.html)| A Simple Implementation of RAMP using Core Theme |
+| RAMP Usability Theme | [Link]({{BASE_PATH}}/demos/NRSTC/v5.3.0/ramp-theme-intranet/ramp-en.html)| A Simple Implementation of RAMP using Usability Theme |
+| RAMP Intranet Theme | [Link]({{BASE_PATH}}/demos/NRSTC/v5.3.0/ramp-theme-intranet/ramp-en.html)| A Simple Implementation of RAMP using Intranet Theme |
+| RAMP Canada.ca Theme | [Link]({{BASE_PATH}}/demos/NRSTC/v5.3.0/ramp-theme-canada/ramp-en.html)| A Simple Implementation of RAMP using Canada.ca Theme |
+{: .table}
+
 ### v5.2.0
 
 | Name | Link | Description
