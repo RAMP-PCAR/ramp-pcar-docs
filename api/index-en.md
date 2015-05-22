@@ -10,6 +10,7 @@ published: true
 
 | Version | Link |
 |---|---|
+| v5.3.2 - Elk | [Link](v5.3.2/yuidoc/) |
 | v5.3.1 - Elk | [Link](v5.3.1/yuidoc/) |
 | v5.2.0 - Elk | [Link](v5.2.0/yuidoc/) |
 | v5.0.0 - Elk | [Link](5.0/yuidoc/) |
