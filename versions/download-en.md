@@ -33,6 +33,7 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 | RAMP Usability Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/archive/v5.3.2.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/releases/download/v5.3.2/ramp-theme-usability-dist-5.3.2.zip) |  |
 | RAMP Intranet Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/archive/v5.3.2.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/releases/download/v5.3.2/ramp-theme-intranet-dist-5.3.2.zip) |  |
 | RAMP Canada.ca Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/archive/v5.3.2.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/releases/download/v5.3.2/ramp-theme-canada-dist-5.3.2.zip) |  |
+| RAMP FGP Internal Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-fgp-int/archive/v5.3.2.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-fgp-int/releases/download/v5.3.2/ramp-theme-fgp-int-dist-5.3.2.zip) |  |
 {: .table}
 
 #### v5.3.1 {#v5_3_1}
