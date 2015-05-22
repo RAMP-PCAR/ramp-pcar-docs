@@ -103,13 +103,15 @@ See function __load__ in module __gui.js__, and function __createUI__ in __bookm
 
 ### Map Creation
 
-The map object is created, along with any initial map layers we want to show.  The map is initialized using the initial extent, and we load the first basemap immediately.  The following layers objects are created, an asterisk indicates it is loaded asynchronously (i.e. it is not added to the map at this point).
+The map object is created, along with any initial map layers we want to show.  The map is initialized using the initial extent, and we load the first basemap immediately.  The following layers objects are created, an asterisk indicates it is loaded asynchronously.
 
-* basemap layer
 * interactive feature layers (*)
 * static feature layers (*)
 * WMS layers (*)
+* bounding box layers
 * highlighting layers
+
+Bounding boxes are generated along with the layers to hold them, and if required the box geometry is reprojected to match the basemap.  
 
 See function __init__ in module __map.js__
 
@@ -118,12 +120,12 @@ See function __init__ in module __map.js__
 Now that the map exists, the remainder of UI tasks are executed.  This includes:
 
 * Construction and initialization of the Navigation widget
+* Event handlers for maptips and feature highlighting are wired up
 * The basemap selector is initialized
 * Construction and initialization of the Layer Selector
 * Initialization of the Advanced Toolbar, if required
 * Construction and initialization of the Datagrid
 * Event handlers to update the Bookmark tool are wired up
-* Asynchronous layers are fed into the [layer loading process](layer-load-en.html)
 
 See function __initializeMap__ in the bootstrapper
 

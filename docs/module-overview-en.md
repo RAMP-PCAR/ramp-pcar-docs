@@ -25,15 +25,6 @@ Provides a toolbar with tools that violate accessibility rules.  Will load and d
 [Back To Top](#top)
 {: .text-right}
 
-## ramp/attributeLoader {#attributeLoader}
-
-Manages the downloading, transformation, and storage of attribute data for map features.  Allows for attribute data to be downloaded independently of the map layers, making it easier to support both snapshot and on-demand feature layers.
-
-| **API Page** | [AttributeLoader](../api/yuidoc/classes/AttributeLoader.html)
-
-[Back To Top](#top)
-{: .text-right}
-
 
 ## ramp/basemapSelector {#basemapselector}
 
@@ -142,24 +133,6 @@ The view detail function involves generating a custom detail report (from a temp
 [Back To Top](#top)
 {: .text-right}
 
-## ramp/dataLoader {#dataLoader}
-
-Methods for supporting user added layers. Includes importing logic for various file types (GeoJSON, Shapefile, CSV) and support for user supplied services, such as symbology generators.
-
-| **API Page** | [DataLoader](../api/yuidoc/classes/DataLoader.html)
-
-[Back To Top](#top)
-{: .text-right}
-
-## ramp/dataLoaderGui {#dataLoaderGui}
-
-Controls the interface for the add layer choice-tree. Includes the allowable choice flows and input presentation & validation.
-
-| **API Page** | [DataLoaderGui](../api/yuidoc/classes/DataLoaderGui.html)
-
-[Back To Top](#top)
-{: .text-right}
-
 ## ramp/eventManager {#eventmanager}
 
 The module defines event names as constants to avoid typing errors.
@@ -231,7 +204,7 @@ The module also generates the graphic layers used to manage the highlight imager
 
 The module implements the generation of the filter control, and implements the filtering.
 
-There is currently only layer-level filtering in RAMP. I.e. a layer can be on or off.  Future versions plan to include more granular filtering, such as by-attribute filters.
+There is only layer-level filtering in the Arctic Fox version of RAMP. I.e. a layer can be on or off.  Future versions plan to include more granular filtering, such as by-attribute filters.
 
 The following actions are performed by the module
 
@@ -242,7 +215,7 @@ The following actions are performed by the module
     * When opacity is set to 0.0, the layer is toggled invisible
     * When opacity is set to 0.1 - 0.99, the layer is toggled visible (if it was invisible before)
     * When a layer is toggled invisible, the opacity slider control is "greyed out"
-    * When a layer is toggled visible, the opacity slider control is restored to normal appearance
+    * WHen a layer is toggled visible, the opacity slider control is restored to normal appearance
     * When a layer is toggled visible, the opacity slider control is set to 1.0 (only if it was set to 0.0)
 * Changing the draw order of layers on the map
 
@@ -273,27 +246,6 @@ The following actions are performed by the module
 [Back To Top](#top)
 {: .text-right}
 
-## ramp/geoSearch {#geoSearch}
-
-The module provides functions to use the [GeoNames](http://www.nrcan.gc.ca/earth-sciences/geography/place-names/tools-applications/9249) and [GeoLocations](http://geogratis.gc.ca/site/eng/geoloc) services available from [GeoGratis](http://geogratis.cgdi.gc.ca/). It takes a search string (including a fragment as the string is typed) along with optional search parameters and returns matches and suggestions, along with map co-ordinates for those suggestions. The module also pre-downloads domain-of-values lists for [Province](http://geogratis.gc.ca/services/geoname/en/codes/province/) and [Concise](http://geogratis.gc.ca/services/geoname/en/codes/concise/) codes.
-
-The module supports 
-
-* Name search
-	* Filter by Province
-	* Filter by Concise Code
-	* Fitler by Map Extent
-	* Suggestions for Spelling Mistakes
-* Forward Sorting Area search
-	* Filter by Radius
-* Lat Long search
-	* Filter by Radius
-
-| **API Page** | [GeoSearch](../api/yuidoc/classes/GeoSearch.html)
-
-[Back To Top](#top)
-{: .text-right}
-
 ## ramp/globalStorage {#globalstorage}
 
 The module defines global items to make things easier to share across modules.  We place location specific string here (e.g. a configuration server URL), so this servers as the spot to tweak when moving the application to a different environment.  Implementers can also add items to this module on the fly.
@@ -305,7 +257,7 @@ The module defines global items to make things easier to share across modules.  
 
 ## ramp/graphicExtension {#graphicextension}
 
-The module contains helper functions for [graphic](https://developers.arcgis.com/javascript/jsapi/graphic-amd.html) objects and Feature Data objects.  E.g. get objectId, get layer, get detail text
+The module contains helper functions for [graphic](https://developers.arcgis.com/javascript/jsapi/graphic-amd.html) objects.  E.g. get objectId, get layer, get detail text
 
 | **API Page** | [GraphicExtension](../api/yuidoc/classes/GraphicExtension.html)
 | **Relevant Configuration Nodes** | [featureLayers[].templates.detail](json-config-en.html#featurelayers_templates_detail)
@@ -330,50 +282,11 @@ Contains logic to go to full-screen mode.
 [Back To Top](#top)
 {: .text-right}
 
-## ramp/imageExport {#imageExport}
-
-The module contains logic to generate an image file based on the current map view using an ESRI ArcGIS Server [Export Web Map Task](http://resources.arcgis.com/en/help/rest/apiref/index.html?exportwebmap_spec.html)
-
-There image export currently does not support imagery that is not hosted on a public map server (e.g. file-based layers,  bounding box graphics).
-
-| **API Page** | [ImageExport](../api/yuidoc/classes/ImageExport.html)
-| **Relevant Configuration Nodes** | [featureLayers[].templates.detail](json-config-en.html#featurelayers_templates_detail)
-
-[Back To Top](#top)
-{: .text-right}
-
-## ramp/layerGroup {#layerGroup}
-
-A class for managing groups of layers in the layer selector.
-
-| **API Page** | [LayerGroup](../api/yuidoc/classes/LayerGroup.html)
-
-[Back To Top](#top)
-{: .text-right}
-
-## ramp/layerItem {#layerItem}
-
-A class for managing a layer in the layer selector. Controls the look and available controls for a layer based on its current state.
-
-| **API Page** | [LayerItem](../api/yuidoc/classes/LayerItem.html)
-
-[Back To Top](#top)
-{: .text-right}
-
-## ramp/layerLoader {#layerLoader}
-
-Handles the loading and state changes of layers. This includes the insertion of layers into the map, and reacting to update and error events. Also contains logic to remove and reload layers.
-
-| **API Page** | [LayerLoader](../api/yuidoc/classes/LayerLoader.html)
-
-[Back To Top](#top)
-{: .text-right}
-
 ## ramp/map {#map}
 
-The map module generates the map control and layer objects, and initiates the adding of layers to the map. It also generates and hosts the scale bar.
+The map module generates the map control and adds layers to the map, as defined in the configuration.
 
-Other map related functions can be found in this module, including layer re-ordering, client-side extent projection, layer visiblility management, zooming and re-centering, boundary checks, as well as applying numerous event listeners and re-publishers.
+It also generates and hosts the scale bar.
 
 **Relevant Sequence Diagrams**
 
@@ -384,16 +297,7 @@ Other map related functions can be found in this module, including layer re-orde
 </section>
 
 | **API Page** | [Map](../api/yuidoc/classes/Map.html)
-| **Relevant Configuration Nodes** | [basemaps[].showOnInit](json-config-en.html#basemaps_showoninit) <br /> [basemaps[].url](json-config-en.html#basemaps_url) <br /> [extents](json-config-en.html#extents) <br /> [featureLayers[].url](json-config-en.html#featurelayers_url) <br /> [featureLayers[].layerAttributes](json-config-en.html#featurelayers_layerattributes) <br /> [levelOfDetails.minLevel](json-config-en.html#levelofdetails_minlevel) <br /> [levelOfDetails.maxLevel](json-config-en.html#levelofdetails_maxlevel) <br /> [spatialReference](json-config-en.html#spatialreference)
-
-[Back To Top](#top)
-{: .text-right}
-
-## ramp/mapClickHandler {#mapClickHandler}
-
-The module reacts to clicks on the map, which represents clicks on a WMS layer. It triggers the calling and results presentation of WMS feature info requests.
-
-| **API Page** | [MapClickHandler](../api/yuidoc/classes/MapClickHandler.html)
+| **Relevant Configuration Nodes** | [basemaps[].showOnInit](json-config-en.html#basemaps_showoninit) <br /> [basemaps[].url](json-config-en.html#basemaps_url) <br /> [extents](json-config-en.html#extents) <br /> [featureLayers[].url](json-config-en.html#featurelayers_url) <br /> [featureLayers[].layerAttributes](json-config-en.html#featurelayers_layerattributes) <br /> `featureLayers[].staticLayers` <br /> [levelOfDetails.minLevel](json-config-en.html#levelofdetails_minlevel) <br /> [levelOfDetails.maxLevel](json-config-en.html#levelofdetails_maxlevel) <br /> [spatialReference](json-config-en.html#spatialreference)
 
 [Back To Top](#top)
 {: .text-right}
@@ -441,7 +345,7 @@ Also handles the two-way synchronization between the map extent and the widget s
 
 Quick zoom widget is populated with target items, will zoom the map when an item is selected
 
-THIS ITEM IS UNDER CONSIDERATION FOR COMPLETE OVERHAUL OR REMOVAL
+THIS ITEM IS UNDER CONSIDERATION FOR COMPLETE OVERHAUL
 
 NOTE: Depends on one of our quickzoom services.  These will be on public production after 10.1 migration.
 
@@ -453,20 +357,11 @@ NOTE: our current config file does not have the appropriate node.  We should add
 [Back To Top](#top)
 {: .text-right}
 
-## ramp/stepItem {#stepItem}
+## ramp/ramp {#ramp}
 
-A class to support a choice-tree step in the data loader workflow.
+The map module contains shared functions used by RAMP.  In particular, it houses functions that depend on the configuration object.
 
-| **API Page** | [StepItem](../api/yuidoc/classes/StepItem.html)
-
-[Back To Top](#top)
-{: .text-right}
-
-## ramp/theme {#theme}
-
-Contains logic targeted at specific WET Themes, such as the full-screen animation sequences.
-
-| **API Page** | [Theme](../api/yuidoc/classes/Theme.html)
+| **API Page** | [RAMP](../api/yuidoc/classes/RAMP.html)
 
 [Back To Top](#top)
 {: .text-right}

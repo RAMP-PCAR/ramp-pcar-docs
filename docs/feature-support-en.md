@@ -21,13 +21,5 @@ Feature Layers hosted in a [Feature Service](http://resources.arcgis.com/en/help
 
 Only layers with Simple, Class Breaks, or Unique Value renderes are supported.  See the [Symbology Support](symbology-en.html) page for more details.
 
-### OnDemand vs Snapshot Layers
-
-As of version Groundhog, RAMP will support feature layers in either OnDemand or Snapshot mode.  A layer in Snapshot mode will download every geometry in the layer at startup time, and then will not hit the service again.  A layer in OnDemand mode will determine what data is appropriate to download every time the extent changes, and apply geometry simplification if it is advantageous.
-
-Snapshot is great for small feature sets, and scales well for Point geometries. It will reduce the load on the map service and give snappier performance.
-
-OnDemand is more appropriate with larger Line or Polygon geometries, or enormous Point geometries.  The simplification factor will allow Canada-wide views of complex geometries, and will still give precise detail as a user zooms in. Extent changes are a bit more sluggish as the layers need to update.
-
 [Back To Top](#top)
 {: .text-right}
