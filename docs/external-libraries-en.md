@@ -14,13 +14,25 @@ categories: [documentation]
 <div class="toc"></div>
 
 ## Animate.css
-v 3.7.1
+v 3.2.5
 
 <https://github.com/daneden/animate.css>
 
 A library supporting CSS animation.
 
 Used for various animation effects.
+
+[Back To Top](#top)
+{: .text-right}
+
+## btoa-umd
+v 0.7.5
+
+<http://www.tiste.org/btoa-umd/>
+
+A library supporting base-64 string encoding that will play nice with dojo modules.
+
+Used for encoding symbology graphics in user added layers.
 
 [Back To Top](#top)
 {: .text-right}
@@ -41,7 +53,7 @@ Used for the Add CSV File function.
 <a name="datatables" />
 
 ## Datatables
-v 1.10.1
+v 1.10.7
 
 <http://www.datatables.net>
 
@@ -67,7 +79,7 @@ Used throughout the application.
 
 
 ## ESRI Javascript API
-v 3.8
+v 3.13
 
 <https://developers.arcgis.com/javascript/>
 
@@ -79,7 +91,7 @@ Used throughout the application.
 {: .text-right}
 
 ## Fontawesome
-v 4.2.0
+v 4.3.0
 
 <http://fontawesome.io>
 
@@ -90,8 +102,20 @@ Used for Toolbar Icons.
 [Back To Top](#top)
 {: .text-right}
 
+## Formstone
+v 0.5.8
+
+<http://formstone.it/>
+
+A collection of UI components.
+
+Used for checkboxes.
+
+[Back To Top](#top)
+{: .text-right}
+
 ## GSAP - GreenSock Animation Platform
-v 1.14.2
+v 1.16.1
 
 <http://www.greensock.com/gsap-js/>
 
@@ -115,7 +139,7 @@ Used to highlight interactive elements of the site.
 {: .text-right}
 
 ## i18next - i18n for JavaScript
-v 1.7.4
+v 1.8.0
 
 <http://i18next.com/>
 
@@ -137,7 +161,7 @@ jQuery makes things like HTML document traversal and manipulation, event handlin
 {: .text-right}
 
 ## jQuery UI
-v 1.10.4
+v 1.11.4
 
 <http://jqueryui.com>
 
@@ -149,7 +173,7 @@ It is used to generate the navigation widget. The widget is found in file jquery
 {: .text-right}
 
 ## Nestoria Sliders jQuery Plugin
-v 1.0.5
+v 1.0.10
 
 <https://github.com/lokku/jquery-nstslider>
 
@@ -173,13 +197,25 @@ Used in the symbology generator when adding user-hosted files.
 {: .text-right}
 
 ## ScrollTo
-v 1.4.13
+v 2.1.0
 
 <https://github.com/flesler/jquery.scrollTo>
 
 A library for implementing animated scrolling.
 
 Used to scroll the datagrid to the selected row (if row is not on the page).
+
+[Back To Top](#top)
+{: .text-right}
+
+## Selfish
+v  0.3.3
+
+<https://github.com/Gozala/selfish>
+
+A library to support prototypal multiple inheritance .
+
+Used for class inheritance of the Bricks-based objects.
 
 [Back To Top](#top)
 {: .text-right}
@@ -210,13 +246,25 @@ Used in the detail panel to trim long text items
 {: .text-right}
 
 ## Snap
-v 0.1.0
+v 0.3.0
 
 <http://snapsvg.io>
 
 A library for working with scalar vector graphics.
 
 Used for managing graphics layers and repositioning anchor maptips in the featureHighlighter module.
+
+[Back To Top](#top)
+{: .text-right}
+
+## t-js
+v 0.5.1
+
+<https://github.com/aaronj1335/t-js>
+
+A tree traversal library
+
+Used for navigating the choice tree in the data loader UI.
 
 [Back To Top](#top)
 {: .text-right}
@@ -264,10 +312,11 @@ Used throughout the application to generate content.  E.g. maptip content, detai
 v 3.0.1-r
 
 <http://iamceege.github.io/tooltipster />
+<https://github.com/RAMP-PCAR/tooltipster.git#rampfix>
 
 A library that provides tooltips with CSS enhancements.
 
-Used for maptips, and also tooltips on the datagrid and filter manager rows
+Used for maptips, and also tooltips on the datagrid and filter manager rows.  Note that RAMP uses a modified version of the library, hosted at the RAMP-PCAR tooltipster repository.
 
 [Back To Top](#top)
 {: .text-right}
