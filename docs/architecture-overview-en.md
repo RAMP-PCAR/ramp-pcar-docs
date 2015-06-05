@@ -100,7 +100,7 @@ Often we will have popups that will close other popups when they open.  Examples
 
 ##Filtering cycle
 
-In RAMP Arctic Fox we do not have any attribute based filtering.  Filtering is determined by two factors: the map extent and the visibility of feature layers.  A change in either of these two items (user pans/zooms the map, or toggles a layer on or off) will trigger the filtering cycle, which is as follows:
+In RAMP we do not have any attribute based filtering.  Filtering is determined by two factors: the map extent and the visibility of feature layers.  A change in either of these two items (user pans/zooms the map, or toggles a layer on or off) will trigger the filtering cycle, which is as follows:
 
 * Retrieve a list of visible layers
 * For each visible layer, perform a spatial query on the features using the map extent as the filter criteria.  Have the query output objectIds for features that satisfy the filter
@@ -121,9 +121,8 @@ The layers exist in the following order on the map
 
 * Basemap Layer
 * WMS Layers
-* Static Layers
+* Feature Layers ( includes Static Layers )
 * Bounding Box Layers
-* Feature Layers
 * Highlighting Layers
   * Zoomlight
   * Highlight

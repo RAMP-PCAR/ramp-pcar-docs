@@ -31,6 +31,15 @@ See the [basemaps](json-config-en.html#basemaps) section of the configuration pa
 ESRI Public Tiles
 : ESRI provides a number of [worldwide tile sets](http://services.arcgisonline.com/ArcGIS/rest/services) in [Web Mercator Auxilliary Sphere](http://spatialreference.org/ref/sr-org/esri102100/) projection.  Sets include topographic, satellite imagery, street map, shaded relief, physcial, ocean, and terrain.
 
+Note that these tiles use a special projection, in which documentation is very sparse in the ESRI Javascript API.  Tiles must use the following spatial reference definition to avoid issues (in particular, printing issues with WMS layers).
+
+{% highlight js %}
+{
+    wkid: 102100,
+    latestWkid: 3857	
+}
+{% endhighlight %}
+
 Natural Resources Canada Public Tiles
 : NrCan provides [Canadian tile sets](http://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps) in both [Web Mercator Auxilliary Sphere](http://spatialreference.org/ref/sr-org/esri102100/) and [Canada Atlas Lambert](http://spatialreference.org/ref/sr-org/7254/) projections.  Tiles are provided in both English and French versions.  Sets include topographic, road network, text labels, water bodies, and provinces.
 

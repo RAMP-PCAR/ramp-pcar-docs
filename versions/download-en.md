@@ -16,7 +16,7 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 <section class="alert alert-warning">
     <h2 class="h3">Access to RAMP</h2>
     <p>To download RAMP source and production files, you need access to RAMP-PCAR private GitHub repo.</p>
-    <p>Contact <a href="mailto:Mike.Weech@ec.gc.ca?Subject=RAMP%20Repo%20private%20access">Mike Weech</a> to get access.</p>
+    <p>Contact <a href="mailto:dan.bowerman@ec.gc.ca?Subject=RAMP%20Repo%20private%20access">Dan Bowerman</a> to get access.</p>
 </section>
 
 <a name="version-list"></a>
@@ -24,6 +24,16 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 ## Version 5 - Elk
 
 ### Stable Releases
+
+#### v5.4.0 {#v5_4_0}
+
+| Repo | Source Code | Production Files | Release Notes |
+|---|---|---|---|
+| RAMP Core | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/archive/v5.4.0.zip) | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/releases/download/v5.4.0/ramp-pcar-dist-5.4.0.zip) | [Release Notes]({{ BASE_PATH }}/versions/v5.4.0-en.html) |
+| RAMP Usability Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/archive/v5.4.0.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/releases/download/v5.4.0/ramp-theme-usability-dist-5.4.0.zip) |  |
+| RAMP Intranet Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/archive/v5.4.0.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/releases/download/v5.4.0/ramp-theme-intranet-dist-5.4.0.zip) |  |
+| RAMP Canada.ca Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/archive/v5.4.0.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/releases/download/v5.4.0/ramp-theme-canada-dist-5.4.0.zip) |  |
+{: .table}
 
 #### v5.3.2 {#v5_3_2}
 

@@ -10,6 +10,7 @@ published: true
 
 | Version | Documentation | API | 
 |---|---|
+| v5.3.2 - Flying Elk | [Link](5.3.2/index-en.html) | [Link](/api/v5.3.2/yuidoc/) |
 | v5.3.1 - Elk | [Link](5.3.1/index-en.html) | [Link](/api/v5.3.1/yuidoc/) |
 | v5.3.0 - Elk | [Link](5.3.0/index-en.html) | [Link](/api/v5.3.0/yuidoc/) |
 | v3.0.0 - Canada Goose | [Link](3.0/index-en.html) | [Link](/api/3.0/yuidoc/) |
