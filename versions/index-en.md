@@ -1,3 +1,4 @@
+| v5.4.0 | 2015-06-05 | [Release Notes]({{ BASE_PATH }}/versions/v5.4.0-en.html) | [Download]({{ BASE_PATH }}/versions/download-en.html#v5_4_0) |
 ---
 layout: index-en
 title: Version History
