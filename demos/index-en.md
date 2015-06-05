@@ -8,6 +8,8 @@ title: Working Examples
 
 <div class="toc"></div>
 
+## Version 5 - Elk
+
 ### v5.4.0
 
 | Name | Link | Description
@@ -15,10 +17,8 @@ title: Working Examples
 | RAMP Core Theme | [Link]({{BASE_PATH}}/demos/NRSTC/v5.4.0/ramp-pcar/ramp-en.html)| A Simple Implementation of RAMP using Core Theme |
 | RAMP Usability Theme | [Link]({{BASE_PATH}}/demos/NRSTC/v5.4.0/ramp-theme-intranet/ramp-en.html)| A Simple Implementation of RAMP using Usability Theme |
 | RAMP Intranet Theme | [Link]({{BASE_PATH}}/demos/NRSTC/v5.4.0/ramp-theme-intranet/ramp-en.html)| A Simple Implementation of RAMP using Intranet Theme |
-| RAMP Canada.ca Theme | [Link]({{BASE_PATH}}/demos/NRSTC/v5.4.0/ramp-theme-canada/ramp-en.html)| A Simple Implementation of RAMP using Canada.ca Theme |
+| RAMP Canada.ca Theme | [Link]({{BASE_PATH}}/demos/NRSTC/v5.4.0/ramp-theme-canada/ramp-en.html)| A Simple Implementation of RAMP using Canada.ca Theme | 
 {: .table}
-
-## Version 5 - Elk
 
 ### v5.3.2
 

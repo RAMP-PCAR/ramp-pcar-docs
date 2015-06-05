@@ -21,6 +21,10 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 
 <a name="version-list"></a>
 
+## Version 5 - Elk
+
+### Stable Releases
+
 #### v5.4.0 {#v5_4_0}
 
 | Repo | Source Code | Production Files | Release Notes |
@@ -30,10 +34,6 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 | RAMP Intranet Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/archive/v5.4.0.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/releases/download/v5.4.0/ramp-theme-intranet-dist-5.4.0.zip) |  |
 | RAMP Canada.ca Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/archive/v5.4.0.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/releases/download/v5.4.0/ramp-theme-canada-dist-5.4.0.zip) |  |
 {: .table}
-
-## Version 5 - Elk
-
-### Stable Releases
 
 #### v5.3.2 {#v5_3_2}
 
