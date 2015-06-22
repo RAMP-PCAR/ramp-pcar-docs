@@ -10,6 +10,7 @@ published: true
 
 | Version | Link |
 |---|---|
+| v5.4.1 - Groundhog | [Link](v5.4.1/yuidoc/) |
 | v5.4.0 - Groundhog | [Link](v5.4.0/yuidoc/) |
 | v5.3.2 - Elk | [Link](v5.3.2/yuidoc/) |
 | v5.3.1 - Elk | [Link](v5.3.1/yuidoc/) |

@@ -25,6 +25,16 @@ See [Versioning](version-info-en.html) for the meaning of each version number.
 
 ### Stable Releases
 
+#### v5.4.1 {#v5_4_1}
+
+| Repo | Source Code | Production Files | Release Notes |
+|---|---|---|---|
+| RAMP Core | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/archive/v5.4.1.zip) | [Download](https://github.com/RAMP-PCAR/RAMP-PCAR/releases/download/v5.4.1/ramp-pcar-dist-5.4.1.zip) | [Release Notes]({{ BASE_PATH }}/versions/v5.4.1-en.html) |
+| RAMP Usability Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/archive/v5.4.1.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-usability/releases/download/v5.4.1/ramp-theme-usability-dist-5.4.1.zip) |  |
+| RAMP Intranet Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/archive/v5.4.1.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-intranet/releases/download/v5.4.1/ramp-theme-intranet-dist-5.4.1.zip) |  |
+| RAMP Canada.ca Theme | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/archive/v5.4.1.zip) | [Download](https://github.com/RAMP-PCAR/ramp-theme-canada/releases/download/v5.4.1/ramp-theme-canada-dist-5.4.1.zip) |  |
+{: .table}
+
 #### v5.4.0 {#v5_4_0}
 
 | Repo | Source Code | Production Files | Release Notes |
